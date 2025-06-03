@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de Azúcar: Un Misterio Dulce o Amargo?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Dark slate text */
+        }
+        /* Custom styles for details/summary to ensure consistent look */
+        details {
+            transition: all 0.3s ease-in-out;
+        }
+        details[open] summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        details summary {
+            cursor: pointer;
+            list-style: none; /* Remove default arrow */
+            position: relative;
+        }
+        details summary::-webkit-details-marker {
+            display: none; /* Remove default arrow for Webkit browsers */
+        }
+        details summary::after {
+            content: '+';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease-in-out;
+            color: inherit; /* Inherit color from summary */
+        }
+        details[open] summary::after {
+            content: '-';
+            transform: translateY(-50%) rotate(0deg); /* No rotation needed for '-' */
+        }
+
+        /* Specific styles for trivia buttons */
+        .trivia-button {
+            @apply bg-purple-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-purple-600 transition-all duration-300 ease-in-out transform hover:scale-105;
+        }
+        .trivia-button.correct {
+            @apply bg-green-500 hover:bg-green-600;
+        }
+        .trivia-button.incorrect {
+            @apply bg-red-500 hover:bg-red-600;
+        }
+        .feedback-message {
+            @apply p-4 rounded-lg mt-4 font-semibold;
+        }
+        .feedback-correct {
+            @apply bg-green-100 text-green-800;
+        }
+        .feedback-incorrect {
+            @apply bg-red-100 text-red-800;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10 lg:p-16">
+
+    <header class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-indigo-700 mb-4 leading-tight">
+            🏠🔍 La Casa de Azúcar: ¿Un Misterio Dulce o Amargo?
+        </h1>
+        <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+            ¡Hola, curiosos! ¿Alguna vez sentiste que un lugar te llama? ¿O que el destino ya está escrito? En esta web, vamos a desentrañar los secretos de "La Casa de Azúcar" de Silvina Ocampo, un cuento que te va a dejar pensando. ¡Prepárate para un viaje misterioso!
+        </p>
+    </header>
+
+    <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-4xl font-bold text-teal-600 mb-8 text-center">💡 Desentrañando La Casa de Azúcar</h2>
+        <p class="text-lg text-gray-600 mb-10 text-center">
+            Para arrancar, ¡sumergite en este resumen visual! Queremos que tengas lo esencial bien clarito, pero con onda.
+        </p>
+
+        <h3 class="text-3xl font-semibold text-purple-600 mb-6 text-center">Personajes Clave: ¿Quién es Quién en Este Misterio?</h3>
+        <div class="overflow-x-auto mb-10">
+            <table class="min-w-full bg-white rounded-lg shadow-md">
+                <thead>
+                    <tr class="bg-purple-100 text-purple-800">
+                        <th class="py-3 px-4 text-left rounded-tl-lg">Icono</th>
+                        <th class="py-3 px-4 text-left">Personaje</th>
+                        <th class="py-3 px-4 text-left rounded-tr-lg">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-purple-200 hover:bg-purple-50">
+                        <td class="py-3 px-4 text-2xl">🔑</td>
+                        <td class="py-3 px-4 font-semibold text-gray-800">Cristina</td>
+                        <td class="py-3 px-4">Joven, enamorada de Daniel, <b class="text-pink-600">curiosa por el futuro</b> y las predicciones. Su inocencia y vulnerabilidad la hacen el centro de la extraña obsesión de Daniel.</td>
+                    </tr>
+                    <tr class="hover:bg-purple-50">
+                        <td class="py-3 px-4 text-2xl">🔒</td>
+                        <td class="py-3 px-4 font-semibold text-gray-800">Daniel</td>
+                        <td class="py-3 px-4">Esposo de Cristina, <b class="text-pink-600">obsesionado con una casa</b> que solo él ve. Sus acciones son enigmáticas y su amor por Cristina parece ligado a esta extraña propiedad. Su pasado familiar está muy conectado con esta casa.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-3xl font-semibold text-pink-600 mb-6 text-center">La Casa: Más que un Lugar, ¿un Personaje?</h3>
+        <div class="overflow-x-auto mb-10">
+            <table class="min-w-full bg-white rounded-lg shadow-md">
+                <thead>
+                    <tr class="bg-pink-100 text-pink-800">
+                        <th class="py-3 px-4 text-left rounded-tl-lg">Icono</th>
+                        <th class="py-3 px-4 text-left">Característica de la Casa</th>
+                        <th class="py-3 px-4 text-left rounded-tr-lg">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-pink-200 hover:bg-pink-50">
+                        <td class="py-3 px-4 text-2xl">❓🏠</td>
+                        <td class="py-3 px-4 font-semibold text-gray-800">Una Propiedad Específica</td>
+                        <td class="py-3 px-4"><i class="text-blue-500">No es cualquier casa.</i> Es el eje de la vida de Daniel, una herencia de su familia, <b class="text-teal-600">destinada a ser habitada por una "verdadera" Cristina</b>.</td>
+                    </tr>
+                    <tr class="border-b border-pink-200 hover:bg-pink-50">
+                        <td class="py-3 px-4 text-2xl">🗺️</td>
+                        <td class="py-3 px-4 font-semibold text-gray-800">Ubicación</td>
+                        <td class="py-3 px-4">Una casa con vista al río, en un <b class="text-teal-600">barrio de Buenos Aires</b>. (¡Imagináte las vistas!).</td>
+                    </tr>
+                    <tr class="hover:bg-pink-50">
+                        <td class="py-3 px-4 text-2xl">👻</td>
+                        <td class="py-3 px-4 font-semibold text-gray-800">Estado y Aura</td>
+                        <td class="py-3 px-4">Descuidada y polvorienta, pero con una <b class="text-teal-600">aura de misterio y fatalidad</b>. ¡Parece tener vida propia!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-3xl font-semibold text-blue-600 mb-6 text-center">La Trama: ¿Qué Oculta el Azúcar?</h3>
+        <ul class="list-none space-y-4 mb-10">
+            <li class="flex items-start bg-blue-50 p-4 rounded-lg shadow-sm">
+                <span class="text-3xl mr-4 text-blue-500">🔗</span>
+                <p class="text-lg text-gray-700"><b class="text-blue-700">El Amor y la Obsesión:</b> La relación de Cristina y Daniel, marcada por la <b class="text-blue-700">obsesión de Daniel por la casa</b>.</p>
+            </li>
+            <li class="flex items-start bg-blue-50 p-4 rounded-lg shadow-sm">
+                <span class="text-3xl mr-4 text-blue-500">🔮</span>
+                <p class="text-lg text-gray-700"><b class="text-blue-700">El Destino y la Predicción:</b> La creencia en la <b class="text-blue-700">predicción de que el "futuro" de Cristina está ligado a la casa</b>.</p>
+            </li>
+            <li class="flex items-start bg-blue-50 p-4 rounded-lg shadow-sm">
+                <span class="text-3xl mr-4 text-blue-500">🔎</span>
+                <p class="text-lg text-gray-700"><b class="text-blue-700">El Misterio y lo Inexplicable:</b> El enigma de las <b class="text-blue-700">sucesivas Cristinas</b> que habitan la casa.</p>
+            </li>
+            <li class="flex items-start bg-blue-50 p-4 rounded-lg shadow-sm">
+                <span class="text-3xl mr-4 text-blue-500">💀</span>
+                <p class="text-lg text-gray-700"><b class="text-blue-700">El Horror y la Fatalidad:</b> El desenlace fatal de Cristina, <b class="text-blue-700">"devorada" por la casa</b>.</p>
+            </li>
+        </ul>
+
+        <h3 class="text-3xl font-semibold text-green-600 mb-6 text-center">Temas Principales: ¿De qué nos Habla Silvina Ocampo?</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg shadow-md">
+                <thead>
+                    <tr class="bg-green-100 text-green-800">
+                        <th class="py-3 px-4 text-left rounded-tl-lg">Tema Central</th>
+                        <th class="py-3 px-4 text-left rounded-tr-lg">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-green-200 hover:bg-green-50">
+                        <td class="py-3 px-4 font-semibold text-gray-800">Destino Inevitable</td>
+                        <td class="py-3 px-4">La idea de que el destino de Cristina ya está escrito, y la casa es su cumplimiento.</td>
+                    </tr>
+                    <tr class="border-b border-green-200 hover:bg-green-50">
+                        <td class="py-3 px-4 font-semibold text-gray-800">Lo Inexplicable</td>
+                        <td class="py-3 px-4">La atmósfera de misterio y elementos que escapan a la lógica, como la casa que solo Daniel ve.</td>
+                    </tr>
+                    <tr class="border-b border-green-200 hover:bg-green-50">
+                        <td class="py-3 px-4 font-semibold text-gray-800">El Amor y la Obsesión</td>
+                        <td class="py-3 px-4">Cómo el amor de Daniel se transforma en una obsesión peligrosa por la casa y una manipulación de Cristina.</td>
+                    </tr>
+                    <tr class="hover:bg-green-50">
+                        <td class="py-3 px-4 font-semibold text-gray-800">La Casa como Trampa</td>
+                        <td class="py-3 px-4">La casa no es un hogar, sino una prisión metafórica que consume a quien la habita.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-16 bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-xl shadow-lg">
+        <h2 class="text-4xl font-bold text-purple-700 mb-8 text-center">🗺️ Infografía Dinámica: "El Ciclo de la Casa de Azúcar"</h2>
+        <p class="text-lg text-gray-700 mb-10 text-center">
+            Imagina que esta es una infografía interactiva en un sitio como Genially o Canva. Cada sección se "anima" al pasar el mouse o hacer clic, revelando el texto.
+        </p>
+
+        <div class="bg-white p-6 rounded-lg shadow-inner mb-8">
+            <h3 class="text-2xl font-semibold text-pink-600 mb-4">Título Grande y Vibrante: <span class="font-extrabold text-purple-800">"El Enigma de la Casa de Azúcar: Un Ciclo Sin Fin"</span></h3>
+            <p class="text-gray-600">(Fondo con degradado de rosa a morado oscuro, fuente impactante con un toque de brillo)</p>
+            <div class="bg-rose-50 border-l-4 border-rose-400 text-rose-800 p-4 mt-4 rounded">
+                <p class="font-bold">Concepto Visual Principal:</p>
+                <p>Un <b>diagrama circular o espiral</b> con la casa en el centro. Alrededor, segmentos que representan las etapas del cuento, conectándose con flechas que se "dibujan" dinámicamente.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-400">
+                <h4 class="text-xl font-semibold text-purple-700 mb-3">Sección 1: El Inicio del Ciclo: "La Predicción y el Amor"</h4>
+                <p class="text-gray-600 mb-2">Color de Fondo: Tonos suaves de rosa y violeta.</p>
+                <p class="text-gray-600 mb-2">Icono Central: 🔮 Una mano sosteniendo una bola de cristal con la imagen de una casa.</p>
+                <ul class="list-disc list-inside text-gray-700 mb-2">
+                    <li><b>Daniel y Cristina:</b> Su amor y el deseo de Daniel de encontrar a la "verdadera" Cristina.</li>
+                    <li><b>La Premonición:</b> La casa heredada y la profecía de que una Cristina la habitará.</li>
+                </ul>
+                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "Descubrí cómo una antigua profecía une a esta pareja con un destino inexplicable. ¿Creerías en un amor así?")</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-400">
+                <h4 class="text-xl font-semibold text-green-700 mb-3">Sección 2: La Casa como Imán: "El Llamado Inevitable"</h4>
+                <p class="text-gray-600 mb-2">Color de Fondo: Tonos de verde musgo y marrón.</p>
+                <p class="text-gray-600 mb-2">Icono Central: 🏡 Una casa antigua con una puerta abierta y una luz que sale de ella.</p>
+                <ul class="list-disc list-inside text-gray-700 mb-2">
+                    <li><b>La Obsesión de Daniel:</b> Cómo la casa lo consume.</li>
+                    <li><b>La Inocencia de Cristina:</b> Ella no comprende la magnitud de la "herencia".</li>
+                </ul>
+                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "La casa no es solo un lugar, ¡es una trampa! ¿Cómo la obsesión de Daniel por ella arrastra a Cristina a su destino?")</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-400">
+                <h4 class="text-xl font-semibold text-blue-700 mb-3">Sección 3: El Habitante: "Cristina y la Casa"</h4>
+                <p class="text-gray-600 mb-2">Color de Fondo: Tonos de azul oscuro y gris.</p>
+                <p class="text-gray-600 mb-2">Icono Central: 🚶‍♀️ Una silueta femenina entrando en la casa, con un efecto de desvanecimiento.</p>
+                <ul class="list-disc list-inside text-gray-700 mb-2">
+                    <li><b>La Transformación:</b> Cristina comienza a sentir que la casa la "absorbe".</li>
+                    <li><b>Pérdida de Identidad:</b> La idea de que cada Cristina es una continuidad de la anterior.</li>
+                </ul>
+                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "¿Qué pasa cuando un lugar empieza a cambiar quién sos? Cristina lo va a descubrir de la peor manera...")</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-400">
+                <h4 class="text-xl font-semibold text-red-700 mb-3">Sección 4: El Desenlace: "El Ciclo se Cierra... ¿o se Abre?"</h4>
+                <p class="text-gray-600 mb-2">Color de Fondo: Rojo intenso y negro.</p>
+                <p class="text-gray-600 mb-2">Icono Central: 💔 Una silueta de Cristina desvaneciéndose o una casa con un cristal roto.</p>
+                <ul class="list-disc list-inside text-gray-700 mb-2">
+                    <li><b>La Fatalidad:</b> La desaparición de Cristina, "absorbida" por la casa.</li>
+                    <li><b>La Continuidad:</b> La casa esperando a la próxima "Cristina".</li>
+                </ul>
+                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "El final te va a dejar helado. ¿Es un final definitivo o el comienzo de un nuevo ciclo? ¿Y si vos fueras la próxima Cristina?")</p>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center bg-gray-900 text-white p-6 rounded-lg shadow-xl animate-pulse">
+            <p class="text-2xl md:text-3xl font-extrabold">
+                "¿Es la casa un monstruo... o somos nosotros los que creamos nuestros propios destinos?"
+            </p>
+        </div>
+    </section>
+
+    <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-4xl font-bold text-orange-600 mb-8 text-center">📂 Elementos Interactivos: Explora los Secretos de la Casa de Azúcar</h2>
+        <p class="text-lg text-gray-700 mb-10 text-center">
+            ¡Presta atención! Aquí vas a poder descubrir más detalles sobre el cuento haciendo clic en los títulos. ¡Es como abrir un archivo clasificado!
+        </p>
+
+        <h3 class="text-3xl font-bold text-yellow-600 mb-6 text-center">📁 Archivos Desclasificados: 'La Casa de Azúcar'</h3>
+
+        <details class="bg-teal-50 rounded-xl shadow-md p-5 mb-4">
+            <summary class="font-bold text-teal-800 text-xl py-2 px-4">👤 Personajes: Más Allá de lo Obvio</summary>
+            <div class="pt-4 px-4">
+                <h4 class="text-lg font-semibold text-teal-700 mb-2">Cristina: La Inocente y la Predestinada.</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+                    <li>Su amor por Daniel y su curiosidad por el futuro la llevan a un camino inesperado.</li>
+                    <li>¿Cómo su personalidad se ve afectada por la casa? ¿Deja de ser ella misma?</li>
+                    <li>¿Víctima o cómplice de su destino? ¡Vos decidís!</li>
+                </ul>
+                <h4 class="text-lg font-semibold text-teal-700 mb-2">Daniel: El Objeto de la Obsesión.</h4>
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li>Su vínculo con la casa y su extraña herencia familiar.</li>
+                    <li>¿Es un villano o está también atrapado por la casa? Su amor se vuelve una trampa.</li>
+                    <li>La búsqueda incansable de la "verdadera" habitante de la casa.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details class="bg-orange-50 rounded-xl shadow-md p-5 mb-4">
+            <summary class="font-bold text-orange-800 text-xl py-2 px-4">🏡 La Casa de Azúcar: ¿Un Ser Vivo?</summary>
+            <div class="pt-4 px-4">
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li><b class="text-orange-700">Su Papel en la Historia:</b> ¿Es solo un escenario o tiene voluntad propia? ¡Parece que te observa!</li>
+                    <li><b class="text-orange-700">Descripción Ambiental:</b> Cómo Silvina Ocampo la describe para crear una atmósfera de misterio y opresión. ¡Sentí el escalofrío!</li>
+                    <li><b class="text-orange-700">Símbolo de Destino:</b> Representación de lo ineludible y lo heredado. ¿Podemos escapar de lo que se nos impone?</li>
+                    <li><b class="text-orange-700">"Comiéndose" a sus Habitantes:</b> La metáfora de la casa que consume la identidad. ¿Te imaginas ser devorado por un lugar?</li>
+                </ul>
+            </div>
+        </details>
+
+        <details class="bg-violet-50 rounded-xl shadow-md p-5 mb-4">
+            <summary class="font-bold text-violet-800 text-xl py-2 px-4">🌌 Temas Oscuros: ¿Qué nos Hace Pensar?</summary>
+            <div class="pt-4 px-4">
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li><b class="text-violet-700">El Destino vs. el Libre Albedrío:</b> ¿Tenemos control sobre nuestras vidas o todo está escrito? ¡Un debate para armar!</li>
+                    <li><b class="text-violet-700">Lo Fantástico y lo Real:</b> La línea difusa entre la realidad y lo sobrenatural en el cuento. ¿Qué es real y qué no?</li>
+                    <li><b class="text-violet-700">El Amor y sus Límites:</b> Cuándo el amor se convierte en obsesión y daño. ¡Ojo con las relaciones tóxicas!</li>
+                    <li><b class="text-violet-700">La Identidad:</b> ¿Cómo nos define nuestro entorno y nuestras herencias? ¿Quién sos vos cuando nadie te ve?</li>
+                </ul>
+            </div>
+        </details>
+
+        <details class="bg-rose-50 rounded-xl shadow-md p-5 mb-4">
+            <summary class="font-bold text-rose-800 text-xl py-2 px-4">✍️ El Estilo de Silvina Ocampo: Una Pluma Única</summary>
+            <div class="pt-4 px-4">
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li><b class="text-rose-700">Atmósfera de Misterio:</b> Cómo crea tensión y suspenso sin darte todas las respuestas.</li>
+                    <li><b class="text-rose-700">Narración Sutil:</b> Lo que se sugiere más que lo que se dice explícitamente. ¡Hay que leer entre líneas!</li>
+                    <li><b class="text-rose-700">Elementos Fantásticos:</b> La incorporación de lo irreal en lo cotidiano. ¡Lo normal se vuelve extraño!</li>
+                    <li><b class="text-rose-700">Finales Abiertos:</b> La invitación a la reflexión y la interpretación del lector. ¡Vos tenés la última palabra!</li>
+                </ul>
+            </div>
+        </details>
+    </section>
+
+    <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-4xl font-bold text-emerald-600 mb-8 text-center">🎮 Zona de Juego: ¡Desafía tu Mente con la Casa de Azúcar!</h2>
+        <p class="text-lg text-gray-700 mb-10 text-center">
+            ¡Ponete a prueba! Demostrá cuánto aprendiste y divertite con estos juegos interactivos.
+        </p>
+
+        <div class="mb-12 p-6 bg-emerald-50 rounded-xl shadow-md">
+            <h3 class="text-3xl font-semibold text-emerald-700 mb-6 text-center">Descifra el Misterio de la Casa de Azúcar (Trivia Interactiva)</h3>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                <b>Mecánica:</b> Responde preguntas de opción múltiple o verdadero/falso. ¡Cada respuesta correcta te acerca a desvelar el enigma!
+            </p>
+            <p class="text-sm text-gray-500 italic mb-8 text-center">
+                (Imagina botones interactivos para las respuestas, un contador de puntos que sube y efectos de sonido para aciertos y errores. ¡Una barra de "Misterio Resuelto" que se va llenando!)
+            </p>
+
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 1:</b> ¿Qué característica principal tenía la casa que Daniel heredó?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="trivia-button" onclick="checkAnswer(1, 'A')">A) Era muy grande y lujosa.</button>
+                    <button class="trivia-button" onclick="checkAnswer(1, 'B')">B) Solo él podía verla.</button>
+                    <button class="trivia-button" onclick="checkAnswer(1, 'C')">C) Estaba destinada a ser habitada por una "verdadera" Cristina.</button>
+                    <button class="trivia-button" onclick="checkAnswer(1, 'D')">D) Estaba llena de objetos de azúcar.</button>
+                </div>
+                <div id="feedback-q1" class="feedback-message hidden"></div>
+            </div>
+
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 2:</b> ¿Qué tema central aborda el cuento al hablar del destino de Cristina?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="trivia-button" onclick="checkAnswer(2, 'A')">A) El amor incondicional.</button>
+                    <button class="trivia-button" onclick="checkAnswer(2, 'B')">B) La lucha por la libertad.</button>
+                    <button class="trivia-button" onclick="checkAnswer(2, 'C')">C) El destino inevitable.</button>
+                    <button class="trivia-button" onclick="checkAnswer(2, 'D')">D) La importancia de la comunicación en la pareja.</button>
+                </div>
+                <div id="feedback-q2" class="feedback-message hidden"></div>
+            </div>
+
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 3 (Verdadero/Falso):</b> Daniel quería que Cristina se pareciera físicamente a su madre.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="trivia-button" onclick="checkAnswer(3, 'Falso')">Falso</button>
+                    <button class="trivia-button" onclick="checkAnswer(3, 'Verdadero')">Verdadero</button>
+                </div>
+                <div id="feedback-q3" class="feedback-message hidden"></div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-blue-50 rounded-xl shadow-md">
+            <h3 class="text-3xl font-semibold text-blue-700 mb-6 text-center">Crea tu Propia Cristina (Actividad de Reflexión)</h3>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                <b>Mecánica:</b> No hay respuestas correctas o incorrectas, ¡solo tu imaginación! Vas a "construir" una Cristina diferente a la del cuento y reflexionar sobre su destino.
+            </p>
+            <p class="text-sm text-gray-500 italic mb-8 text-center">
+                (Imagina una interfaz con "tarjetas" arrastrables de diferentes características: "aventurera", "tímida", "escéptica", "creyente en el destino", etc. Los chicos arrastran y sueltan las tarjetas para formar su Cristina.)
+            </p>
+
+            <div class="bg-white p-6 rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>¡Manos a la Obra!</b></p>
+                <ol class="list-decimal list-inside text-gray-700 space-y-3 mb-6">
+                    <li>
+                        <b>Introducción:</b> "Imagina que eres un arquitecto de destinos. Tienes la oportunidad de crear una nueva Cristina para 'La Casa de Azúcar'. ¿Cómo sería? ¿Podrías cambiar su destino?"
+                    </li>
+                    <li>
+                        <b>Selecciona sus Características:</b> Elige 3 a 5 tarjetas de nuestra "Biblioteca de Cristinas". Por ejemplo:
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-yellow-800">Tarjeta 1: "Cristina Curiosa"</span> (Siempre quiere saber más, investiga todo).</div>
+                            <div class="bg-green-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-green-800">Tarjeta 2: "Cristina Valiente"</span> (No le teme a los desafíos, enfrenta sus miedos).</div>
+                            <div class="bg-red-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-red-800">Tarjeta 3: "Cristina Escéptica"</span> (No cree en destinos ni predicciones).</div>
+                            <div class="bg-purple-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-purple-800">Tarjeta 4: "Cristina Optimista"</span> (Siempre ve el lado bueno de las cosas).</div>
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-blue-800">Tarjeta 5: "Cristina Protectora"</span> (Busca cuidar a los demás, incluso a Daniel).</div>
+                        </div>
+                    </li>
+                    <li>
+                        <b>¡Reflexioná y Contanos!</b> Una vez que armaste a tu Cristina, respondé en el espacio de abajo:
+                        <ul class="list-disc list-inside text-gray-700 mt-4 space-y-2">
+                            <li>¿Crees que esta Cristina habría podido escapar de la casa? ¿Por qué?</li>
+                            <li>¿Qué diferencias clave ves entre tu Cristina y la del cuento de Silvina Ocampo?</li>
+                            <li>¿Qué crees que Silvina Ocampo pensaría de tu Cristina?</li>
+                        </ul>
+                        <textarea class="w-full p-4 mt-6 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="8" placeholder="Escribe aquí tus reflexiones..."></textarea>
+                        <button class="mt-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105">
+                            Guardar mis Reflexiones
+                        </button>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center mt-16 text-gray-500 text-sm">
+        <p>¡Esperamos que esta web te haya hecho ver "La Casa de Azúcar" con otros ojos! Si tenés alguna pregunta o querés seguir explorando, ¡no dudes en consultarnos!</p>
+    </footer>
+
+    <script>
+        // Trivia Answers
+        const answers = {
+            1: 'C',
+            2: 'C',
+            3: 'Falso'
+        };
+
+        function checkAnswer(questionNum, selectedAnswer) {
+            const feedbackDiv = document.getElementById(`feedback-q${questionNum}`);
+            const buttons = Array.from(document.querySelectorAll(`#feedback-q${questionNum}`).previousElementSibling.querySelectorAll('button'));
+
+            // Reset button styles
+            buttons.forEach(button => {
+                button.classList.remove('correct', 'incorrect');
+                button.disabled = false; // Re-enable for multiple attempts or reset
+            });
+
+            // Hide previous feedback
+            feedbackDiv.classList.add('hidden');
+            feedbackDiv.classList.remove('feedback-correct', 'feedback-incorrect');
+
+            // Check answer
+            if (selectedAnswer === answers[questionNum]) {
+                feedbackDiv.innerHTML = `<b>¡Correcto!</b> ${getCorrectFeedback(questionNum)}`;
+                feedbackDiv.classList.add('feedback-correct');
+                // Highlight the correct button if it's a multiple choice
+                buttons.forEach(button => {
+                    if (button.textContent.includes(selectedAnswer)) {
+                        button.classList.add('correct');
+                    }
+                });
+            } else {
+                feedbackDiv.innerHTML = `<b>¡Ups!</b> ${getIncorrectFeedback(questionNum)}`;
+                feedbackDiv.classList.add('feedback-incorrect');
+                // Highlight the incorrect button clicked and the correct one
+                buttons.forEach(button => {
+                    if (button.textContent.includes(selectedAnswer)) {
+                        button.classList.add('incorrect');
+                    }
+                    if (button.textContent.includes(answers[questionNum])) {
+                        button.classList.add('correct'); // Show correct answer
+                    }
+                });
+            }
+            feedbackDiv.classList.remove('hidden');
+
+            // Disable all buttons for this question after an attempt
+            buttons.forEach(button => button.disabled = true);
+        }
+
+        function getCorrectFeedback(questionNum) {
+            switch (questionNum) {
+                case 1: return "Esa casa tenía un destino particular para Daniel. ¡Seguí así!";
+                case 2: return "El destino es un hilo conductor en 'La Casa de Azúcar'. ¡Sos un/a crack!";
+                case 3: return "Falso. La casa no se trataba de su madre, sino de una misteriosa 'verdadera' Cristina. ¡Atento al detalle!";
+                default: return "¡Excelente!";
+            }
+        }
+
+        function getIncorrectFeedback(questionNum) {
+            switch (questionNum) {
+                case 1: return "Vuelve a leer la descripción de la casa. Recuerda que no era una casa cualquiera. ¡Intenta de nuevo!";
+                case 2: return "Este cuento nos hace reflexionar mucho sobre el destino. ¡Revisa los temas principales!";
+                case 3: return "No se trataba de su madre... ¡Volvé a leer el cuento!";
+                default: return "¡Intenta de nuevo!";
+            }
+        }
+    </script>
+</body>
+</html>
