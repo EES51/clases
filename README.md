@@ -38,26 +38,14 @@
             margin-top: 0;
             margin-bottom: 15px;
             font-size: 1.8em;
-            cursor: pointer; /* Para indicar que es clickeable si luego se usa JS */
-            display: flex; /* Para alinear el icono y el texto */
-            align-items: center;
+            /* Se eliminan estilos relacionados con la interactividad de JavaScript */
         }
-        .year-section h2::before {
-            content: "▶"; /* Icono de flecha para expandir/contraer si se usa JS */
-            display: inline-block;
-            transition: transform 0.2s;
-            margin-right: 10px;
-        }
-        .year-section h2.expanded::before {
-            transform: rotate(90deg);
-        }
+        /* Se eliminan reglas ::before y .expanded ya que no hay JavaScript para la interactividad */
         .subject-list {
             list-style: none;
             padding-left: 0;
-            display: none; /* Oculto por defecto, se mostrará con JS */
-        }
-        .year-section h2.expanded + .subject-list {
-            display: block; /* Mostrar cuando el año está expandido */
+            /* Se elimina display: none; para que las listas estén visibles por defecto */
+            display: block; /* Asegura que las listas de materias estén siempre visibles */
         }
 
         .subject-list li {
@@ -111,6 +99,7 @@
     <h1>ESCUELA SECUNDARIA N°51 AZUCENA VILLAFLOR</h1>
 
     <div class="school-menu">
+        <!-- Primer Año -->
         <div class="year-section">
             <h2 id="year1">1° Año</h2>
             <ul class="subject-list" aria-labelledby="year1">
@@ -237,6 +226,7 @@
             </ul>
         </div>
 
+        <!-- Segundo Año -->
         <div class="year-section">
             <h2 id="year2">2° Año</h2>
             <ul class="subject-list" aria-labelledby="year2">
@@ -363,6 +353,7 @@
             </ul>
         </div>
 
+        <!-- Tercer Año -->
         <div class="year-section">
             <h2 id="year3">3° Año</h2>
             <ul class="subject-list" aria-labelledby="year3">
@@ -489,6 +480,7 @@
             </ul>
         </div>
 
+        <!-- Cuarto Año (Turno Noche) -->
         <div class="year-section">
             <h2 id="year4n">4° Año (Noche)</h2>
             <ul class="subject-list" aria-labelledby="year4n">
@@ -615,6 +607,7 @@
             </ul>
         </div>
 
+        <!-- Cuarto Año (Turno Sur) -->
         <div class="year-section">
             <h2 id="year4s">4° Año (Sur)</h2>
             <ul class="subject-list" aria-labelledby="year4s">
@@ -741,6 +734,7 @@
             </ul>
         </div>
 
+        <!-- Quinto Año (Turno Noche) -->
         <div class="year-section">
             <h2 id="year5n">5° Año (Noche)</h2>
             <ul class="subject-list" aria-labelledby="year5n">
@@ -867,6 +861,7 @@
             </ul>
         </div>
 
+        <!-- Quinto Año (Turno Sur) -->
         <div class="year-section">
             <h2 id="year5s">5° Año (Sur)</h2>
             <ul class="subject-list" aria-labelledby="year5s">
@@ -993,6 +988,7 @@
             </ul>
         </div>
 
+        <!-- Sexto Año (Turno Noche) -->
         <div class="year-section">
             <h2 id="year6n">6° Año (Noche)</h2>
             <ul class="subject-list" aria-labelledby="year6n">
@@ -1119,6 +1115,7 @@
             </ul>
         </div>
 
+        <!-- Sexto Año (Turno Sur) -->
         <div class="year-section">
             <h2 id="year6s">6° Año (Sur)</h2>
             <ul class="subject-list" aria-labelledby="year6s">
@@ -1246,20 +1243,7 @@
         </div>
     </div>
 
-    <script>
-        // JavaScript para expandir/contraer las secciones de cada año
-        document.querySelectorAll('.year-section h2').forEach(header => {
-            header.addEventListener('click', () => {
-                header.classList.toggle('expanded');
-                const subjectList = header.nextElementSibling;
-                if (subjectList.style.display === "block") {
-                    subjectList.style.display = "none";
-                } else {
-                    subjectList.style.display = "block";
-                }
-            });
-        });
-    </script>
+    <!-- Se ha eliminado el bloque de JavaScript para cumplir con la solicitud de "solo HTML" -->
 
 </body>
 </html>
