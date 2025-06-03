@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martín Fierro: Aventura Gaucha Interactiva</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles for the Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f5f0; /* Light beige background */
+            color: #333;
+            padding: 1rem;
+        }
+
+        .main-container {
+            max-width: 6xl;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 2rem;
+            border: 4px solid #a78bfa; /* Violet 400 */
+        }
+
+        /* Styles for collapsible sections (details/summary) */
+        details summary {
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #f0fdf4; /* Green 50 */
+            border-radius: 0.75rem;
+            font-weight: 600;
+            color: #166534; /* Green 800 */
+            transition: background-color 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+        details summary:hover {
+            background-color: #dcfce7; /* Green 100 */
+        }
+        details summary::-webkit-details-marker {
+            display: none; /* Hide default marker */
+        }
+        details summary::before {
+            content: "\f078"; /* Font Awesome chevron-down icon */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 0.75rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        details[open] summary::before {
+            transform: rotate(180deg); /* Rotate icon when open */
+        }
+        details .content {
+            padding: 1rem 1.5rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            margin-top: 0.5rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+        }
+
+        /* Styles for LLM sections */
+        .llm-section {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .llm-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .llm-button {
+            background-color: #10b981; /* Emerald 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .llm-button:hover {
+            background-color: #059669; /* Emerald 600 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .llm-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .llm-response {
+            background-color: #f0fdf4; /* Green 50 */
+            border-left: 4px solid #34d399; /* Green 400 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: #1f2937; /* Gray 800 */
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #34d399; /* Green */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Rosco Specific Styles */
+        .rosco-circle {
+            position: relative;
+            width: 300px; /* Base size for mobile */
+            height: 300px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            border: 8px solid #a78bfa; /* Violet 400 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .rosco-circle {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .rosco-circle {
+                width: 500px;
+                height: 500px;
+            }
+        }
+
+        .letter-button {
+            position: absolute;
+            width: 45px; /* Size of each letter button */
+            height: 45px;
+            border-radius: 50%;
+            background-color: #fca5a5; /* Red 300 */
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1.2rem;
+        }
+
+        .letter-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .letter-button.answered-correct {
+            background-color: #34d399; /* Green 400 */
+            cursor: default;
+        }
+
+        .letter-button.answered-incorrect {
+            background-color: #ef4444; /* Red 500 */
+            cursor: default;
+        }
+
+        .letter-button.active {
+            border: 3px solid #f97316; /* Orange 500 */
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .game-controls {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .game-button {
+            background-color: #eab308; /* Amber 500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Full rounded */
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-button:hover {
+            background-color: #d97706; /* Amber 600 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .game-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .input-area {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .input-area input {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            font-size: 1rem;
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .feedback-correct {
+            background-color: #dcfce7; /* Green 100 */
+            color: #16a34a; /* Green 600 */
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2; /* Red 100 */
+            color: #dc2626; /* Red 600 */
+        }
+
+        .score-display, .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4b5563; /* Gray 700 */
+            margin-top: 1rem;
+        }
+        .score-display span, .timer-display span {
+            color: #f97316; /* Orange 500 */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="main-container">
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-amber-600 mb-4 leading-tight">
+                <i class="fas fa-horse-head text-amber-500 mr-3"></i>Martín Fierro: <span class="text-green-700">¡Aventura Gaucha Interactiva!</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto">
+                ¡Prepárate para sumergirte en la epopeya del gaucho más famoso de Argentina! Explora su historia, conoce a sus personajes, descubre su contexto y pon a prueba tus conocimientos.
+            </p>
+        </header>
+
+        <!-- Sección: La Historia de Martín Fierro -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-8 text-center">
+                <i class="fas fa-scroll text-amber-500 mr-2"></i>La Historia de Martín Fierro: ¡Un Viaje Épico!
+            </h2>
+            <div class="space-y-6">
+                <!-- La Ida de Martín Fierro (1872) -->
+                <details class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl shadow-md">
+                    <summary class="text-xl sm:text-2xl text-teal-800 font-bold">
+                        <i class="fas fa-arrow-right text-teal-600 mr-3"></i>Parte 1: "El Gaucho Martín Fierro" (La Ida)
+                    </summary>
+                    <div class="content text-gray-700">
+                        <p class="mb-4">
+                            Esta primera parte nos presenta a Martín Fierro, un gaucho cantor y trabajador que vive una vida tranquila en la Pampa con su familia. Pero su paz se rompe cuando es **reclutado a la fuerza (la "leva")** para servir en los fortines de la frontera, defendiendo la civilización de los ataques indígenas.
+                        </p>
+                        <p class="mb-4">
+                            En el fortín, Fierro sufre **abusos y maltratos** por parte de los superiores, no le pagan y vive en condiciones miserables. Cuando regresa a su rancho después de años, lo encuentra **destruido y su familia ha desaparecido**. Desesperado y lleno de rabia por la injusticia, Fierro se convierte en un **"gaucho matrero"**, un fugitivo de la ley.
+                        </p>
+                        <p class="mb-4">
+                            En su camino como matrero, Fierro se ve obligado a **enfrentarse a la autoridad** y a otros gauchos en duelos de facón. En una de estas peleas, conoce a **Cruz**, un sargento que, al ver la injusticia, decide desertar y unirse a Fierro. Juntos, deciden **cruzar la frontera y vivir con los indios**, buscando una libertad que la sociedad "civilizada" les negó.
+                        </p>
+                        <p class="font-semibold text-amber-700">
+                            <i class="fas fa-lightbulb text-amber-500 mr-2"></i>Idea clave: La "Ida" es una denuncia cruda de las injusticias que sufría el gaucho y su transformación en un marginado.
+                        </p>
+                    </div>
+                </details>
+
+                <!-- La Vuelta de Martín Fierro (1879) -->
+                <details class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-md">
+                    <summary class="text-xl sm:text-2xl text-purple-800 font-bold">
+                        <i class="fas fa-arrow-left text-purple-600 mr-3"></i>Parte 2: "La Vuelta de Martín Fierro" (La Vuelta)
+                    </summary>
+                    <div class="content text-gray-700">
+                        <p class="mb-4">
+                            Siete años después, Fierro y Cruz viven entre los indios. Sin embargo, la vida allí también es dura y sufren la **viruela** (enfermedad). Tras la muerte de Cruz, Fierro decide **regresar a la civilización** y buscar a su familia.
+                        </p>
+                        <p class="mb-4">
+                            En su regreso, Fierro se reencuentra con sus **dos hijos** y con el **hijo de Cruz**. Cada uno le cuenta sus propias desgracias y sufrimientos. Los hijos de Fierro, por ejemplo, estuvieron bajo la tutela del **Viejo Vizcacha**, un personaje cínico que les da consejos de vida muy particulares.
+                        </p>
+                        <p class="mb-4">
+                            La obra culmina con un **famoso encuentro de payadas** entre Fierro y un moreno (hermano del gaucho que Fierro mató en la "Ida"). Aunque hay tensión, la situación no termina en violencia. Finalmente, Fierro les da una serie de **consejos a sus hijos** y a los demás jóvenes, enfatizando la importancia de la unión y la prudencia. Después, los cuatro (Fierro, sus dos hijos y el hijo de Cruz) se separan, cada uno buscando su propio camino.
+                        </p>
+                        <p class="font-semibold text-amber-700">
+                            <i class="fas fa-lightbulb text-amber-500 mr-2"></i>Idea clave: La "Vuelta" muestra un Fierro más maduro, que busca la reconciliación y la transmisión de valores, aunque la injusticia sigue presente.
+                        </p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Sección: Personajes Clave -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-amber-600 mb-8 text-center">
+                <i class="fas fa-users text-green-700 mr-2"></i>Personajes Clave: ¿Quién es Quién en la Pampa?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Personaje: Martín Fierro -->
+                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <i class="fas fa-user-cowboy text-6xl text-amber-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">Martín Fierro</h3>
+                    <p class="text-gray-800 text-base">
+                        Es el **protagonista** y narrador de la obra. Representa al gaucho libre que es despojado de todo por el sistema. Pasa de ser un trabajador pacífico a un fugitivo y luego a un consejero. Es el símbolo de la **identidad argentina** y la voz de los marginados.
+                    </p>
+                </div>
+                <!-- Personaje: Cruz -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <i class="fas fa-handshake text-6xl text-blue-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2">Cruz</h3>
+                    <p class="text-gray-800 text-base">
+                        Un sargento que, al igual que Fierro, ha sufrido las injusticias del sistema. Se **identifica con Fierro** durante un enfrentamiento y decide desertar para unírsele. Es el símbolo de la **amistad incondicional y la solidaridad** entre los gauchos.
+                    </p>
+                </div>
+                <!-- Personaje: El Viejo Vizcacha -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <i class="fas fa-hat-cowboy text-6xl text-gray-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">El Viejo Vizcacha</h3>
+                    <p class="text-gray-800 text-base">
+                        Un viejo gaucho astuto y cínico que es tutor de uno de los hijos de Fierro. Sus **"consejos"** (que son más bien advertencias egoístas para sobrevivir en un mundo hostil) son famosos y reflejan una visión pesimista de la vida.
+                    </p>
+                </div>
+                <!-- Personaje: Los Hijos de Fierro -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <i class="fas fa-child text-6xl text-green-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-green-800 mb-2">Los Hijos de Fierro</h3>
+                    <p class="text-gray-800 text-base">
+                        Representan la **nueva generación de gauchos**. Cada uno cuenta su propia historia de sufrimiento y cómo la sociedad los ha afectado. A través de ellos, Fierro busca transmitir sus experiencias y lecciones de vida.
+                    </p>
+                </div>
+                <!-- Personaje: El Moreno -->
+                <div class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <i class="fas fa-microphone-alt text-6xl text-red-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-red-800 mb-2">El Moreno</h3>
+                    <p class="text-gray-800 text-base">
+                        Hermano del gaucho que Fierro mató en la "Ida". Se encuentra con Fierro en una payada y lo desafía. Su aparición permite a Hernández explorar temas de **justicia, perdón y reconciliación**.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: El Mundo de Martín Fierro: Contexto Histórico y Literario -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-8 text-center">
+                <i class="fas fa-globe-americas text-amber-500 mr-2"></i>El Mundo de Martín Fierro: ¡Contexto Histórico y Literario!
+            </h2>
+            <div class="space-y-6">
+                <!-- Contexto Histórico -->
+                <details class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl shadow-md">
+                    <summary class="text-xl sm:text-2xl text-orange-800 font-bold">
+                        <i class="fas fa-landmark text-orange-600 mr-3"></i>Contexto Histórico: Argentina en el Siglo XIX
+                    </summary>
+                    <div class="content text-gray-700">
+                        <p class="mb-4">
+                            "El Martín Fierro" fue escrito por José Hernández en un período crucial de la historia argentina: la segunda mitad del siglo XIX (1872 y 1879). Después de años de guerras civiles, Argentina buscaba consolidar su **organización nacional**.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><span class="font-semibold text-gray-800">La "Civilización" vs. la "Barbarie":</span> En esta época, se impulsaba un modelo de país "civilizado" (europeo, urbano), y se veía al gaucho, con su vida libre y rural, como un obstáculo o una "barbarie" a controlar.</li>
+                            <li><span class="font-semibold text-gray-800">La Leva y los Fortines:</span> El gobierno implementaba la "leva" (reclutamiento forzoso) para enviar a los gauchos a la frontera a luchar contra los pueblos originarios. Era una forma de deshacerse de ellos y usarlos como mano de obra barata o carne de cañón.</li>
+                            <li><span class="font-semibold text-gray-800">Leyes de Vagos y Maleantes:</span> Se crearon leyes que criminalizaban la vida errante del gaucho, obligándolos a tener un patrón o a ir al ejército, lo que los despojaba de su libertad.</li>
+                            <li><span class="font-semibold text-gray-800">La Expansión de la Frontera:</span> La Pampa era un territorio en disputa. El avance de la "civilización" significaba el retroceso de los pueblos originarios y el fin del modo de vida tradicional del gaucho.</li>
+                        </ul>
+                        <p class="font-semibold text-amber-700">
+                            <i class="fas fa-lightbulb text-amber-500 mr-2"></i>Idea clave: La obra es un espejo de las tensiones sociales y políticas de una Argentina en formación, donde el gaucho era marginado.
+                        </p>
+                    </div>
+                </details>
+
+                <!-- Contexto Literario -->
+                <details class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl shadow-md">
+                    <summary class="text-xl sm:text-2xl text-teal-800 font-bold">
+                        <i class="fas fa-feather-alt text-teal-600 mr-3"></i>Contexto Literario: La Literatura Gauchesca
+                    </summary>
+                    <div class="content text-gray-700">
+                        <p class="mb-4">
+                            "El Martín Fierro" es la obra cumbre de la **literatura gauchesca**, un género literario que se desarrolló en el Río de la Plata y que tiene al gaucho como protagonista.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 mb-4">
+                            <li><span class="font-semibold text-gray-800">Características:</span> Se escribe en verso, imitando la forma de hablar del gaucho, y a menudo se presenta como un canto o una payada. Refleja sus costumbres, su lenguaje y sus problemas.</li>
+                            <li><span class="font-semibold text-gray-800">José Hernández (El Autor):</span> Hernández no era un gaucho, sino un periodista y político que conocía muy bien la vida rural. Escribió la obra para **denunciar las injusticias** que sufrían los gauchos y para defender su figura. Quería que la sociedad urbana entendiera su realidad.</li>
+                            <li><span class="font-semibold text-gray-800">Impacto y Legado:</span> La obra fue un éxito rotundo. Se convirtió en un **símbolo nacional** y la voz de los gauchos. Hoy, es considerada una de las obras más importantes de la literatura argentina y un patrimonio cultural.</li>
+                        </ul>
+                        <p class="font-semibold text-amber-700">
+                            <i class="fas fa-lightbulb text-amber-500 mr-2"></i>Idea clave: La obra no solo cuenta una historia, sino que es una herramienta de denuncia social y una pieza fundamental de la identidad cultural argentina.
+                        </p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Sección: Pregúntale al Experto (LLM Feature) -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-8 text-center">
+                <i class="fas fa-question-circle text-amber-500 mr-2"></i>Pregúntale al Experto ✨
+            </h2>
+            <div class="llm-section">
+                <p class="text-gray-700 text-lg mb-4">
+                    ¿Tenés alguna duda sobre "El Martín Fierro"? ¡Pregúntale a nuestro experto en la obra!
+                </p>
+                <textarea id="expert-question" class="llm-input h-24" placeholder="Ej: ¿Por qué Fierro se vuelve matrero? ¿Qué es una payada?"></textarea>
+                <button id="ask-expert-button" class="llm-button flex items-center">
+                    Preguntar <span id="expert-loading-spinner" class="loading-spinner hidden"></span>
+                </button>
+                <div id="expert-response" class="llm-response hidden">
+                    <!-- LLM response will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Generador de Payadas Modernas (LLM Feature) -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-amber-600 mb-8 text-center">
+                <i class="fas fa-guitar text-green-700 mr-2"></i>Generador de Payadas Modernas ✨
+            </h2>
+            <div class="llm-section">
+                <p class="text-gray-700 text-lg mb-4">
+                    ¡Creá tu propia payada con un toque moderno! Ingresá un tema o algunas palabras clave:
+                </p>
+                <input type="text" id="payada-theme" class="llm-input" placeholder="Ej: la amistad, la ciudad, el futuro, el estudio">
+                <button id="generate-payada-button" class="llm-button flex items-center">
+                    Generar Payada <span id="payada-loading-spinner" class="loading-spinner hidden"></span>
+                </button>
+                <div id="payada-response" class="llm-response hidden">
+                    <!-- LLM generated payada will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: El Rosco de Martín Fierro -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-amber-600 mb-8 text-center">
+                <i class="fas fa-dice text-green-700 mr-2"></i>El Rosco de Martín Fierro: ¡A Jugar!
+            </h2>
+            <div class="rosco-game-container llm-section"> <!-- Reusing llm-section styles for consistency -->
+                <p class="text-lg sm:text-xl text-gray-700 mb-6">
+                    ¡Demuestra cuánto sabes de la obra cumbre de José Hernández! Responde las preguntas para completar el rosco.
+                </p>
+
+                <div class="rosco-circle" id="rosco-circle">
+                    <!-- Letters will be dynamically generated here -->
+                </div>
+
+                <div class="score-display">Aciertos: <span id="correct-answers">0</span> / <span id="total-letters">0</span></div>
+                <div class="timer-display">Tiempo restante: <span id="timer">00:00</span></div>
+
+                <div class="current-question-area mt-8 bg-gray-50 p-6 rounded-xl shadow-inner border border-gray-200">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3" id="current-letter-display">Selecciona una letra para empezar...</h3>
+                    <p class="text-gray-700 text-lg mb-4" id="current-question">
+                        Haz clic en una letra del rosco para ver la pregunta.
+                    </p>
+                    <div class="input-area">
+                        <input type="text" id="answer-input" placeholder="Escribe tu respuesta aquí..." class="p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                        <button id="check-answer-button" class="game-button">Comprobar</button>
+                        <button id="pass-button" class="game-button bg-gray-500 hover:bg-gray-600">Pasapalabra</button>
+                    </div>
+                    <div id="feedback-message" class="feedback-message hidden"></div>
+                </div>
+
+                <div class="game-controls mt-8">
+                    <button id="start-rosco-button" class="game-button bg-green-600 hover:bg-green-700">Comenzar Rosco</button>
+                    <button id="reset-rosco-button" class="game-button bg-red-600 hover:bg-red-700 hidden">Reiniciar Rosco</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 1: Resúmenes Visuales - Flashcards Gauchas -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-8 text-center">
+                <i class="fas fa-book-open text-amber-500 mr-2"></i>Flashcards Gauchas: ¡Lo Esencial en un Vistazo!
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: ¿Quién es Martín Fierro? -->
+                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="toggleCard('card1')">
+                    <i class="fas fa-user-cowboy text-6xl text-amber-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-amber-700 mb-2">¿Quién es Martín Fierro?</h3>
+                    <p id="card1-short" class="text-gray-800 text-base">
+                        Imaginá a un gaucho que vivía tranqui en la Pampa, con su familia y sus caballos. ¡Pero la vida le dio un giro inesperado!
+                    </p>
+                    <p id="card1-full" class="text-gray-800 text-base hidden">
+                        Martín Fierro es el protagonista y narrador de la obra. Un gaucho trabajador que es forzado a la leva, pierde todo y se convierte en un fugitivo. Su historia es la denuncia de las injusticias que sufrió el gaucho en el siglo XIX.
+                    </p>
+                    <span class="text-sm text-amber-500 mt-3">Haz clic para más detalles</span>
+                </div>
+
+                <!-- Card 2: La Vida del Gaucho: ¿Romántica o Dura? -->
+                <div class="bg-gradient-to-br from-green-100 to-green-200 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="toggleCard('card2')">
+                    <i class="fas fa-horse text-6xl text-green-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-green-800 mb-2">La Vida del Gaucho: ¿Romántica o Dura?</h3>
+                    <p id="card2-short" class="text-gray-800 text-base">
+                        Olvidate del gaucho de las películas. La posta era que vivían libres, sí, ¡pero también sufrían un montón!
+                    </p>
+                    <p id="card2-full" class="text-gray-800 text-base hidden">
+                        La vida del gaucho era una mezcla de libertad en la inmensidad de la Pampa y de grandes sufrimientos: injusticias, pobreza, el peligro de la frontera, la constante amenaza de ser reclutado y la pérdida de su modo de vida tradicional.
+                    </p>
+                    <span class="text-sm text-green-600 mt-3">Haz clic para más detalles</span>
+                </div>
+
+                <!-- Card 3: La Leva: ¿Qué era y por qué era injusta? -->
+                <div class="bg-gradient-to-br from-red-100 to-red-200 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="toggleCard('card3')">
+                    <i class="fas fa-gavel text-6xl text-red-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-red-800 mb-2">La Leva: ¿Injusticia?</h3>
+                    <p id="card3-short" class="text-gray-800 text-base">
+                        Era el reclutamiento forzoso de gauchos para el ejército de frontera. ¡Una trampa para sacarlos de sus tierras!
+                    </p>
+                    <p id="card3-full" class="text-gray-800 text-base hidden">
+                        La leva era el reclutamiento obligatorio y arbitrario de gauchos para el ejército de frontera. Era una práctica injusta que los despojaba de sus bienes, los separaba de sus familias y los sometía a condiciones inhumanas en los fortines, sin paga ni reconocimiento.
+                    </p>
+                    <span class="text-sm text-red-600 mt-3">Haz clic para más detalles</span>
+                </div>
+
+                <!-- Card 4: La Amistad de Cruz -->
+                <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="toggleCard('card4')">
+                    <i class="fas fa-handshake text-6xl text-blue-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2">Cruz: El Amigo</h3>
+                    <p id="card4-short" class="text-gray-800 text-base">
+                        Un sargento que se une a Fierro. Su amistad es clave y muestra la solidaridad gaucha.
+                    </p>
+                    <p id="card4-full" class="text-gray-800 text-base hidden">
+                        Cruz es un personaje fundamental en la historia. Siendo un sargento, decide desertar y unirse a Fierro al ver la injusticia que este sufre. Su lealtad y solidaridad representan la fuerte unión que existía entre los gauchos frente a la adversidad.
+                    </p>
+                    <span class="text-sm text-blue-600 mt-3">Haz clic para más detalles</span>
+                </div>
+
+                <!-- Card 5: El Legado de Fierro -->
+                <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center cursor-pointer transform hover:scale-105 transition-transform duration-300" onclick="toggleCard('card5')">
+                    <i class="fas fa-feather-alt text-6xl text-purple-700 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-purple-800 mb-2">El Legado</h3>
+                    <p id="card5-short" class="text-gray-800 text-base">
+                        Más que una historia, es un símbolo de la identidad argentina y una denuncia de la injusticia.
+                    </p>
+                    <p id="card5-full" class="text-gray-800 text-base hidden">
+                        "El Martín Fierro" trascendió su tiempo para convertirse en un pilar de la identidad cultural argentina. Es una obra que denuncia la opresión, celebra la libertad y la solidaridad, y nos invita a reflexionar sobre la justicia y el rol del individuo en la sociedad.
+                    </p>
+                    <span class="text-sm text-purple-600 mt-3">Haz clic para más detalles</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: Infografía - El Mapa de la Aventura Gaucha -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-amber-600 mb-8 text-center">
+                <i class="fas fa-map-marked-alt text-green-700 mr-2"></i>El Mapa de la Aventura Gaucha: ¡Una Línea de Tiempo!
+            </h2>
+            <div class="flex flex-col items-center space-y-8">
+                <!-- Step 1: Vida Tranquila -->
+                <div class="bg-gradient-to-r from-teal-50 to-teal-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-home text-4xl text-teal-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-teal-800">1. Vida Tranquila en la Pampa (Ida)</h3>
+                        <p class="text-gray-700">Martín Fierro vive feliz con su familia, cantando y trabajando en su rancho. Es un gaucho libre.</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down text-3xl text-gray-500"></i>
+
+                <!-- Step 2: La Leva Forzosa -->
+                <div class="bg-gradient-to-r from-orange-50 to-orange-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-gavel text-4xl text-orange-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-800">2. La Leva y el Fortín (Ida)</h3>
+                        <p class="text-gray-700">Es reclutado a la fuerza para la frontera. Sufre abusos, maltratos y la pérdida de su libertad.</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down text-3xl text-gray-500"></i>
+
+                <!-- Step 3: El Regreso y la Tragedia -->
+                <div class="bg-gradient-to-r from-red-50 to-red-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-frown text-4xl text-red-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-red-800">3. El Regreso y la Tragedia (Ida)</h3>
+                        <p class="text-gray-700">Vuelve y encuentra su rancho destruido y su familia desaparecida. Se convierte en "matrero".</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down text-3xl text-gray-500"></i>
+
+                <!-- Step 4: El Encuentro con Cruz -->
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-users text-4xl text-blue-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-blue-800">4. La Amistad con Cruz (Ida)</h3>
+                        <p class="text-gray-700">En un enfrentamiento, Cruz lo ayuda y se unen. Deciden irse a vivir con los indios.</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down text-3xl text-gray-500"></i>
+
+                <!-- Step 5: La Vida con los Indios y el Regreso (Vuelta) -->
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-campground text-4xl text-purple-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-purple-800">5. Vida con Indios y el Regreso (Vuelta)</h3>
+                        <p class="text-gray-700">Tras la muerte de Cruz, Fierro decide volver a la civilización en busca de su familia.</p>
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down text-3xl text-gray-500"></i>
+
+                <!-- Step 6: Reencuentros y Consejos (Vuelta) -->
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-2xl shadow-md w-full md:w-3/4 lg:w-2/3 flex items-center space-x-4">
+                    <i class="fas fa-comments text-4xl text-green-600"></i>
+                    <div>
+                        <h3 class="text-xl font-bold text-green-800">6. Reencuentros y Consejos (Vuelta)</h3>
+                        <p class="text-gray-700">Se reencuentra con sus hijos y el de Cruz. Les da sabios consejos antes de separarse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3: Juego Educativo - El Camino de Fierro -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-8 text-center">
+                <i class="fas fa-dice text-amber-500 mr-2"></i>El Camino de Fierro: ¡Tus Decisiones Importan!
+            </h2>
+            <div class="game-container">
+                <p class="text-gray-700 text-lg mb-6" id="game-scenario">
+                    ¡Bienvenido al mundo de Martín Fierro! Prepárate para tomar decisiones que cambiarán tu destino como gaucho. ¿Estás listo?
+                </p>
+                <div id="game-choices" class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
+                    <!-- Choices will be rendered here by JavaScript -->
+                </div>
+                <button id="start-game-button" class="game-button mx-auto block">Comenzar Aventura</button>
+                <p class="text-gray-600 text-center mt-4 text-sm" id="game-feedback"></p>
+            </div>
+        </section>
+
+        <!-- Glosario Gaucho Flash -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-amber-600 mb-8 text-center">
+                <i class="fas fa-mortar-board text-green-700 mr-2"></i>Glosario Gaucho Flash
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Facón</h3>
+                    <p class="text-gray-700">Cuchillo grande y afilado, usado por los gauchos para defenderse y para tareas del campo.</p>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Pulpería</h3>
+                    <p class="text-gray-700">Antiguo almacén de campo, donde los gauchos se reunían a comprar, beber y socializar.</p>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Payada</h3>
+                    <p class="text-gray-700">Duelo de versos improvisados entre dos payadores, acompañados de guitarra. ¡Como un rap de la Pampa!</p>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Matrero</h3>
+                    <p class="text-gray-700">Gaucho que vive fuera de la ley, escondido en el campo, generalmente por haber cometido un delito o por huir de la justicia.</p>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Fortín</h3>
+                    <p class="text-gray-700">Pequeña fortificación militar en la frontera, donde los gauchos reclutados defendían el territorio.</p>
+                </div>
+                <div class="bg-gray-50 p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2"><i class="fas fa-hand-point-right text-amber-500 mr-2"></i>Pampa</h3>
+                    <p class="text-gray-700">Vasta llanura de Argentina, hogar del gaucho y escenario principal de la obra.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-600 mt-10 text-sm">
+            <p>&copy; 2025 Material Didáctico Interactivo. Basado en "El Martín Fierro" de José Hernández.</p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript for Flashcards
+        function toggleCard(cardId) {
+            const shortText = document.getElementById(cardId + '-short');
+            const fullText = document.getElementById(cardId + '-full');
+            if (fullText.classList.contains('hidden')) {
+                shortText.classList.add('hidden');
+                fullText.classList.remove('hidden');
+            } else {
+                shortText.classList.remove('hidden');
+                fullText.classList.add('hidden');
+            }
+        }
+
+        // JavaScript for the "Choose Your Own Adventure" Game
+        const gameScenarioElement = document.getElementById('game-scenario');
+        const gameChoicesElement = document.getElementById('game-choices');
+        const startGameButton = document.getElementById('start-game-button');
+        const gameFeedbackElement = document.getElementById('game-feedback');
+
+        let currentScenarioIndex = 0;
+
+        const scenarios = [
+            {
+                text: "Estás tranquilo en tu rancho, con tu familia y tus animales. De repente, llega el Juez de Paz con unos soldados para llevarte a la fuerza a la frontera. ¿Qué hacés?",
+                choices: [
+                    { text: "A) Te resistís con un facón, defendiendo tu libertad.", feedback: "¡Uf! Decidiste pelear. Fierro hizo algo similar, pero la fuerza era mayor. Esta decisión te lleva a ser un fugitivo.", nextScenario: 1 },
+                    { text: "B) Aceptás ir, pero protestando y dejando claro que es una injusticia.", feedback: "Elegiste ir, como Fierro al principio. Es una decisión dura, pero a veces es la única opción para sobrevivir.", nextScenario: 1 },
+                    { text: "C) Intentás esconderte o huir antes de que te vean.", feedback: "Intentaste escapar, pero en la Pampa, esconderse del poder era casi imposible. Te encuentran y te llevan de todas formas.", nextScenario: 1 }
+                ]
+            },
+            {
+                text: "Pasás años en la frontera, sufriendo abusos y sin paga. Cuando finalmente volvés a tu rancho, ¡está destruido y tu familia no está! Te sentís solo y traicionado. ¿Cuál es tu reacción?",
+                choices: [
+                    { text: "A) Buscás venganza contra los que te hicieron daño.", feedback: "La sed de venganza es fuerte. Fierro también sintió esa rabia y se convirtió en un 'gaucho matrero'.", nextScenario: 2 },
+                    { text: "B) Te lamentás y te resignás a tu triste destino.", feedback: "La resignación puede ser un camino, pero Fierro era un luchador. Su dolor lo impulsó a actuar.", nextScenario: 2 },
+                    { text: "C) Decidís irte lejos, buscando un nuevo comienzo en soledad.", feedback: "Escapar de todo es una opción, pero Fierro encontró compañía en su camino. A veces, la soledad es más dura.", nextScenario: 2 }
+                ]
+            },
+            {
+                text: "Ahora sos un gaucho matrero, perseguido por la ley. Una noche, te enfrentás a una partida de soldados, pero uno de ellos, Cruz, decide ayudarte porque se siente identificado con tu sufrimiento. ¿Qué hacés?",
+                choices: [
+                    { text: "A) Desconfiás de Cruz y seguís tu camino solo.", feedback: "La desconfianza es natural para un fugitivo, pero Fierro encontró en Cruz una amistad incondicional.", nextScenario: 3 },
+                    { text: "B) Aceptás su ayuda y se hacen amigos inseparables.", feedback: "¡Excelente elección! Como Fierro, encontraste un compañero leal. La amistad de Cruz es clave en la obra.", nextScenario: 3 },
+                    { text: "C) Le pedís a Cruz que te ayude a vengarte de tus enemigos.", feedback: "Cruz te apoya, pero su amistad se basa en la solidaridad, no solo en la venganza. Juntos, buscan un nuevo camino.", nextScenario: 3 }
+                ]
+            },
+            {
+                text: "Junto a Cruz, decidís cruzar la frontera y vivir con los indígenas, buscando la libertad que el 'mundo civilizado' les negó. ¿Creés que esta es la verdadera libertad para el gaucho?",
+                choices: [
+                    { text: "A) Sí, la libertad está fuera del sistema, lejos de las injusticias.", feedback: "Muchos gauchos buscaron refugio y libertad lejos de la sociedad. Es una visión de la autonomía.", nextScenario: -1 }, // -1 indicates end of game
+                    { text: "B) No, la verdadera libertad debería ser posible dentro de la sociedad, con justicia.", feedback: "Es una postura idealista pero justa. La obra critica que esa libertad no existía para el gaucho.", nextScenario: -1 },
+                    { text: "C) La libertad es una ilusión, siempre habrá algo que nos oprima.", feedback: "Una visión más pesimista. La obra muestra que la lucha por la libertad es constante, aunque a veces parezca inalcanzable.", nextScenario: -1 }
+                ]
+            }
+        ];
+
+        function startGame() {
+            currentScenarioIndex = 0;
+            displayScenario();
+            startGameButton.classList.add('hidden');
+            gameFeedbackElement.textContent = '';
+        }
+
+        function displayScenario() {
+            if (currentScenarioIndex < scenarios.length) {
+                const scenario = scenarios[currentScenarioIndex];
+                gameScenarioElement.textContent = scenario.text;
+                gameChoicesElement.innerHTML = ''; // Clear previous choices
+
+                scenario.choices.forEach((choice, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = choice.text;
+                    button.classList.add('game-button', 'w-full', 'sm:w-auto');
+                    button.onclick = () => makeChoice(index);
+                    gameChoicesElement.appendChild(button);
+                });
+            } else {
+                gameScenarioElement.textContent = "¡Fin de la Aventura! Gracias por explorar el camino de Martín Fierro. ¡Esperamos que hayas aprendido mucho!";
+                gameChoicesElement.innerHTML = '';
+                startGameButton.textContent = "Volver a Jugar";
+                startGameButton.classList.remove('hidden');
+            }
+        }
+
+        function makeChoice(choiceIndex) {
+            const scenario = scenarios[currentScenarioIndex];
+            const chosenOption = scenario.choices[choiceIndex];
+            gameFeedbackElement.textContent = chosenOption.feedback;
+
+            // Move to the next scenario or end the game
+            if (chosenOption.nextScenario !== -1) {
+                currentScenarioIndex = chosenOption.nextScenario;
+                // Add a small delay for feedback to be read before next scenario
+                setTimeout(displayScenario, 2000);
+            } else {
+                // End of game
+                gameChoicesElement.innerHTML = '';
+                startGameButton.textContent = "Volver a Jugar";
+                startGameButton.classList.remove('hidden');
+            }
+        }
+
+        startGameButton.addEventListener('click', startGame);
+
+        // Initial display of the game intro
+        displayScenario(); // This will show the initial "¡Bienvenido al mundo de Martín Fierro!" text
+
+
+        // --- Gemini API Integration ---
+
+        // Ask the Expert Feature
+        const askExpertButton = document.getElementById('ask-expert-button');
+        const expertQuestionInput = document.getElementById('expert-question');
+        const expertResponseDiv = document.getElementById('expert-response');
+        const expertLoadingSpinner = document.getElementById('expert-loading-spinner');
+
+        askExpertButton.addEventListener('click', async () => {
+            const question = expertQuestionInput.value.trim();
+            if (!question) {
+                expertResponseDiv.textContent = 'Por favor, escribe una pregunta.';
+                expertResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            expertLoadingSpinner.classList.remove('hidden');
+            expertResponseDiv.classList.add('hidden');
+            expertResponseDiv.textContent = ''; // Clear previous response
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: `Actúa como un experto en la obra "El Martín Fierro" de José Hernández y en el contexto histórico y cultural del gaucho argentino en el siglo XIX. Responde a la siguiente pregunta de un estudiante de secundaria de Buenos Aires de forma clara, concisa, educativa y adecuada para su nivel, sin usar lenguaje técnico excesivo. Si la pregunta es muy amplia, enfócate en los puntos clave. Pregunta: "${question}"` }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will automatically provide the API key at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    expertResponseDiv.textContent = text;
+                } else {
+                    expertResponseDiv.textContent = 'Lo siento, no pude generar una respuesta. Intenta con otra pregunta.';
+                }
+            } catch (error) {
+                console.error('Error al llamar a la API de Gemini:', error);
+                expertResponseDiv.textContent = 'Hubo un error al procesar tu pregunta. Por favor, inténtalo de nuevo más tarde.';
+            } finally {
+                expertLoadingSpinner.classList.add('hidden');
+                expertResponseDiv.classList.remove('hidden');
+            }
+        });
+
+        // Generate Modern Payada Feature
+        const generatePayadaButton = document.getElementById('generate-payada-button');
+        const payadaThemeInput = document.getElementById('payada-theme');
+        const payadaResponseDiv = document.getElementById('payada-response');
+        const payadaLoadingSpinner = document.getElementById('payada-loading-spinner');
+
+        generatePayadaButton.addEventListener('click', async () => {
+            const theme = payadaThemeInput.value.trim();
+            if (!theme) {
+                payadaResponseDiv.textContent = 'Por favor, ingresa un tema para tu payada.';
+                payadaResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            payadaLoadingSpinner.classList.remove('hidden');
+            payadaResponseDiv.classList.add('hidden');
+            payadaResponseDiv.textContent = ''; // Clear previous response
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: `Genera una payada corta (4 a 8 versos) en español, con rima y ritmo, inspirada en el estilo del Martín Fierro pero con un lenguaje moderno y un toque de humor o reflexión. El tema central debe ser: "${theme}". Asegúrate de que tenga un aire gauchesco pero que sea entendible para adolescentes de hoy.` }] });
+
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will automatically provide the API key at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    payadaResponseDiv.textContent = text;
+                } else {
+                    payadaResponseDiv.textContent = 'No pude crear una payada con ese tema. ¿Probamos con otro?';
+                }
+            } catch (error) {
+                console.error('Error al llamar a la API de Gemini:', error);
+                payadaResponseDiv.textContent = 'Hubo un error al generar la payada. Por favor, inténtalo de nuevo más tarde.';
+            } finally {
+                payadaLoadingSpinner.classList.add('hidden');
+                payadaResponseDiv.classList.remove('hidden');
+            }
+        });
+
+        // --- Rosco Game Logic ---
+        const roscoCircle = document.getElementById('rosco-circle');
+        const currentLetterDisplay = document.getElementById('current-letter-display');
+        const currentQuestionDisplay = document.getElementById('current-question');
+        const answerInput = document.getElementById('answer-input');
+        const checkAnswerButton = document.getElementById('check-answer-button');
+        const passButton = document.getElementById('pass-button');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const startRoscoButton = document.getElementById('start-rosco-button'); // Changed ID
+        const resetRoscoButton = document.getElementById('reset-rosco-button'); // Changed ID
+        const correctAnswersDisplay = document.getElementById('correct-answers');
+        const totalLettersDisplay = document.getElementById('total-letters');
+        const timerDisplay = document.getElementById('timer');
+
+        let roscoQuestions = {}; // Renamed to avoid conflict
+        let roscoLettersState = {}; // Renamed
+        let roscoCurrentLetter = null; // Renamed
+        let roscoCorrectCount = 0; // Renamed
+        let roscoTotalTime = 120; // 2 minutes in seconds
+        let roscoTimeLeft = roscoTotalTime; // Renamed
+        let roscoTimerInterval; // Renamed
+        let roscoGameStarted = false; // Renamed
+
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+        // Define questions for each letter
+        const allRoscoQuestions = {
+            A: { question: "Empieza por A: Apellido del autor de 'El Martín Fierro'.", answer: "HERNANDEZ" },
+            B: { question: "Contiene la B: Concepto que Sarmiento oponía a la civilización, y que se asocia al gaucho.", answer: "BARBARIE" },
+            C: { question: "Empieza por C: Fiel compañero de Fierro, que se une a él en su huida.", answer: "CRUZ" },
+            D: { question: "Empieza por D: El objetivo principal de la obra, al mostrar las injusticias sufridas por el gaucho.", answer: "DENUNCIA" },
+            E: { question: "Empieza por E: Género literario al que pertenece 'El Martín Fierro', por su carácter heroico y extenso.", answer: "EPOPEYA" },
+            F: { question: "Empieza por F: Cuchillo grande y afilado que usaban los gauchos.", answer: "FACON" },
+            G: { question: "Empieza por G: El protagonista de la obra, un hombre de campo.", answer: "GAUCHO" },
+            H: { question: "Empieza por H: Nombre de pila del autor de la obra.", answer: "JOSE" },
+            I: { question: "Empieza por I: Tema recurrente en la vida de Fierro, al ser despojado de sus derechos y bienes.", answer: "INJUSTICIA" },
+            J: { question: "Empieza por J: Autoridad que recluta a Fierro a la fuerza para ir a la frontera.", answer: "JUEZ" },
+            L: { question: "Empieza por L: El reclutamiento forzoso de gauchos para el ejército.", answer: "LEVA" },
+            M: { question: "Empieza por M: Condición de Fierro al vivir fuera de la ley, escondido en el campo.", answer: "MATRERO" },
+            N: { question: "Empieza por N: La formación de la Argentina como tal, contexto histórico de la obra.", answer: "NACION" },
+            O: { question: "Empieza por O: Lo que sufre el gaucho por parte de las autoridades y el sistema.", answer: "OPRESION" },
+            P: { question: "Empieza por P: Duelo de versos improvisados y cantados entre dos gauchos.", answer: "PAYADA" },
+            Q: { question: "Contiene la Q: Adjetivo que describe la vida de Fierro antes de la leva, cuando vivía en paz.", answer: "TRANQUILA" },
+            R: { question: "Empieza por R: El hogar de Fierro, que encuentra destruido al regresar del fortín.", answer: "RANCHO" },
+            S: { question: "Empieza por S: Sentimiento que acompaña a Fierro tras perder a su familia y su libertad.", answer: "SOLEDAD" },
+            T: { question: "Empieza por T: Las costumbres y modos de vida propios del gaucho, que la obra busca preservar.", answer: "TRADICION" },
+            U: { question: "Empieza por U: El consejo final que Fierro da a sus hijos, fundamental para la supervivencia.", answer: "UNION" },
+            V: { question: "Empieza por V: El viejo gaucho cínico que da consejos a los hijos de Fierro.", answer: "VIZCACHA" },
+            X: { question: "Contiene la X: Expresión de sorpresa o dolor que Fierro usa a menudo.", answer: "AY" },
+            Y: { question: "Contiene la Y: El nombre del autor de la obra, que comienza con esta letra.", answer: "JOSE" },
+            Z: { question: "Contiene la Z: Animal astuto y salvaje, a veces asociado con la picardía o la supervivencia en el campo.", answer: "ZORRO" }
+        };
+
+        function initializeRoscoGame() {
+            roscoCircle.innerHTML = '';
+            roscoQuestions = {};
+            roscoLettersState = {};
+            roscoCorrectCount = 0;
+            roscoTimeLeft = roscoTotalTime;
+            roscoCurrentLetter = null;
+            roscoGameStarted = false;
+
+            correctAnswersDisplay.textContent = roscoCorrectCount;
+            totalLettersDisplay.textContent = Object.keys(allRoscoQuestions).length;
+            updateRoscoTimerDisplay();
+            feedbackMessage.classList.add('hidden');
+            answerInput.value = '';
+            answerInput.disabled = true;
+            checkAnswerButton.disabled = true;
+            passButton.disabled = true;
+            currentQuestionDisplay.textContent = 'Haz clic en una letra del rosco para ver la pregunta.';
+            currentLetterDisplay.textContent = 'Selecciona una letra para empezar...';
+
+            const availableLetters = Object.keys(allRoscoQuestions);
+            const angleStep = (2 * Math.PI) / availableLetters.length;
+            const radius = roscoCircle.offsetWidth / 2.5; // Adjust radius based on circle size
+
+            availableLetters.forEach((letter, index) => {
+                roscoQuestions[letter] = allRoscoQuestions[letter];
+                roscoLettersState[letter] = 'unanswered';
+
+                const letterButton = document.createElement('div');
+                letterButton.classList.add('letter-button');
+                letterButton.textContent = letter;
+                letterButton.id = `letter-${letter}`;
+                letterButton.onclick = () => selectRoscoLetter(letter);
+
+                const angle = index * angleStep;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+
+                letterButton.style.left = `calc(50% + ${x}px - 22.5px)`;
+                letterButton.style.top = `calc(50% + ${y}px - 22.5px)`;
+
+                roscoCircle.appendChild(letterButton);
+            });
+
+            startRoscoButton.classList.remove('hidden');
+            resetRoscoButton.classList.add('hidden');
+        }
+
+        function startRoscoGame() {
+            roscoGameStarted = true;
+            startRoscoButton.classList.add('hidden');
+            resetRoscoButton.classList.remove('hidden');
+            answerInput.disabled = false;
+            checkAnswerButton.disabled = false;
+            passButton.disabled = false;
+            startRoscoTimer();
+            const firstLetter = Object.keys(roscoQuestions)[0];
+            if (firstLetter) {
+                selectRoscoLetter(firstLetter);
+            }
+        }
+
+        function selectRoscoLetter(letter) {
+            if (!roscoGameStarted || roscoLettersState[letter] !== 'unanswered' && roscoLettersState[letter] !== 'passed') {
+                return;
+            }
+
+            if (roscoCurrentLetter) {
+                document.getElementById(`letter-${roscoCurrentLetter}`).classList.remove('active');
+            }
+
+            roscoCurrentLetter = letter;
+            document.getElementById(`letter-${roscoCurrentLetter}`).classList.add('active');
+            currentLetterDisplay.textContent = `Empieza por ${letter}:`;
+            currentQuestionDisplay.textContent = roscoQuestions[letter].question;
+            answerInput.value = '';
+            feedbackMessage.classList.add('hidden');
+        }
+
+        function checkRoscoAnswer() {
+            if (!roscoCurrentLetter || !roscoGameStarted) return;
+
+            const userAnswer = answerInput.value.trim().toUpperCase();
+            const correctAnswer = roscoQuestions[roscoCurrentLetter].answer.toUpperCase();
+            const letterButton = document.getElementById(`letter-${roscoCurrentLetter}`);
+
+            feedbackMessage.classList.remove('hidden', 'feedback-correct', 'feedback-incorrect');
+
+            if (userAnswer === correctAnswer) {
+                roscoLettersState[roscoCurrentLetter] = 'correct';
+                letterButton.classList.add('answered-correct');
+                feedbackMessage.textContent = '¡Correcto!';
+                feedbackMessage.classList.add('feedback-correct');
+                roscoCorrectCount++;
+                correctAnswersDisplay.textContent = roscoCorrectCount;
+            } else {
+                roscoLettersState[roscoCurrentLetter] = 'incorrect';
+                letterButton.classList.add('answered-incorrect');
+                feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: ${roscoQuestions[roscoCurrentLetter].answer}.`;
+                feedbackMessage.classList.add('feedback-incorrect');
+            }
+
+            moveToNextRoscoLetter();
+        }
+
+        function passRoscoQuestion() {
+            if (!roscoCurrentLetter || !roscoGameStarted) return;
+
+            if (roscoLettersState[roscoCurrentLetter] === 'unanswered') {
+                roscoLettersState[roscoCurrentLetter] = 'passed';
+            }
+            moveToNextRoscoLetter();
+        }
+
+        function moveToNextRoscoLetter() {
+            const currentLetterIndex = alphabet.indexOf(roscoCurrentLetter);
+            let nextLetter = null;
+
+            for (let i = 1; i <= alphabet.length; i++) {
+                const nextIndex = (currentLetterIndex + i) % alphabet.length;
+                const letter = alphabet[nextIndex];
+                if (roscoQuestions[letter] && (roscoLettersState[letter] === 'unanswered' || roscoLettersState[letter] === 'passed')) {
+                    nextLetter = letter;
+                    break;
+                }
+            }
+
+            if (nextLetter) {
+                selectRoscoLetter(nextLetter);
+            } else {
+                endRoscoGame();
+            }
+        }
+
+        function startRoscoTimer() {
+            roscoTimerInterval = setInterval(() => {
+                roscoTimeLeft--;
+                updateRoscoTimerDisplay();
+                if (roscoTimeLeft <= 0) {
+                    clearInterval(roscoTimerInterval);
+                    endRoscoGame();
+                }
+            }, 1000);
+        }
+
+        function updateRoscoTimerDisplay() {
+            const minutes = Math.floor(roscoTimeLeft / 60);
+            const seconds = roscoTimeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function endRoscoGame() {
+            roscoGameStarted = false;
+            clearInterval(roscoTimerInterval);
+            answerInput.disabled = true;
+            checkAnswerButton.disabled = true;
+            passButton.disabled = true;
+
+            let finalMessage = `¡Juego Terminado! Conseguiste ${roscoCorrectCount} aciertos de ${Object.keys(roscoQuestions).length}.`;
+            if (roscoCorrectCount === Object.keys(roscoQuestions).length) {
+                finalMessage = `¡Felicidades! ¡Has completado el Rosco de Martín Fierro con ${roscoCorrectCount} aciertos! ¡Sos un verdadero experto gaucho!`;
+            } else if (roscoTimeLeft <= 0) {
+                finalMessage += " ¡Se acabó el tiempo!";
+            } else {
+                finalMessage += " ¡Inténtalo de nuevo para mejorar tu puntaje!";
+            }
+
+            currentQuestionDisplay.textContent = finalMessage;
+            currentLetterDisplay.textContent = 'Fin del juego';
+            if (roscoCurrentLetter) {
+                document.getElementById(`letter-${roscoCurrentLetter}`).classList.remove('active');
+            }
+            resetRoscoButton.classList.remove('hidden');
+        }
+
+        // Rosco Event Listeners
+        startRoscoButton.addEventListener('click', startRoscoGame);
+        checkAnswerButton.addEventListener('click', checkRoscoAnswer);
+        passButton.addEventListener('click', passRoscoQuestion);
+        resetRoscoButton.addEventListener('click', initializeRoscoGame);
+        answerInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkRoscoAnswer();
+            }
+        });
+
+        // Initialize the Rosco game on page load
+        initializeRoscoGame();
+    </script>
+</body>
+</html>
