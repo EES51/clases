@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Barril de Amontillado: Infografía y Juego</title>
+    <title>El Barril de Amontillado: Infografía y Crucigrama</title>
+    <!-- Tailwind CSS CDN para un estilo moderno y responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Creepster&display=swap" rel="stylesheet">
     <style>
@@ -50,57 +51,115 @@
         .icon {
             font-size: 1.5rem; /* Tamaño de los iconos emoji */
         }
-        .tweet-card {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            margin-top: 1rem;
-            display: flex;
-            align-items: flex-start;
+
+        /* Estilos para el Crucigrama */
+        #crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 35px); /* Ajusta el tamaño de las celdas */
+            grid-template-rows: repeat(12, 35px);
+            gap: 1px;
+            background-color: #444;
+            border: 2px solid #555;
+            margin: 2rem auto;
+            max-width: fit-content;
         }
-        .tweet-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 9999px; /* Círculo perfecto */
-            background-color: #555;
+        .crossword-cell {
+            width: 35px;
+            height: 35px;
+            background-color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.2rem;
+            font-weight: bold;
             color: #eee;
-            margin-right: 0.75rem;
+            border: 1px solid #555;
+            position: relative;
         }
-        .tweet-content {
-            flex-grow: 1;
-        }
-        .tweet-username {
-            font-weight: 600;
+        .crossword-cell input {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            background-color: #555;
+            border: none;
             color: #eee;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            outline: none;
+            caret-color: transparent; /* Oculta el cursor de texto */
         }
-        .tweet-handle {
-            color: #999;
-            font-size: 0.875rem;
+        .crossword-cell input:focus {
+            background-color: #666;
+            box-shadow: 0 0 0 2px #888;
         }
-        .tweet-text {
-            margin-top: 0.5rem;
+        .crossword-cell.empty {
+            background-color: #1a1a1a;
+            border: 1px solid #1a1a1a;
+        }
+        .clue-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.7rem;
             color: #ccc;
+            font-weight: normal;
+        }
+        .clues-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .clues-list {
+            background-color: #2c2c2c;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            flex: 1 1 45%; /* Permite que se organicen en dos columnas */
+            min-width: 280px;
+        }
+        .clues-list h4 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #a78bfa; /* Morado claro */
+            margin-bottom: 1rem;
+        }
+        .clues-list ol {
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .clues-list li {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+        .correct-word input {
+            background-color: #22c55e !important; /* Verde para respuestas correctas */
+            color: #fff !important;
+        }
+        .incorrect-word input {
+            background-color: #ef4444 !important; /* Rojo para respuestas incorrectas */
+            color: #fff !important;
         }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
     <div class="container">
+        <!-- Encabezado Principal -->
         <header class="text-center py-8">
             <h1 class="text-5xl md:text-6xl font-creepy text-red-600 mb-4 animate-pulse">El Barril de Amontillado</h1>
             <p class="text-xl md:text-2xl text-gray-300">Recursos Dinámicos para el Aula de Lengua y Literatura</p>
             <p class="mt-4 text-gray-400">¡Prepárense para desentrañar el misterio de Edgar Allan Poe como nunca antes!</p>
         </header>
 
+        <!-- Sección de Resúmenes Visuales: La "Story" del Amontillado -->
         <section class="mb-12">
             <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">1. La "Story" del Amontillado</h2>
             <p class="text-lg text-gray-300 mb-8 text-center">Imaginemos la historia como una serie de "Stories" de Instagram o TikTok. Cada una, un momento clave con un diseño que ¡salta a la vista!</p>
 
+            <!-- Tarjeta de cada "Story" -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Story 1: La Chispa de la Venganza -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-red-500 mb-2 flex items-center"><span class="icon mr-2">💥</span> La Chispa de la Venganza</h3>
                     <p class="text-gray-300">Montresor ya no aguanta más las "mil injurias" de Fortunato. Pero hay una en particular que lo quiebra. ¿Cuál fue? La historia no lo dice, ¡pero la venganza ya es un hecho!</p>
@@ -110,6 +169,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 💀 o 🗡️</p>
                 </div>
 
+                <!-- Story 2: El Plan Perfecto: Impunidad y Sutilidad -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-blue-400 mb-2 flex items-center"><span class="icon mr-2">🤫</span> El Plan Perfecto: Impunidad y Sutilidad</h3>
                     <p class="text-gray-300">Montresor no solo quiere castigar, ¡quiere castigar *sin que nadie lo descubra*! Y lo más retorcido: Fortunato no tiene *ni idea* de que Montresor le guarda rencor. ¡Montresor sigue sonriendo en su cara!</p>
@@ -119,6 +179,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🎭 o ⚙️</p>
                 </div>
 
+                <!-- Story 3: El Carnaval: La Trampa Disfrazada -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-green-400 mb-2 flex items-center"><span class="icon mr-2">🎉</span> El Carnaval: La Trampa Disfrazada</h3>
                     <p class="text-gray-300">En pleno Carnaval (¡la fiesta del desenfreno y las máscaras!), Montresor encuentra a Fortunato, borracho y disfrazado de payaso. La excusa perfecta: "¡Recibí un barril de *amontillado* y tengo dudas!"</p>
@@ -128,6 +189,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🍷 o 🥳</p>
                 </div>
 
+                <!-- Story 4: Fortunato: El Vino y el Ego -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-purple-400 mb-2 flex items-center"><span class="icon mr-2">👑</span> Fortunato: El Vino y el Ego</h3>
                     <p class="text-gray-300">Fortunato es un conocedor de vinos (o eso cree). Montresor lo sabe y usa esa "pasión" como cebo. ¿Mencionar a Luchesi? ¡La competencia despierta su orgullo!</p>
@@ -137,6 +199,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🍇 o 👑</p>
                 </div>
 
+                <!-- Story 5: Bajo Tierra: Las Catacumbas -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-gray-400 mb-2 flex items-center"><span class="icon mr-2">⬇️</span> Bajo Tierra: Las Catacumbas</h3>
                     <p class="text-gray-300">Fortunato, con su disfraz de payaso y sus cascabeles, sigue a Montresor hasta las catacumbas de su familia. ¡Qué frío, qué humedad, qué salitre! Pero el "amontillado" es más fuerte que el resfrío.</p>
@@ -146,6 +209,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🪜 o ⚰️</p>
                 </div>
 
+                <!-- Story 6: La Última Copa: El Medoc y el Secreto Masón -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-orange-400 mb-2 flex items-center"><span class="icon mr-2">🥂</span> La Última Copa: El Medoc y el Secreto Masón</h3>
                     <p class="text-gray-300">Montresor le da vino (medoc y De Grave) para la tos y para seguir "lubricando" la trampa. Fortunato, cada vez más ebrio, hace un gesto masón... y Montresor responde con una paleta de albañil. ¡La ironía!</p>
@@ -155,6 +219,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🍾 o 🧱</p>
                 </div>
 
+                <!-- Story 7: El Nicho Final: No Hay Salida -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-red-600 mb-2 flex items-center"><span class="icon mr-2">⛓️</span> El Nicho Final: No Hay Salida</h3>
                     <p class="text-gray-300">Llegan a un nicho escondido. "¡Aquí está el amontillado!" Y en un instante, ¡Fortunato está encadenado! Montresor saca su paleta y empieza a levantar una pared de ladrillos y mortero. ¡El pánico se apodera de Fortunato!</p>
@@ -164,6 +229,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🔗 o 🚧</p>
                 </div>
 
+                <!-- Story 8: Los Gritos y el Silencio -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-pink-400 mb-2 flex items-center"><span class="icon mr-2">😱</span> Los Gritos y el Silencio</h3>
                     <p class="text-gray-300">Fortunato grita, sacude las cadenas, y Montresor lo imita, ¡se burla de su desesperación! La risa se convierte en un suspiro. Luego, el silencio. ¡Solo los cascabeles suenan por última vez!</p>
@@ -173,6 +239,7 @@
                     <p class="text-center text-gray-400 mt-2">Icono: 🗣️ o 🔇</p>
                 </div>
 
+                <!-- Story 9: El Legado del Crimen -->
                 <div class="card">
                     <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="icon mr-2">⏳</span> El Legado del Crimen</h3>
                     <p class="text-gray-300">La pared está completa. Montresor termina su "obra" y deja los huesos de los Montresor cubriendo el lugar. Nadie ha tocado esa pared en medio siglo. "¡In pace requiescat!" (¡Que descanse en paz!)</p>
@@ -184,6 +251,7 @@
             </div>
         </section>
 
+        <!-- Sección de Infografía Interactiva: El Mapa Mental de la Venganza -->
         <section class="mb-12">
             <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">2. Infografía Interactiva: El Mapa Mental de la Venganza</h2>
             <p class="text-lg text-gray-300 mb-8 text-center">Explora la mente de Montresor y el desarrollo de su plan en este mapa conceptual interactivo.</p>
@@ -279,47 +347,34 @@
             </div>
         </section>
 
+        <!-- Sección de Crucigrama -->
         <section class="mb-12">
-            <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">3. Actividades Dinámicas y Juegos</h2>
-            <p class="text-lg text-gray-300 mb-8 text-center">¡Es hora de poner a prueba su creatividad y comprensión del relato!</p>
+            <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">3. Actividad: Crucigrama del Amontillado</h2>
+            <p class="text-lg text-gray-300 mb-8 text-center">¡Pon a prueba tu conocimiento del cuento resolviendo este misterioso crucigrama!</p>
 
-            <div class="card mb-8">
-                <h3 class="text-3xl font-bold text-purple-400 mb-4 flex items-center"><span class="icon mr-2">🎧</span> Actividad 1: "El Podcast de la Venganza"</h3>
-                <p class="text-gray-300 mb-4">En grupos, conviértanse en "podcasters" del misterio. Creen un mini-podcast (de 3 a 5 minutos) que narre un fragmento clave de la historia desde la perspectiva de Montresor, Fortunato, o un "testigo" imaginario (¡como un esqueleto de las catacumbas!).</p>
-                <p class="text-gray-300 mb-4">**¡El toque musical/sonoro!** Incluyan efectos de sonido (cascabeles, tos, goteo de agua, gritos, el ruido de la cadena, los ladrillos al ser colocados) y música de fondo que cree esa atmósfera de terror y misterio. Pueden buscar sonidos libres de derechos o usar sus propias ideas.</p>
-                <p class="text-gray-300 mb-4">**Sugerencia:** Podemos iniciar la actividad con un fragmento del audiolibro del cuento para sumergirlos en la atmósfera. (Busquen "El Barril de Amontillado audiolibro" en YouTube).</p>
-                <h4 class="text-xl font-semibold text-gray-200 mt-4 mb-2">Preguntas Guía para el Podcast:</h4>
-                <ul class="list-disc list-inside text-gray-300">
-                    <li>¿Qué sonidos son *esenciales* para que la gente sienta la tensión?</li>
-                    <li>¿Qué tipo de música de fondo elegirían y por qué? (¿Suspense, dramática, silenciosa?)</li>
-                    <li>¿Cómo harían para que la voz de Montresor suene fría y calculadora, y la de Fortunato, asustada o desesperada?</li>
-                </ul>
-                <p class="text-gray-400 mt-4">**Herramientas sugeridas:** Aplicaciones gratuitas de grabación y edición de audio en celulares (ej. Audacity en PC, o grabadoras de voz nativas).</p>
-            </div>
-
-            <div class="card">
-                <h3 class="text-3xl font-bold text-blue-400 mb-4 flex items-center"><span class="icon mr-2">📱</span> Actividad 2: "Los Tweets de Montresor" (¡Juego!)</h3>
-                <p class="text-gray-300 mb-4">Conviértanse en el "community manager" de Montresor. Escriban un tweet que él podría haber publicado antes, durante o después del crimen. ¡Usen hashtags y emojis!</p>
-
-                <div class="mb-4">
-                    <label for="tweetInput" class="block text-gray-300 text-lg font-semibold mb-2">Tu Tweet de Montresor:</label>
-                    <textarea id="tweetInput" class="w-full p-3 rounded-md bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Escribe aquí el tweet de Montresor... #VenganzaPerfecta"></textarea>
-                    <p id="charCount" class="text-sm text-gray-400 text-right mt-1">0/280 caracteres</p>
+            <div class="flex flex-col lg:flex-row gap-8 justify-center items-start">
+                <div id="crossword-grid" class="flex-shrink-0">
+                    <!-- El crucigrama se genera aquí con JavaScript -->
                 </div>
-                <button id="postTweetBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                    Publicar Tweet
-                </button>
 
-                <div id="tweetsContainer" class="mt-6">
-                    <h4 class="text-2xl font-semibold text-yellow-300 mb-4">Tweets Publicados:</h4>
-                    <div class="tweet-card">
-                        <div class="tweet-avatar">M</div>
-                        <div class="tweet-content">
-                            <span class="tweet-username">Montresor</span> <span class="tweet-handle">@ElMaestroVengador</span>
-                            <p class="tweet-text">Carnaval, la excusa ideal. Fortunato cayó como una pera madura con la palabra 'Amontillado'. 😏 Su debilidad es mi fuerza. #CazandoAlCatador #FortunatoCaera</p>
-                        </div>
+                <div class="clues-section flex-grow">
+                    <div class="clues-list">
+                        <h4>Horizontales</h4>
+                        <ol id="clues-across"></ol>
+                    </div>
+                    <div class="clues-list">
+                        <h4>Verticales</h4>
+                        <ol id="clues-down"></ol>
                     </div>
                 </div>
+            </div>
+            <div class="text-center mt-8">
+                <button id="checkCrosswordBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mr-4">
+                    Comprobar
+                </button>
+                <button id="resetCrosswordBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    Reiniciar
+                </button>
             </div>
         </section>
     </div>
@@ -348,66 +403,157 @@
             }
         }
 
-        // JavaScript para el juego "Los Tweets de Montresor"
-        const tweetInput = document.getElementById('tweetInput');
-        const charCount = document.getElementById('charCount');
-        const postTweetBtn = document.getElementById('postTweetBtn');
-        const tweetsContainer = document.getElementById('tweetsContainer');
-        const MAX_CHARS = 280;
+        // --- Lógica del Crucigrama ---
+        const crosswordData = [
+            { id: 1, word: "MONTRESOR", clue: "El narrador y vengador de la historia.", direction: "across", start_x: 0, start_y: 1 },
+            { id: 2, word: "FORTUNATO", clue: "La víctima, un supuesto experto en vinos.", direction: "down", start_x: 1, start_y: 0 },
+            { id: 3, word: "AMONTILLADO", clue: "El tipo de vino que sirve de cebo.", direction: "across", start_x: 2, start_y: 3 },
+            { id: 4, word: "CARNAVAL", clue: "La festividad donde Montresor encuentra a Fortunato.", direction: "down", start_x: 4, start_y: 2 },
+            { id: 5, word: "CATACUMBAS", clue: "El oscuro lugar donde se desarrolla el crimen.", direction: "across", start_x: 5, start_y: 5 },
+            { id: 6, word: "SALITRE", clue: "Sustancia que cubre las paredes de las catacumbas.", direction: "down", start_x: 6, start_y: 4 },
+            { id: 7, word: "PAYASO", clue: "El disfraz que lleva Fortunato.", direction: "across", start_x: 7, start_y: 7 },
+            { id: 8, word: "VENGANZA", clue: "El motivo principal de Montresor.", direction: "down", start_x: 8, start_y: 6 },
+            { id: 9, word: "PALETA", clue: "La herramienta de albañil que Montresor usa para el muro.", direction: "across", start_x: 9, start_y: 9 },
+            { id: 10, word: "LUCHESI", clue: "El rival de Fortunato, también catador de vinos.", direction: "down", start_x: 10, start_y: 8 }
+        ];
 
-        // Actualizar contador de caracteres
-        tweetInput.addEventListener('input', () => {
-            const currentLength = tweetInput.value.length;
-            charCount.textContent = `${currentLength}/${MAX_CHARS} caracteres`;
-            if (currentLength > MAX_CHARS) {
-                charCount.classList.add('text-red-500');
-                postTweetBtn.disabled = true;
-                postTweetBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                charCount.classList.remove('text-red-500');
-                postTweetBtn.disabled = false;
-                postTweetBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        const GRID_SIZE = 12; // Cuadrícula de 12x12
+        const crosswordGridElement = document.getElementById('crossword-grid');
+        const cluesAcrossElement = document.getElementById('clues-across');
+        const cluesDownElement = document.getElementById('clues-down');
+        const checkCrosswordBtn = document.getElementById('checkCrosswordBtn');
+        const resetCrosswordBtn = document.getElementById('resetCrosswordBtn');
+
+        let grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+
+        function generateCrosswordGrid() {
+            crosswordGridElement.innerHTML = ''; // Limpiar la cuadrícula existente
+            grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null)); // Resetear la matriz
+
+            // Crear celdas vacías
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('crossword-cell', 'empty');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    crosswordGridElement.appendChild(cell);
+                }
             }
-        });
 
-        // Publicar tweet
-        postTweetBtn.addEventListener('click', () => {
-            const tweetText = tweetInput.value.trim();
-            if (tweetText.length > 0 && tweetText.length <= MAX_CHARS) {
-                const newTweetCard = document.createElement('div');
-                newTweetCard.classList.add('tweet-card');
-                newTweetCard.innerHTML = `
-                    <div class="tweet-avatar">M</div>
-                    <div class="tweet-content">
-                        <span class="tweet-username">Montresor</span> <span class="tweet-handle">@TuMontresor</span>
-                        <p class="tweet-text">${tweetText}</p>
-                    </div>
-                `;
-                tweetsContainer.prepend(newTweetCard); // Añadir el nuevo tweet al principio
-                tweetInput.value = ''; // Limpiar el input
-                charCount.textContent = `0/${MAX_CHARS} caracteres`; // Resetear contador
-            } else if (tweetText.length === 0) {
-                alert("¡El tweet no puede estar vacío!"); // Usar un modal personalizado en un entorno real
-            }
-        });
+            // Colocar palabras en la cuadrícula
+            crosswordData.forEach(wordData => {
+                const { id, word, direction, start_x, start_y } = wordData;
+                for (let i = 0; i < word.length; i++) {
+                    let r, c;
+                    if (direction === "across") {
+                        r = start_y;
+                        c = start_x + i;
+                    } else { // down
+                        r = start_y + i;
+                        c = start_x;
+                    }
 
-        // Función para reproducir un fragmento de audiolibro (simulado)
-        // En un entorno real, aquí cargarías un archivo de audio o usarías una API de audio.
-        // Por la limitación de no usar URLs externas de audio, esto es solo un placeholder.
-        function playAmbientAudio() {
-            // Aquí iría la lógica para cargar y reproducir un fragmento de audiolibro
-            // Por ejemplo:
-            // const audio = new Audio('url_del_audiolibro.mp3');
-            // audio.volume = 0.3; // Volumen bajo para ambientar
-            // audio.loop = true;
-            // audio.play().catch(e => console.log("Error al reproducir audio:", e));
-            console.log("Simulando reproducción de audiolibro para ambientar la clase.");
-            // Podrías mostrar un mensaje en pantalla al usuario para que reproduzca un audiolibro externo.
+                    if (r < GRID_SIZE && c < GRID_SIZE) {
+                        const cellIndex = r * GRID_SIZE + c;
+                        const cellElement = crosswordGridElement.children[cellIndex];
+                        cellElement.classList.remove('empty');
+                        cellElement.innerHTML = `<input type="text" maxlength="1" data-word-id="${id}" data-letter-index="${i}" data-direction="${direction}" data-start-x="${start_x}" data-start-y="${start_y}">`;
+                        
+                        // Añadir número de pista solo a la primera letra
+                        if (i === 0) {
+                            const clueNumberSpan = document.createElement('span');
+                            clueNumberSpan.classList.add('clue-number');
+                            clueNumberSpan.textContent = id;
+                            cellElement.appendChild(clueNumberSpan);
+                        }
+                    }
+                }
+            });
+
+            // Generar pistas
+            cluesAcrossElement.innerHTML = '';
+            cluesDownElement.innerHTML = '';
+            crosswordData.forEach(wordData => {
+                const li = document.createElement('li');
+                li.textContent = `${wordData.id}. ${wordData.clue}`;
+                if (wordData.direction === "across") {
+                    cluesAcrossElement.appendChild(li);
+                } else {
+                    cluesDownElement.appendChild(li);
+                }
+            });
         }
 
-        // Llamar a la función de audio al cargar la página (o cuando el usuario interactúe)
-        window.onload = playAmbientAudio;
+        function checkCrossword() {
+            let allCorrect = true;
+            crosswordData.forEach(wordData => {
+                const { id, word, direction, start_x, start_y } = wordData;
+                let userAnswer = "";
+                let wordCells = [];
 
+                for (let i = 0; i < word.length; i++) {
+                    let r, c;
+                    if (direction === "across") {
+                        r = start_y;
+                        c = start_x + i;
+                    } else { // down
+                        r = start_y + i;
+                        c = start_x;
+                    }
+                    const cellIndex = r * GRID_SIZE + c;
+                    const cellElement = crosswordGridElement.children[cellIndex];
+                    const inputElement = cellElement.querySelector('input');
+                    if (inputElement) {
+                        userAnswer += inputElement.value.toUpperCase();
+                        wordCells.push(inputElement);
+                    }
+                }
+
+                if (userAnswer === word) {
+                    wordCells.forEach(input => {
+                        input.classList.remove('incorrect-word');
+                        input.classList.add('correct-word');
+                        input.disabled = true; // Deshabilitar si es correcta
+                    });
+                } else {
+                    wordCells.forEach(input => {
+                        input.classList.remove('correct-word');
+                        input.classList.add('incorrect-word');
+                    });
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                // Usar un modal personalizado en un entorno real
+                alert("¡Felicidades! ¡Has completado el crucigrama correctamente!");
+            } else {
+                // Usar un modal personalizado en un entorno real
+                alert("Hay algunas respuestas incorrectas. ¡Sigue intentándolo!");
+            }
+        }
+
+        function resetCrossword() {
+            generateCrosswordGrid(); // Regenera la cuadrícula para resetear
+        }
+
+        // Event Listeners para los botones
+        checkCrosswordBtn.addEventListener('click', checkCrossword);
+        resetCrosswordBtn.addEventListener('click', resetCrossword);
+
+        // Inicializar el crucigrama al cargar la página
+        window.onload = function() {
+            generateCrosswordGrid();
+            // Función para reproducir un fragmento de audiolibro (simulado)
+            // En un entorno real, aquí cargarías un archivo de audio o usarías una API de audio.
+            // Por la limitación de no usar URLs externas de audio, esto es solo un placeholder.
+            function playAmbientAudio() {
+                console.log("Simulando reproducción de audiolibro para ambientar la clase.");
+                // Podrías mostrar un mensaje en pantalla al usuario para que reproduzca un audiolibro externo.
+            }
+            playAmbientAudio();
+        };
     </script>
 </body>
 </html>
