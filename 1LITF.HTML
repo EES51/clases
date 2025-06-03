@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Espejo Africano: Recursos Didácticos</title>
+    <!-- Carga de Tailwind CSS desde CDN para un estilo moderno y responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Fuente Inter para una mejor legibilidad */
@@ -76,14 +77,62 @@
             border-top-right-radius: 1rem;
             margin-top: 3rem;
         }
-        /* Estilo para los botones de las actividades */
+        /* Estilo para los botones de las actividades (si se usaran en el futuro) */
         .activity-button {
             @apply bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105;
         }
+
+        /* --- Estilos específicos para la Sopa de Letras (integrados aquí) --- */
+        /* Contenedor de la cuadrícula */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr); /* 15 columnas para el puzzle */
+            gap: 2px; /* Espacio entre las celdas */
+            max-width: 600px; /* Ancho máximo para el puzzle */
+            margin: 0 auto;
+            border: 2px solid #4a5568;
+            border-radius: 0.5rem;
+            overflow: hidden; /* Para que los bordes redondeados se vean bien */
+        }
+        /* Estilo de cada celda de la cuadrícula */
+        .grid-cell {
+            width: 40px; /* Ancho de cada celda */
+            height: 40px; /* Alto de cada celda */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e2e8f0; /* Fondo de celda */
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2d3748;
+            border-radius: 0.25rem;
+            text-transform: uppercase; /* Asegura que las letras sean mayúsculas */
+        }
+        /* Estilo para la lista de palabras */
+        .word-list {
+            list-style: none; /* Quita los puntos de la lista */
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Columnas responsivas */
+            gap: 0.5rem;
+        }
+        .word-list li {
+            background-color: #ffffff;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            font-weight: 500;
+            color: #4a5568;
+            text-align: center;
+            text-transform: uppercase; /* Asegura que las palabras sean mayúsculas */
+        }
+        /* --- Fin de estilos específicos para la Sopa de Letras --- */
     </style>
 </head>
 <body class="leading-relaxed">
 
+    <!-- Encabezado de la página -->
     <header class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-8 px-4 rounded-b-3xl shadow-xl">
         <div class="container mx-auto text-center">
             <h1 class="text-5xl font-extrabold mb-2">El Espejo Africano 🌍✨</h1>
@@ -91,8 +140,10 @@
         </div>
     </header>
 
+    <!-- Contenedor principal de la página -->
     <main class="container mx-auto px-4 py-8">
 
+        <!-- Sección de Bienvenida e Introducción -->
         <section class="text-center mb-12">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">¡Bienvenidos a esta aventura literaria!</h2>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -100,6 +151,7 @@
             </p>
         </section>
 
+        <!-- Menú de Navegación Rápida -->
         <nav class="mb-12">
             <h3 class="subsection-title text-center">Explora nuestros recursos:</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
@@ -109,12 +161,11 @@
                 <a href="#glosario-visual" class="nav-link">
                     <span class="icon">💡</span> Glosario Visual
                 </a>
-                <a href="#actividades" class="nav-link">
-                    <span class="icon">🎲</span> Actividades Dinámicas
-                </a>
+                <!-- El enlace a "Actividades Dinámicas" se elimina del menú principal si la sección completa se quita -->
             </div>
         </nav>
 
+        <!-- Sección 1: Resúmenes Visuales y Dinámicos -->
         <section id="ruta-espejo" class="content-card">
             <h2 class="section-title">
                 <span class="icon">🗺️</span> La Ruta del Espejo: Ejes de la Historia
@@ -123,6 +174,7 @@
                 Aquí desglosamos los grandes momentos y temas de la novela. ¡Ideal para refrescar la memoria o anticipar lo que viene!
             </p>
 
+            <!-- Eje 1 -->
             <div class="mb-8 p-6 bg-blue-50 rounded-lg shadow-md">
                 <h3 class="subsection-title text-blue-800 flex items-center">
                     <span class="icon">🌳</span> EJE 1: Raíces Rotas y Sueños en Cadenas
@@ -151,6 +203,7 @@
                 </div>
             </div>
 
+            <!-- Eje 2 (Ejemplo, puedes añadir más según el avance de la lectura) -->
             <div class="mb-8 p-6 bg-green-50 rounded-lg shadow-md">
                 <h3 class="subsection-title text-green-800 flex items-center">
                     <span class="icon">🔗</span> EJE 2: Conexiones Inesperadas y la Fuerza del Legado
@@ -179,8 +232,11 @@
                 </div>
             </div>
 
-            </section>
+            <!-- Puedes añadir más Ejes aquí siguiendo la estructura -->
 
+        </section>
+
+        <!-- Sección 2: Infografías Llamativas -->
         <section id="glosario-visual" class="content-card">
             <h2 class="section-title">
                 <span class="icon">💡</span> Infografías Llamativas: Glosario Visual y Contexto
@@ -189,6 +245,7 @@
                 Información compleja, ¡simple y visual! Aquí te ayudamos a entender conceptos clave y el contexto histórico de la obra.
             </p>
 
+            <!-- Infografía 1: El Espejo y sus Guardianes -->
             <div class="mb-8 p-6 bg-purple-50 rounded-lg shadow-md">
                 <h3 class="subsection-title text-purple-800 flex items-center">
                     <span class="icon">🛡️</span> EL ESPEJO AFRICANO: SUS GUARDIANES
@@ -245,11 +302,13 @@
                 </p>
             </div>
 
+            <!-- Infografía 2: Más allá de la Novela: Conceptos Clave -->
             <div class="mb-8 p-6 bg-yellow-50 rounded-lg shadow-md">
                 <h3 class="subsection-title text-yellow-800 flex items-center">
                     <span class="icon">📚</span> Más allá de la Novela: Conceptos Clave
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Concepto 1 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-red-500">⛓️</span>
@@ -259,6 +318,7 @@
                             Comercio forzado de personas, principalmente africanas, a través del Atlántico para ser explotadas como mano de obra.
                         </p>
                     </div>
+                    <!-- Concepto 2 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-green-500">🏃‍♂️</span>
@@ -268,6 +328,7 @@
                             Acto de resistencia de los esclavos que huían de las plantaciones y formaban comunidades libres (quilombos o palenques).
                         </p>
                     </div>
+                    <!-- Concepto 3 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-blue-500">✊</span>
@@ -277,6 +338,7 @@
                             Movimiento social y político que buscaba la abolición de la esclavitud y la trata de personas.
                         </p>
                     </div>
+                    <!-- Concepto 4 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-purple-500">👤</span>
@@ -286,6 +348,7 @@
                             Conjunto de rasgos y características que definen a una persona o grupo, especialmente en contextos de opresión.
                         </p>
                     </div>
+                    <!-- Concepto 5 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-orange-500">🕊️</span>
@@ -295,6 +358,7 @@
                             Estado de no estar sometido, de poder actuar y decidir por uno mismo. Un tema central en la novela.
                         </p>
                     </div>
+                    <!-- Concepto 6 -->
                     <div class="p-4 bg-white rounded-lg shadow-sm border border-yellow-200">
                         <div class="flex items-center mb-2">
                             <span class="icon text-teal-500">📜</span>
@@ -307,71 +371,75 @@
                 </div>
             </div>
 
+            <!-- Sopa de Letras Estática - INTEGRADA DIRECTAMENTE AQUÍ -->
+            <div class="mb-8 p-6 bg-indigo-50 rounded-lg shadow-md text-center">
+                <h3 class="subsection-title text-indigo-800 flex items-center justify-center">
+                    <span class="icon">🧩</span> ¡Juega la Sopa de Letras de "El Espejo Africano"!
+                </h3>
+                <p class="text-gray-700 mb-6">
+                    Pon a prueba tus conocimientos sobre los personajes y los temas clave de la novela. ¡Encuentra todas las palabras ocultas!
+                </p>
+                <div class="flex flex-col lg:flex-row gap-8 justify-center">
+                    <!-- Sección de la Cuadrícula del Puzzle -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-4 border-indigo-300">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">¡A Buscar!</h2>
+                        <div class="grid-container">
+                            <!-- Las letras de la sopa de letras (15x15) -->
+                            <!-- Las palabras están incrustadas en esta cuadrícula -->
+                            <!-- Palabras clave: ESPEJO (0,0 H), ESCLAVITUD (0,0 D), ATIMA (0,5 V), JUSTICIA (0,11 V), AFRICA (0,14 V) -->
+                            <!-- RAQUEL (3,9 H), IDENTIDAD (5,4 H), IMAOMA (7,7 H), MEMORIA (8,0 V) -->
+                            <!-- VIAJE (9,10 H), DOREL (10,1 H), ESPERANZA (11,0 H), MARIA (12,3 H) -->
+                            <!-- RESISTENCIA (13,0 H), LIBERTAD (14,7 H) -->
+
+                            <div class="grid-cell">E</div><div class="grid-cell">S</div><div class="grid-cell">P</div><div class="grid-cell">E</div><div class="grid-cell">J</div><div class="grid-cell">O</div><div class="grid-cell">W</div><div class="grid-cell">F</div><div class="grid-cell">G</div><div class="grid-cell">H</div><div class="grid-cell">I</div><div class="grid-cell">J</div><div class="grid-cell">U</div><div class="grid-cell">S</div><div class="grid-cell">T</div>
+                            <div class="grid-cell">S</div><div class="grid-cell">E</div><div class="grid-cell">S</div><div class="grid-cell">C</div><div class="grid-cell">L</div><div class="grid-cell">A</div><div class="grid-cell">V</div><div class="grid-cell">I</div><div class="grid-cell">T</div><div class="grid-cell">U</div><div class="grid-cell">D</div><div class="grid-cell">U</div><div class="grid-cell">P</div><div class="grid-cell">Q</div><div class="grid-cell">I</div>
+                            <div class="grid-cell">C</div><div class="grid-cell">X</div><div class="grid-cell">Y</div><div class="grid-cell">Z</div><div class="grid-cell">A</div><div class="grid-cell">T</div><div class="grid-cell">B</div><div class="grid-cell">C</div><div class="grid-cell">D</div><div class="grid-cell">E</div><div class="grid-cell">F</div><div class="grid-cell">S</div><div class="grid-cell">R</div><div class="grid-cell">S</div><div class="grid-cell">C</div>
+                            <div class="grid-cell">L</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">I</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">R</div><div class="grid-cell">A</div><div class="grid-cell">Q</div><div class="grid-cell">U</div><div class="grid-cell">E</div><div class="grid-cell">L</div>
+                            <div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">M</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">T</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">A</div>
+                            <div class="grid-cell">V</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">I</div><div class="grid-cell">D</div><div class="grid-cell">E</div><div class="grid-cell">N</div><div class="grid-cell">T</div><div class="grid-cell">I</div><div class="grid-cell">D</div><div class="grid-cell">A</div><div class="grid-cell">D</div><div class="grid-cell">X</div><div class="grid-cell">F</div>
+                            <div class="grid-cell">I</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">I</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">R</div>
+                            <div class="grid-cell">T</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">I</div><div class="grid-cell">M</div><div class="grid-cell">A</div><div class="grid-cell">O</div><div class="grid-cell">M</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">I</div>
+                            <div class="grid-cell">U</div><div class="grid-cell">M</div><div class="grid-cell">E</div><div class="grid-cell">M</div><div class="grid-cell">O</div><div class="grid-cell">R</div><div class="grid-cell">I</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">C</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">C</div>
+                            <div class="grid-cell">D</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">V</div><div class="grid-cell">I</div><div class="grid-cell">A</div><div class="grid-cell">J</div><div class="grid-cell">E</div>
+                            <div class="grid-cell">X</div><div class="grid-cell">D</div><div class="grid-cell">O</div><div class="grid-cell">R</div><div class="grid-cell">E</div><div class="grid-cell">L</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">I</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">A</div>
+                            <div class="grid-cell">E</div><div class="grid-cell">S</div><div class="grid-cell">P</div><div class="grid-cell">E</div><div class="grid-cell">R</div><div class="grid-cell">A</div><div class="grid-cell">N</div><div class="grid-cell">Z</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div>
+                            <div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">M</div><div class="grid-cell">A</div><div class="grid-cell">R</div><div class="grid-cell">I</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div>
+                            <div class="grid-cell">R</div><div class="grid-cell">E</div><div class="grid-cell">S</div><div class="grid-cell">I</div><div class="grid-cell">S</div><div class="grid-cell">T</div><div class="grid-cell">E</div><div class="grid-cell">N</div><div class="grid-cell">C</div><div class="grid-cell">I</div><div class="grid-cell">A</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div>
+                            <div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">X</div><div class="grid-cell">L</div><div class="grid-cell">I</div><div class="grid-cell">B</div><div class="grid-cell">E</div><div class="grid-cell">R</div><div class="grid-cell">T</div><div class="grid-cell">A</div><div class="grid-cell">D</div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Palabras a Encontrar -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-4 border-purple-300 h-fit">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Palabras a Encontrar</h2>
+                        <ul class="word-list">
+                            <li>ESPEJO</li>
+                            <li>AFRICA</li>
+                            <li>ESCLAVITUD</li>
+                            <li>LIBERTAD</li>
+                            <li>MEMORIA</li>
+                            <li>IMAOMA</li>
+                            <li>ATIMA</li>
+                            <li>DOREL</li>
+                            <li>RAQUEL</li>
+                            <li>MARIA</li>
+                            <li>IDENTIDAD</li>
+                            <li>RESISTENCIA</li>
+                            <li>JUSTICIA</li>
+                            <li>ESPERANZA</li>
+                            <li>VIAJE</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
-        <section id="actividades" class="content-card">
-            <h2 class="section-title">
-                <span class="icon">🎲</span> Actividades Dinámicas y Juegos Educativos
-            </h2>
-            <p class="text-gray-700 mb-6">
-                ¡Es hora de poner en práctica lo aprendido! Estas actividades te ayudarán a conectar con la novela de una forma diferente y divertida.
-            </p>
-
-            <div class="mb-8 p-6 bg-indigo-50 rounded-lg shadow-md">
-                <h3 class="subsection-title text-indigo-800 flex items-center">
-                    <span class="icon">🎭</span> 1. Cartas de Rol: Diálogos en el Tiempo
-                </h3>
-                <p class="text-gray-700 mb-4">
-                    Ponte en los zapatos de los personajes y responde a dilemas como lo harían ellos. ¡Desarrolla tu empatía y comprensión!
-                </p>
-                <h4 class="font-bold text-lg text-indigo-700 mb-2">Mecánica del Juego:</h4>
-                <ul class="list-disc list-inside text-gray-700 mb-4 ml-4">
-                    <li>**Materiales:** Crea un set de "Cartas de Personaje" (con nombre y 2-3 rasgos clave) y "Cartas de Situación" (dilemas o eventos cruciales de la novela).</li>
-                    <li>**Grupos:** Divídanse en grupos pequeños (3-4 alumnos).</li>
-                    <li>**Turnos:** Un alumno lee una Carta de Situación. Otro elige una Carta de Personaje y, actuando como él/ella, responde a la situación, justificando su respuesta con la novela.</li>
-                    <li>**Debate:** El resto del grupo debate la respuesta, aportando otras perspectivas. ¡Roten los roles!</li>
-                </ul>
-                <h4 class="font-bold text-lg text-indigo-700 mb-2">¿Por qué es útil?</h4>
-                <p class="text-gray-700">
-                    Fomenta la empatía, el pensamiento crítico y la comprensión profunda de los personajes y los temas de la novela.
-                </p>
-                <div class="text-center mt-6">
-                    <button class="activity-button">
-                        ¡Prepara tus cartas!
-                    </button>
-                </div>
-            </div>
-
-            <div class="mb-8 p-6 bg-red-50 rounded-lg shadow-md">
-                <h3 class="subsection-title text-red-800 flex items-center">
-                    <span class="icon">🗣️</span> 2. El Muro de las Voces Calladas (o "El Eco de la Memoria")
-                </h3>
-                <p class="text-gray-700 mb-4">
-                    Dale voz a las experiencias y emociones que la novela evoca. ¡Crea un espacio visual de memoria colectiva!
-                </p>
-                <h4 class="font-bold text-lg text-red-700 mb-2">Mecánica de la Actividad:</h4>
-                <ul class="list-disc list-inside text-gray-700 mb-4 ml-4">
-                    <li>**Materiales:** Hojas de papel de colores (o post-its), marcadores, un espacio en la pared o pizarrón.</li>
-                    <li>**Indagación:** Reflexiona: "Si pudieras darle voz a un personaje que sufrió la esclavitud, ¿qué mensaje dejarías a las futuras generaciones sobre su experiencia, sus sueños o su resistencia?"</li>
-                    <li>**Creación:** Escribe tu mensaje (frase, palabra clave, párrafo) en una hoja, puedes añadir dibujos o símbolos.</li>
-                    <li>**Construcción del Muro:** Pega tu mensaje en el "Muro de las Voces Calladas" en el aula. ¡Crea un mosaico de voces!</li>
-                    <li>**Reflexión:** Recorre el muro, lee los mensajes de tus compañeros y dialoguen: ¿Qué emociones te generó? ¿Qué aprendemos al darle voz a quienes fueron silenciados?</li>
-                </ul>
-                <h4 class="font-bold text-lg text-red-700 mb-2">¿Por qué es útil?</h4>
-                <p class="text-gray-700">
-                    Profundiza en la empatía, la memoria histórica y la conexión personal con los temas de la novela.
-                </p>
-                <div class="text-center mt-6">
-                    <button class="activity-button">
-                        ¡Construye el muro!
-                    </button>
-                </div>
-            </div>
-
-            </section>
+        <!-- Se elimina completamente la sección de "Actividades Dinámicas y Juegos Educativos" -->
 
     </main>
 
+    <!-- Pie de página -->
     <footer>
         <p>&copy; 2025 Recursos Didácticos para "El Espejo Africano". ¡Aprendiendo juntos!</p>
     </footer>
