@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Crimen Casi Perfecto: Una Investigación Literaria 🕵️‍♂️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Un gris suave */
+            color: #333;
+        }
+        .section-title {
+            font-size: 2.5rem; /* Letras grandes y llamativas */
+            font-weight: 700;
+            color: #8b5cf6; /* Un violeta púrpura vibrante */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid #a78bfa; /* Línea decorativa */
+            padding-bottom: 0.5rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* Bordes más redondeados */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px); /* Efecto hover sutil */
+        }
+        .icon-large {
+            font-size: 3rem;
+            color: #10b981; /* Verde esmeralda */
+            margin-bottom: 1rem;
+        }
+        .interactive-button {
+            background-color: #f97316; /* Naranja vibrante */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .interactive-button:hover {
+            background-color: #ea580c; /* Naranja más oscuro al pasar el mouse */
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #8b5cf6;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #c4b5fd;
+            transition: color 0.3s ease;
+        }
+        details summary:hover {
+            color: #7c3aed;
+        }
+        details[open] summary {
+            color: #7c3aed;
+            border-bottom-color: transparent;
+        }
+        .concept-box {
+            background-color: #ede9fe; /* Violeta muy claro */
+            border-left: 6px solid #a78bfa; /* Borde violeta vibrante */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+        }
+        .example-box {
+            background-color: #fef3c7; /* Amarillo claro */
+            border-left: 6px solid #fbbf24; /* Borde amarillo vibrante */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            overflow: hidden; /* Para que los bordes redondeados funcionen con el contenido */
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f3e8ff; /* Púrpura muy claro para encabezados */
+            font-weight: 600;
+            color: #8b5cf6;
+        }
+        tr:nth-child(even) {
+            background-color: #faf5ff; /* Rayas sutiles en la tabla */
+        }
+        /* Estilos específicos para el ahorcado */
+        #hangman-drawing {
+            height: 150px; /* Altura fija para el dibujo */
+            text-align: center;
+            line-height: 1.2;
+        }
+        #word-display {
+            letter-spacing: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+    <header class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+            ¡El Crimen Casi Perfecto! 🕵️‍♂️
+        </h1>
+        <p class="text-xl text-gray-600 mt-4">
+            Una investigación literaria sobre el cuento de Roberto Arlt.
+        </p>
+    </header>
+
+    <nav class="mb-10">
+        <div class="hidden md:flex justify-center space-x-6">
+            <a href="#el-caso" class="interactive-button">El Caso 📖</a>
+            <a href="#personajes" class="interactive-button">Los Sospechosos 🎭</a>
+            <a href="#pistas" class="interactive-button">Pistas Falsas 🤔</a>
+            <a href="#actividades" class="interactive-button">¡A Investigar! 🔍</a>
+            <a href="#ahorcado" class="interactive-button">Ahorcado 📚</a>
+        </div>
+        <div class="md:hidden">
+            <details class="card p-4">
+                <summary class="text-lg">Menú de Contenidos ☰</summary>
+                <ul class="mt-4 space-y-2">
+                    <li><a href="#el-caso" class="block text-gray-700 hover:text-purple-600">El Caso 📖</a></li>
+                    <li><a href="#personajes" class="block text-gray-700 hover:text-purple-600">Los Sospechosos 🎭</a></li>
+                    <li><a href="#pistas" class="block text-gray-700 hover:text-purple-600">Pistas Falsas 🤔</a></li>
+                    <li><a href="#actividades" class="block text-gray-700 hover:text-purple-600">¡A Investigar! 🔍</a></li>
+                    <li><a href="#ahorcado" class="block text-gray-700 hover:text-purple-600">Ahorcado 📚</a></li>
+                </ul>
+            </details>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto">
+
+        <section id="el-caso" class="card">
+            <h2 class="section-title">El Caso: ¡Un Misterio Bajo la Lluvia! 🌧️</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                ¿Qué pasó esa noche de lluvia? Acompañemos al narrador en su extraña investigación.
+            </p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-cloud-showers-heavy icon-large mr-3 text-blue-500"></i> La Noche Misteriosa
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="concept-box">
+                        <p class="font-semibold text-lg text-purple-800">Escena del Crimen (¿o no?):</p>
+                        <p>Una noche de lluvia torrencial en Buenos Aires. El narrador ve a tres hombres salir de una casa.</p>
+                        <i class="fas fa-city text-gray-600 text-xl mt-2"></i> <span class="text-sm">Calles de Buenos Aires</span>
+                    </div>
+                    <div class="concept-box">
+                        <p class="font-semibold text-lg text-purple-800">El Objeto Sospechoso:</p>
+                        <p>Los tres hombres llevan un bulto grande y alargado, cubierto por un paraguas. ¡Parece un cuerpo!</p>
+                        <i class="fas fa-umbrella text-green-600 text-xl mt-2"></i> <span class="text-sm">Un paraguas gigante</span>
+                    </div>
+                    <div class="concept-box">
+                        <p class="font-semibold text-lg text-purple-800">La Persecución:</p>
+                        <p>El narrador, convencido de que es un crimen, los sigue por las calles de la ciudad, imaginando todo tipo de detalles.</p>
+                        <i class="fas fa-walking text-red-600 text-xl mt-2"></i> <span class="text-sm">Un detective improvisado</span>
+                    </div>
+                    <div class="concept-box">
+                        <p class="font-semibold text-lg text-purple-800">El Descubrimiento Final:</p>
+                        <p>¡Sorpresa! El bulto no es un cuerpo, sino un maniquí. Todo era un malentendido.</p>
+                        <i class="fas fa-user-tie text-yellow-600 text-xl mt-2"></i> <span class="text-sm">Un maniquí</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="personajes" class="card">
+            <h2 class="section-title">Los Sospechosos y el Detective: ¡Quién es Quién! 🎭</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Conocé a los protagonistas de esta historia y sus roles en el "misterio".
+            </p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-users icon-large mr-3 text-cyan-500"></i> Infografía: Roles en el "Crimen"
+                </h3>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th>Personaje</th>
+                            <th>Descripción</th>
+                            <th>Rol en la historia</th>
+                            <th>Icono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="font-semibold text-purple-700">El Narrador</span></td>
+                            <td>Observador, imaginativo, con tendencia a la sospecha y a crear teorías.</td>
+                            <td>El "Detective" (improvisado y equivocado).</td>
+                            <td><i class="fas fa-glasses text-purple-500"></i></td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-semibold text-green-700">Los Tres Portugueses</span></td>
+                            <td>Hombres que cargan un bulto sospechoso.</td>
+                            <td>Los "Sospechosos" (inocentes).</td>
+                            <td><i class="fas fa-user-friends text-green-500"></i></td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-semibold text-red-700">El Maniquí</span></td>
+                            <td>El "cuerpo" que desata toda la trama.</td>
+                            <td>La "Víctima" (falsa).</td>
+                            <td><i class="fas fa-tshirt text-red-500"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="example-box mt-6">
+                    <p class="font-semibold text-lg text-yellow-800">¡Dato Clave!</p>
+                    <p>La historia juega con lo que <span class="font-bold text-purple-700">parece</span> y lo que <span class="font-bold text-green-700">realmente es</span>. El narrador ve "pistas" donde no las hay.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pistas" class="card">
+            <h2 class="section-title">Pistas Falsas y Verdades Ocultas: ¡Qué nos Enseña Arlt! 🤔</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Más allá del "misterio", este cuento nos invita a pensar sobre cómo vemos el mundo.
+            </p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-lightbulb icon-large mr-3 text-orange-500"></i> Temas para Reflexionar
+                </h3>
+                <ol class="list-decimal list-inside space-y-4 text-gray-700">
+                    <li class="p-3 bg-purple-50 rounded-lg shadow-sm border-l-4 border-purple-400">
+                        <span class="font-bold text-purple-800">1. La Percepción vs. La Realidad:</span> Lo que el narrador cree que ve (un crimen) es muy diferente a lo que realmente sucede (un maniquí).
+                        <div class="example-box text-sm mt-2">
+                            <p>¿Alguna vez te pasó de entender algo mal y después darte cuenta de que era otra cosa?</p>
+                        </div>
+                    </li>
+                    <li class="p-3 bg-blue-50 rounded-lg shadow-sm border-l-4 border-blue-400">
+                        <span class="font-bold text-blue-800">2. El Poder de la Imaginación:</span> La mente del narrador construye una historia compleja con muy pocos datos.
+                        <div class="example-box text-sm mt-2">
+                            <p>¿Cómo influye nuestra imaginación en lo que creemos que es verdad?</p>
+                        </div>
+                    </li>
+                    <li class="p-3 bg-green-50 rounded-lg shadow-sm border-l-4 border-green-400">
+                        <span class="font-bold text-green-800">3. La Sátira del Género Policial:</span> Arlt se burla un poco de las historias de detectives, donde todo es tan claro y lógico. Acá, el "detective" se equivoca feo.
+                        <div class="example-box text-sm mt-2">
+                            <p>¿Qué elementos de las novelas policiales tradicionales aparecen y cuáles se invierten en este cuento?</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="actividades" class="card">
+            <h2 class="section-title">¡A Ponerse el Sombrero de Detective! 🔍🧠</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                ¡Ahora es tu turno de investigar y reflexionar sobre este cuento!
+            </p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-pencil-ruler icon-large mr-3 text-blue-600"></i> Actividad: Armá tu Propia Teoría
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-blue-800">Mecánica:</span> Si fueras el narrador, ¿qué otras explicaciones podrías haber imaginado para el bulto bajo el paraguas? Escribí un párrafo corto con una teoría alternativa (¡por más loca que sea!).
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-blue-800">Relación con el contenido:</span> Fomenta la creatividad, la inferencia y la comprensión de la subjetividad del narrador.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-gavel icon-large mr-3 text-green-600"></i> Debate: El Juicio del Lector
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-green-800">Mecánica:</span> Dividí la clase en dos grupos. Un grupo defiende al narrador ("¿Era lógico que sospechara?") y el otro a los portugueses ("¿Por qué el narrador se equivocó?"). Preparen argumentos basados en el cuento.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-green-800">Relación con el contenido:</span> Promueve el pensamiento crítico, la argumentación y la comprensión de los diferentes puntos de vista en la historia.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-book-open icon-large mr-3 text-red-600"></i> Juego: Descifrando el Estilo de Arlt
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-red-800">Mecánica:</span> Se presentan fragmentos del cuento. Los alumnos deben identificar qué recurso literario usa Arlt en cada uno (ej. ironía, descripción detallada, monólogo interior). Pueden ser tarjetas o una actividad interactiva con opciones.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-red-800">Relación con el contenido:</span> Introduce conceptos de análisis literario de forma práctica y lúdica.
+                </p>
+                <div class="example-box mt-4">
+                    <p class="font-semibold text-yellow-800">Ejemplo de Fragmento:</p>
+                    <p>"...el hombre se despidió con una inclinación de cabeza tan ceremoniosa que me pareció una burla."</p>
+                    <button class="interactive-button mt-4" onclick="showMessage('¡Aquí hay un toque de ironía! El narrador interpreta algo normal como una burla, mostrando su paranoia.', 'alert-arlt-style')">¿Qué recurso es?</button>
+                    <div id="alert-arlt-style" class="concept-box hidden mt-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ahorcado" class="card">
+            <h2 class="section-title">¡Ahorcado Literario! 📚</h2>
+            <p class="text-lg text-gray-700 mb-6">
+                ¡Poné a prueba tus conocimientos sobre "El Crimen Casi Perfecto" adivinando la palabra oculta!
+            </p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+                    <i class="fas fa-puzzle-piece icon-large mr-3 text-indigo-500"></i> Adiviná la Palabra
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    <span class="font-bold text-indigo-800">Mecánica:</span> Pensá en una letra y escribila en el cuadro. Si está en la palabra, ¡aparecerá! Si no, el ahorcado se irá formando. Tenés 6 intentos.
+                </p>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-inner text-center">
+                    <pre id="hangman-drawing" class="text-xl font-mono mb-4 text-gray-800"></pre>
+                    <p id="word-display" class="text-3xl font-bold tracking-widest mb-4 text-purple-800"></p>
+                    <p id="guessed-letters" class="text-lg text-gray-600 mb-4">Letras usadas: </p>
+                    <input type="text" id="letter-input" maxlength="1" class="w-20 p-3 text-center border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-500 text-xl uppercase" placeholder="Letra">
+                    <button id="guess-button" class="interactive-button mt-4 ml-2">Adivinar</button>
+                    <button id="reset-button" class="interactive-button mt-4 ml-2 bg-gray-500 hover:bg-gray-600">Reiniciar</button>
+                    <p id="game-message" class="mt-4 text-lg font-semibold text-green-700"></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-gray-500 text-sm mt-12 p-4">
+        <p>© 2025 Material Didáctico Interactivo. Creado para vos con ❤️.</p>
+    </footer>
+
+    <script>
+        // Función para mostrar mensajes en los cuadros de alerta (usada en las actividades)
+        function showMessage(message, elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `<p>${message}</p>`;
+                element.classList.remove('hidden');
+            }
+        }
+
+        // Lógica del Juego del Ahorcado
+        const words = ['ARLT', 'PARAGUAS', 'MANIQUI', 'DETECTIVE', 'BUENOSAIRES', 'LLUVIA', 'PORTUGUESES', 'MISTERIO', 'PERCEPCION', 'IMAGINACION', 'SATIRA'];
+        let selectedWord = '';
+        let guessedWord = [];
+        let wrongGuesses = 0;
+        let guessedLetters = [];
+        const maxWrongGuesses = 6;
+
+        const hangmanDrawingElement = document.getElementById('hangman-drawing');
+        const wordDisplayElement = document.getElementById('word-display');
+        const guessedLettersElement = document.getElementById('guessed-letters');
+        const letterInput = document.getElementById('letter-input');
+        const guessButton = document.getElementById('guess-button');
+        const resetButton = document.getElementById('reset-button');
+        const gameMessageElement = document.getElementById('game-message');
+
+        // Etapas del dibujo del ahorcado (texto ASCII)
+        const hangmanStages = [
+            `
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========`,
+        ];
+
+        // Inicializa el juego
+        function initializeGame() {
+            selectedWord = words[Math.floor(Math.random() * words.length)]; // Elige una palabra al azar
+            guessedWord = Array(selectedWord.length).fill('_'); // Crea un array de guiones bajos
+            wrongGuesses = 0; // Reinicia los intentos fallidos
+            guessedLetters = []; // Reinicia las letras adivinadas
+
+            hangmanDrawingElement.textContent = hangmanStages[0]; // Muestra el dibujo inicial
+            wordDisplayElement.textContent = guessedWord.join(' '); // Muestra la palabra con guiones
+            guessedLettersElement.textContent = 'Letras usadas: '; // Limpia las letras usadas
+            gameMessageElement.textContent = ''; // Limpia mensajes
+            letterInput.value = ''; // Limpia el input
+            letterInput.disabled = false; // Habilita el input
+            guessButton.disabled = false; // Habilita el botón de adivinar
+        }
+
+        // Actualiza el dibujo del ahorcado y la palabra mostrada
+        function updateDisplay() {
+            hangmanDrawingElement.textContent = hangmanStages[wrongGuesses];
+            wordDisplayElement.textContent = guessedWord.join(' ');
+            guessedLettersElement.textContent = 'Letras usadas: ' + guessedLetters.join(', ');
+        }
+
+        // Maneja la adivinanza de una letra
+        function handleGuess() {
+            const guess = letterInput.value.toUpperCase(); // Obtiene la letra y la convierte a mayúscula
+            letterInput.value = ''; // Limpia el input después de adivinar
+
+            // Valida que sea una sola letra y que sea alfabética
+            if (!guess.match(/^[A-Z]$/)) {
+                gameMessageElement.textContent = 'Por favor, ingresa una sola letra válida.';
+                gameMessageElement.style.color = '#dc2626'; // Rojo
+                return;
+            }
+
+            // Valida que la letra no haya sido adivinada antes
+            if (guessedLetters.includes(guess)) {
+                gameMessageElement.textContent = `Ya adivinaste la letra "${guess}".`;
+                gameMessageElement.style.color = '#f97316'; // Naranja
+                return;
+            }
+
+            guessedLetters.push(guess); // Agrega la letra a las letras usadas
+            gameMessageElement.textContent = ''; // Limpia el mensaje anterior
+
+            // Comprueba si la letra está en la palabra
+            if (selectedWord.includes(guess)) {
+                for (let i = 0; i < selectedWord.length; i++) {
+                    if (selectedWord[i] === guess) {
+                        guessedWord[i] = guess; // Revela la letra en la palabra
+                    }
+                }
+                gameMessageElement.textContent = `¡Bien! La letra "${guess}" es correcta.`;
+                gameMessageElement.style.color = '#10b981'; // Verde
+            } else {
+                wrongGuesses++; // Incrementa los intentos fallidos
+                gameMessageElement.textContent = `¡Uy! La letra "${guess}" no está.`;
+                gameMessageElement.style.color = '#dc2626'; // Rojo
+            }
+
+            updateDisplay(); // Actualiza la interfaz
+            checkGameStatus(); // Comprueba si el juego terminó
+        }
+
+        // Comprueba el estado del juego (ganado o perdido)
+        function checkGameStatus() {
+            if (guessedWord.join('') === selectedWord) {
+                gameMessageElement.textContent = `¡Felicitaciones! Adivinaste la palabra: "${selectedWord}" 🎉`;
+                gameMessageElement.style.color = '#4f46e5'; // Índigo
+                letterInput.disabled = true; // Deshabilita el input y el botón
+                guessButton.disabled = true;
+            } else if (wrongGuesses >= maxWrongGuesses) {
+                gameMessageElement.textContent = `¡Perdiste! La palabra era: "${selectedWord}" 😭`;
+                gameMessageElement.style.color = '#dc2626'; // Rojo
+                letterInput.disabled = true; // Deshabilita el input y el botón
+                guessButton.disabled = true;
+            }
+        }
+
+        // Event Listeners
+        guessButton.addEventListener('click', handleGuess); // Al hacer clic en "Adivinar"
+        letterInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') { // Al presionar Enter en el input
+                handleGuess();
+            }
+        });
+        resetButton.addEventListener('click', initializeGame); // Al hacer clic en "Reiniciar"
+
+        // Inicializa el juego cuando la página carga
+        initializeGame();
+    </script>
+</body
