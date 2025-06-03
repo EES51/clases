@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Liebre Dorada: Un Resumen Brillante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a more youthful feel */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Soft light blue/gray background */
+        }
+        .section-title {
+            color: #3b82f6; /* Vibrant blue for titles */
+        }
+        .highlight-text-yellow {
+            color: #fbbf24; /* Amarillo oro */
+        }
+        .highlight-text-pink {
+            color: #ec4899; /* Rosa vibrante */
+        }
+        .highlight-text-green {
+            color: #10b981; /* Verde esmeralda */
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.75rem; /* Spacing between rows */
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-radius: 0.5rem; /* Rounded corners for cells */
+        }
+        th {
+            background-color: #e2e8f0; /* Light gray for table header */
+            font-weight: 600;
+            color: #4a5568;
+        }
+        td {
+            background-color: #f7fafc; /* Lighter gray for table rows */
+        }
+        tr:hover td {
+            background-color: #e2e8f0; /* Hover effect for rows */
+        }
+        .icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+            vertical-align: middle;
+        }
+
+        /* Word Search Specific Styles */
+        #word-search-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+            gap: 2px; /* Smaller gap for cells */
+            max-width: 400px; /* Max width for the grid */
+            margin: 0 auto; /* Center the grid */
+            border: 2px solid #a7d9f6; /* Border around the grid */
+            border-radius: 0.75rem;
+            overflow: hidden; /* Ensures rounded corners apply to cells at edges */
+        }
+        .grid-cell {
+            width: 32px; /* Fixed size for cells on larger screens */
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #4a5568; /* Dark gray for letters */
+            background-color: #e0f2fe; /* Light blue background for cells */
+            border-radius: 0.25rem; /* Slightly rounded corners for cells */
+            cursor: pointer;
+            user-select: none; /* Prevent text selection */
+            transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+            font-size: 0.9rem; /* Adjust font size for cells */
+        }
+
+        /* Responsive cell size */
+        @media (max-width: 640px) {
+            .grid-cell {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            #word-search-grid {
+                max-width: 90%; /* Adjust max-width for smaller screens */
+            }
+        }
+        @media (max-width: 480px) {
+            .grid-cell {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+            }
+        }
+
+
+        .grid-cell.highlighted {
+            background-color: #93c5fd; /* Light blue for selection */
+            color: #ffffff;
+        }
+        .grid-cell.found {
+            background-color: #34d399; /* Green for found words */
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .word-list-item.found {
+            text-decoration: line-through;
+            color: #6b7280; /* Gray out found words in the list */
+        }
+        #message-box {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 md:p-12 lg:p-16">
+    <div class="max-w-4xl mx-auto">
+        <div class="card">
+            <h1 class="text-4xl sm:text-5xl font-bold text-center mb-6 section-title">
+                ✨ La Liebre Dorada: Un Resumen Brillante ✨
+            </h1>
+            <p class="text-lg text-gray-700 text-center mb-8">
+                ¡Atención, exploradores de historias! Prepárense para sumergirse en la aventura de una liebre... ¡pero no cualquier liebre! Esta es la Liebre Dorada, un ser que desafía lo ordinario y nos invita a reflexionar.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 section-title">
+                🎯 Puntos Clave para no Perderse:
+            </h2>
+            <ul class="space-y-4 text-lg text-gray-800">
+                <li>
+                    <span class="font-semibold">El Protagonista:</span> Una liebre <span class="highlight-text-yellow">dorada</span> <span class="icon">🌟</span>, única y excepcional. No es solo su color, ¡es su esencia!
+                </li>
+                <li>
+                    <span class="font-semibold">La Persecución:</span> Un grupo de <span class="highlight-text-pink">perros de caza</span> <span class="icon">🐕‍🦺</span> la persiguen incansablemente. ¿Lograrán atraparla?
+                </li>
+                <li>
+                    <span class="font-semibold">El Giro Inesperado:</span> Los perros, agotados, ¡se rinden! Pero la liebre dorada no los abandona. ¿Qué hace? ¡Los <span class="highlight-text-green">ayuda a recuperarse</span>! <span class="icon">💖</span>
+                </li>
+                <li>
+                    <span class="font-semibold">El Mensaje Profundo:</span> La liebre no es solo un animal. Representa una conexión especial, casi <span class="highlight-text-yellow">divina</span> <span class="icon">✨</span>, con Dios y los ángeles. Su valor va más allá de lo físico.
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 section-title">
+                📊 ¿Qué Aprendemos de la Liebre Dorada?
+            </h2>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica de la Liebre</th>
+                            <th>Significado Clave</th>
+                            <th>Icono Sugerido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold">Dorada</td>
+                            <td>Excepcional, única, valiosa</td>
+                            <td>🏆</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Veloz y Esencial</td>
+                            <td>Habilidad para superar desafíos</td>
+                            <td>🚀</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Compasiva</td>
+                            <td>Ayuda a quienes la persiguen</td>
+                            <td>❤️</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Conexión Espiritual</td>
+                            <td>Trascendencia, lo divino</td>
+                            <td>🙏</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 section-title">
+                💡 ¡Piensa y Reflexiona!
+            </h2>
+            <ul class="space-y-3 text-lg text-gray-800 list-disc pl-6">
+                <li>
+                    ¿Qué crees que simboliza la <span class="font-semibold highlight-text-yellow">"dorada"</span> en la liebre?
+                </li>
+                <li>
+                    ¿Te sorprende la actitud de la liebre al ayudar a los perros? ¿Por qué?
+                </li>
+                <li>
+                    ¿Qué mensaje te deja esta historia sobre el valor de las cosas o las personas?
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 section-title text-center">
+                🔍 Sopa de Letras: ¡Encuentra la Liebre Dorada!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                ¡Demuestra tu agilidad visual! Encuentra las palabras clave de la historia de "La Liebre Dorada" en esta sopa de letras. Haz clic y arrastra para seleccionar las palabras.
+            </p>
+            <div id="word-search-grid" class="grid gap-1 p-2 bg-blue-100 rounded-lg" style="--grid-cols: 12;">
+                </div>
+            <div class="mt-6">
+                <h3 class="text-2xl font-semibold mb-3 section-title text-center">Palabras a Encontrar:</h3>
+                <ul id="word-list" class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-lg text-gray-800 font-semibold">
+                    </ul>
+            </div>
+            <div id="message-box" class="mt-6 p-3 bg-blue-200 text-blue-800 rounded-lg text-center font-semibold hidden">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Word Search Game Logic
+        const words = [
+            "LIEBRE", "DORADA", "PERROS", "CAZA", "AYUDA", "COMPASION",
+            "DIVINA", "ANGEL", "VALOR", "ESENCIA", "AGOTADOS", "RECUPERAR"
+        ];
+        const gridSize = 12;
+        const grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
+        const foundWords = new Set();
+        const directions = [
+            { dr: 0, dc: 1 },  // Horizontal
+            { dr: 1, dc: 0 },  // Vertical
+            { dr: 1, dc: 1 },  // Diagonal down-right
+            { dr: 1, dc: -1 }, // Diagonal down-left
+            { dr: 0, dc: -1 }, // Horizontal reverse
+            { dr: -1, dc: 0 }, // Vertical reverse
+            { dr: -1, dc: -1 },// Diagonal up-left
+            { dr: -1, dc: 1 }  // Diagonal up-right
+        ];
+
+        let isDrawing = false;
+        let startCell = null;
+        let highlightedCells = [];
+        let currentSelectionElements = []; // Stores the actual DOM elements being highlighted
+
+        const gridContainer = document.getElementById('word-search-grid');
+        const wordListContainer = document.getElementById('word-list');
+        const messageBox = document.getElementById('message-box');
+
+        // Function to get a random uppercase letter
+        function getRandomLetter() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+
+        // Function to check if a word can be placed at a given position and direction
+        function canPlaceWord(word, row, col, dr, dc) {
+            for (let i = 0; i < word.length; i++) {
+                const r = row + i * dr;
+                const c = col + i * dc;
+                if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) {
+                    return false; // Out of bounds
+                }
+                if (grid[r][c] !== '' && grid[r][c] !== word[i]) {
+                    return false; // Conflict with existing letter
+                }
+            }
+            return true;
+        }
+
+        // Function to place a word on the grid
+        function placeWord(word) {
+            let placed = false;
+            let attempts = 0;
+            const maxAttempts = 100; // Prevent infinite loops
+
+            while (!placed && attempts < maxAttempts) {
+                const direction = directions[Math.floor(Math.random() * directions.length)];
+                const startRow = Math.floor(Math.random() * gridSize);
+                const startCol = Math.floor(Math.random() * gridSize);
+
+                if (canPlaceWord(word, startRow, startCol, direction.dr, direction.dc)) {
+                    for (let i = 0; i < word.length; i++) {
+                        const r = startRow + i * direction.dr;
+                        const c = startCol + i * direction.dc;
+                        grid[r][c] = word[i];
+                    }
+                    placed = true;
+                }
+                attempts++;
+            }
+            return placed;
+        }
+
+        // Function to generate the entire word search grid
+        function generateGrid() {
+            // Initialize grid with empty strings
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    grid[r][c] = '';
+                }
+            }
+
+            // Place words
+            words.sort((a, b) => b.length - a.length); // Place longer words first
+            words.forEach(word => placeWord(word));
+
+            // Fill remaining empty cells with random letters
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    if (grid[r][c] === '') {
+                        grid[r][c] = getRandomLetter();
+                    }
+                }
+            }
+        }
+
+        // Function to render the grid in the DOM
+        function renderGrid() {
+            gridContainer.innerHTML = ''; // Clear previous grid
+            gridContainer.style.setProperty('--grid-cols', gridSize); // Set CSS variable for grid columns
+
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('grid-cell');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.textContent = grid[r][c];
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        // Function to render the list of words to find
+        function renderWordList() {
+            wordListContainer.innerHTML = '';
+            words.forEach(word => {
+                const listItem = document.createElement('li');
+                listItem.textContent = word;
+                listItem.classList.add('word-list-item');
+                if (foundWords.has(word)) {
+                    listItem.classList.add('found');
+                }
+                wordListContainer.appendChild(listItem);
+            });
+        }
+
+        // Function to show temporary messages
+        function showMessage(msg, type = 'info') {
+            messageBox.textContent = msg;
+            messageBox.classList.remove('hidden', 'bg-blue-200', 'text-blue-800', 'bg-green-200', 'text-green-800', 'bg-red-200', 'text-red-800');
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-200', 'text-green-800');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-200', 'text-red-800');
+            } else {
+                messageBox.classList.add('bg-blue-200', 'text-blue-800');
+            }
+            messageBox.style.opacity = 1;
+            setTimeout(() => {
+                messageBox.style.opacity = 0;
+                setTimeout(() => messageBox.classList.add('hidden'), 300); // Hide after fade out
+            }, 1500);
+        }
+
+        // Get cell coordinates from an event target
+        function getCellCoordinates(target) {
+            const cell = target.closest('.grid-cell');
+            if (cell) {
+                return {
+                    row: parseInt(cell.dataset.row),
+                    col: parseInt(cell.dataset.col)
+                };
+            }
+            return null;
+        }
+
+        // Get cell element from coordinates
+        function getCellElement(row, col) {
+            return gridContainer.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        }
+
+        // Highlight cells during selection
+        function highlightSelection(start, end) {
+            // Clear previous temporary highlights
+            currentSelectionElements.forEach(cell => {
+                if (!cell.classList.contains('found')) { // Don't un-highlight found words
+                    cell.classList.remove('highlighted');
+                }
+            });
+            currentSelectionElements = [];
+
+            if (!start || !end) return;
+
+            const dr = Math.sign(end.row - start.row);
+            const dc = Math.sign(end.col - start.col);
+
+            // Calculate distance to determine if it's a straight line
+            const rowDiff = Math.abs(end.row - start.row);
+            const colDiff = Math.abs(end.col - start.col);
+
+            // Only highlight if it's a straight line (horizontal, vertical, diagonal)
+            if (rowDiff === colDiff || rowDiff === 0 || colDiff === 0) {
+                let r = start.row;
+                let c = start.col;
+                while (true) {
+                    const cell = getCellElement(r, c);
+                    if (cell && !cell.classList.contains('found')) {
+                        cell.classList.add('highlighted');
+                        currentSelectionElements.push(cell);
+                    }
+                    if (r === end.row && c === end.col) break;
+                    if (rowDiff > 0) r += dr;
+                    if (colDiff > 0) c += dc;
+                    if (rowDiff === 0 && colDiff === 0) break; // Single cell selection
+                }
+            }
+        }
+
+        // Check if selected word is valid
+        function checkWord() {
+            if (!startCell || !currentSelectionElements.length) return;
+
+            let selectedWord = '';
+            currentSelectionElements.forEach(cell => {
+                selectedWord += cell.textContent;
+            });
+
+            // Check both forward and reverse
+            const forwardWord = selectedWord;
+            const reverseWord = selectedWord.split('').reverse().join('');
+
+            let foundMatch = false;
+
+            if (words.includes(forwardWord) && !foundWords.has(forwardWord)) {
+                foundWords.add(forwardWord);
+                foundMatch = true;
+                showMessage(`¡Palabra encontrada: ${forwardWord}!`, 'success');
+            } else if (words.includes(reverseWord) && !foundWords.has(reverseWord)) {
+                foundWords.add(reverseWord);
+                foundMatch = true;
+                showMessage(`¡Palabra encontrada: ${reverseWord}!`, 'success');
+            } else {
+                showMessage('¡Inténtalo de nuevo!', 'error');
+            }
+
+            if (foundMatch) {
+                currentSelectionElements.forEach(cell => {
+                    cell.classList.remove('highlighted');
+                    cell.classList.add('found');
+                });
+                renderWordList(); // Update the word list to show found words
+                if (foundWords.size === words.length) {
+                    showMessage('¡Felicidades! ¡Encontraste todas las palabras!', 'success');
+                }
+            } else {
+                // Clear temporary highlights if not found
+                currentSelectionElements.forEach(cell => {
+                    if (!cell.classList.contains('found')) {
+                        cell.classList.remove('highlighted');
+                    }
+                });
+            }
+            currentSelectionElements = []; // Reset for next selection
+            startCell = null; // Reset start cell
+        }
+
+        // Event Listeners for mouse and touch
+        gridContainer.addEventListener('mousedown', (e) => {
+            startCell = getCellCoordinates(e.target);
+            if (startCell) {
+                isDrawing = true;
+                highlightSelection(startCell, startCell); // Highlight initial cell
+            }
+        });
+
+        gridContainer.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            const endCell = getCellCoordinates(e.target);
+            highlightSelection(startCell, endCell);
+        });
+
+        gridContainer.addEventListener('mouseup', () => {
+            if (isDrawing) {
+                isDrawing = false;
+                checkWord();
+            }
+        });
+
+        // Prevent default touch behavior (scrolling) to allow selection
+        gridContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent scrolling
+            const touch = e.touches[0];
+            const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+            startCell = getCellCoordinates(targetElement);
+            if (startCell) {
+                isDrawing = true;
+                highlightSelection(startCell, startCell);
+            }
+        }, { passive: false }); // Use { passive: false } for preventDefault
+
+        gridContainer.addEventListener('touchmove', (e) => {
+            if (!isDrawing) return;
+            e.preventDefault(); // Prevent scrolling
+            const touch = e.touches[0];
+            const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+            const endCell = getCellCoordinates(targetElement);
+            highlightSelection(startCell, endCell);
+        }, { passive: false });
+
+        gridContainer.addEventListener('touchend', () => {
+            if (isDrawing) {
+                isDrawing = false;
+                checkWord();
+            }
+        });
+
+        // Initial setup
+        window.onload = function() {
+            generateGrid();
+            renderGrid();
+            renderWordList();
+        };
+    </script>
+</body>
+</html>
