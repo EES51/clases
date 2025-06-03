@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Vestido de Terciopelo: Un Misterio que Te Atrapa</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Fuente Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un gris azulado suave */
+            color: #334155; /* Gris oscuro para el texto principal */
+        }
+        .section-title {
+            font-size: 2.5rem; /* Letras grandes para títulos de sección */
+            font-weight: 700;
+            color: #4f46e5; /* Un morado vibrante */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .accordion-header {
+            background-color: #6366f1; /* Morado medio */
+            color: white;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem; /* Bordes redondeados */
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #4f46e5; /* Morado más oscuro al pasar el mouse */
+        }
+        .accordion-content {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 0.5rem;
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease-out;
+        }
+        .accordion-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .icon-box {
+            background-color: #e0e7ff; /* Azul claro muy suave */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        .icon-box:hover {
+            transform: translateY(-5px);
+        }
+        .icon-box i {
+            font-size: 2.5rem;
+            color: #4f46e5;
+            margin-bottom: 0.75rem;
+        }
+        .activity-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .activity-card:hover {
+            transform: translateY(-8px);
+        }
+        .activity-card h3 {
+            color: #4f46e5;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .activity-card p {
+            line-height: 1.6;
+            color: #475569;
+        }
+        .btn-primary {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #6366f1;
+        }
+        /* Estilos específicos para el crucigrama */
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr)); /* Responsive columns */
+            gap: 2px; /* Small gap between cells */
+            max-width: fit-content; /* Adjust to content */
+            margin: 0 auto; /* Center the grid */
+            border: 2px solid #6366f1;
+            border-radius: 0.5rem;
+            overflow: hidden; /* Ensures rounded corners apply */
+        }
+        .crossword-cell {
+            width: 32px; /* Fixed size for cells */
+            height: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            border: 1px solid #cbd5e1; /* Light gray border */
+            font-weight: 600;
+            color: #1e293b; /* Dark text */
+            background-color: #ffffff;
+            transition: background-color 0.1s ease, border-color 0.1s ease;
+            outline: none; /* Remove default focus outline */
+        }
+        .crossword-cell:focus {
+            border-color: #4f46e5; /* Highlight on focus */
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2); /* Soft glow */
+        }
+        .crossword-cell.bg-gray-700 { /* Disabled cells */
+            background-color: #475569; /* Darker gray for disabled cells */
+            cursor: not-allowed;
+            border-color: #475569;
+        }
+        .crossword-cell.border-green-500 {
+            border-color: #22c55e;
+            color: #16a34a;
+            background-color: #dcfce7; /* Light green background */
+        }
+        .crossword-cell.border-red-500 {
+            border-color: #ef4444;
+            color: #dc2626;
+            background-color: #fee2e2; /* Light red background */
+        }
+        .clues-list {
+            list-style: none;
+            padding: 0;
+        }
+        .clues-list li {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #475569;
+        }
+        .clues-list li strong {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <!-- Encabezado Principal -->
+    <header class="text-center mb-12 max-w-4xl w-full">
+        <h1 class="text-5xl sm:text-6xl font-extrabold text-gray-800 leading-tight mb-4 animate-pulse">
+            <span class="text-purple-700">El Vestido de Terciopelo</span>
+            <br>
+            <span class="text-indigo-600">Un Misterio que Te Atrapa</span>
+        </h1>
+        <p class="text-xl text-gray-600">
+            ¡Prepárate para sumergirte en el inquietante mundo de Silvina Ocampo!
+            Aquí desentrañaremos los secretos de un cuento que te hará pensar...
+        </p>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-6xl w-full space-y-16">
+
+        <!-- Sección 1: Resúmenes Visuales y Dinámicos -->
+        <section class="bg-white p-8 rounded-2xl shadow-xl">
+            <h2 class="section-title mb-8 text-center">
+                <i class="fas fa-book-open mr-3 text-purple-500"></i>
+                Resumen Express: ¡No te pierdas ningún detalle!
+            </h2>
+            <div class="space-y-4">
+                <!-- Acordeón 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="text-lg font-semibold"><i class="fas fa-gem mr-2"></i> Parte 1: El Comienzo de la Obsesión</span>
+                        <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Todo empieza cuando la tía Leonor, una mujer con una personalidad muy particular,
+                            se encapricha con un <strong class="text-purple-600">vestido de terciopelo</strong> en una tienda.
+                            No es un vestido cualquiera; parece tener una cualidad magnética, casi viva.
+                            Desde el momento en que lo compra, el vestido se convierte en el centro de su universo,
+                            desplazando todo lo demás.
+                        </p>
+                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                            <i class="fas fa-lightbulb text-yellow-500"></i>
+                            <span>¿Sabías que la obsesión por un objeto puede ser un tema recurrente en la literatura?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acordeón 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="text-lg font-semibold"><i class="fas fa-hat-wizard mr-2"></i> Parte 2: El Vestido Cobra Vida Propia</span>
+                        <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            Lo extraño comienza cuando la tía Leonor empieza a sentir que el vestido
+                            no es solo una prenda. Lo acaricia, le habla, lo trata como si fuera un ser vivo.
+                            La narradora, su sobrina, observa con preocupación cómo la tía se aísla,
+                            cada vez más absorta en su relación con el terciopelo.
+                            La línea entre la realidad y la fantasía se vuelve borrosa.
+                        </p>
+                        <table class="min-w-full bg-blue-50 rounded-lg shadow-sm mt-4">
+                            <thead>
+                                <tr class="bg-blue-200 text-blue-800">
+                                    <th class="px-4 py-2 text-left">Elemento</th>
+                                    <th class="px-4 py-2 text-left">Descripción / Efecto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border px-4 py-2">Tía Leonor</td>
+                                    <td class="border px-4 py-2">Pasa de la curiosidad a una obsesión enfermiza.</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">El Vestido</td>
+                                    <td class="border px-4 py-2">Parece adquirir una presencia, "respira" o "se mueve".</td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2">La Sobrina</td>
+                                    <td class="border px-4 py-2">Testigo preocupada, intenta comprender lo que sucede.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Acordeón 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="text-lg font-semibold"><i class="fas fa-ghost mr-2"></i> Parte 3: Un Final Inquietante</span>
+                        <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700 mb-4">
+                            El clímax llega cuando la tía Leonor parece <strong class="text-red-600">desaparecer</strong>.
+                            ¿Se fusionó con el vestido? ¿Fue absorbida por él? Ocampo nos deja con un
+                            <strong class="text-indigo-600">final abierto</strong>, lleno de ambigüedad,
+                            que es una de las características más fascinantes de su estilo.
+                            El cuento nos invita a reflexionar sobre la identidad, la locura y lo inexplicable.
+                        </p>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md mt-4" role="alert">
+                            <p class="font-bold">¡Piensa como un detective!</p>
+                            <p>¿Qué crees que le pasó realmente a la tía Leonor? ¡No hay una única respuesta!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: Infografía Llamativa -->
+        <section class="bg-white p-8 rounded-2xl shadow-xl">
+            <h2 class="section-title mb-8 text-center">
+                <i class="fas fa-chart-pie mr-3 text-green-500"></i>
+                Infografía: Diseccionando el Misterio
+            </h2>
+            <p class="text-center text-gray-600 mb-8">
+                Aquí te presentamos los elementos clave de "El Vestido de Terciopelo" de forma visual y rápida.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="icon-box">
+                    <i class="fas fa-user-circle"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Personajes Clave</h3>
+                    <ul class="list-none p-0 text-gray-700">
+                        <li><span class="font-bold text-purple-600">Tía Leonor:</span> Protagonista, obsesionada.</li>
+                        <li><span class="font-bold text-purple-600">La Sobrina:</span> Narradora, testigo.</li>
+                    </ul>
+                </div>
+                <div class="icon-box">
+                    <i class="fas fa-tshirt"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">El Objeto Central</h3>
+                    <p class="text-gray-700">
+                        <span class="font-bold text-purple-600">El Vestido de Terciopelo:</span> Más que una prenda, un símbolo de la obsesión y lo fantástico.
+                    </p>
+                </div>
+                <div class="icon-box">
+                    <i class="fas fa-brain"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Temas Principales</h3>
+                    <ul class="list-none p-0 text-gray-700">
+                        <li><span class="font-bold text-purple-600">Obsesión:</span> El motor de la trama.</li>
+                        <li><span class="font-bold text-purple-600">Identidad:</span> ¿Quién es Leonor sin el vestido?</li>
+                        <li><span class="font-bold text-purple-600">Lo Fantástico / Inquietante:</span> La realidad se distorsiona.</li>
+                    </ul>
+                </div>
+                <div class="icon-box">
+                    <i class="fas fa-moon"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Atmósfera</h3>
+                    <p class="text-gray-700">
+                        <span class="font-bold text-purple-600">Misteriosa y Perturbadora:</span> Sensación de que algo no está bien.
+                    </p>
+                </div>
+                <div class="icon-box">
+                    <i class="fas fa-question-circle"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">El Final Abierto</h3>
+                    <p class="text-gray-700">
+                        Ocampo no da respuestas claras, invitando a la <span class="font-bold text-purple-600">interpretación personal</span>.
+                    </p>
+                </div>
+                <div class="icon-box">
+                    <i class="fas fa-feather-alt"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Estilo de Ocampo</h3>
+                    <p class="text-gray-700">
+                        Brevedad, precisión, y la habilidad de crear mundos <span class="font-bold text-purple-600">inquietantes</span> con pocos elementos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3: Actividades Dinámicas y Juegos Educativos -->
+        <section class="bg-white p-8 rounded-2xl shadow-xl">
+            <h2 class="section-title mb-8 text-center">
+                <i class="fas fa-gamepad mr-3 text-orange-500"></i>
+                ¡Manos a la Obra! Actividades para Desafiarte
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="activity-card">
+                    <h3 class="text-2xl mb-4">
+                        <i class="fas fa-search mr-2 text-blue-500"></i>
+                        Actividad 1: Detective Literario
+                    </h3>
+                    <p class="mb-4">
+                        <strong>Mecánica:</strong> Te daremos una serie de citas clave del cuento. Tu misión es identificar qué personaje lo dice (o a quién se refiere) y explicar qué revela esa frase sobre la trama, el personaje o la atmósfera.
+                    </p>
+                    <p class="mb-4">
+                        <strong>Relación con el contenido:</strong> Fomenta la lectura atenta, la identificación de ideas principales y la inferencia a partir del texto.
+                    </p>
+                    <p class="mb-4">
+                        <span class="font-bold text-indigo-600">Ejemplo de cita:</span> "El terciopelo es una materia viva, que respira."
+                        <br>
+                        <span class="text-sm text-gray-500">¿Quién podría decir esto? ¿Qué nos dice sobre la relación con el vestido?</span>
+                    </p>
+                    <button class="btn-primary mt-4">¡Empezar a investigar!</button>
+                </div>
+
+                <div class="activity-card">
+                    <h3 class="text-2xl mb-4">
+                        <i class="fas fa-pen-nib mr-2 text-green-500"></i>
+                        Actividad 2: El Final Alternativo
+                    </h3>
+                    <p class="mb-4">
+                        <strong>Mecánica:</strong> El cuento de Silvina Ocampo tiene un final muy abierto. ¡Es tu turno de ser el autor! Escribe un párrafo (o dos) donde propongas un final diferente para la tía Leonor y el vestido. ¿Qué le sucede? ¿Hay una explicación lógica o sigue siendo misterioso?
+                    </p>
+                    <p class="mb-4">
+                        <strong>Relación con el contenido:</strong> Desarrolla la creatividad, la comprensión de la trama y los personajes, y la capacidad de jugar con los elementos fantásticos del cuento.
+                    </p>
+                    <p class="mb-4">
+                        <span class="font-bold text-indigo-600">Pista:</span> Puedes imaginar que el vestido la transforma, que alguien la rescata, o que el misterio se resuelve de una forma inesperada.
+                    </p>
+                    <button class="btn-primary mt-4">¡A escribir!</button>
+                </div>
+
+                <div class="activity-card lg:col-span-2">
+                    <h3 class="text-2xl mb-4">
+                        <i class="fas fa-puzzle-piece mr-2 text-red-500"></i>
+                        Actividad 3: Conecta la Idea (Juego de Relaciones)
+                    </h3>
+                    <p class="mb-4">
+                        <strong>Mecánica:</strong> Imagina un juego donde aparecen dos columnas. En una columna, tienes conceptos o palabras clave del cuento (ej. "Obsesión", "Ambiente Inquietante", "Final Abierto"). En la otra columna, tienes ejemplos o descripciones de esos conceptos tomados del cuento. Debes unir cada concepto con su ejemplo correcto.
+                    </p>
+                    <p class="mb-4">
+                        <strong>Relación con el contenido:</strong> Refuerza la comprensión de vocabulario, temas y elementos narrativos, y la capacidad de asociar ideas abstractas con ejemplos concretos del texto.
+                    </p>
+                    <p class="mb-4">
+                        <span class="font-bold text-indigo-600">Ejemplo:</span>
+                        <br>
+                        Columna A: "Obsesión"
+                        <br>
+                        Columna B: "La tía Leonor pasa horas acariciando el vestido y hablándole."
+                    </p>
+                    <button class="btn-primary mt-4">¡A jugar!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4: Crucigrama Misterioso -->
+        <section class="bg-white p-8 rounded-2xl shadow-xl">
+            <h2 class="section-title mb-8 text-center">
+                <i class="fas fa-crosshairs mr-3 text-red-500"></i>
+                Crucigrama Misterioso: ¡Pon a prueba tu memoria!
+            </h2>
+            <p class="text-center text-gray-600 mb-8">
+                ¡Demuestra cuánto sabes sobre "El Vestido de Terciopelo" resolviendo este crucigrama!
+            </p>
+
+            <div class="flex flex-col lg:flex-row gap-8 justify-center items-start">
+                <!-- Crucigrama Grid -->
+                <div id="crossword-grid" class="crossword-grid" style="--grid-cols: 15;">
+                    <!-- Cells will be generated by JavaScript -->
+                </div>
+
+                <!-- Clues and Buttons -->
+                <div class="flex flex-col gap-6 w-full lg:w-1/3">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Pistas Horizontales</h3>
+                        <ul class="clues-list">
+                            <li>1. Nombre de la tía obsesionada con el vestido.</li>
+                            <li>3. Sentimiento que domina a la tía Leonor.</li>
+                            <li>5. Apellido de la autora del cuento.</li>
+                            <li>7. Material principal del vestido.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Pistas Verticales</h3>
+                        <ul class="clues-list">
+                            <li>2. Prenda central del cuento.</li>
+                            <li>4. La atmósfera general del cuento.</li>
+                            <li>6. Parte del cuento que queda abierto.</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                        <button id="check-crossword-btn" class="btn-primary flex-1">
+                            <i class="fas fa-check-circle mr-2"></i> Verificar Crucigrama
+                        </button>
+                        <button id="clear-crossword-btn" class="btn-primary flex-1 bg-gray-500 hover:bg-gray-600">
+                            <i class="fas fa-eraser mr-2"></i> Borrar
+                        </button>
+                    </div>
+                    <p id="crossword-feedback" class="text-center font-bold text-lg mt-4 hidden"></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="mt-16 text-center text-gray-500 text-sm">
+        <p>&copy; 2025 Recursos Didácticos Innovadores. Creado para alumnos de secundaria en Buenos Aires.</p>
+    </footer>
+
+    <script>
+        // JavaScript para la funcionalidad de acordeón
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionContent = header.nextElementSibling;
+                    const icon = header.querySelector('.fa-chevron-down');
+
+                    // Cierra todos los demás acordeones
+                    document.querySelectorAll('.accordion-content.active').forEach(content => {
+                        if (content !== accordionContent) {
+                            content.classList.remove('active');
+                            content.previousElementSibling.querySelector('.fa-chevron-down').classList.remove('rotate-180');
+                        }
+                    });
+
+                    // Abre o cierra el acordeón actual
+                    accordionContent.classList.toggle('active');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // --- Lógica del Crucigrama ---
+
+            // Dimensiones de la cuadrícula
+            const GRID_ROWS = 10;
+            const GRID_COLS = 15;
+            // Matriz para almacenar los caracteres de las palabras en la cuadrícula
+            let grid = Array(GRID_ROWS).fill(null).map(() => Array(GRID_COLS).fill(null));
+
+            // Datos del crucigrama: palabra, pista, posición inicial y dirección
+            const crosswordData = [
+                { word: "LEONOR", clue: "1. Nombre de la tía obsesionada con el vestido. (Horizontal)", start_row: 0, start_col: 0, direction: "across" },
+                { word: "VESTIDO", clue: "2. Prenda central del cuento. (Vertical)", start_row: 0, start_col: 2, direction: "down" },
+                { word: "OBSESION", clue: "3. Sentimiento que domina a la tía Leonor. (Horizontal)", start_row: 4, start_col: 0, direction: "across" },
+                { word: "MISTERIO", clue: "4. La atmósfera general del cuento. (Vertical)", start_row: 0, start_col: 4, direction: "down" },
+                { word: "OCAMPO", clue: "5. Apellido de la autora del cuento. (Horizontal)", start_row: 2, start_col: 2, direction: "across" },
+                { word: "FINAL", clue: "6. Parte del cuento que queda abierto. (Vertical)", start_row: 4, start_col: 6, direction: "down" },
+                { word: "TERCIOPELO", clue: "7. Material principal del vestido. (Horizontal)", start_row: 6, start_col: 0, direction: "across" }
+            ];
+
+            // Función para poblar la matriz 'grid' con las palabras del crucigrama
+            function populateGrid() {
+                crosswordData.forEach(wordData => {
+                    const { word, start_row, start_col, direction } = wordData;
+                    for (let i = 0; i < word.length; i++) {
+                        const char = word[i];
+                        let row = start_row;
+                        let col = start_col;
+
+                        if (direction === "across") {
+                            col += i;
+                        } else { // down
+                            row += i;
+                        }
+                        // Asegurarse de que la posición esté dentro de los límites de la cuadrícula
+                        if (row < GRID_ROWS && col < GRID_COLS) {
+                            grid[row][col] = char;
+                        }
+                    }
+                });
+            }
+
+            // Función para generar la cuadrícula HTML del crucigrama
+            function generateCrosswordGrid() {
+                const crosswordContainer = document.getElementById('crossword-grid');
+                crosswordContainer.innerHTML = ''; // Limpiar cualquier cuadrícula previa
+
+                // Establecer la variable CSS para el número de columnas
+                crosswordContainer.style.setProperty('--grid-cols', GRID_COLS);
+
+                for (let r = 0; r < GRID_ROWS; r++) {
+                    for (let c = 0; c < GRID_COLS; c++) {
+                        const cell = document.createElement('input');
+                        cell.type = 'text';
+                        cell.maxLength = '1';
+                        cell.classList.add('crossword-cell');
+                        cell.dataset.row = r;
+                        cell.dataset.col = c;
+
+                        // Si la celda no es parte de ninguna palabra, deshabilitarla y darle estilo de celda "negra"
+                        if (grid[r][c] === null) {
+                            cell.classList.add('bg-gray-700', 'cursor-not-allowed');
+                            cell.disabled = true;
+                        } else {
+                            cell.classList.add('bg-white');
+                            // Opcional: añadir números de pista a las celdas iniciales
+                            crosswordData.forEach((word, index) => {
+                                if (word.start_row === r && word.start_col === c) {
+                                    const clueNumberSpan = document.createElement('span');
+                                    clueNumberSpan.textContent = `${index + 1}`;
+                                    clueNumberSpan.classList.add('absolute', 'top-0', 'left-0', 'text-xs', 'font-bold', 'text-gray-500', 'p-0.5');
+                                    cell.style.position = 'relative'; // Necesario para posicionar el span
+                                    cell.appendChild(clueNumberSpan);
+                                }
+                            });
+                        }
+                        crosswordContainer.appendChild(cell);
+                    }
+                }
+            }
+
+            // Función para verificar las respuestas del crucigrama
+            function checkCrossword() {
+                let allCorrect = true;
+                crosswordData.forEach(wordData => {
+                    const { word, start_row, start_col, direction } = wordData;
+                    let currentInput = "";
+                    let wordCells = []; // Para almacenar las celdas de la palabra actual
+
+                    for (let i = 0; i < word.length; i++) {
+                        let row = start_row;
+                        let col = start_col;
+                        if (direction === "across") {
+                            col += i;
+                        } else {
+                            row += i;
+                        }
+                        const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                        if (cell) {
+                            currentInput += cell.value.toUpperCase();
+                            wordCells.push(cell);
+                        }
+                    }
+
+                    if (currentInput === word) {
+                        // Marcar la palabra como correcta
+                        wordCells.forEach(cell => {
+                            cell.classList.remove('border-red-500', 'text-red-500');
+                            cell.classList.add('border-green-500', 'text-green-600');
+                        });
+                    } else {
+                        allCorrect = false;
+                        // Marcar la palabra como incorrecta
+                        wordCells.forEach(cell => {
+                            cell.classList.remove('border-green-500', 'text-green-600');
+                            cell.classList.add('border-red-500', 'text-red-500');
+                        });
+                    }
+                });
+
+                const feedbackMessage = document.getElementById('crossword-feedback');
+                if (allCorrect) {
+                    feedbackMessage.textContent = "¡Felicitaciones! ¡Has completado el crucigrama correctamente!";
+                    feedbackMessage.classList.remove('text-red-600');
+                    feedbackMessage.classList.add('text-green-600');
+                } else {
+                    feedbackMessage.textContent = "Sigue intentando. Hay errores en el crucigrama.";
+                    feedbackMessage.classList.remove('text-green-600');
+                    feedbackMessage.classList.add('text-red-600');
+                }
+                feedbackMessage.classList.remove('hidden');
+            }
+
+            // Función para borrar las celdas del crucigrama
+            function clearCrossword() {
+                const cells = document.querySelectorAll('.crossword-cell');
+                cells.forEach(cell => {
+                    cell.value = '';
+                    cell.classList.remove('border-green-500', 'text-green-600', 'border-red-500', 'text-red-500');
+                });
+                document.getElementById('crossword-feedback').classList.add('hidden');
+            }
+
+            // Inicializar el crucigrama al cargar la página
+            populateGrid();
+            generateCrosswordGrid();
+
+            // Asignar eventos a los botones
+            document.getElementById('check-crossword-btn').addEventListener('click', checkCrossword);
+            document.getElementById('clear-crossword-btn').addEventListener('click', clearCrossword);
+        });
+    </script>
+</body>
+</html>
