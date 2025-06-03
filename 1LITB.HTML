@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Barril de Amontillado: Infografía y Juego</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados para la atmósfera del cuento */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a; /* Fondo oscuro */
+            color: #e0e0e0; /* Texto claro */
+            line-height: 1.6;
+        }
+        .font-creepy {
+            font-family: 'Creepster', cursive; /* Fuente para títulos dramáticos */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        .card {
+            background-color: #2c2c2c; /* Fondo de tarjeta más claro */
+            border-radius: 0.75rem; /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .accordion-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #444;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-top: 0.5rem;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Suficiente para expandir el contenido */
+            transition: max-height 0.5s ease-in;
+        }
+        .icon {
+            font-size: 1.5rem; /* Tamaño de los iconos emoji */
+        }
+        .tweet-card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .tweet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px; /* Círculo perfecto */
+            background-color: #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #eee;
+            margin-right: 0.75rem;
+        }
+        .tweet-content {
+            flex-grow: 1;
+        }
+        .tweet-username {
+            font-weight: 600;
+            color: #eee;
+        }
+        .tweet-handle {
+            color: #999;
+            font-size: 0.875rem;
+        }
+        .tweet-text {
+            margin-top: 0.5rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container">
+        <header class="text-center py-8">
+            <h1 class="text-5xl md:text-6xl font-creepy text-red-600 mb-4 animate-pulse">El Barril de Amontillado</h1>
+            <p class="text-xl md:text-2xl text-gray-300">Recursos Dinámicos para el Aula de Lengua y Literatura</p>
+            <p class="mt-4 text-gray-400">¡Prepárense para desentrañar el misterio de Edgar Allan Poe como nunca antes!</p>
+        </header>
+
+        <section class="mb-12">
+            <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">1. La "Story" del Amontillado</h2>
+            <p class="text-lg text-gray-300 mb-8 text-center">Imaginemos la historia como una serie de "Stories" de Instagram o TikTok. Cada una, un momento clave con un diseño que ¡salta a la vista!</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-red-500 mb-2 flex items-center"><span class="icon mr-2">💥</span> La Chispa de la Venganza</h3>
+                    <p class="text-gray-300">Montresor ya no aguanta más las "mil injurias" de Fortunato. Pero hay una en particular que lo quiebra. ¿Cuál fue? La historia no lo dice, ¡pero la venganza ya es un hecho!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Ojo+Vengador" alt="Ojo con chispa roja" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 💀 o 🗡️</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-blue-400 mb-2 flex items-center"><span class="icon mr-2">🤫</span> El Plan Perfecto: Impunidad y Sutilidad</h3>
+                    <p class="text-gray-300">Montresor no solo quiere castigar, ¡quiere castigar *sin que nadie lo descubra*! Y lo más retorcido: Fortunato no tiene *ni idea* de que Montresor le guarda rencor. ¡Montresor sigue sonriendo en su cara!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Rostro+Sombra" alt="Rostro sonriente con sombra" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🎭 o ⚙️</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-green-400 mb-2 flex items-center"><span class="icon mr-2">🎉</span> El Carnaval: La Trampa Disfrazada</h3>
+                    <p class="text-gray-300">En pleno Carnaval (¡la fiesta del desenfreno y las máscaras!), Montresor encuentra a Fortunato, borracho y disfrazado de payaso. La excusa perfecta: "¡Recibí un barril de *amontillado* y tengo dudas!"</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Antifaz+Barril" alt="Antifaz y barril de vino" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🍷 o 🥳</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-purple-400 mb-2 flex items-center"><span class="icon mr-2">👑</span> Fortunato: El Vino y el Ego</h3>
+                    <p class="text-gray-300">Fortunato es un conocedor de vinos (o eso cree). Montresor lo sabe y usa esa "pasión" como cebo. ¿Mencionar a Luchesi? ¡La competencia despierta su orgullo!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Copa+Borrón" alt="Copa de vino con figura borrosa" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🍇 o 👑</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-gray-400 mb-2 flex items-center"><span class="icon mr-2">⬇️</span> Bajo Tierra: Las Catacumbas</h3>
+                    <p class="text-gray-300">Fortunato, con su disfraz de payaso y sus cascabeles, sigue a Montresor hasta las catacumbas de su familia. ¡Qué frío, qué humedad, qué salitre! Pero el "amontillado" es más fuerte que el resfrío.</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Entrada+Catacumba" alt="Entrada oscura a una catacumba" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🪜 o ⚰️</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-orange-400 mb-2 flex items-center"><span class="icon mr-2">🥂</span> La Última Copa: El Medoc y el Secreto Masón</h3>
+                    <p class="text-gray-300">Montresor le da vino (medoc y De Grave) para la tos y para seguir "lubricando" la trampa. Fortunato, cada vez más ebrio, hace un gesto masón... y Montresor responde con una paleta de albañil. ¡La ironía!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Copas+Paleta" alt="Manos chocando copas con paleta oculta" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🍾 o 🧱</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-red-600 mb-2 flex items-center"><span class="icon mr-2">⛓️</span> El Nicho Final: No Hay Salida</h3>
+                    <p class="text-gray-300">Llegan a un nicho escondido. "¡Aquí está el amontillado!" Y en un instante, ¡Fortunato está encadenado! Montresor saca su paleta y empieza a levantar una pared de ladrillos y mortero. ¡El pánico se apodera de Fortunato!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Agujero+Cadenas" alt="Agujero oscuro con cadenas" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🔗 o 🚧</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-pink-400 mb-2 flex items-center"><span class="icon mr-2">😱</span> Los Gritos y el Silencio</h3>
+                    <p class="text-gray-300">Fortunato grita, sacude las cadenas, y Montresor lo imita, ¡se burla de su desesperación! La risa se convierte en un suspiro. Luego, el silencio. ¡Solo los cascabeles suenan por última vez!</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Máscara+Horror" alt="Máscara de payaso con expresión de horror" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🗣️ o 🔇</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-bold text-gray-500 mb-2 flex items-center"><span class="icon mr-2">⏳</span> El Legado del Crimen</h3>
+                    <p class="text-gray-300">La pared está completa. Montresor termina su "obra" y deja los huesos de los Montresor cubriendo el lugar. Nadie ha tocado esa pared en medio siglo. "¡In pace requiescat!" (¡Que descanse en paz!)</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://placehold.co/150x100/333/eee?text=Muro+Calavera" alt="Muro de ladrillos con calavera" class="rounded-lg shadow-md">
+                    </div>
+                    <p class="text-center text-gray-400 mt-2">Icono: 🔒 o 🗓️</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">2. Infografía Interactiva: El Mapa Mental de la Venganza</h2>
+            <p class="text-lg text-gray-300 mb-8 text-center">Explora la mente de Montresor y el desarrollo de su plan en este mapa conceptual interactivo.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-red-500 flex items-center"><span class="icon mr-2">💔</span> LA INJURIA IGNORADA</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">Montresor sufre "mil injurias" de Fortunato, pero el "insulto" final es lo que desata su sed de venganza.</p>
+                        <p class="text-gray-400 mt-2">**Más sobre la Injuria:** La venganza de Montresor se basa en la necesidad de castigar sin ser descubierto y asegurarse de que la víctima sepa quién es su vengador.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-blue-400 flex items-center"><span class="icon mr-2">⚖️</span> CASTIGAR IMPUNEMENTE</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">La venganza solo vale si: 1) El castigo no perjudica al vengador. 2) La víctima sabe quién lo vengó. 3) Montresor sonríe mientras planea la muerte.</p>
+                        <p class="text-gray-400 mt-2">**La Mente de Montresor:** Su frialdad y cálculo son clave para ejecutar su plan sin remordimientos aparentes.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-yellow-400 flex items-center"><span class="icon mr-2">🍷</span> FORTUNATO: EGO Y VINO</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">Orgulloso conocedor de vinos, vanidoso (especialmente si lo comparan con Luchesi), y borracho en Carnaval, lo que lo vuelve vulnerable.</p>
+                        <p class="text-gray-400 mt-2">**Puntos Débiles:** Su vanidad y su afición al vino son explotadas magistralmente por Montresor.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-green-400 flex items-center"><span class="icon mr-2">🎭</span> EL CARNAVAL Y EL 'AMONTILLADO'</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">La atmósfera de fiesta y disfraces facilita el engaño. La excusa del "barril de amontillado" es irresistible para Fortunato.</p>
+                        <p class="text-gray-400 mt-2">**El Cebo Perfecto:** El "amontillado" es la trampa ideal para atraer a Fortunato a las catacumbas.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-gray-400 flex items-center"><span class="icon mr-2">💀</span> LAS CATACUMBAS DE LOS MONTRESORS</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">Húmedas, cubiertas de salitre, laberínticas y oscuras, llenas de huesos humanos. Criados ausentes por Carnaval.</p>
+                        <p class="text-gray-400 mt-2">**Un Tour por las Catacumbas:** El ambiente opresivo y lúgubre contribuye a la tensión y el terror del relato.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-amber-600 flex items-center"><span class="icon mr-2">🤫</span> MANIPULACIÓN MAESTRA</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">Elogios falsos, mencionar a Luchesi, preocupación fingida, vino para la tos, el juego de la masonería, la trampa final.</p>
+                        <p class="text-gray-400 mt-2">**Cronología del Engaño:** Cada paso de Montresor está fríamente calculado para llevar a Fortunato a su destino final.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-red-600 flex items-center"><span class="icon mr-2">🧱</span> EL MURO FINAL</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">Fortunato encadenado. Se levanta la pared. Gritos de horror y desesperación. Risas y silencio.</p>
+                        <p class="text-gray-400 mt-2">**Momentos de Tensión:** "¡Por el amor de Dios, Montresor!" y el sonido final de los cascabeles.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3 class="text-2xl font-bold text-gray-500 flex items-center"><span class="icon mr-2">🕰️</span> UN SECRETO DE MEDIO SIGLO</h3>
+                        <span class="text-3xl toggle-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-300">El crimen perfecto. Impunidad total. Montresor vive con su secreto. "¡In pace requiescat!"</p>
+                        <p class="text-gray-400 mt-2">**El Legado del Silencio:** La frialdad de Montresor al relatar los hechos 50 años después.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-4xl font-bold text-yellow-500 mb-6 text-center">3. Actividades Dinámicas y Juegos</h2>
+            <p class="text-lg text-gray-300 mb-8 text-center">¡Es hora de poner a prueba su creatividad y comprensión del relato!</p>
+
+            <div class="card mb-8">
+                <h3 class="text-3xl font-bold text-purple-400 mb-4 flex items-center"><span class="icon mr-2">🎧</span> Actividad 1: "El Podcast de la Venganza"</h3>
+                <p class="text-gray-300 mb-4">En grupos, conviértanse en "podcasters" del misterio. Creen un mini-podcast (de 3 a 5 minutos) que narre un fragmento clave de la historia desde la perspectiva de Montresor, Fortunato, o un "testigo" imaginario (¡como un esqueleto de las catacumbas!).</p>
+                <p class="text-gray-300 mb-4">**¡El toque musical/sonoro!** Incluyan efectos de sonido (cascabeles, tos, goteo de agua, gritos, el ruido de la cadena, los ladrillos al ser colocados) y música de fondo que cree esa atmósfera de terror y misterio. Pueden buscar sonidos libres de derechos o usar sus propias ideas.</p>
+                <p class="text-gray-300 mb-4">**Sugerencia:** Podemos iniciar la actividad con un fragmento del audiolibro del cuento para sumergirlos en la atmósfera. (Busquen "El Barril de Amontillado audiolibro" en YouTube).</p>
+                <h4 class="text-xl font-semibold text-gray-200 mt-4 mb-2">Preguntas Guía para el Podcast:</h4>
+                <ul class="list-disc list-inside text-gray-300">
+                    <li>¿Qué sonidos son *esenciales* para que la gente sienta la tensión?</li>
+                    <li>¿Qué tipo de música de fondo elegirían y por qué? (¿Suspense, dramática, silenciosa?)</li>
+                    <li>¿Cómo harían para que la voz de Montresor suene fría y calculadora, y la de Fortunato, asustada o desesperada?</li>
+                </ul>
+                <p class="text-gray-400 mt-4">**Herramientas sugeridas:** Aplicaciones gratuitas de grabación y edición de audio en celulares (ej. Audacity en PC, o grabadoras de voz nativas).</p>
+            </div>
+
+            <div class="card">
+                <h3 class="text-3xl font-bold text-blue-400 mb-4 flex items-center"><span class="icon mr-2">📱</span> Actividad 2: "Los Tweets de Montresor" (¡Juego!)</h3>
+                <p class="text-gray-300 mb-4">Conviértanse en el "community manager" de Montresor. Escriban un tweet que él podría haber publicado antes, durante o después del crimen. ¡Usen hashtags y emojis!</p>
+
+                <div class="mb-4">
+                    <label for="tweetInput" class="block text-gray-300 text-lg font-semibold mb-2">Tu Tweet de Montresor:</label>
+                    <textarea id="tweetInput" class="w-full p-3 rounded-md bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Escribe aquí el tweet de Montresor... #VenganzaPerfecta"></textarea>
+                    <p id="charCount" class="text-sm text-gray-400 text-right mt-1">0/280 caracteres</p>
+                </div>
+                <button id="postTweetBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                    Publicar Tweet
+                </button>
+
+                <div id="tweetsContainer" class="mt-6">
+                    <h4 class="text-2xl font-semibold text-yellow-300 mb-4">Tweets Publicados:</h4>
+                    <div class="tweet-card">
+                        <div class="tweet-avatar">M</div>
+                        <div class="tweet-content">
+                            <span class="tweet-username">Montresor</span> <span class="tweet-handle">@ElMaestroVengador</span>
+                            <p class="tweet-text">Carnaval, la excusa ideal. Fortunato cayó como una pera madura con la palabra 'Amontillado'. 😏 Su debilidad es mi fuerza. #CazandoAlCatador #FortunatoCaera</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // JavaScript para la funcionalidad de los acordeones en la infografía
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const toggleIcon = header.querySelector('.toggle-icon');
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                content.style.maxHeight = '0';
+                toggleIcon.textContent = '+';
+            } else {
+                // Cierra todos los demás acordeones antes de abrir este
+                document.querySelectorAll('.accordion-content.active').forEach(item => {
+                    item.classList.remove('active');
+                    item.style.maxHeight = '0';
+                    item.previousElementSibling.querySelector('.toggle-icon').textContent = '+';
+                });
+
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px'; // Ajusta la altura dinámicamente
+                toggleIcon.textContent = '-';
+            }
+        }
+
+        // JavaScript para el juego "Los Tweets de Montresor"
+        const tweetInput = document.getElementById('tweetInput');
+        const charCount = document.getElementById('charCount');
+        const postTweetBtn = document.getElementById('postTweetBtn');
+        const tweetsContainer = document.getElementById('tweetsContainer');
+        const MAX_CHARS = 280;
+
+        // Actualizar contador de caracteres
+        tweetInput.addEventListener('input', () => {
+            const currentLength = tweetInput.value.length;
+            charCount.textContent = `${currentLength}/${MAX_CHARS} caracteres`;
+            if (currentLength > MAX_CHARS) {
+                charCount.classList.add('text-red-500');
+                postTweetBtn.disabled = true;
+                postTweetBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                charCount.classList.remove('text-red-500');
+                postTweetBtn.disabled = false;
+                postTweetBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        });
+
+        // Publicar tweet
+        postTweetBtn.addEventListener('click', () => {
+            const tweetText = tweetInput.value.trim();
+            if (tweetText.length > 0 && tweetText.length <= MAX_CHARS) {
+                const newTweetCard = document.createElement('div');
+                newTweetCard.classList.add('tweet-card');
+                newTweetCard.innerHTML = `
+                    <div class="tweet-avatar">M</div>
+                    <div class="tweet-content">
+                        <span class="tweet-username">Montresor</span> <span class="tweet-handle">@TuMontresor</span>
+                        <p class="tweet-text">${tweetText}</p>
+                    </div>
+                `;
+                tweetsContainer.prepend(newTweetCard); // Añadir el nuevo tweet al principio
+                tweetInput.value = ''; // Limpiar el input
+                charCount.textContent = `0/${MAX_CHARS} caracteres`; // Resetear contador
+            } else if (tweetText.length === 0) {
+                alert("¡El tweet no puede estar vacío!"); // Usar un modal personalizado en un entorno real
+            }
+        });
+
+        // Función para reproducir un fragmento de audiolibro (simulado)
+        // En un entorno real, aquí cargarías un archivo de audio o usarías una API de audio.
+        // Por la limitación de no usar URLs externas de audio, esto es solo un placeholder.
+        function playAmbientAudio() {
+            // Aquí iría la lógica para cargar y reproducir un fragmento de audiolibro
+            // Por ejemplo:
+            // const audio = new Audio('url_del_audiolibro.mp3');
+            // audio.volume = 0.3; // Volumen bajo para ambientar
+            // audio.loop = true;
+            // audio.play().catch(e => console.log("Error al reproducir audio:", e));
+            console.log("Simulando reproducción de audiolibro para ambientar la clase.");
+            // Podrías mostrar un mensaje en pantalla al usuario para que reproduzca un audiolibro externo.
+        }
+
+        // Llamar a la función de audio al cargar la página (o cuando el usuario interactúe)
+        window.onload = playAmbientAudio;
+
+    </script>
+</body>
+</html>
