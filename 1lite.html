@@ -1,0 +1,916 @@
+
+
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Corazón Delator: Materiales Educativos</title>
+    <!-- Carga de Tailwind CSS desde CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración para usar la fuente Inter -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <div id="root"></div>
+
+    <!-- Carga de React, ReactDOM y Babel desde CDNs -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Componente principal de la aplicación
+        const App = () => {
+          return (
+            <div className="min-h-screen bg-black text-white font-inter p-4 sm:p-8 flex flex-col items-center">
+              {/* Encabezado Principal */}
+              <header className="w-full max-w-4xl text-center mb-12">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-red-500 mb-4 rounded-lg p-2">
+                  El Corazón Delator: Un Viaje a la Mente
+                </h1>
+                <p className="text-lg sm:text-xl text-gray-300">
+                  Explora la obra maestra de Edgar Allan Poe con materiales educativos dinámicos y cautivadores.
+                </p>
+              </header>
+
+              {/* Sección de Resumen */}
+              <SummarySection />
+
+              {/* Sección de Infografías (Concepto) */}
+              <InfographicConceptSection />
+
+              {/* Sección de Elementos Interactivos (Menús Desplegables) */}
+              <InteractiveElementsSection />
+
+              {/* Sección de Juegos Educativos */}
+              <GameSection />
+
+              {/* Pie de página */}
+              <footer className="w-full max-w-4xl text-center mt-12 py-4 border-t border-gray-700 text-gray-500 text-sm">
+                <p>© 2025 Asistente de IA para Diseño Instruccional</p>
+              </footer>
+            </div>
+          );
+        };
+
+        // Componente para la sección de Resumen
+        const SummarySection = () => {
+          // Estado para controlar qué parte del resumen está activa
+          const [activeTab, setActiveTab] = React.useState('introduccion');
+
+          const tabs = [
+            { id: 'introduccion', name: 'La Voz que te Desafía', icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> },
+            { id: 'plan', name: 'La Sombra del Buitre', icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-2"><path d="M15 14v1a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3v-1"/><path d="M12 22v-3"/><path d="M12 2c-2.2 0-4 1.8-4 4 0 1.8 1 3.5 2 4.2V12h4v-1.8c1-.7 2-2.4 2-4.2 0-2.2-1.8-4-4-4Z"/></svg> },
+            { id: 'confesion', name: 'El Sonido que lo Traicionó', icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> },
+          ];
+
+          return (
+            <section className="w-full max-w-4xl bg-gray-900 p-6 rounded-xl shadow-lg mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-3"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Documentos de Resumen
+              </h2>
+
+              {/* Navegación por pestañas */}
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-300 ${
+                      activeTab === tab.id
+                        ? 'bg-red-600 text-white shadow-md'
+                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    }`}
+                    onClick={() => setActiveTab(tab.id)}
+                  >
+                    {tab.icon} {tab.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Contenido de las pestañas */}
+              <div className="bg-gray-800 p-6 rounded-lg">
+                {activeTab === 'introduccion' && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-400 mb-3">La Voz que te Desafía</h3>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">Narrador Inquietante:</span> Conoce al personaje principal, quien desde el inicio intenta convencerte de su cordura, ¡pero sus acciones cuentan otra historia!
+                    </p>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">Sentidos Agudizados:</span> Afirma que su "enfermedad" ha afinado sus sentidos, especialmente el oído, permitiéndole escuchar "todas las cosas del cielo y de la tierra, y no pocas del infierno."
+                    </p>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">El Motivo Inesperado:</span> No hay odio ni envidia de oro, solo una obsesión por un "ojo de buitre" que le helaba la sangre.
+                    </p>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full bg-gray-700 rounded-lg overflow-hidden">
+                        <thead>
+                          <tr className="bg-gray-600">
+                            <th className="py-2 px-4 text-left font-bold text-red-300">¿Loco?</th>
+                            <th className="py-2 px-4 text-left font-bold text-red-300">¿Cuerdo?</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="py-2 px-4 border-t border-gray-600">Cree escuchar cosas del infierno.</td>
+                            <td className="py-2 px-4 border-t border-gray-600">Razona sobre su método.</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-4 border-t border-gray-600">Obsesión por un ojo.</td>
+                            <td className="py-2 px-4 border-t border-gray-600">Planificación meticulosa.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+                {activeTab === 'plan' && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-400 mb-3">La Sombra del Buitre: El Plan Macabro</h3>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">Semana a Semana: La Preparación Perfecta</span>
+                    </p>
+                    <ul className="list-disc pl-6 mb-4 text-gray-200">
+                      <li><span className="font-bold text-white">Amabilidad Falsa:</span> Durante la semana previa, el narrador fue "tan amable con el viejo" como nunca.</li>
+                      <li><span className="font-bold text-white">Ritual Nocturno:</span> Todas las noches, a medianoche, un ritual de apertura de puerta silenciosa, introducción de la cabeza y la linterna sorda.</li>
+                      <li><span className="font-bold text-white">La Linterna y el Ojo:</span> Solo un "imperceptible rayo de luz" para iluminar el ojo de buitre, ¡su verdadero objetivo!</li>
+                      <li><span className="font-bold text-white">Paciencia Insana:</span> Siete largas noches con el ojo cerrado, impidiendo la "obra".</li>
+                    </ul>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">La Octava Noche: El Desenlace</span>
+                    </p>
+                    <ul className="list-disc pl-6 text-gray-200">
+                      <li><span className="font-bold text-white">Cautela Extrema:</span> Movimientos más lentos que la aguja de un reloj.</li>
+                      <li><span className="font-bold text-white">El Resbalón y el Grito:</span> Un descuido con el muelle de la linterna y un grito del viejo.</li>
+                      <li><span className="font-bold text-white">El Latido Creciente:</span> El narrador oye el corazón del viejo, un sonido que aumenta su furia y su terror.</li>
+                    </ul>
+                  </div>
+                )}
+                {activeTab === 'confesion' && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-400 mb-3">El Sonido que lo Traicionó: Culpa y Confesión</h3>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">El Crimen y el Ocultamiento</span>
+                    </p>
+                    <ul className="list-disc pl-6 mb-4 text-gray-200">
+                      <li><span className="font-bold text-white">Un Grito y Silencio:</span> El viejo solo profirió un grito.</li>
+                      <li><span className="font-bold text-white">La Muerte y el Cese del Latido:</span> El corazón deja de latir, el ojo deja de atormentar.</li>
+                      <li><span className="font-bold text-white">Precauciones Macabras:</span> Desmembramiento del cuerpo y ocultamiento bajo las tablas del suelo.</li>
+                      <li><span className="font-bold text-white">Sin Manchas:</span> Gracias a la prudencia, ¡no hubo necesidad de limpiar!</li>
+                    </ul>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">La Visita Inesperada</span>
+                    </p>
+                    <ul className="list-disc pl-6 mb-4 text-gray-200">
+                      <li><span className="font-bold text-white">Oficiales de Policía:</span> Un grito nocturno alertó a los vecinos, llevando a la llegada de la policía.</li>
+                      <li><span className="font-bold text-white">Confianza Extrema:</span> El narrador los recibe con calma, inventa una excusa para el grito y los invita a registrar toda la casa.</li>
+                      <li><span className="font-bold text-white">La Silla Fatídica:</span> Se sienta justo encima del cadáver, con "la loca audacia de un triunfo completo".</li>
+                    </ul>
+                    <p className="mb-4">
+                      <span className="font-bold text-white">El Sonido de la Culpa</span>
+                    </p>
+                    <ul className="list-disc pl-6 text-gray-200">
+                      <li><span className="font-bold text-white">El Zumbido:</span> Un zumbido en los oídos del narrador que se intensifica.</li>
+                      <li><span className="font-bold text-white">El Corazón Reaparece:</span> El zumbido no es en sus oídos, ¡es el latido ahogado del corazón del viejo!</li>
+                      <li><span className="font-bold text-white">La Paranoia:</span> Cree que los oficiales lo oyen y se burlan de él.</li>
+                      <li><span className="font-bold text-white">La Confesión Explosiva:</span> No puede soportar más las "hipócritas sonrisas" y confiesa el crimen, ¡revelando el latido del "espantoso corazón"!</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        };
+
+        // Componente para la sección de Infografías (Concepto)
+        const InfographicConceptSection = () => {
+          return (
+            <section className="w-full max-w-4xl bg-gray-900 p-6 rounded-xl shadow-lg mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-3"><path d="M4 14a1 1 0 0 1-.49-1.96l4-7.92A1 1 0 0 1 9 4h1a1 1 0 0 1 .49 1.96l-4 7.92A1 1 0 0 1 4 14Z"/><path d="M19 10a1 1 0 0 1 .49 1.96l-4 7.92A1 1 0 0 1 15 20h-1a1 1 0 0 1-.49-1.96l4-7.92A1 1 0 0 1 19 10Z"/><path d="M9.5 16h5"/></svg>Infografías Dinámicas (Concepto)
+              </h2>
+              <p className="text-gray-300 mb-6 text-center">
+                Aquí te presentamos la estructura y el contenido conceptual para infografías visualmente impactantes, con un diseño que sugiere colores llamativos, uso prominente de iconos, gráficos y texto resaltado.
+              </p>
+
+              {/* Concepto 1: Anatomía de una Obsesión */}
+              <div className="bg-gray-800 p-6 rounded-lg mb-6">
+                <h3 className="text-2xl font-semibold text-red-400 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>ANATOMÍA DE UNA OBSESIÓN: El Corazón Delator
+                </h3>
+                <p className="text-gray-200 mb-4">
+                  **Concepto Visual:** Un diseño circular o en espiral que guía la mirada. Fondo oscuro, elementos en blanco y rojo.
+                </p>
+                <ul className="list-disc pl-6 text-gray-200">
+                  <li>
+                    <span className="font-bold text-white">Sección 1: El Desencadenante</span> (Icono: Ojo de buitre)
+                    <br />
+                    Texto: "No es odio ni oro, es un ojo... 'semejaba al de un buitre y tenía el color azul pálido'. Cada vez que este ojo fijaba en mí su mirada, se me helaba la sangre."
+                    <br />
+                    Gráfico: Un pequeño gráfico de un ojo en el centro, con flechas que salen de él hacia la "obsesión".
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Sección 2: La Metodología</span> (Icono: Linterna sorda)
+                    <br />
+                    Texto: "Paciencia extrema, movimientos lentos, una linterna sorda que solo emite 'un imperceptible rayo de luz'."
+                    <br />
+                    Iconos: Siluetas de un reloj, una mano cautelosa, la linterna.
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Sección 3: El Sonido de la Culpa</span> (Icono: Corazón latiendo / Ondas de sonido)
+                    <br />
+                    Texto: "Un 'ruido sordo, ahogado y frecuente, semejante al que produce un reloj envuelto en algodón'. Primero del anciano, luego en la mente del narrador."
+                    <br />
+                    Gráfico: Ondas de sonido que se intensifican, cambiando de un color tenue a un rojo vibrante.
+                  </li>
+                </ul>
+              </div>
+
+              {/* Concepto 2: El Ciclo de la Locura */}
+              <div className="bg-gray-800 p-6 rounded-lg">
+                <h3 className="text-2xl font-semibold text-red-400 mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-2"><path d="M12 5c-3.3 0-6 2.7-6 6v2c0 2.2 1.8 4 4 4h.5c.3 0 .5.2.5.5v2c0 .3.2.5.5.5h3c.3 0 .5-.2.5-.5v-2c0-.3.2-.5.5-.5H18c2.2 0 4-1.8 4-4v-2c0-3.3-2.7-6-6-6Z"/><path d="M12 5v-.3c0-.9-.7-1.7-1.7-1.7H9c-1.3 0-2.3.9-2.3 2.2v.3"/><path d="M12 5v-.3c0-.9.7-1.7 1.7-1.7H15c1.3 0 2.3.9 2.3 2.2v.3"/></svg>EL CICLO DE LA LOCURA: El Corazón Delator
+                </h3>
+                <p className="text-gray-200 mb-4">
+                  **Concepto Visual:** Un ciclo o espiral en blanco y negro que representa la progresión. Los iconos y el texto resaltado en rojo marcan cada etapa.
+                </p>
+                <ul className="list-disc pl-6 text-gray-200">
+                  <li>
+                    <span className="font-bold text-white">Etapa 1: Obsesión</span> (Icono: Cerebro)
+                    <br />
+                    Texto: "Una idea 'concebida' que no pudo desechar 'ni de noche ni de día'. La necesidad de 'librarme para siempre de aquel ojo que me molestaba'."
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Etapa 2: Planificación</span> (Icono: Engranajes)
+                    <br />
+                    Texto: "Buen juicio, tacto y disimulo. Una hora cada noche para ver al viejo. 'Un loco no habría sido tan prudente'."
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Etapa 3: Ejecución</span> (Icono: Cuchillo / Martillo)
+                    <br />
+                    Texto: "El grito. El desmembramiento. El ocultamiento perfecto. 'Ningún ojo humano... hubiera podido descubrir nada'."
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Etapa 4: Paranoia</span> (Icono: Oído / Signo de interrogación)
+                    <br />
+                    Texto: "El zumbido que se transforma en el latido del corazón. La certeza de que '¡Oían! ¡Sospechaban; lo "sabían" todo; se divertían con mi espanto!'"
+                  </li>
+                  <li className="mt-2">
+                    <span className="font-bold text-white">Etapa 5: Confesión</span> (Icono: Boca abierta / Exclamación)
+                    <br />
+                    Texto: "La incapacidad de soportar más. '¡Comprendí que era preciso gritar o morir!' '¡Es el latido de su espantoso corazón!'"
+                  </li>
+                </ul>
+              </div>
+            </section>
+          );
+        };
+
+        // Componente para la sección de Elementos Interactivos
+        const InteractiveElementsSection = () => {
+          // Estado para controlar qué desplegable está abierto
+          const [openDropdown, setOpenDropdown] = React.useState(null);
+
+          // Función para alternar la visibilidad de un desplegable
+          const toggleDropdown = (id) => {
+            setOpenDropdown(openDropdown === id ? null : id);
+          };
+
+          const dropdowns = [
+            {
+              id: 'narrador',
+              title: '¿Quién es el Narrador? Un Retrato Psicológico',
+              content: (
+                <>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Su Afirmación:</span> "¡Es verdad! Soy muy nervioso, horrorosamente nervioso, siempre lo fui, pero, ¿por qué pretendéis que esté loco?"
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Su Auto-Percepción:</span> "La enfermedad ha aguzado mis sentidos, sin destruirlos ni embotarlos. Tenía el oído muy fino; ninguno le igualaba."
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Su Razón:</span> Argumenta que los locos no razonan, y él demuestra su "buen juicio" al planear el crimen.
+                  </p>
+                  <p>
+                    <span className="font-bold text-white">Su Verdadera Motivación:</span> No hay un motivo lógico, solo la obsesión con el "ojo de buitre" del anciano.
+                  </p>
+                </>
+              ),
+            },
+            {
+              id: 'ojo',
+              title: 'El Ojo del Buitre: El Origen de la Obsesión',
+              content: (
+                <>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Descripción:</span> "Era uno de sus ojos, sí, esto es! Se asemejaba al de un buitre y tenía el color azul pálido."
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Efecto:</span> "Cada vez que este ojo fijaba en mí su mirada, se me helaba la sangre en las venas."
+                  </p>
+                  <p>
+                    <span className="font-bold text-white">El Propósito:</span> Eliminar el ojo para "librarme para siempre de aquel ojo que me molestaba."
+                  </p>
+                </>
+              ),
+            },
+            {
+              id: 'noche',
+              title: 'La Noche del Terror: Paso a Paso hacia el Crimen',
+              content: (
+                <>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">Rutina de Preparación:</span> Siete noches de acercamientos sigilosos, abriendo la puerta y la linterna con extrema cautela.
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">El Punto de Inflexión:</span> La octava noche, el ruido del pulgar en el muelle de la linterna despierta al anciano.
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">El Sonido de la Angustia:</span> El narrador escucha la queja del anciano, un "ruido sordo y ahogado que se eleva del fondo de un alma poseída por el espanto."
+                  </p>
+                  <p>
+                    <span className="font-bold text-white">El Latido Fatal:</span> El corazón del anciano late con más fuerza, desencadenando la furia final del narrador.
+                  </p>
+                </>
+              ),
+            },
+            {
+              id: 'confesion-interactiva',
+              title: 'La Confesión: Cuando la Culpa Emerge',
+              content: (
+                <>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">El Engaño Inicial:</span> La calma y la sonrisa del narrador al recibir a la policía, invitándolos a registrar la casa.
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">El Sonido Irrefutable:</span> Un "zumbido" inicial que el narrador atribuye a su cabeza, pero que pronto reconoce como el latido del corazón del viejo.
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">La Escalada de la Locura:</span> La desesperación, la voz que se alza, los gestos exagerados para ahogar el sonido.
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold text-white">El Fin de la Farsa:</span> La convicción de que los oficiales lo saben y se burlan. "¡Comprendí que era preciso gritar o morir!"
+                  </p>
+                  <p>
+                    <span className="font-bold text-white">La Declaración Final:</span> "¡Arrancad esas tablas; ahí está, ahí está! ¡Es el latido de su espantoso corazón!"
+                  </p>
+                </>
+              ),
+            },
+          ];
+
+          return (
+            <section className="w-full max-w-4xl bg-gray-900 p-6 rounded-xl shadow-lg mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Elementos Interactivos (Menús Desplegables)
+              </h2>
+              <p className="text-gray-300 mb-6 text-center">
+                Haz clic en los títulos para revelar más información sobre los aspectos clave de la historia.
+              </p>
+
+              {dropdowns.map((item) => (
+                <div key={item.id} className="mb-4">
+                  <button
+                    className="flex justify-between items-center w-full bg-gray-800 hover:bg-gray-700 text-red-400 font-semibold py-3 px-4 rounded-lg shadow-md transition-colors duration-300"
+                    onClick={() => toggleDropdown(item.id)}
+                  >
+                    <span className="text-xl">{item.title}</span>
+                    {openDropdown === item.id ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>}
+                  </button>
+                  {openDropdown === item.id && (
+                    <div className="bg-gray-800 p-4 mt-2 rounded-lg text-gray-200 border border-gray-700">
+                      {item.content}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </section>
+          );
+        };
+
+        // Componente de la Trivia
+        const TriviaGame = () => {
+          const triviaQuestions = [
+            {
+              question: "¿Cuál es el motivo principal por el que el narrador decide matar al anciano?",
+              options: [
+                { text: "Envidia por su riqueza.", isCorrect: false },
+                { text: "Odio personal hacia el anciano.", isCorrect: false },
+                { text: "Obsesión por el 'ojo de buitre' del anciano.", isCorrect: true },
+                { text: "El anciano le había hecho daño en el pasado.", isCorrect: false },
+              ],
+              explanation: "El narrador deja claro que no hay odio ni envidia, solo una profunda obsesión por el ojo del anciano.",
+            },
+            {
+              question: "¿Qué sonido es el que finalmente lleva al narrador a confesar su crimen?",
+              options: [
+                { text: "El grito del anciano.", isCorrect: false },
+                { text: "El zumbido en sus propios oídos.", isCorrect: false },
+                { text: "El latido del corazón del anciano (alucinación).", isCorrect: true },
+                { text: "Las voces de los policías.", isCorrect: false },
+              ],
+              explanation: "Aunque inicialmente lo atribuye a un zumbido, el narrador se convence de que es el latido del corazón del anciano, lo que lo lleva a la confesión.",
+            },
+            {
+              question: "¿Cuántas noches tardó el narrador en abrir la linterna para iluminar el ojo del anciano antes de la noche del crimen?",
+              options: [
+                { text: "Tres noches.", isCorrect: false },
+                { text: "Cinco noches.", isCorrect: false },
+                { text: "Siete noches.", isCorrect: true },
+                { text: "Una sola noche.", isCorrect: false },
+              ],
+              explanation: "El narrador intentó durante siete largas noches, pero siempre encontró el ojo cerrado.",
+            },
+            {
+              question: "¿Cómo describe el narrador el ojo del anciano?",
+              options: [
+                { text: "Un ojo brillante y amable.", isCorrect: false },
+                { text: "Un ojo de buitre, de color azul pálido.", isCorrect: true },
+                { text: "Un ojo ciego y sin vida.", isCorrect: false },
+                { text: "Un ojo de gato, de color verde intenso.", isCorrect: false },
+              ],
+              explanation: "Lo describe como un 'ojo de buitre' con un 'color azul pálido'.",
+            },
+            {
+              question: "¿Qué precaución extrema toma el narrador para no perturbar el sueño del viejo al entrar en la habitación?",
+              options: [
+                { text: "Entra corriendo y salta a la cama.", isCorrect: false },
+                { text: "Mueve la cabeza muy lentamente, poco a poco.", isCorrect: true },
+                { text: "Canta una nana para adormecerlo.", isCorrect: false },
+                { text: "Golpea la puerta para despertarlo.", isCorrect: false },
+              ],
+              explanation: "Movía lentamente la cabeza, muy poco a poco, para no perturbar el sueño del viejo.",
+            },
+            {
+              question: "¿Qué hace el narrador con el cadáver del anciano después de matarlo?",
+              options: [
+                { text: "Lo entierra en el jardín.", isCorrect: false },
+                { text: "Lo arroja por la ventana.", isCorrect: false },
+                { text: "Lo desmiembra y lo esconde bajo las tablas del suelo.", isCorrect: true },
+                { text: "Lo deja en la cama y se va.", isCorrect: false },
+              ],
+              explanation: "Cortó la cabeza, después los brazos y por último las piernas, y los depositó en los espacios huecos bajo las tablas.",
+            },
+            {
+              question: "¿Cómo descubre la policía el crimen?",
+              options: [
+                { text: "El narrador los llama por teléfono.", isCorrect: false },
+                { text: "Un vecino escucha un grito durante la noche.", isCorrect: true },
+                { text: "Encuentran una nota de confesión.", isCorrect: false },
+                { text: "El anciano deja una pista antes de morir.", isCorrect: false },
+              ],
+              explanation: "Un vecino había escuchado un grito durante la noche, lo que despertó sospechas.",
+            },
+            {
+              question: "¿Dónde se sienta el narrador cuando los oficiales de policía están en la habitación del anciano?",
+              options: [
+                { text: "En el sofá de la sala.", isCorrect: false },
+                { text: "En la silla justo encima del cadáver.", isCorrect: true },
+                { text: "De pie junto a la ventana.", isCorrect: false },
+                { text: "En la cama del anciano.", isCorrect: false },
+              ],
+              explanation: "Con la loca audacia de un triunfo completo, colocó la suya en el sitio mismo donde yacía el cadáver de la víctima.",
+            },
+            {
+              question: "¿Qué sensación experimenta el narrador que lo lleva a la paranoia final?",
+              options: [
+                { text: "Un fuerte dolor de cabeza.", isCorrect: false },
+                { text: "Un zumbido en los oídos que se convierte en el latido del corazón.", isCorrect: true },
+                { text: "Un olor desagradable en la habitación.", isCorrect: false },
+                { text: "Una visión del ojo del buitre.", isCorrect: false },
+              ],
+              explanation: "El zumbido se pronunció más, persistiendo con mayor fuerza; y al fin descubrió que el rumor no se producía en sus oídos, sino que era el latido del corazón del anciano.",
+            },
+            {
+              question: "¿Qué tipo de luz utiliza el narrador para iluminar el ojo del anciano?",
+              options: [
+                { text: "Una vela brillante.", isCorrect: false },
+                { text: "Una linterna sorda, con un rayo imperceptible.", isCorrect: true },
+                { text: "La luz de la luna.", isCorrect: false },
+                { text: "Una lámpara de aceite.", isCorrect: false },
+              ],
+              explanation: "Introducía una linterna sorda bien cerrada, para que no filtrase ninguna luz.",
+            },
+            {
+              question: "¿Cómo reacciona el anciano cuando el narrador lo despierta accidentalmente?",
+              options: [
+                { text: "Grita y pide ayuda.", isCorrect: false },
+                { text: "Se incorpora en su lecho exclamando '¿Quién anda ahí?'.", isCorrect: true },
+                { text: "Se levanta y enciende la luz.", isCorrect: false },
+                { text: "Se queda dormido de nuevo.", isCorrect: false },
+              ],
+              explanation: "El viejo se incorporó en su lecho exclamando: '¿Quién anda ahí?'.",
+            },
+            {
+              question: "¿Qué comparación utiliza el narrador para describir el latido del corazón del anciano?",
+              options: [
+                { text: "Como el sonido de la lluvia.", isCorrect: false },
+                { text: "Como el redoble de un tambor.", isCorrect: true },
+                { text: "Como el canto de un grillo.", isCorrect: false },
+                { text: "Como el susurro del viento.", isCorrect: false },
+              ],
+              explanation: "Aquel latido del corazón del anciano, y aumentó mi cólera, así como el redoble del tambor sobreexcita el valor del soldado.",
+            },
+            {
+              question: "¿Qué hora de la madrugada era cuando el narrador terminó de ocultar el cadáver?",
+              options: [
+                { text: "La una de la madrugada.", isCorrect: false },
+                { text: "Las dos de la madrugada.", isCorrect: false },
+                { text: "Las tres de la madrugada.", isCorrect: false },
+                { text: "Las cuatro de la madrugada.", isCorrect: true },
+              ],
+              explanation: "Terminada la operación, a eso de las cuatro de la madrugada, aún estaba tan oscuro como a medianoche.",
+            },
+            {
+              question: "¿Qué afirmación hace el narrador sobre la cordura de los locos?",
+              options: [
+                { text: "Los locos siempre razonan lógicamente.", isCorrect: false },
+                { text: "Los locos no razonan.", isCorrect: true },
+                { text: "Los locos solo razonan en la oscuridad.", isCorrect: false },
+                { text: "Los locos razonan mejor que los cuerdos.", isCorrect: false },
+              ],
+              explanation: "Me creéis loco; pero advertid que los locos no razonan.",
+            },
+            {
+              question: "¿Cómo describe el narrador el silencio de la noche en la antigua casa?",
+              options: [
+                { text: "Como el de un bosque ruidoso.", isCorrect: false },
+                { text: "Como el de una calle concurrida.", isCorrect: false },
+                { text: "Tan imponente como el de aquella antigua casa.", isCorrect: true },
+                { text: "Como el de un mercado bullicioso.", isCorrect: false },
+              ],
+              explanation: "En medio del silencio de la noche, un silencio tan imponente como el de aquella antigua casa.",
+            },
+            {
+              question: "¿Qué le helaba la sangre en las venas al narrador?",
+              options: [
+                { text: "El frío de la noche.", isCorrect: false },
+                { text: "La mirada del ojo de buitre del anciano.", isCorrect: true },
+                { text: "El miedo a los ladrones.", isCorrect: false },
+                { text: "El sonido de su propio corazón.", isCorrect: false },
+              ],
+              explanation: "Cada vez que este ojo fijaba en mí su mirada, se me helaba la sangre en las venas.",
+            },
+            {
+              question: "¿Qué hace el narrador para intentar ahogar el sonido del latido del corazón mientras habla con la policía?",
+              options: [
+                { text: "Enciende la radio a todo volumen.", isCorrect: false },
+                { text: "Comienza a discutir sobre nimiedades en un diapasón muy alto y gesticulando vivamente.", isCorrect: true },
+                { text: "Les pide a los oficiales que se callen.", isCorrect: false },
+                { text: "Sale de la habitación.", isCorrect: false },
+              ],
+              explanation: "Me levanté y comencé a discutir sobre varias nimiedades, en un diapasón muy alto y gesticulando vivamente.",
+            },
+            {
+              question: "¿Qué objeto utiliza el narrador para abrir la puerta de la habitación del anciano?",
+              options: [
+                { text: "Una llave ruidosa.", isCorrect: false },
+                { text: "El picaporte, abriéndola suavemente.", isCorrect: true },
+                { text: "Un martillo para romper la cerradura.", isCorrect: false },
+                { text: "Un control remoto.", isCorrect: false },
+              ],
+              explanation: "Todas las noches, a eso de las doce, levantaba el picaporte de la puerta y la abría; pero, ¡qué suavemente!",
+            },
+            {
+              question: "¿Cuál es el nombre del cuento?",
+              options: [
+                { text: "El Gato Negro.", isCorrect: false },
+                { text: "El Cuervo.", isCorrect: false },
+                { text: "El Corazón Delator.", isCorrect: true },
+                { text: "La Caída de la Casa Usher.", isCorrect: false },
+              ],
+              explanation: "El título de la obra es 'El Corazón Delator' de Edgar Allan Poe.",
+            },
+            {
+              question: "¿Qué autor escribió 'El Corazón Delator'?",
+              options: [
+                { text: "H.P. Lovecraft.", isCorrect: false },
+                { text: "Stephen King.", isCorrect: false },
+                { text: "Edgar Allan Poe.", isCorrect: true },
+                { text: "Mary Shelley.", isCorrect: false },
+              ],
+              explanation: "El autor de 'El Corazón Delator' es Edgar Allan Poe.",
+            },
+          ];
+
+          const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
+          const [selectedOption, setSelectedOption] = React.useState(null);
+          const [showFeedback, setShowFeedback] = React.useState(false);
+          const [score, setScore] = React.useState(0);
+          const [quizCompleted, setQuizCompleted] = React.useState(false);
+
+          const handleOptionClick = (option) => {
+            setSelectedOption(option);
+            setShowFeedback(true);
+            if (option.isCorrect) {
+              setScore(score + 1);
+            }
+          };
+
+          const handleNextQuestion = () => {
+            setSelectedOption(null);
+            setShowFeedback(false);
+            const nextQuestion = currentQuestionIndex + 1;
+            if (nextQuestion < triviaQuestions.length) {
+              setCurrentQuestionIndex(nextQuestion);
+            } else {
+              setQuizCompleted(true);
+            }
+          };
+
+          const handleRestartQuiz = () => {
+            setCurrentQuestionIndex(0);
+            setSelectedOption(null);
+            setShowFeedback(false);
+            setScore(0);
+            setQuizCompleted(false);
+          };
+
+          const currentQuestion = triviaQuestions[currentQuestionIndex];
+
+          return (
+            <div className="bg-gray-800 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-red-400 mb-4">
+                Pregunta {currentQuestionIndex + 1} de {triviaQuestions.length}
+              </h3>
+              <p className="text-lg text-gray-100 mb-6">{currentQuestion.question}</p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                {currentQuestion.options.map((option, index) => (
+                  <button
+                    key={index}
+                    className={`py-3 px-4 rounded-lg font-semibold transition-colors duration-300
+                      ${selectedOption === option
+                        ? (option.isCorrect ? 'bg-green-700 text-white' : 'bg-red-700 text-white')
+                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                      }
+                      ${showFeedback ? 'cursor-not-allowed' : 'cursor-pointer'}
+                    `}
+                    onClick={() => !showFeedback && handleOptionClick(option)}
+                    disabled={showFeedback}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+
+              {showFeedback && (
+                <div className="mt-4 p-4 rounded-lg bg-gray-700 text-gray-100">
+                  <p className="font-bold">
+                    {selectedOption.isCorrect ? '¡Correcto!' : 'Incorrecto.'}
+                  </p>
+                  <p className="text-sm mt-2">{currentQuestion.explanation}</p>
+                  <button
+                    className="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+                    onClick={handleNextQuestion}
+                  >
+                    {currentQuestionIndex < triviaQuestions.length - 1 ? 'Siguiente Pregunta' : 'Ver Resultados'}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        };
+
+        // Componente de la Sopa de Letras
+        const WordSearchGame = () => {
+          const words = [
+            "OJO", "BUITRE", "VIEJO", "NARRADOR", "LOCURA",
+            "CORAZON", "LATIDO", "CULPA", "MIEDO", "POLICIA",
+            "CRIMEN", "SILENCIO", "NOCHE", "LINTERNA", "TABLAS",
+            "GRITO", "PARANOIA", "CONFESION", "ESPANTO", "SANGRE"
+          ];
+
+          const gridSize = 12; // Tamaño de la cuadrícula (12x12)
+          const [grid, setGrid] = React.useState([]);
+          const [foundWords, setFoundWords] = React.useState([]);
+          const [selectedCells, setSelectedCells] = React.useState([]);
+          const [isSelecting, setIsSelecting] = React.useState(false);
+          const gridRef = React.useRef(null);
+
+          // Función para generar la cuadrícula de la sopa de letras
+          const generateGrid = (wordsToPlace, size) => {
+            let newGrid = Array(size).fill(0).map(() => Array(size).fill(''));
+            const directions = [
+              { dr: 0, dc: 1 },  // Horizontal
+              { dr: 0, dc: -1 }, // Horizontal inversa
+              { dr: 1, dc: 0 },  // Vertical
+              { dr: -1, dc: 0 }, // Vertical inversa
+              { dr: 1, dc: 1 },  // Diagonal abajo-derecha
+              { dr: 1, dc: -1 }, // Diagonal abajo-izquierda
+              { dr: -1, dc: 1 }, // Diagonal arriba-derecha
+              { dr: -1, dc: -1 }  // Diagonal arriba-izquierda
+            ];
+
+            // Intentar colocar cada palabra
+            wordsToPlace.forEach(word => {
+              let placed = false;
+              let attempts = 0;
+              while (!placed && attempts < 100) { // Limitar intentos para evitar bucles infinitos
+                const startRow = Math.floor(Math.random() * size);
+                const startCol = Math.floor(Math.random() * size);
+                const { dr, dc } = directions[Math.floor(Math.random() * directions.length)];
+
+                let canPlace = true;
+                let tempCells = [];
+                for (let i = 0; i < word.length; i++) {
+                  const r = startRow + i * dr;
+                  const c = startCol + i * dc;
+                  if (r < 0 || r >= size || c < 0 || c >= size || (newGrid[r][c] !== '' && newGrid[r][c] !== word[i])) {
+                    canPlace = false;
+                    break;
+                  }
+                  tempCells.push({ r, c });
+                }
+
+                if (canPlace) {
+                  tempCells.forEach((cell, i) => {
+                    newGrid[cell.r][cell.c] = word[i];
+                  });
+                  placed = true;
+                }
+                attempts++;
+              }
+            });
+
+            // Rellenar espacios vacíos con letras aleatorias
+            for (let r = 0; r < size; r++) {
+              for (let c = 0; c < size; c++) {
+                if (newGrid[r][c] === '') {
+                  newGrid[r][c] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Letras mayúsculas
+                }
+              }
+            }
+            return newGrid;
+          };
+
+          React.useEffect(() => {
+            setGrid(generateGrid(words, gridSize));
+          }, []); // Se ejecuta una vez al montar el componente
+
+          // Manejadores de eventos para la selección de celdas
+          const handleMouseDown = (row, col) => {
+            setIsSelecting(true);
+            setSelectedCells([{ row, col }]);
+          };
+
+          const handleMouseEnter = (row, col) => {
+            if (isSelecting) {
+              setSelectedCells(prev => {
+                const lastCell = prev[prev.length - 1];
+                if (lastCell.row === row && lastCell.col === col) return prev; // Avoid adding same cell twice
+                return [...prev, { row, col }];
+              });
+            }
+          };
+
+          const handleMouseUp = () => {
+            setIsSelecting(false);
+            checkSelectedWord();
+            setSelectedCells([]); // Limpiar selección después de soltar el clic
+          };
+
+          // Función para verificar si la palabra seleccionada es correcta
+          const checkSelectedWord = () => {
+            if (selectedCells.length < 2) return;
+
+            // Obtener la palabra formada por las celdas seleccionadas
+            const wordFormed = selectedCells.map(cell => grid[cell.row][cell.col]).join('');
+
+            // Verificar si la palabra es una de las palabras a encontrar (en cualquier dirección)
+            const reversedWordFormed = wordFormed.split('').reverse().join('');
+
+            const foundMatch = words.find(word =>
+              word === wordFormed || word === reversedWordFormed
+            );
+
+            if (foundMatch && !foundWords.includes(foundMatch)) {
+              setFoundWords(prev => [...prev, foundMatch]);
+            }
+          };
+
+          // Función para determinar si una celda está seleccionada o es parte de una palabra encontrada
+          const getCellClasses = (row, col) => {
+            const isSelected = selectedCells.some(cell => cell.row === row && cell.col === col);
+            const isPartOfFoundWord = foundWords.some(word => {
+              // Check if this cell is part of any found word (this is a simplified check,
+              // a more robust one would involve storing cell coordinates for each found word)
+              // For now, we'll just check if the letter matches and if the word is found.
+              return word.includes(grid[row][col]) && foundWords.includes(word);
+            });
+
+            let classes = 'w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center border border-gray-700 text-white font-bold text-lg sm:text-xl rounded-sm transition-colors duration-200';
+
+            if (isSelected) {
+              classes += ' bg-red-600';
+            } else if (isPartOfFoundWord) {
+              classes += ' bg-green-700 text-white'; // Highlight found words in green
+            } else {
+              classes += ' bg-gray-800 hover:bg-gray-700';
+            }
+            return classes;
+          };
+
+          return (
+            <div className="w-full lg:w-full bg-gray-900 p-6 rounded-xl shadow-lg mt-8">
+              <h2 className="text-2xl font-bold text-red-400 mb-4 text-center">
+                Sopa de Letras: El Corazón Delator
+              </h2>
+              <p className="text-gray-300 mb-6 text-center">
+                Encuentra las 20 palabras clave escondidas en la cuadrícula. ¡Haz clic y arrastra para seleccionar!
+              </p>
+              <div className="flex flex-col lg:flex-row gap-8 w-full max-w-5xl mx-auto"> {/* Added mx-auto for centering */}
+                {/* Cuadrícula de la Sopa de Letras */}
+                <div
+                  ref={gridRef}
+                  className="flex-grow grid gap-1 p-4 bg-gray-900 rounded-xl shadow-lg"
+                  style={{
+                    gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
+                    gridTemplateRows: `repeat(${gridSize}, minmax(0, 1fr))`,
+                  }}
+                  onMouseLeave={handleMouseUp} // Terminar selección si el ratón sale de la cuadrícula
+                >
+                  {grid.map((row, rIdx) =>
+                    row.map((letter, cIdx) => (
+                      <div
+                        key={`${rIdx}-${cIdx}`}
+                        className={getCellClasses(rIdx, cIdx)}
+                        onMouseDown={() => handleMouseDown(rIdx, cIdx)}
+                        onMouseEnter={() => handleMouseEnter(rIdx, cIdx)}
+                        onMouseUp={handleMouseUp}
+                      >
+                        {letter}
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Lista de Palabras a Encontrar */}
+                <div className="w-full lg:w-1/3 bg-gray-900 p-6 rounded-xl shadow-lg">
+                  <h2 className="text-2xl font-bold text-red-400 mb-4 text-center">
+                    Palabras a Encontrar ({foundWords.length}/{words.length})
+                  </h2>
+                  <ul className="grid grid-cols-2 gap-2 text-lg">
+                    {words.map((word, index) => (
+                      <li
+                        key={index}
+                        className={`py-1 px-2 rounded-md ${
+                          foundWords.includes(word) ? 'line-through text-green-400' : 'text-gray-200'
+                        }`}
+                      >
+                        {word}
+                      </li>
+                    ))}
+                  </ul>
+                  {foundWords.length === words.length && (
+                    <div className="mt-6 text-center">
+                      <p className="text-2xl font-bold text-green-500 animate-pulse">
+                        ¡Felicidades, has encontrado todas las palabras!
+                      </p>
+                      <button
+                        className="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+                        onClick={() => {
+                          setFoundWords([]);
+                          setGrid(generateGrid(words, gridSize)); // Regenerar la cuadrícula
+                        }}
+                      >
+                        Jugar de Nuevo
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        };
+
+
+        // Componente para la sección de Juegos Educativos (ahora contiene ambos juegos)
+        const GameSection = () => {
+          return (
+            <section className="w-full max-w-4xl bg-gray-900 p-6 rounded-xl shadow-lg mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline-block mr-3"><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M8 20v2h8v-2a2 2 0 0 0 1-1.76V15a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v3.24c0 .3-.05.6-.15.84a2 2 0 0 1-1.47 1.3A6 6 0 0 1 4 17c0-3.3 1.5-6 4-6h8c2.5 0 4 2.7 4 6a6 6 0 0 1-2.38 4.74 2 2 0 0 1-1.47-1.3A2 2 0 0 0 17 20Z"/><path d="M12 4c.8-.8 2-1.4 3-1.4 2.6 0 4 2.2 4 5.2v2H5V7.8c0-3 1.4-5.2 4-5.2.9 0 2.2.6 3 1.4Z"/></svg>Juegos Educativos
+              </h2>
+              <p className="text-gray-300 mb-6 text-center">
+                Pon a prueba tus conocimientos y agilidad visual con estos desafíos.
+              </p>
+
+              {/* Trivia Game */}
+              <TriviaGame />
+
+              {/* Word Search Game */}
+              <WordSearchGame />
+            </section>
+          );
+        };
+
+        // Renderiza la aplicación React en el elemento con id 'root'
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
