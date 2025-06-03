@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Casa de Azúcar: Un Misterio Dulce o Amargo?</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8; /* Light blue-gray background */
             color: #334155; /* Dark slate text */
+            overflow-x: hidden; /* Prevent horizontal scroll on small screens */
         }
+
         /* Custom styles for details/summary to ensure consistent look */
         details {
             transition: all 0.3s ease-in-out;
@@ -62,10 +66,75 @@
         .feedback-incorrect {
             @apply bg-red-100 text-red-800;
         }
+
+        /* Custom styles for the infographic sections */
+        .infographic-section {
+            @apply relative p-8 md:p-12 rounded-2xl shadow-xl transition-all duration-500 ease-in-out transform hover:scale-102 cursor-pointer overflow-hidden;
+            min-height: 250px; /* Ensure consistent height for visual balance */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .infographic-section-content {
+            @apply absolute inset-0 flex flex-col justify-center items-center p-6 opacity-0 transition-opacity duration-500 ease-in-out bg-black bg-opacity-70 text-white rounded-2xl;
+        }
+
+        .infographic-section:hover .infographic-section-content {
+            opacity: 1;
+        }
+
+        .infographic-section-title {
+            @apply text-3xl md:text-4xl font-extrabold mb-4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .infographic-section-icon {
+            @apply text-6xl md:text-7xl mb-4;
+        }
+
+        /* Animation for the final question */
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #00f, 0 0 80px #00f, 0 0 90px #00f, 0 0 100px #00f, 0 0 150px #00f;
+                color: #fff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #ccc;
+            }
+        }
+
+        .flicker-text {
+            animation: flicker 2s infinite alternate;
+        }
+
+        /* Background gradients for infographic sections */
+        .bg-section-1 { background: linear-gradient(135deg, #fbcfe8, #d8b4fe); } /* Pink to Violet */
+        .bg-section-2 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); } /* Light Green to Teal */
+        .bg-section-3 { background: linear-gradient(135deg, #bfdbfe, #93c5fd); } /* Light Blue to Deeper Blue */
+        .bg-section-4 { background: linear-gradient(135deg, #fecaca, #fca5a5); } /* Light Red to Deeper Red */
+
+        /* Central house icon for header */
+        .central-house-icon {
+            @apply text-9xl text-gray-800 opacity-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0;
+        }
+
+        /* Styles for multiple choice options with colored backgrounds */
+        .option-button {
+            @apply py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out text-white font-bold text-lg hover:scale-105;
+        }
+        .option-A { @apply bg-blue-500 hover:bg-blue-600; }
+        .option-B { @apply bg-green-500 hover:bg-green-600; }
+        .option-C { @apply bg-orange-500 hover:bg-orange-600; }
+        .option-D { @apply bg-red-500 hover:bg-red-600; }
     </style>
 </head>
 <body class="p-6 md:p-10 lg:p-16">
 
+    <!-- Header Section -->
     <header class="text-center mb-12">
         <h1 class="text-5xl md:text-6xl font-extrabold text-indigo-700 mb-4 leading-tight">
             🏠🔍 La Casa de Azúcar: ¿Un Misterio Dulce o Amargo?
@@ -75,6 +144,7 @@
         </p>
     </header>
 
+    <!-- Summary Section -->
     <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-4xl font-bold text-teal-600 mb-8 text-center">💡 Desentrañando La Casa de Azúcar</h2>
         <p class="text-lg text-gray-600 mb-10 text-center">
@@ -187,74 +257,86 @@
         </div>
     </section>
 
+    <!-- Infographics Section -->
     <section class="mb-16 bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-xl shadow-lg">
         <h2 class="text-4xl font-bold text-purple-700 mb-8 text-center">🗺️ Infografía Dinámica: "El Ciclo de la Casa de Azúcar"</h2>
         <p class="text-lg text-gray-700 mb-10 text-center">
-            Imagina que esta es una infografía interactiva en un sitio como Genially o Canva. Cada sección se "anima" al pasar el mouse o hacer clic, revelando el texto.
+            ¡Sumérgete en el misterio de Silvina Ocampo! Descubre cómo una casa puede devorar el destino.
         </p>
 
-        <div class="bg-white p-6 rounded-lg shadow-inner mb-8">
-            <h3 class="text-2xl font-semibold text-pink-600 mb-4">Título Grande y Vibrante: <span class="font-extrabold text-purple-800">"El Enigma de la Casa de Azúcar: Un Ciclo Sin Fin"</span></h3>
-            <p class="text-gray-600">(Fondo con degradado de rosa a morado oscuro, fuente impactante con un toque de brillo)</p>
-            <div class="bg-rose-50 border-l-4 border-rose-400 text-rose-800 p-4 mt-4 rounded">
-                <p class="font-bold">Concepto Visual Principal:</p>
-                <p>Un <b>diagrama circular o espiral</b> con la casa en el centro. Alrededor, segmentos que representan las etapas del cuento, conectándose con flechas que se "dibujan" dinámicamente.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+
+            <!-- Section 1: The Beginning -->
+            <div class="infographic-section bg-section-1">
+                <div class="infographic-section-icon">🔮</div>
+                <h3 class="infographic-section-title text-purple-800">El Inicio del Ciclo</h3>
+                <p class="text-gray-700 text-lg font-semibold">"La Predicción y el Amor"</p>
+                <div class="infographic-section-content">
+                    <h4 class="text-2xl font-bold mb-4">El Inicio del Ciclo: "La Predicción y el Amor"</h4>
+                    <ul class="list-disc list-inside text-lg space-y-2">
+                        <li><b>Daniel y Cristina:</b> Su amor y el deseo de Daniel de encontrar a la "verdadera" Cristina.</li>
+                        <li><b>La Premonición:</b> La casa heredada y la profecía de que una Cristina la habitará.</li>
+                    </ul>
+                    <p class="mt-4 text-sm italic">Descubrí cómo una antigua profecía une a esta pareja con un destino inexplicable. ¿Creerías en un amor así?</p>
+                </div>
             </div>
+
+            <!-- Section 2: The House as a Magnet -->
+            <div class="infographic-section bg-section-2">
+                <div class="infographic-section-icon">🏡</div>
+                <h3 class="infographic-section-title text-green-800">La Casa como Imán</h3>
+                <p class="text-gray-700 text-lg font-semibold">"El Llamado Inevitable"</p>
+                <div class="infographic-section-content">
+                    <h4 class="text-2xl font-bold mb-4">La Casa como Imán: "El Llamado Inevitable"</h4>
+                    <ul class="list-disc list-inside text-lg space-y-2">
+                        <li><b>La Obsesión de Daniel:</b> Cómo la casa lo consume.</li>
+                        <li><b>La Inocencia de Cristina:</b> Ella no comprende la magnitud de la "herencia".</li>
+                    </ul>
+                    <p class="mt-4 text-sm italic">La casa no es solo un lugar, ¡es una trampa! ¿Cómo la obsesión de Daniel por ella arrastra a Cristina a su destino?</p>
+                </div>
+            </div>
+
+            <!-- Section 3: The Inhabitant -->
+            <div class="infographic-section bg-section-3">
+                <div class="infographic-section-icon">🚶‍♀️</div>
+                <h3 class="infographic-section-title text-blue-800">El Habitante</h3>
+                <p class="text-gray-700 text-lg font-semibold">"Cristina y la Casa"</p>
+                <div class="infographic-section-content">
+                    <h4 class="text-2xl font-bold mb-4">El Habitante: "Cristina y la Casa"</h4>
+                    <ul class="list-disc list-inside text-lg space-y-2">
+                        <li><b>La Transformación:</b> Cristina comienza a sentir que la casa la "absorbe".</li>
+                        <li><b>Pérdida de Identidad:</b> La idea de que cada Cristina es una continuidad de la anterior.</li>
+                    </ul>
+                    <p class="mt-4 text-sm italic">¿Qué pasa cuando un lugar empieza a cambiar quién sos? Cristina lo va a descubrir de la peor manera...</p>
+                </div>
+            </div>
+
+            <!-- Section 4: The Outcome -->
+            <div class="infographic-section bg-section-4">
+                <div class="infographic-section-icon">💔</div>
+                <h3 class="infographic-section-title text-red-800">El Desenlace</h3>
+                <p class="text-gray-700 text-lg font-semibold">"El Ciclo se Cierra... ¿o se Abre?"</p>
+                <div class="infographic-section-content">
+                    <h4 class="text-2xl font-bold mb-4">El Desenlace: "El Ciclo se Cierra... ¿o se Abre?"</h4>
+                    <ul class="list-disc list-inside text-lg space-y-2">
+                        <li><b>La Fatalidad:</b> La desaparición de Cristina, "absorbida" por la casa.</li>
+                        <li><b>La Continuidad:</b> La casa esperando a la próxima "Cristina".</li>
+                    </ul>
+                    <p class="mt-4 text-sm italic">El final te va a dejar helado. ¿Es un final definitivo o el comienzo de un nuevo ciclo? ¿Y si vos fueras la próxima Cristina?</p>
+                </div>
+            </div>
+
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-400">
-                <h4 class="text-xl font-semibold text-purple-700 mb-3">Sección 1: El Inicio del Ciclo: "La Predicción y el Amor"</h4>
-                <p class="text-gray-600 mb-2">Color de Fondo: Tonos suaves de rosa y violeta.</p>
-                <p class="text-gray-600 mb-2">Icono Central: 🔮 Una mano sosteniendo una bola de cristal con la imagen de una casa.</p>
-                <ul class="list-disc list-inside text-gray-700 mb-2">
-                    <li><b>Daniel y Cristina:</b> Su amor y el deseo de Daniel de encontrar a la "verdadera" Cristina.</li>
-                    <li><b>La Premonición:</b> La casa heredada y la profecía de que una Cristina la habitará.</li>
-                </ul>
-                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "Descubrí cómo una antigua profecía une a esta pareja con un destino inexplicable. ¿Creerías en un amor así?")</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-400">
-                <h4 class="text-xl font-semibold text-green-700 mb-3">Sección 2: La Casa como Imán: "El Llamado Inevitable"</h4>
-                <p class="text-gray-600 mb-2">Color de Fondo: Tonos de verde musgo y marrón.</p>
-                <p class="text-gray-600 mb-2">Icono Central: 🏡 Una casa antigua con una puerta abierta y una luz que sale de ella.</p>
-                <ul class="list-disc list-inside text-gray-700 mb-2">
-                    <li><b>La Obsesión de Daniel:</b> Cómo la casa lo consume.</li>
-                    <li><b>La Inocencia de Cristina:</b> Ella no comprende la magnitud de la "herencia".</li>
-                </ul>
-                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "La casa no es solo un lugar, ¡es una trampa! ¿Cómo la obsesión de Daniel por ella arrastra a Cristina a su destino?")</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-400">
-                <h4 class="text-xl font-semibold text-blue-700 mb-3">Sección 3: El Habitante: "Cristina y la Casa"</h4>
-                <p class="text-gray-600 mb-2">Color de Fondo: Tonos de azul oscuro y gris.</p>
-                <p class="text-gray-600 mb-2">Icono Central: 🚶‍♀️ Una silueta femenina entrando en la casa, con un efecto de desvanecimiento.</p>
-                <ul class="list-disc list-inside text-gray-700 mb-2">
-                    <li><b>La Transformación:</b> Cristina comienza a sentir que la casa la "absorbe".</li>
-                    <li><b>Pérdida de Identidad:</b> La idea de que cada Cristina es una continuidad de la anterior.</li>
-                </ul>
-                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "¿Qué pasa cuando un lugar empieza a cambiar quién sos? Cristina lo va a descubrir de la peor manera...")</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-400">
-                <h4 class="text-xl font-semibold text-red-700 mb-3">Sección 4: El Desenlace: "El Ciclo se Cierra... ¿o se Abre?"</h4>
-                <p class="text-gray-600 mb-2">Color de Fondo: Rojo intenso y negro.</p>
-                <p class="text-gray-600 mb-2">Icono Central: 💔 Una silueta de Cristina desvaneciéndose o una casa con un cristal roto.</p>
-                <ul class="list-disc list-inside text-gray-700 mb-2">
-                    <li><b>La Fatalidad:</b> La desaparición de Cristina, "absorbida" por la casa.</li>
-                    <li><b>La Continuidad:</b> La casa esperando a la próxima "Cristina".</li>
-                </ul>
-                <p class="text-sm text-gray-500 italic">¡Click para saber más! (Texto que aparece al interactuar: "El final te va a dejar helado. ¿Es un final definitivo o el comienzo de un nuevo ciclo? ¿Y si vos fueras la próxima Cristina?")</p>
-            </div>
-        </div>
-
-        <div class="mt-10 text-center bg-gray-900 text-white p-6 rounded-lg shadow-xl animate-pulse">
-            <p class="text-2xl md:text-3xl font-extrabold">
+        <!-- Final Provocative Question -->
+        <section class="mt-16 text-center bg-gray-900 text-white p-8 rounded-xl shadow-2xl max-w-4xl mx-auto">
+            <p class="text-3xl md:text-4xl font-extrabold flicker-text">
                 "¿Es la casa un monstruo... o somos nosotros los que creamos nuestros propios destinos?"
             </p>
-        </div>
+        </section>
     </section>
 
+    <!-- Interactive Elements (Dropdowns) Section -->
     <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-4xl font-bold text-orange-600 mb-8 text-center">📂 Elementos Interactivos: Explora los Secretos de la Casa de Azúcar</h2>
         <p class="text-lg text-gray-700 mb-10 text-center">
@@ -318,92 +400,180 @@
         </details>
     </section>
 
+    <!-- Educational Games Section -->
     <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-4xl font-bold text-emerald-600 mb-8 text-center">🎮 Zona de Juego: ¡Desafía tu Mente con la Casa de Azúcar!</h2>
         <p class="text-lg text-gray-700 mb-10 text-center">
             ¡Ponete a prueba! Demostrá cuánto aprendiste y divertite con estos juegos interactivos.
         </p>
 
+        <!-- Trivia Game -->
         <div class="mb-12 p-6 bg-emerald-50 rounded-xl shadow-md">
             <h3 class="text-3xl font-semibold text-emerald-700 mb-6 text-center">Descifra el Misterio de la Casa de Azúcar (Trivia Interactiva)</h3>
             <p class="text-lg text-gray-700 mb-6 text-center">
                 <b>Mecánica:</b> Responde preguntas de opción múltiple o verdadero/falso. ¡Cada respuesta correcta te acerca a desvelar el enigma!
             </p>
             <p class="text-sm text-gray-500 italic mb-8 text-center">
-                (Imagina botones interactivos para las respuestas, un contador de puntos que sube y efectos de sonido para aciertos y errores. ¡Una barra de "Misterio Resuelto" que se va llenando!)
-            </p>
+                (Imagina botones interactivos para las respuestas, un contador de puntos que sube y efectos de sonido para aciertos y errores. ¡Una barra de "Misterio Resuelto" que se va llenando!)</p>
 
+            <!-- Question 1 -->
             <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
                 <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 1:</b> ¿Qué característica principal tenía la casa que Daniel heredó?</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="trivia-button" onclick="checkAnswer(1, 'A')">A) Era muy grande y lujosa.</button>
-                    <button class="trivia-button" onclick="checkAnswer(1, 'B')">B) Solo él podía verla.</button>
-                    <button class="trivia-button" onclick="checkAnswer(1, 'C')">C) Estaba destinada a ser habitada por una "verdadera" Cristina.</button>
-                    <button class="trivia-button" onclick="checkAnswer(1, 'D')">D) Estaba llena de objetos de azúcar.</button>
+                    <button class="option-button option-A" onclick="checkAnswer(1, 'A')">A) Era muy grande y lujosa.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(1, 'B')">B) Solo él podía verla.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(1, 'C')">C) Estaba destinada a ser habitada por una "verdadera" Cristina.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(1, 'D')">D) Estaba llena de objetos de azúcar.</button>
                 </div>
                 <div id="feedback-q1" class="feedback-message hidden"></div>
             </div>
 
+            <!-- Question 2 -->
             <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
                 <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 2:</b> ¿Qué tema central aborda el cuento al hablar del destino de Cristina?</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="trivia-button" onclick="checkAnswer(2, 'A')">A) El amor incondicional.</button>
-                    <button class="trivia-button" onclick="checkAnswer(2, 'B')">B) La lucha por la libertad.</button>
-                    <button class="trivia-button" onclick="checkAnswer(2, 'C')">C) El destino inevitable.</button>
-                    <button class="trivia-button" onclick="checkAnswer(2, 'D')">D) La importancia de la comunicación en la pareja.</button>
+                    <button class="option-button option-A" onclick="checkAnswer(2, 'A')">A) El amor incondicional.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(2, 'B')">B) La lucha por la libertad.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(2, 'C')">C) El destino inevitable.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(2, 'D')">D) La importancia de la comunicación en la pareja.</button>
                 </div>
                 <div id="feedback-q2" class="feedback-message hidden"></div>
             </div>
 
+            <!-- Question 3 -->
             <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
                 <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 3 (Verdadero/Falso):</b> Daniel quería que Cristina se pareciera físicamente a su madre.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="trivia-button" onclick="checkAnswer(3, 'Falso')">Falso</button>
-                    <button class="trivia-button" onclick="checkAnswer(3, 'Verdadero')">Verdadero</button>
+                    <button class="option-button option-A" onclick="checkAnswer(3, 'Falso')">Falso</button>
+                    <button class="option-button option-B" onclick="checkAnswer(3, 'Verdadero')">Verdadero</button>
                 </div>
                 <div id="feedback-q3" class="feedback-message hidden"></div>
             </div>
-        </div>
 
-        <div class="p-6 bg-blue-50 rounded-xl shadow-md">
-            <h3 class="text-3xl font-semibold text-blue-700 mb-6 text-center">Crea tu Propia Cristina (Actividad de Reflexión)</h3>
-            <p class="text-lg text-gray-700 mb-6 text-center">
-                <b>Mecánica:</b> No hay respuestas correctas o incorrectas, ¡solo tu imaginación! Vas a "construir" una Cristina diferente a la del cuento y reflexionar sobre su destino.
-            </p>
-            <p class="text-sm text-gray-500 italic mb-8 text-center">
-                (Imagina una interfaz con "tarjetas" arrastrables de diferentes características: "aventurera", "tímida", "escéptica", "creyente en el destino", etc. Los chicos arrastran y sueltan las tarjetas para formar su Cristina.)
-            </p>
+            <!-- New Questions Start Here -->
 
-            <div class="bg-white p-6 rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>¡Manos a la Obra!</b></p>
-                <ol class="list-decimal list-inside text-gray-700 space-y-3 mb-6">
-                    <li>
-                        <b>Introducción:</b> "Imagina que eres un arquitecto de destinos. Tienes la oportunidad de crear una nueva Cristina para 'La Casa de Azúcar'. ¿Cómo sería? ¿Podrías cambiar su destino?"
-                    </li>
-                    <li>
-                        <b>Selecciona sus Características:</b> Elige 3 a 5 tarjetas de nuestra "Biblioteca de Cristinas". Por ejemplo:
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-yellow-800">Tarjeta 1: "Cristina Curiosa"</span> (Siempre quiere saber más, investiga todo).</div>
-                            <div class="bg-green-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-green-800">Tarjeta 2: "Cristina Valiente"</span> (No le teme a los desafíos, enfrenta sus miedos).</div>
-                            <div class="bg-red-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-red-800">Tarjeta 3: "Cristina Escéptica"</span> (No cree en destinos ni predicciones).</div>
-                            <div class="bg-purple-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-purple-800">Tarjeta 4: "Cristina Optimista"</span> (Siempre ve el lado bueno de las cosas).</div>
-                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm flex items-center">🃏 <span class="ml-2 font-semibold text-blue-800">Tarjeta 5: "Cristina Protectora"</span> (Busca cuidar a los demás, incluso a Daniel).</div>
-                        </div>
-                    </li>
-                    <li>
-                        <b>¡Reflexioná y Contanos!</b> Una vez que armaste a tu Cristina, respondé en el espacio de abajo:
-                        <ul class="list-disc list-inside text-gray-700 mt-4 space-y-2">
-                            <li>¿Crees que esta Cristina habría podido escapar de la casa? ¿Por qué?</li>
-                            <li>¿Qué diferencias clave ves entre tu Cristina y la del cuento de Silvina Ocampo?</li>
-                            <li>¿Qué crees que Silvina Ocampo pensaría de tu Cristina?</li>
-                        </ul>
-                        <textarea class="w-full p-4 mt-6 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="8" placeholder="Escribe aquí tus reflexiones..."></textarea>
-                        <button class="mt-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105">
-                            Guardar mis Reflexiones
-                        </button>
-                    </li>
-                </ol>
+            <!-- Question 4 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 4:</b> ¿Cuál es el motivo principal por el que Daniel lleva a Cristina a la casa?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(4, 'A')">A) Para que la decore a su gusto.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(4, 'B')">B) Para cumplir una antigua profecía familiar.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(4, 'C')">C) Porque era la única propiedad que les quedaba.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(4, 'D')">D) Para esconder un tesoro.</button>
+                </div>
+                <div id="feedback-q4" class="feedback-message hidden"></div>
             </div>
+
+            <!-- Question 5 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 5:</b> ¿Qué objeto de la casa le genera una particular inquietud a Cristina?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(5, 'A')">A) Un viejo reloj de pie.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(5, 'B')">B) El retrato de una mujer desconocida.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(5, 'C')">C) Un espejo que no reflejaba.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(5, 'D')">D) Una jaula vacía.</button>
+                </div>
+                <div id="feedback-q5" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 6:</b> ¿Qué sensación experimenta Cristina al mudarse a la casa?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(6, 'A')">A) Alegría y emoción por el nuevo hogar.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(6, 'B')">B) Despersonalización y la sensación de ser otra.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(6, 'C')">C) Miedo a los fantasmas.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(6, 'D')">D) Curiosidad por explorar cada rincón.</button>
+                </div>
+                <div id="feedback-q6" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 7:</b> ¿Cómo reacciona Daniel ante las preocupaciones de Cristina sobre la casa?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(7, 'A')">A) La escucha atentamente y busca soluciones.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(7, 'B')">B) Las minimiza o las ignora.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(7, 'C')">C) Se asusta y quiere mudarse.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(7, 'D')">D) Le confiesa un secreto sobre la casa.</button>
+                </div>
+                <div id="feedback-q7" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 8:</b> ¿Qué le sucede a la Cristina original al final del cuento?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(8, 'A')">A) Decide abandonar a Daniel y la casa.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(8, 'B')">B) Es absorbida o desaparece dentro de la casa.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(8, 'C')">C) Logra romper la maldición de la casa.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(8, 'D')">D) Se convierte en la dueña absoluta de la casa.</button>
+                </div>
+                <div id="feedback-q8" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 9:</b> ¿Qué simboliza la "Casa de Azúcar" en el cuento?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(9, 'A')">A) La dulzura del amor.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(9, 'B')">B) Un refugio seguro y feliz.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(9, 'C')">C) El destino, una trampa o la obsesión.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(9, 'D')">D) La riqueza y el lujo.</button>
+                </div>
+                <div id="feedback-q9" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 10:</b> ¿Qué tipo de narrador predomina en la historia?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(10, 'A')">A) Primera persona (la propia Cristina).</button>
+                    <button class="option-button option-B" onclick="checkAnswer(10, 'B')">B) Tercera persona omnisciente.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(10, 'C')">C) Primera persona (el propio Daniel).</button>
+                    <button class="option-button option-D" onclick="checkAnswer(10, 'D')">D) Un narrador testigo.</button>
+                </div>
+                <div id="feedback-q10" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 11:</b> ¿Qué elemento fantástico se presenta en el cuento?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(11, 'A')">A) Animales que hablan.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(11, 'B')">B) Viajes en el tiempo.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(11, 'C')">C) Las sucesivas Cristinas y la casa con vida propia.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(11, 'D')">D) Objetos que levitan.</button>
+                </div>
+                <div id="feedback-q11" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 12:</b> ¿Cuál es la actitud de Daniel hacia las otras "Cristinas" que habitaron la casa?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(12, 'A')">A) Las recuerda con nostalgia.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(12, 'B')">B) Indiferencia y aceptación de su destino.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(12, 'C')">C) Siente remordimiento por ellas.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(12, 'D')">D) Intenta contactarlas.</button>
+                </div>
+                <div id="feedback-q12" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
+                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 13:</b> ¿Qué atmósfera general predomina en el cuento?</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-button option-A" onclick="checkAnswer(13, 'A')">A) Romántica y alegre.</button>
+                    <button class="option-button option-B" onclick="checkAnswer(13, 'B')">B) Cómica y divertida.</button>
+                    <button class="option-button option-C" onclick="checkAnswer(13, 'C')">C) Misterio, inquietud y fatalidad.</button>
+                    <button class="option-button option-D" onclick="checkAnswer(13, 'D')">D) Aventurera y heroica.</button>
+                </div>
+                <div id="feedback-q13" class="feedback-message hidden"></div>
+            </div>
+
+            <!-- New Questions End Here -->
+
         </div>
     </section>
 
@@ -416,17 +586,27 @@
         const answers = {
             1: 'C',
             2: 'C',
-            3: 'Falso'
+            3: 'Falso',
+            4: 'B', // New question answers
+            5: 'B',
+            6: 'B',
+            7: 'B',
+            8: 'B',
+            9: 'C',
+            10: 'B',
+            11: 'C',
+            12: 'B',
+            13: 'C'
         };
 
         function checkAnswer(questionNum, selectedAnswer) {
             const feedbackDiv = document.getElementById(`feedback-q${questionNum}`);
-            const buttons = Array.from(document.querySelectorAll(`#feedback-q${questionNum}`).previousElementSibling.querySelectorAll('button'));
+            const buttons = Array.from(document.querySelector(`#feedback-q${questionNum}`).previousElementSibling.querySelectorAll('button'));
 
             // Reset button styles
             buttons.forEach(button => {
                 button.classList.remove('correct', 'incorrect');
-                button.disabled = false; // Re-enable for multiple attempts or reset
+                // button.disabled = false; // Keep disabled after first attempt as per previous logic
             });
 
             // Hide previous feedback
@@ -437,9 +617,13 @@
             if (selectedAnswer === answers[questionNum]) {
                 feedbackDiv.innerHTML = `<b>¡Correcto!</b> ${getCorrectFeedback(questionNum)}`;
                 feedbackDiv.classList.add('feedback-correct');
-                // Highlight the correct button if it's a multiple choice
+                // Highlight the correct button
                 buttons.forEach(button => {
-                    if (button.textContent.includes(selectedAnswer)) {
+                    // For multiple choice, check if the text content includes the selected option letter
+                    // For True/False, check if the button text matches the selected answer
+                    if ((questionNum <= 2 && button.textContent.includes(selectedAnswer)) ||
+                        (questionNum === 3 && button.textContent === selectedAnswer) ||
+                        (questionNum > 3 && button.textContent.includes(selectedAnswer.substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
                         button.classList.add('correct');
                     }
                 });
@@ -448,10 +632,14 @@
                 feedbackDiv.classList.add('feedback-incorrect');
                 // Highlight the incorrect button clicked and the correct one
                 buttons.forEach(button => {
-                    if (button.textContent.includes(selectedAnswer)) {
+                    if ((questionNum <= 2 && button.textContent.includes(selectedAnswer)) ||
+                        (questionNum === 3 && button.textContent === selectedAnswer) ||
+                        (questionNum > 3 && button.textContent.includes(selectedAnswer.substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
                         button.classList.add('incorrect');
                     }
-                    if (button.textContent.includes(answers[questionNum])) {
+                    if ((questionNum <= 2 && button.textContent.includes(answers[questionNum])) ||
+                        (questionNum === 3 && button.textContent === answers[questionNum]) ||
+                        (questionNum > 3 && button.textContent.includes(answers[questionNum].substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
                         button.classList.add('correct'); // Show correct answer
                     }
                 });
@@ -467,6 +655,16 @@
                 case 1: return "Esa casa tenía un destino particular para Daniel. ¡Seguí así!";
                 case 2: return "El destino es un hilo conductor en 'La Casa de Azúcar'. ¡Sos un/a crack!";
                 case 3: return "Falso. La casa no se trataba de su madre, sino de una misteriosa 'verdadera' Cristina. ¡Atento al detalle!";
+                case 4: return "¡Exacto! La profecía familiar era clave.";
+                case 5: return "¡Bien! El retrato era un elemento inquietante para Cristina.";
+                case 6: return "¡Correcto! La casa la hacía sentir que perdía su propia identidad.";
+                case 7: return "Así es. Daniel solía restar importancia a sus miedos.";
+                case 8: return "¡Lamentablemente, sí! La casa la consume.";
+                case 9: return "¡Perfecto! Simboliza la fatalidad y la obsesión.";
+                case 10: return "¡Correcto! Un narrador que sabe todo lo que pasa.";
+                case 11: return "¡Muy bien! Esos elementos le dan el toque fantástico al cuento.";
+                case 12: return "¡Sí! Daniel acepta el ciclo de la casa con indiferencia.";
+                case 13: return "¡Exacto! Una atmósfera que te mantiene en vilo.";
                 default: return "¡Excelente!";
             }
         }
@@ -476,6 +674,16 @@
                 case 1: return "Vuelve a leer la descripción de la casa. Recuerda que no era una casa cualquiera. ¡Intenta de nuevo!";
                 case 2: return "Este cuento nos hace reflexionar mucho sobre el destino. ¡Revisa los temas principales!";
                 case 3: return "No se trataba de su madre... ¡Volvé a leer el cuento!";
+                case 4: return "No era solo por decoración. Hay un motivo más profundo.";
+                case 5: return "Revisa los detalles que le causaban incomodidad a Cristina en la casa.";
+                case 6: return "La casa no le generaba alegría. ¿Qué otra sensación experimentaba?";
+                case 7: return "Daniel no la apoyaba mucho en ese sentido. ¿Cómo reaccionaba?";
+                case 8: return "El final de Cristina es bastante oscuro. ¿Qué le sucede realmente?";
+                case 9: return "La casa no es tan 'dulce' como parece. ¿Qué representa?";
+                case 10: return "¿Quién nos cuenta la historia? ¿Desde qué punto de vista?";
+                case 11: return "Piensa en los elementos que no son 'normales' en la historia.";
+                case 12: return "¿Cómo se siente Daniel con las Cristinas anteriores? ¿Le importa?";
+                case 13: return "El cuento no es precisamente alegre. ¿Qué tipo de ambiente crea?";
                 default: return "¡Intenta de nuevo!";
             }
         }
