@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rosco de Geografía: Un Viaje por el Planeta</title>
+    <!-- Tailwind CSS CDN para un estilo moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente Inter y una fuente tipo "game show" para el título -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1a26; /* Azul muy oscuro, casi negro */
+            color: #e0e0e0;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: #1a2734; /* Azul oscuro */
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Para asegurar que el círculo se contenga */
+        }
+        .font-bangers {
+            font-family: 'Bangers', cursive;
+        }
+
+        /* Estilos para el Rosco */
+        .rosco-container {
+            position: relative;
+            width: 380px; /* Tamaño del círculo base */
+            height: 380px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            border: 8px solid #3b82f6; /* Borde azul vibrante */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0f1c2a; /* Fondo más oscuro del círculo */
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .letter-circle {
+            position: absolute;
+            width: 60px; /* Tamaño de cada letra */
+            height: 60px;
+            background-color: #fca311; /* Naranja vibrante */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a2734; /* Texto azul oscuro */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid #ffbf00; /* Borde amarillo-naranja */
+        }
+        .letter-circle:hover:not(.answered):not(.current-letter) {
+            transform: scale(1.1);
+            background-color: #f78c0c;
+        }
+
+        /* Colores para estados de las letras */
+        .letter-circle.current-letter {
+            background-color: #be185d; /* Rosado oscuro para la letra actual */
+            color: #fff;
+            transform: scale(1.15);
+            border-color: #f472b6; /* Borde rosado más claro */
+            animation: pulse-current 1.5s infinite;
+        }
+        @keyframes pulse-current {
+            0% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(244, 114, 182, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0); }
+        }
+
+        .letter-circle.correct {
+            background-color: #16a34a; /* Verde para correcta */
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.6);
+        }
+        .letter-circle.incorrect {
+            background-color: #dc2626; /* Rojo para incorrecta */
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.6);
+        }
+        .letter-circle.skipped {
+            background-color: #d97706; /* Naranja oscuro para saltada */
+            color: #fff;
+        }
+        .letter-circle.answered {
+            cursor: default;
+        }
+
+        /* Área de Pregunta y Respuesta */
+        .question-area {
+            background-color: #2a3a4b; /* Azul grisáceo */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a7d9ff; /* Azul claro */
+            margin-bottom: 1.5rem;
+            min-height: 50px; /* Para evitar saltos de diseño */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid #3b82f6;
+            background-color: #0f1c2a;
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .answer-input:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+        .buttons-area {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .btn-confirm {
+            background-color: #3b82f6; /* Azul */
+            color: white;
+        }
+        .btn-confirm:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        .btn-pass {
+            background-color: #d97706; /* Naranja */
+            color: white;
+        }
+        .btn-pass:hover {
+            background-color: #b45309;
+            transform: translateY(-2px);
+        }
+        .btn-reset {
+            background-color: #ef4444; /* Rojo */
+            color: white;
+            margin-top: 1rem;
+        }
+        .btn-reset:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+        .feedback-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 25px;
+        }
+        .correct-feedback { color: #10b981; } /* Esmeralda */
+        .incorrect-feedback { color: #ef4444; } /* Rojo */
+
+        /* Medidas responsivas */
+        @media (max-width: 768px) {
+            .rosco-container {
+                width: 300px;
+                height: 300px;
+                border-width: 6px;
+            }
+            .letter-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .question-text {
+                font-size: 1.3rem;
+            }
+            .answer-input {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rosco-container {
+                width: 250px;
+                height: 250px;
+                border-width: 4px;
+            }
+            .letter-circle {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            .answer-input {
+                font-size: 0.9rem;
+            }
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .buttons-area {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bangers text-blue-400 mb-6 drop-shadow-lg">
+            ¡Rosco Geográfico!
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 mb-8">
+            Para 5to año de secundaria - ¡Un viaje por el planeta y sus desafíos!
+        </p>
+
+        <!-- Contenedor del Rosco -->
+        <div class="rosco-container" id="rosco-container">
+            <!-- Las letras se generarán aquí con JavaScript -->
+        </div>
+
+        <!-- Área de Pregunta y Respuesta -->
+        <div class="question-area">
+            <p id="question-text" class="question-text">Selecciona una letra para empezar...</p>
+            <input type="text" id="answer-input" class="answer-input" placeholder="Tu respuesta aquí...">
+            <div id="feedback-message" class="feedback-message"></div>
+            <div class="buttons-area">
+                <button id="confirm-btn" class="btn btn-confirm" disabled>Confirmar</button>
+                <button id="pass-btn" class="btn btn-pass" disabled>Pasapalabra</button>
+            </div>
+            <button id="reset-game-btn" class="btn btn-reset mt-4">Reiniciar Juego</button>
+        </div>
+
+        <!-- Área de Puntuación/Estado -->
+        <div class="mt-8 text-xl">
+            <p>Correctas: <span id="correct-count" class="text-green-400 font-bold">0</span></p>
+            <p>Incorrectas: <span id="incorrect-count" class="text-red-400 font-bold">0</span></p>
+            <p>Preguntas restantes: <span id="remaining-count" class="text-yellow-400 font-bold">30</span></p>
+        </div>
+    </div>
+
+    <script>
+        // --- Datos del Rosco ---
+        const questions = [
+            { id: 'A', letter: 'A', question: "Con la A: Capa de gases que rodea la Tierra, esencial para la vida.", answer: "ATMÓSFERA", status: 'unanswered' },
+            { id: 'B', letter: 'B', question: "Con la B: Gran área geográfica definida por su vegetación, clima y fauna específicos.", answer: "BIOMA", status: 'unanswered' },
+            { id: 'C1', letter: 'C', question: "Con la C: Conjunto de condiciones atmosféricas (temperatura, precipitaciones) que caracterizan una región a largo plazo.", answer: "CLIMA", status: 'unanswered' },
+            { id: 'D', letter: 'D', question: "Con la D: Proceso de degradación del suelo que transforma tierras fértiles en desiertos.", answer: "DESERTIFICACIÓN", status: 'unanswered' },
+            { id: 'E', letter: 'E', question: "Con la E: Fenómeno natural por el cual la Tierra retiene parte del calor solar, vital para la vida.", answer: "EFECTOINVERNADERO", status: 'unanswered' },
+            { id: 'F', letter: 'F', question: "Con la F: Ruptura en la corteza terrestre que genera sismos o terremotos.", answer: "FALLA", status: 'unanswered' },
+            { id: 'G', letter: 'G', question: "Con la G: Proceso de creciente interconexión a nivel mundial en aspectos económicos, sociales y culturales.", answer: "GLOBALIZACIÓN", status: 'unanswered' },
+            { id: 'H', letter: 'H', question: "Con la H: Parte de la geografía que estudia las aguas de la Tierra, como ríos, lagos y océanos.", answer: "HIDROGRAFÍA", status: 'unanswered' },
+            { id: 'I', letter: 'I', question: "Con la I: Alteración o modificación del medio ambiente causada por la actividad humana, a menudo negativa.", answer: "IMPACTOAMBIENTAL", status: 'unanswered' },
+            { id: 'J', letter: 'J', question: "Con la J: Tipo de yacimiento mineral o de combustibles fósiles, como los de Vaca Muerta en Argentina.", answer: "YACIMIENTO", status: 'unanswered' }, // J for Yacimiento, common Rosco trick
+            { id: 'K', letter: 'K', question: "Con la K: Tipo de relieve formado por la disolución de rocas calizas, creando cuevas y sumideros.", answer: "KARST", status: 'unanswered' },
+            { id: 'L', letter: 'L', question: "Con la L: Distancia angular de cualquier punto de la Tierra al Ecuador, medida en grados.", answer: "LATITUD", status: 'unanswered' },
+            { id: 'M', letter: 'M', question: "Con la M: Movimiento de población que implica el cambio de residencia de un lugar a otro.", answer: "MIGRACIÓN", status: 'unanswered' },
+            { id: 'N', letter: 'N', question: "Con la N: Nutrientes inorgánicos que, en exceso en el agua, provocan eutrofización y contaminación.", answer: "NITRATOS", status: 'unanswered' },
+            { id: 'Ñ', letter: 'Ñ', question: "Con la Ñ: Animal corredor y grande, icónico de la región pampeana argentina.", answer: "ÑANDÚ", status: 'unanswered' },
+            { id: 'O', letter: 'O', question: "Con la O: Gran masa de agua salada que cubre la mayor parte de la superficie terrestre.", answer: "OCÉANO", status: 'unanswered' },
+            { id: 'P1', letter: 'P', question: "Con la P: Región geográfica de llanuras fértiles que abarca gran parte del centro de Argentina.", answer: "PAMPA", status: 'unanswered' },
+            { id: 'Q', letter: 'Q', question: "Con la Q: Accidente geográfico que es un valle estrecho y profundo, a menudo con un río.", answer: "QUEBRADA", status: 'unanswered' },
+            { id: 'R', letter: 'R', question: "Con la R: Elemento o bien que existe en la naturaleza y es aprovechado por el ser humano.", answer: "RECURSONATURAL", status: 'unanswered' },
+            { id: 'S', letter: 'S', question: "Con la S: Desarrollo que satisface las necesidades del presente sin comprometer las de futuras generaciones.", answer: "SUSTENTABLE", status: 'unanswered' },
+            { id: 'T', letter: 'T', question: "Con la T: Fenómeno meteorológico caracterizado por fuertes vientos, lluvias intensas y descargas eléctricas.", answer: "TORMENTA", status: 'unanswered' },
+            { id: 'U', letter: 'U', question: "Con la U: Proceso de crecimiento de las ciudades y la concentración de la población en áreas urbanas.", answer: "URBANIZACIÓN", status: 'unanswered' },
+            { id: 'V', letter: 'V', question: "Con la V: Abertura en la superficie terrestre por donde se expulsan materiales incandescentes, gases y cenizas.", answer: "VOLCÁN", status: 'unanswered' },
+            { id: 'W', letter: 'W', question: "Con la W: Término en inglés que se refiere a una cuenca hidrográfica o área de drenaje de agua.", answer: "WATERSHED", status: 'unanswered' },
+            { id: 'X', letter: 'X', question: "Con la X: Planta adaptada para vivir en ambientes secos o áridos, como un cactus.", answer: "XERÓFILA", status: 'unanswered' },
+            { id: 'Y', letter: 'Y', question: "Con la Y: Actividad económica que extrae minerales o combustibles de la Tierra.", answer: "MINERÍA", status: 'unanswered' }, // Y for minerÍA (spanish trick)
+            { id: 'Z', letter: 'Z', question: "Con la Z: Grandes extensiones de la Tierra con características climáticas homogéneas.", answer: "ZONASCLIMÁTICAS", status: 'unanswered' },
+            { id: 'C2', letter: 'C', question: "Con la C (contiene la): Región de la atmósfera que nos protege de la radiación ultravioleta del sol.", answer: "CAPADEZONO", status: 'unanswered' },
+            { id: 'A2', letter: 'A', question: "Con la A (contiene la): Actividad económica primaria basada en el cultivo de la tierra y la cría de animales.", answer: "AGRICULTURA", status: 'unanswered' },
+            { id: 'P2', letter: 'P', question: "Con la P (contiene la): Río de la provincia de Buenos Aires, conocido por su alta contaminación.", answer: "RIACHUELO", status: 'unanswered' } // P for riachuelo, common Rosco trick
+        ];
+
+        let currentQuestionIndex = 0;
+        let answeredQuestions = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        const roscoContainer = document.getElementById('rosco-container');
+        const questionTextElement = document.getElementById('question-text');
+        const answerInput = document.getElementById('answer-input');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const passBtn = document.getElementById('pass-btn');
+        const resetGameBtn = document.getElementById('reset-game-btn');
+        const correctCountElement = document.getElementById('correct-count');
+        const incorrectCountElement = document.getElementById('incorrect-count');
+        const remainingCountElement = document.getElementById('remaining-count');
+
+        // Función para inicializar o reiniciar el juego
+        function initializeGame() {
+            // Reiniciar estado de las preguntas y contadores
+            questions.forEach(q => q.status = 'unanswered');
+            currentQuestionIndex = 0;
+            answeredQuestions = 0;
+            correctCount = 0;
+            incorrectCount = 0;
+
+            updateScoreDisplay();
+            feedbackMessage.textContent = '';
+            answerInput.value = '';
+            answerInput.disabled = true; // Deshabilitar input al inicio
+            confirmBtn.disabled = true;
+            passBtn.disabled = true;
+
+            renderRoscoLetters(); // Volver a dibujar las letras
+            displayQuestion(questions[currentQuestionIndex]); // Mostrar la primera pregunta
+        }
+
+        // Función para renderizar las letras del Rosco en un círculo
+        function renderRoscoLetters() {
+            roscoContainer.innerHTML = ''; // Limpiar letras existentes
+            const radius = 170; // Radio del círculo para las letras
+            const centerX = roscoContainer.offsetWidth / 2 - 30; // Centrar las letras (ajuste por tamaño de letra)
+            const centerY = roscoContainer.offsetHeight / 2 - 30;
+
+            questions.forEach((q, index) => {
+                const angle = (index / questions.length) * (2 * Math.PI) - (Math.PI / 2); // -PI/2 para empezar arriba
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                const letterDiv = document.createElement('div');
+                letterDiv.classList.add('letter-circle');
+                letterDiv.id = `letter-${q.id}`; // ID único para cada letra
+                letterDiv.textContent = q.letter;
+                letterDiv.style.left = `${x}px`;
+                letterDiv.style.top = `${y}px`;
+                letterDiv.dataset.questionIndex = index; // Guardar el índice de la pregunta
+
+                // Asignar clase de estado si es necesario
+                if (q.status !== 'unanswered') {
+                    letterDiv.classList.add(q.status);
+                    if (q.status === 'correct' || q.status === 'incorrect') {
+                         // Si ya fue respondida, no es clickeable
+                         letterDiv.classList.add('answered');
+                    }
+                }
+
+                // Manejar el clic en las letras
+                letterDiv.addEventListener('click', () => {
+                    if (!letterDiv.classList.contains('answered')) {
+                        displayQuestion(questions[index]);
+                    }
+                });
+
+                roscoContainer.appendChild(letterDiv);
+            });
+        }
+
+        // Función para mostrar la pregunta actual
+        function displayQuestion(q) {
+            // Remover la clase 'current-letter' de la anterior
+            const prevLetterDiv = document.querySelector('.letter-circle.current-letter');
+            if (prevLetterDiv) {
+                prevLetterDiv.classList.remove('current-letter');
+            }
+
+            // Añadir la clase 'current-letter' a la nueva
+            const currentLetterDiv = document.getElementById(`letter-${q.id}`);
+            if (currentLetterDiv) {
+                currentLetterDiv.classList.add('current-letter');
+            }
+
+            questionTextElement.textContent = q.question;
+            answerInput.value = '';
+            answerInput.disabled = false;
+            answerInput.focus(); // Enfocar el input para que el usuario pueda escribir
+            feedbackMessage.textContent = ''; // Limpiar feedback anterior
+
+            confirmBtn.disabled = false;
+            passBtn.disabled = false;
+
+            currentQuestionIndex = questions.indexOf(q); // Actualizar el índice de la pregunta actual
+        }
+
+        // Función para actualizar los contadores
+        function updateScoreDisplay() {
+            correctCountElement.textContent = correctCount;
+            incorrectCountElement.textContent = incorrectCount;
+            remainingCountElement.textContent = questions.length - answeredQuestions;
+
+            if (answeredQuestions === questions.length) {
+                endGame();
+            }
+        }
+
+        // Función para manejar la confirmación de la respuesta
+        confirmBtn.addEventListener('click', () => {
+            const currentQuestion = questions[currentQuestionIndex];
+            const userAnswer = answerInput.value.trim().toUpperCase();
+            const correctAnswer = currentQuestion.answer.toUpperCase();
+            const letterDiv = document.getElementById(`letter-${currentQuestion.id}`);
+
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+                currentQuestion.status = 'correct';
+                feedbackMessage.textContent = '¡Correcto!';
+                feedbackMessage.classList.remove('incorrect-feedback');
+                feedbackMessage.classList.add('correct-feedback');
+            } else {
+                incorrectCount++;
+                currentQuestion.status = 'incorrect';
+                feedbackMessage.textContent = `¡Incorrecto! La respuesta era: ${currentQuestion.answer}`;
+                feedbackMessage.classList.remove('correct-feedback');
+                feedbackMessage.classList.add('incorrect-feedback');
+            }
+            answeredQuestions++;
+            letterDiv.classList.remove('current-letter'); // Quitar el efecto de la letra actual
+            letterDiv.classList.add(currentQuestion.status, 'answered');
+            answerInput.disabled = true; // Deshabilitar input
+            confirmBtn.disabled = true; // Deshabilitar botones
+            passBtn.disabled = true;
+
+            updateScoreDisplay();
+            setTimeout(moveToNextQuestion, 2000); // Mover a la siguiente pregunta después de un delay
+        });
+
+        // Función para manejar "Pasapalabra"
+        passBtn.addEventListener('click', () => {
+            const currentQuestion = questions[currentQuestionIndex];
+            currentQuestion.status = 'skipped';
+            const letterDiv = document.getElementById(`letter-${currentQuestion.id}`);
+            
+            letterDiv.classList.remove('current-letter');
+            letterDiv.classList.add('skipped', 'answered'); // Marcar como saltada
+            answerInput.disabled = true; // Deshabilitar input
+            confirmBtn.disabled = true; // Deshabilitar botones
+            passBtn.disabled = true;
+            feedbackMessage.textContent = '¡Pasapalabra!';
+            feedbackMessage.classList.remove('correct-feedback', 'incorrect-feedback'); // Limpiar clases de color
+
+            answeredQuestions++; // Contar como respondida (para el total)
+            updateScoreDisplay();
+            setTimeout(moveToNextQuestion, 1500); // Mover a la siguiente pregunta después de un delay
+        });
+
+        // Función para buscar la siguiente pregunta sin responder/saltada
+        function moveToNextQuestion() {
+            let nextIndex = currentQuestionIndex;
+            let foundNext = false;
+            let rounds = 0; // Para evitar bucles infinitos si no hay más preguntas
+
+            while (rounds < questions.length * 2) { // Intentar dos vueltas completas
+                nextIndex = (nextIndex + 1) % questions.length;
+                if (questions[nextIndex].status === 'unanswered' || questions[nextIndex].status === 'skipped') {
+                    foundNext = true;
+                    break;
+                }
+                rounds++;
+            }
+
+            if (foundNext && answeredQuestions < questions.length) {
+                displayQuestion(questions[nextIndex]);
+            } else if (answeredQuestions === questions.length) {
+                endGame();
+            }
+        }
+
+        // Función para terminar el juego
+        function endGame() {
+            questionTextElement.textContent = `¡Juego Terminado! Tus resultados:`;
+            answerInput.style.display = 'none';
+            confirmBtn.style.display = 'none';
+            passBtn.style.display = 'none';
+            feedbackMessage.textContent = `Correctas: ${correctCount}, Incorrectas: ${incorrectCount}.`;
+            feedbackMessage.classList.remove('correct-feedback', 'incorrect-feedback');
+            feedbackMessage.classList.add('text-yellow-300'); // Color para mensaje final
+            resetGameBtn.style.display = 'block'; // Mostrar botón de reiniciar
+
+            // Remover la clase 'current-letter' de todas las letras al finalizar
+            document.querySelectorAll('.letter-circle.current-letter').forEach(div => {
+                div.classList.remove('current-letter');
+            });
+        }
+
+        // Reiniciar el juego
+        resetGameBtn.addEventListener('click', () => {
+            answerInput.style.display = 'block';
+            confirmBtn.style.display = 'inline-block';
+            passBtn.style.display = 'inline-block';
+            resetGameBtn.style.display = 'none';
+            feedbackMessage.classList.remove('text-yellow-300'); // Limpiar color del mensaje final
+            initializeGame();
+        });
+
+        // Iniciar el juego al cargar la página
+        initializeGame();
+    </script>
+</body>
+</html>
