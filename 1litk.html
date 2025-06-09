@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mito de Penélope y Ulises: Un Viaje Épico</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text color */
+        }
+        /* Style for interactive cards/sections */
+        .interactive-card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+        }
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .hidden-content.expanded {
+            max-height: 500px; /* Adjust as needed to fit content */
+            transition: max-height 0.5s ease-in;
+        }
+        .icon {
+            font-size: 2.5rem; /* Larger icons */
+            line-height: 1;
+        }
+        /* Specific styling for the activity buttons */
+        .activity-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .activity-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Crossword specific styles */
+        .crossword-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr); /* Adjust grid size as needed */
+            gap: 2px;
+            max-width: 300px; /* Limit grid size for better display */
+            margin: 0 auto;
+            border: 1px solid #cbd5e1; /* Light gray border */
+        }
+        .crossword-cell {
+            width: 30px; /* Fixed width for cells */
+            height: 30px; /* Fixed height for cells */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e2e8f0; /* Light background for cells */
+            font-weight: bold;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            position: relative;
+        }
+        .crossword-cell.empty {
+            background-color: #a0aec0; /* Darker background for empty cells */
+        }
+        .crossword-cell input {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            border: none;
+            background-color: transparent;
+            font-weight: bold;
+            color: #1a202c;
+            padding: 0;
+            outline: none;
+        }
+        .crossword-number {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            font-size: 0.6rem;
+            color: #4a5568;
+        }
+
+        /* Matching game specific styles */
+        .match-card {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            border: 2px solid transparent; /* Default border */
+        }
+        .match-card:hover {
+            transform: scale(1.02);
+        }
+        .match-card.selected {
+            border-color: #3b82f6; /* Blue border for selected */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Blue glow */
+            transform: scale(1.02);
+        }
+        .match-card.matched {
+            background-color: #d1fae5; /* Light green for matched */
+            border-color: #10b981; /* Green border */
+            color: #065f46; /* Darker green text */
+            cursor: default;
+            pointer-events: none; /* Disable clicking once matched */
+        }
+        .match-card.incorrect {
+            border-color: #ef4444; /* Red border for incorrect */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5); /* Red glow */
+            animation: shake 0.3s; /* Shake animation */
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+
+    <!-- Main Container -->
+    <div class="max-w-4xl w-full bg-white p-8 rounded-2xl shadow-xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-blue-700 mb-4 leading-tight">
+                Mito de Penélope y Ulises
+            </h1>
+            <p class="text-xl sm:text-2xl text-gray-600">
+                ¡Un viaje épico a través del tiempo y la lealtad!
+            </p>
+        </header>
+
+        <!-- Section 1: Resúmenes Visuales y Dinámicos -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold text-purple-700 mb-8 text-center">
+                El Hilo de la Historia: Un Viaje por el Mito
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center">
+                Explora los momentos clave de esta increíble historia, ¡desplegando cada "nudo" para descubrir más!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Nudo 1: El Inicio y la Partida -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center" onclick="toggleContent('nudo1')">
+                    <span class="icon text-blue-500 mb-4">⛵</span>
+                    <h3 class="text-2xl font-semibold text-blue-800 mb-2">1. El Inicio y la Partida</h3>
+                    <p class="text-gray-600">Ulises se va a la Guerra de Troya, dejando a su familia en Ítaca.</p>
+                    <div id="nudo1-content" class="hidden-content pt-4 text-left">
+                        <p class="text-gray-700">Ulises, rey de Ítaca, es llamado a luchar en la Guerra de Troya. Deja atrás a su amada esposa Penélope y a su pequeño hijo Telémaco, prometiendo regresar pronto. Nadie imaginaba que su viaje de vuelta sería tan largo y lleno de peligros.</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700">
+                            <li><strong class="text-blue-700">Personajes:</strong> Ulises, Penélope, Telémaco.</li>
+                            <li><strong class="text-blue-700">Lugar:</strong> Ítaca, Troya.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nudo 2: Las Pruebas de Ulises -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center" onclick="toggleContent('nudo2')">
+                    <span class="icon text-green-500 mb-4">🌊</span>
+                    <h3 class="text-2xl font-semibold text-green-800 mb-2">2. Las Pruebas de Ulises</h3>
+                    <p class="text-gray-600">Un viaje de diez años lleno de monstruos, dioses y desafíos.</p>
+                    <div id="nudo2-content" class="hidden-content pt-4 text-left">
+                        <p class="text-gray-700">Tras la victoria en Troya, Ulises emprende un viaje de regreso que dura una década. Se enfrenta a criaturas como el Cíclope Polifemo, las seductoras Sirenas, la hechicera Circe y la ninfa Calipso, quien lo retiene por años. Cada encuentro es una prueba de su ingenio y resistencia.</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700">
+                            <li><strong class="text-green-700">Desafíos:</strong> Cíclope, Sirenas, Circe, Calipso.</li>
+                            <li><strong class="text-green-700">Habilidades:</strong> Astucia, liderazgo, paciencia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nudo 3: La Espera de Penélope -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center" onclick="toggleContent('nudo3')">
+                    <span class="icon text-red-500 mb-4">🧶</span>
+                    <h3 class="text-2xl font-semibold text-red-800 mb-2">3. La Espera de Penélope</h3>
+                    <p class="text-gray-600">Mientras, Penélope resiste a los pretendientes con ingenio.</p>
+                    <div id="nudo3-content" class="hidden-content pt-4 text-left">
+                        <p class="text-gray-700">En Ítaca, Penélope es asediada por numerosos pretendientes que buscan casarse con ella y tomar el trono de Ulises. Para ganar tiempo y mantener su lealtad, idea una astuta estrategia: promete elegir esposo cuando termine de tejer un sudario para su suegro, pero cada noche deshace lo tejido durante el día.</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700">
+                            <li><strong class="text-red-700">Estrategia:</strong> El telar.</li>
+                            <li><strong class="text-red-700">Virtudes:</strong> Fidelidad, ingenio, paciencia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nudo 4: El Regreso y la Venganza -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center" onclick="toggleContent('nudo4')">
+                    <span class="icon text-yellow-500 mb-4">🏹</span>
+                    <h3 class="text-2xl font-semibold text-yellow-800 mb-2">4. El Regreso y la Venganza</h3>
+                    <p class="text-gray-600">Ulises vuelve disfrazado y enfrenta a los pretendientes.</p>
+                    <div id="nudo4-content" class="hidden-content pt-4 text-left">
+                        <p class="text-gray-700">Ulises finalmente llega a Ítaca, pero lo hace disfrazado de mendigo para no ser reconocido y evaluar la situación. Con la ayuda de su hijo Telémaco y algunos fieles sirvientes, planea su venganza contra los arrogantes pretendientes. La prueba del arco de Ulises es el clímax de la historia.</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700">
+                            <li><strong class="text-yellow-700">Clímax:</strong> La prueba del arco.</li>
+                            <li><strong class="text-yellow-700">Aliados:</strong> Telémaco, Eumeo, Filetio.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nudo 5: El Reconocimiento y la Paz -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center" onclick="toggleContent('nudo5')">
+                    <span class="icon text-purple-500 mb-4">🏡</span>
+                    <h3 class="text-2xl font-semibold text-purple-800 mb-2">5. El Reconocimiento y la Paz</h3>
+                    <p class="text-gray-600">La familia se reúne y la paz regresa a Ítaca.</p>
+                    <div id="nudo5-content" class="hidden-content pt-4 text-left">
+                        <p class="text-gray-700">Después de la masacre de los pretendientes, Penélope, aún cautelosa, pone una última prueba a Ulises para asegurarse de que es realmente él. Al reconocer su lecho nupcial inamovible, la pareja se reúne. La paz y el orden son restaurados en Ítaca.</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700">
+                            <li><strong class="text-purple-700">Reunión:</strong> Familia unida.</li>
+                            <li><strong class="text-purple-700">Final:</strong> Restauración del orden.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Infografías Llamativas -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold text-teal-700 mb-8 text-center">
+                Desarmando el Mito: Componentes Clave
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center">
+                ¡Mira cómo se construye un mito! Aquí te mostramos sus partes más importantes.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Infografía 1: El Viaje del Héroe: Ulises -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center">
+                    <span class="icon text-orange-500 mb-4">🧭</span>
+                    <h3 class="text-2xl font-semibold text-orange-800 mb-4">El Viaje del Héroe: Ulises</h3>
+                    <p class="text-gray-700 mb-4">
+                        El viaje de Ulises sigue un patrón universal de las historias de héroes. ¡Descúbrelo!
+                    </p>
+                    <div class="w-full">
+                        <table class="w-full text-sm text-left text-gray-700 border-collapse border border-gray-300 rounded-lg overflow-hidden">
+                            <thead class="bg-orange-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b border-gray-300">Etapa</th>
+                                    <th class="py-2 px-4 border-b border-gray-300">Ejemplo en Ulises</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white">
+                                    <td class="py-2 px-4 border-b border-gray-200">La Llamada</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">Guerra de Troya</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="py-2 px-4 border-b border-gray-200">Pruebas</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">Cíclope, Sirenas, Circe</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="py-2 px-4 border-b border-gray-200">Clímax</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">Regreso a Ítaca, prueba del arco</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="py-2 px-4 border-b border-gray-200">Regreso</td>
+                                    <td class="py-2 px-4 border-b border-gray-200">Reunión con Penélope</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Infografía 2: Penélope: La Fortaleza en la Espera -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center">
+                    <span class="icon text-pink-500 mb-4">👑</span>
+                    <h3 class="text-2xl font-semibold text-pink-800 mb-4">Penélope: La Fortaleza en la Espera</h3>
+                    <p class="text-gray-700 mb-4">
+                        Descubre cómo Penélope usó su ingenio para proteger su hogar y su lealtad.
+                    </p>
+                    <ul class="list-none space-y-3 text-left w-full">
+                        <li class="flex items-start">
+                            <span class="text-pink-600 mr-2">✅</span>
+                            <p class="text-gray-700"><strong class="text-pink-700">El Telar Mágico:</strong> Su estrategia para engañar a los pretendientes, tejiendo de día y destejiendo de noche.</p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-pink-600 mr-2">✅</span>
+                            <p class="text-gray-700"><strong class="text-pink-700">Resistencia a los Pretendientes:</strong> Cómo se mantuvo firme ante la presión y el acoso.</p>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-pink-600 mr-2">✅</span>
+                            <p class="text-gray-700"><strong class="text-pink-700">La Prueba Final:</strong> Su astucia al poner a prueba al supuesto Ulises con el secreto de su lecho.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Infografía 3: Estructura Mítica: Un Glosario Visual -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center">
+                    <span class="icon text-indigo-500 mb-4">📚</span>
+                    <h3 class="text-2xl font-semibold text-indigo-800 mb-4">Estructura Mítica: Glosario Visual</h3>
+                    <p class="text-gray-700 mb-4">
+                        ¡Aprende los términos clave para entender cualquier mito!
+                    </p>
+                    <div class="w-full space-y-4">
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-700">Prólogo / Inicio</h4>
+                            <p class="text-gray-700 text-sm">Presentación de personajes y situación inicial. (Ulises en Ítaca, llamado a la guerra).</p>
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-700">Nudo / Desarrollo</h4>
+                            <p class="text-gray-700 text-sm">Conflictos y desafíos que enfrentan los personajes. (Viaje de Ulises, espera de Penélope).</p>
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-700">Clímax</h4>
+                            <p class="text-gray-700 text-sm">El punto de máxima tensión o el momento decisivo. (La prueba del arco de Ulises).</p>
+                        </div>
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-700">Desenlace / Epílogo</h4>
+                            <p class="text-gray-700 text-sm">Resolución de los conflictos y final de la historia. (Ulises y Penélope se reúnen, paz en Ítaca).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Actividades Dinámicas y Juegos Educativos -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold text-blue-700 mb-8 text-center">
+                Actividades Dinámicas: ¡Pon a prueba tu conocimiento!
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center">
+                ¡Es hora de interactuar con el mito y demostrar lo que aprendiste!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Actividad 1: Secuencia del Héroe Desordenada -->
+                <div class="interactive-card p-6 flex flex-col items-center text-center">
+                    <span class="icon text-purple-500 mb-4">🧩</span>
+                    <h3 class="text-2xl font-semibold text-purple-800 mb-4">Secuencia del Héroe Desordenada</h3>
+                    <p class="text-gray-700 mb-4">
+                        Arrastra y suelta (o haz clic para ordenar) los eventos clave del viaje de Ulises en el orden correcto.
+                    </p>
+                    <div class="w-full bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <p class="font-semibold text-purple-700 mb-2">Instrucciones:</p>
+                        <ol class="list-decimal list-inside text-left text-gray-700">
+                            <li>Lee los eventos listados a continuación.</li>
+                            <li>Haz clic en "Mostrar Orden" para ver la secuencia correcta.</li>
+                            <li>¡Compara tu orden con la respuesta!</li>
+                        </ol>
+                        <div class="mt-4 space-y-2">
+                            <div class="bg-white p-2 rounded-md shadow-sm">Ulises lucha contra el Cíclope.</div>
+                            <div class="bg-white p-2 rounded-md shadow-sm">Ulises regresa a Ítaca disfrazado.</div>
+                            <div class="bg-white p-2 rounded-md shadow-sm">Guerra de Troya.</div>
+                            <div class="bg-white p-2 rounded-md shadow-sm">Ulises se reencuentra con Penélope.</div>
+                            <div class="bg-white p-2 rounded-md shadow-sm">Los pretendientes asedian a Penélope.</div>
+                        </div>
+                        <button class="activity-button mt-6 bg-purple-600 text-white hover:bg-purple-700" onclick="showSequence()">
+                            Mostrar Orden
+                        </button>
+                        <div id="sequence-answer" class="hidden-content mt-4 text-left p-3 bg-purple-100 rounded-lg">
+                            <p class="font-semibold text-purple-800 mb-2">Orden Correcto:</p>
+                            <ol class="list-decimal list-inside text-gray-800">
+                                <li>Guerra de Troya.</li>
+                                <li>Ulises lucha contra el Cíclope.</li>
+                                <li>Los pretendientes asedian a Penélope.</li>
+                                <li>Ulises regresa a Ítaca disfrazado.</li>
+                                <li>Ulises se reencuentra con Penélope.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card p-6 flex flex-col items-center text-center">
+                    <span class="icon text-green-500 mb-4">🧵</span>
+                    <h3 class="text-2xl font-semibold text-green-800 mb-4">El Telar de Penélope: Tejiendo la Trama</h3>
+                    <p class="text-gray-700 mb-4">
+                        ¡Trabajemos en grupo! Cada "hilo" es una parte del mito.
+                    </p>
+                    <div class="w-full bg-green-50 p-4 rounded-lg border border-green-200">
+                        <p class="font-semibold text-green-700 mb-2">Instrucciones para la actividad en clase:</p>
+                        <ul class="list-disc list-inside text-left text-gray-700">
+                            <li>Divide la clase en 5 grupos.</li>
+                            <li>Asigna a cada grupo una de las 5 etapas del mito (Inicio, Pruebas de Ulises, Espera de Penélope, Regreso y Venganza, Reconocimiento y Paz).</li>
+                            <li>Cada grupo debe crear un "hilo" (un resumen corto, un dibujo o una escena) que represente su etapa.</li>
+                            <li>¡Luego, unan todos los "hilos" para contar el mito completo!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-card p-6 flex flex-col items-center text-center md:col-span-2">
+                    <span class="icon text-cyan-500 mb-4">📝</span>
+                    <h3 class="text-2xl font-semibold text-cyan-800 mb-4">Crucigrama del Mito: ¡Adivina las palabras!</h3>
+                    <p class="text-gray-700 mb-4">
+                        ¡Demuestra cuánto sabes sobre el mito de Penélope y Ulises y la estructura narrativa!
+                    </p>
+                    <div class="w-full bg-cyan-50 p-4 rounded-lg border border-cyan-200 flex flex-col lg:flex-row items-start lg:space-x-8">
+                        <div class="w-full lg:w-1/2 mb-6 lg:mb-0 text-left">
+                            <h4 class="font-bold text-cyan-700 mb-3 text-xl">Horizontales:</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                                <li>Esposa de Ulises, famosa por su lealtad.</li>
+                                <li>Monstruo de un solo ojo al que Ulises engañó.</li>
+                                <li>La ciudad donde Ulises luchó por diez años.</li>
+                                <li>Objeto que Penélope tejía y destejía para ganar tiempo.</li>
+                                <li>Punto de máxima tensión en una historia.</li>
+                                <li>Cualidad principal de Penélope.</li>
+                            </ol>
+                            <h4 class="font-bold text-cyan-700 mt-6 mb-3 text-xl">Verticales:</h4>
+                            <ol class="list-decimal list-inside text-gray-700 space-y-2" start="7">
+                                <li>Héroe principal de la historia.</li>
+                                <li>Reino de Ulises y Penélope.</li>
+                                <li>Seres marinos que atraían a los marineros con su canto.</li>
+                                <li>Parte central del relato, donde se desarrollan los conflictos.</li>
+                                <li>La prueba con la que Ulises demuestra su identidad.</li>
+                                <li>Hombres que asediaban a Penélope.</li>
+                                <li>Cualidad principal de Ulises.</li>
+                                <li>El comienzo de la historia.</li>
+                                <li>El final de la historia, donde se resuelven los conflictos.</li>
+                            </ol>
+                        </div>
+
+                        <div class="w-full lg:w-1/2 flex flex-col items-center">
+                            <div class="crossword-grid">
+                                <!-- Row 1 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 2 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 3 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 4 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 5 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 6 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 7 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 8 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 9 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+
+                                <!-- Row 10 -->
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                                <div class="crossword-cell empty"></div>
+                            </div>
+                            <button class="activity-button mt-6 bg-cyan-600 text-white hover:bg-cyan-700" onclick="showCrosswordSolution()">
+                                Mostrar Solución
+                            </button>
+                            <div id="crossword-solution" class="hidden-content mt-4 text-left p-3 bg-cyan-100 rounded-lg w-full">
+                                <p class="font-semibold text-cyan-800 mb-2">Solución:</p>
+                                <p class="text-gray-800">
+                                    **Horizontales:**<br>
+                                    1. PENELOPE<br>
+                                    2. CICLOPE<br>
+                                    3. TROYA<br>
+                                    4. TELAR<br>
+                                    5. CLIMAX<br>
+                                    6. LEALTAD<br>
+                                    <br>
+                                    **Verticales:**<br>
+                                    7. ULISES<br>
+                                    8. ITACA<br>
+                                    9. SIRENAS<br>
+                                    10. NUDO<br>
+                                    11. ARCO<br>
+                                    12. PRETENDIENTES<br>
+                                    13. ASTUCIA<br>
+                                    14. INICIO<br>
+                                    15. DESENLACE
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Juego de Unir -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold text-orange-700 mb-8 text-center">
+                Conecta los Puntos: Personajes y Claves
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center">
+                ¡Demuestra tu conocimiento uniendo cada personaje con su elemento clave!
+            </p>
+
+            <div class="w-full bg-orange-50 p-6 rounded-lg border border-orange-200 flex flex-col md:flex-row justify-center items-stretch space-y-6 md:space-y-0 md:space-x-8">
+                <!-- Character Column -->
+                <div class="w-full md:w-1/2">
+                    <h4 class="font-bold text-orange-700 mb-4 text-2xl text-center">Personajes</h4>
+                    <div id="character-list" class="space-y-3">
+                        <div class="match-card character-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Ulises">Ulises</div>
+                        <div class="match-card character-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Penélope">Penélope</div>
+                        <div class="match-card character-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Telémaco">Telémaco</div>
+                        <div class="match-card character-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Cíclope">Cíclope</div>
+                        <div class="match-card character-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Sirenas">Sirenas</div>
+                    </div>
+                </div>
+
+                <!-- Reference Column -->
+                <div class="w-full md:w-1/2">
+                    <h4 class="font-bold text-orange-700 mb-4 text-2xl text-center">Referencias</h4>
+                    <div id="reference-list" class="space-y-3">
+                        <div class="match-card reference-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Viaje">Viaje (Odisea)</div>
+                        <div class="match-card reference-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Telar">Telar</div>
+                        <div class="match-card reference-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Hijo">Hijo de Ulises</div>
+                        <div class="match-card reference-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Polifemo">Polifemo</div>
+                        <div class="match-card reference-card p-4 rounded-lg bg-white shadow-sm text-center font-semibold text-lg" data-name="Canto">Canto Seductor</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8 space-x-4">
+                <button class="activity-button bg-orange-600 text-white hover:bg-orange-700" onclick="resetMatchingGame()">
+                    Reiniciar Juego
+                </button>
+            </div>
+            <div id="match-feedback" class="text-center mt-4 text-xl font-bold"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>&copy; 2025 Material Didáctico Interactivo. Creado para estudiantes de Buenos Aires.</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        /**
+         * Toggles the visibility of a hidden content section.
+         * @param {string} id - The ID of the content section to toggle.
+         */
+        function toggleContent(id) {
+            const content = document.getElementById(id + '-content');
+            if (content) {
+                content.classList.toggle('expanded');
+            }
+        }
+
+        /**
+         * Shows the correct sequence for the "Secuencia del Héroe Desordenada" activity.
+         */
+        function showSequence() {
+            const answerDiv = document.getElementById('sequence-answer');
+            if (answerDiv) {
+                answerDiv.classList.toggle('expanded');
+            }
+        }
+
+        /**
+         * Shows the solution for the crossword puzzle.
+         */
+        function showCrosswordSolution() {
+            const solutionDiv = document.getElementById('crossword-solution');
+            if (solutionDiv) {
+                solutionDiv.classList.toggle('expanded');
+            }
+        }
+
+        // Crossword grid population and logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridData = [
+                // 10x10 grid for simplicity. ' ' for empty, number for starting cell
+                // You can manually fill this to create a more complex grid.
+                // For now, it's a visual placeholder and the solution is text-based.
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            ];
+
+            const crosswordGridElement = document.querySelector('.crossword-grid');
+            crosswordGridElement.innerHTML = ''; // Clear existing content
+
+            // This is a simplified grid. For a true interactive crossword,
+            // you'd need a more complex data structure and logic to place words.
+            // For now, it's a visual representation with input fields.
+            gridData.forEach((row, rowIndex) => {
+                row.forEach((cell, colIndex) => {
+                    const cellDiv = document.createElement('div');
+                    cellDiv.classList.add('crossword-cell');
+                    if (cell === ' ') {
+                        cellDiv.classList.add('empty');
+                    } else {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        cellDiv.appendChild(input);
+                    }
+
+                    // Add numbers to specific cells for clue references (manual placement for now)
+                    // These numbers correspond to the clues in the HTML for the crossword.
+                    if (rowIndex === 0 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">7</span>'; } // ULISES (V)
+                    if (rowIndex === 0 && colIndex === 1) { cellDiv.innerHTML = '<span class="crossword-number">1</span>'; } // PENELOPE (H)
+                    if (rowIndex === 1 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">8</span>'; } // ITACA (V)
+                    if (rowIndex === 2 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">9</span>'; } // SIRENAS (V)
+                    if (rowIndex === 3 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">10</span>'; } // NUDO (V)
+                    if (rowIndex === 4 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">11</span>'; } // ARCO (V)
+                    if (rowIndex === 5 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">12</span>'; } // PRETENDIENTES (V)
+                    if (rowIndex === 6 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">13</span>'; } // ASTUCIA (V)
+                    if (rowIndex === 7 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">14</span>'; } // INICIO (V)
+                    if (rowIndex === 8 && colIndex === 0) { cellDiv.innerHTML = '<span class="crossword-number">15</span>'; } // DESENLACE (V)
+
+                    if (rowIndex === 1 && colIndex === 2) { cellDiv.innerHTML = '<span class="crossword-number">2</span>'; } // CICLOPE (H)
+                    if (rowIndex === 2 && colIndex === 3) { cellDiv.innerHTML = '<span class="crossword-number">3</span>'; } // TROYA (H)
+                    if (rowIndex === 3 && colIndex === 4) { cellDiv.innerHTML = '<span class="crossword-number">4</span>'; } // TELAR (H)
+                    if (rowIndex === 4 && colIndex === 5) { cellDiv.innerHTML = '<span class="crossword-number">5</span>'; } // CLIMAX (H)
+                    if (rowIndex === 5 && colIndex === 6) { cellDiv.innerHTML = '<span class="crossword-number">6</span>'; } // LEALTAD (H)
+
+
+                    crosswordGridElement.appendChild(cellDiv);
+                });
+            });
+        });
+
+        // --- Matching Game Logic ---
+        let selectedCharacterCard = null; // Stores the actual DOM element of the selected character
+        let selectedCharacterName = null; // Stores the data-name of the selected character
+
+        // Define correct matches as key-value pairs (Character -> ONE correct Reference)
+        const correctMatches = {
+            "Ulises": "Viaje",
+            "Penélope": "Telar",
+            "Telémaco": "Hijo",
+            "Cíclope": "Polifemo",
+            "Sirenas": "Canto"
+        };
+
+        // This will store successful matches: { "Ulises": "Viaje", "Penelope": "Telar" }
+        let currentMatches = {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const characterCards = document.querySelectorAll('.character-card');
+            const referenceCards = document.querySelectorAll('.reference-card');
+            const matchFeedbackDiv = document.getElementById('match-feedback');
+
+            // Event listeners for character cards
+            characterCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // If this card is already matched, do nothing
+                    if (card.classList.contains('matched')) {
+                        return;
+                    }
+
+                    // Remove 'selected' from previously selected character
+                    if (selectedCharacterCard) {
+                        selectedCharacterCard.classList.remove('selected');
+                    }
+
+                    // Set this card as selected
+                    card.classList.add('selected');
+                    selectedCharacterCard = card;
+                    selectedCharacterName = card.dataset.name;
+                    matchFeedbackDiv.textContent = `Seleccionaste a ${selectedCharacterName}. Ahora elige una referencia.`;
+                    matchFeedbackDiv.style.color = '#334155';
+                });
+            });
+
+            // Event listeners for reference cards
+            referenceCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // If this card is already matched, do nothing
+                    if (card.classList.contains('matched')) {
+                        return;
+                    }
+
+                    if (selectedCharacterCard && selectedCharacterName) {
+                        const refName = card.dataset.name;
+
+                        // Check for a correct match
+                        if (correctMatches[selectedCharacterName] === refName) {
+                            // Correct match!
+                            selectedCharacterCard.classList.add('matched');
+                            card.classList.add('matched');
+                            selectedCharacterCard.classList.remove('selected'); // Deselect after matching
+
+                            currentMatches[selectedCharacterName] = refName; // Store the successful match
+
+                            matchFeedbackDiv.textContent = `¡Correcto! ${selectedCharacterName} se conecta con ${refName}.`;
+                            matchFeedbackDiv.style.color = '#10b981'; // Green color
+
+                            // Disable cards that are matched
+                            selectedCharacterCard.style.pointerEvents = 'none';
+                            card.style.pointerEvents = 'none';
+
+                            // Reset selection
+                            selectedCharacterCard = null;
+                            selectedCharacterName = null;
+
+                            // Check if all pairs are matched
+                            checkAllMatches();
+
+                        } else {
+                            // Incorrect match
+                            card.classList.add('incorrect');
+                            matchFeedbackDiv.textContent = `¡Incorrecto! ${selectedCharacterName} no se conecta con ${refName}.`;
+                            matchFeedbackDiv.style.color = '#ef4444'; // Red color
+
+                            // Remove incorrect highlight and feedback after a short delay
+                            setTimeout(() => {
+                                card.classList.remove('incorrect');
+                                matchFeedbackDiv.textContent = '';
+                            }, 1000); // 1 second
+                        }
+                    } else {
+                        // User clicked reference before selecting character
+                        matchFeedbackDiv.textContent = 'Primero selecciona un personaje.';
+                        matchFeedbackDiv.style.color = '#f59e0b'; // Orange color
+                        setTimeout(() => matchFeedbackDiv.textContent = '', 1000);
+                    }
+                });
+            });
+        });
+
+        // Function to check if all pairs are matched
+        function checkAllMatches() {
+            const totalRequiredMatches = Object.keys(correctMatches).length;
+            const currentSuccessfulMatches = Object.keys(currentMatches).length;
+
+            const matchFeedbackDiv = document.getElementById('match-feedback');
+
+            if (currentSuccessfulMatches === totalRequiredMatches) {
+                matchFeedbackDiv.textContent = '¡Felicidades! Has unido a todos los personajes correctamente.';
+                matchFeedbackDiv.style.color = '#065f46'; // Dark green
+            }
+        }
+
+        // Function to reset the game
+        function resetMatchingGame() {
+            const characterCards = document.querySelectorAll('.character-card');
+            const referenceCards = document.querySelectorAll('.reference-card');
+            const matchFeedbackDiv = document.getElementById('match-feedback');
+
+            characterCards.forEach(card => {
+                card.classList.remove('selected', 'matched');
+                card.style.pointerEvents = 'auto'; // Re-enable clicking
+            });
+            referenceCards.forEach(card => {
+                card.classList.remove('selected', 'matched', 'incorrect');
+                card.style.pointerEvents = 'auto'; // Re-enable clicking
+            });
+
+            selectedCharacterCard = null;
+            selectedCharacterName = null;
+            currentMatches = {}; // Clear current matches
+            matchFeedbackDiv.textContent = '';
+            matchFeedbackDiv.style.color = '#334155'; // Reset feedback color
+        }
+    </script>
+</body>
+</html>
