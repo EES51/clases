@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teseo y el Minotauro: ¡La Aventura Épica!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+        }
+        .section-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: bold;
+            color: #1e3a8a; /* Dark blue */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .highlight-text-blue {
+            color: #3b82f6; /* Blue-500 */
+            font-weight: bold;
+        }
+        .highlight-text-purple {
+            color: #9333ea; /* Purple-600 */
+            font-weight: bold;
+        }
+        .highlight-text-green {
+            color: #22c55e; /* Green-500 */
+            font-weight: bold;
+        }
+        .highlight-text-yellow {
+            color: #eab308; /* Yellow-500 */
+            font-weight: bold;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .icon-large {
+            font-size: 2.5rem; /* text-5xl */
+            color: #ef4444; /* Red-500 */
+        }
+        .table-header {
+            background-color: #6366f1; /* Indigo-500 */
+            color: white;
+        }
+        .table-row-even {
+            background-color: #e0e7ff; /* Indigo-100 */
+        }
+        .table-row-odd {
+            background-color: #c7d2fe; /* Indigo-200 */
+        }
+        .accordion-header {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem; /* rounded-lg */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #4338ca; /* Indigo-700 */
+        }
+        .accordion-content {
+            background-color: #e0e7ff; /* Indigo-100 */
+            padding: 1rem;
+            border-radius: 0.75rem; /* rounded-lg */
+            margin-top: -0.25rem; /* Negative margin to overlap slightly */
+            display: none; /* Hidden by default */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            max-height: 0;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed for content */
+            display: block;
+        }
+
+        /* Word Search Specific Styles */
+        #word-search-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-cols), 1fr);
+            border: 2px solid #4f46e5; /* Indigo-600 */
+            border-radius: 0.5rem;
+            overflow: hidden;
+            max-width: 100%; /* Ensure it fits within its container */
+            margin: 0 auto;
+        }
+        .grid-cell {
+            width: 100%;
+            padding-top: 100%; /* Makes cells square based on width */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #c7d2fe; /* Indigo-200 */
+            font-size: 0.9rem; /* Adjust font size for smaller screens */
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.1s ease, color 0.1s ease;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+        .grid-cell span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .grid-cell.selected {
+            background-color: #a78bfa; /* Purple-400 */
+            color: white;
+        }
+        .grid-cell.found {
+            background-color: #10b981; /* Emerald-500 */
+            color: white;
+            animation: found-highlight 0.5s ease-in-out;
+        }
+        @keyframes found-highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; /* gap-3 */
+            justify-content: center;
+            margin-top: 1.5rem; /* mt-6 */
+        }
+        .word-item {
+            background-color: #e0e7ff; /* Indigo-100 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            color: #312e81; /* Indigo-900 */
+            transition: background-color 0.3s ease;
+        }
+        .word-item.found-word {
+            background-color: #10b981; /* Emerald-500 */
+            color: white;
+            text-decoration: line-through;
+        }
+        #word-search-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        #word-search-controls button {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #word-search-controls button:hover {
+            background-color: #4338ca; /* Indigo-700 */
+            transform: translateY(-2px);
+        }
+        #word-search-controls button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        /* Matching Game Specific Styles */
+        .matching-pair-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        @media (min-width: 768px) {
+            .matching-pair-container {
+                flex-direction: row;
+            }
+        }
+
+        .matching-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.5rem;
+        }
+        .matching-item {
+            background-color: #e0e7ff; /* Indigo-100 */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            color: #312e81; /* Indigo-900 */
+            transition: background-color 0.3s ease, transform 0.1s ease, border 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent; /* Default border */
+            text-align: center;
+            min-height: 56px; /* Ensure consistent height for items */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .matching-item:hover {
+            background-color: #c7d2fe; /* Indigo-200 */
+            transform: translateY(-2px);
+        }
+        .matching-item.selected-match {
+            background-color: #9333ea; /* Purple-600 */
+            color: white;
+            border: 2px solid #6d28d9; /* Purple-700 */
+            transform: scale(1.02);
+        }
+        .matching-item.matched {
+            background-color: #10b981; /* Emerald-500 */
+            color: white;
+            border: 2px solid #059669; /* Emerald-600 */
+            cursor: default;
+            pointer-events: none; /* Disable clicks on matched items */
+            animation: matched-pop 0.3s ease-out;
+        }
+        @keyframes matched-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .matching-item.incorrect {
+            background-color: #ef4444; /* Red-500 */
+            color: white;
+            border: 2px solid #dc2626; /* Red-600 */
+            animation: shake 0.3s ease-in-out;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 640px) {
+            .grid-cell {
+                font-size: 0.7rem; /* Smaller font for very small screens */
+            }
+            .section-title {
+                font-size: 1.75rem; /* text-3xl */
+            }
+            .card {
+                padding: 1rem;
+            }
+            .matching-item {
+                font-size: 0.8rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-300 via-blue-300 to-green-300 min-h-screen p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 rounded-3xl shadow-2xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-indigo-800 leading-tight">
+                <span class="block text-yellow-500">🌟</span> Teseo y el Minotauro
+                <span class="block text-green-600 mt-2">¡La Aventura Épica!</span>
+            </h1>
+            <p class="text-xl text-gray-700 mt-4">
+                ¡Prepárate para sumergirte en una de las historias más <span class="highlight-text-purple">impactantes</span> de la mitología griega!
+            </p>
+        </header>
+
+        <!-- Sección 1: El Escenario -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-map-marked-alt text-red-500 mr-3"></i>El Escenario: Creta y Atenas</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                <span class="highlight-text-blue">Creta:</span> Una isla poderosa, gobernada por el <span class="highlight-text-purple">Rey Minos</span>. ¡Pero no todo era paz! Minos tenía un secreto oscuro...
+            </p>
+            <p class="text-lg text-gray-700 mb-6">
+                <span class="highlight-text-blue">Atenas:</span> Una ciudad orgullosa, pero obligada a pagar un <span class="highlight-text-purple">terrible tributo</span> a Creta.
+            </p>
+
+            <div class="overflow-x-auto rounded-lg shadow-md">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">Ciudad</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider">Gobernante</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">Situación Clave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-row-even">
+                            <td class="py-3 px-4 border-b border-gray-200"><span class="font-bold text-indigo-700">Creta</span></td>
+                            <td class="py-3 px-4 border-b border-gray-200">Rey Minos</td>
+                            <td class="py-3 px-4 border-b border-gray-200">Hogar del Minotauro y el Laberinto.</td>
+                        </tr>
+                        <tr class="table-row-odd">
+                            <td class="py-3 px-4 border-b border-gray-200"><span class="font-bold text-indigo-700">Atenas</span></td>
+                            <td class="py-3 px-4 border-b border-gray-200">Rey Egeo</td>
+                            <td class="py-3 px-4 border-b border-gray-200">Obligada a enviar jóvenes como tributo al Minotauro.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección 2: El Monstruo -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-dragon text-red-500 mr-3"></i>El Monstruo: ¡El Minotauro!</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Imagina una criatura con el <span class="highlight-text-purple">cuerpo de un hombre</span> y la <span class="highlight-text-purple">cabeza de un toro</span>... ¡Así era el Minotauro!
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">Origen:</span> Hijo de Pasífae (esposa de Minos) y un toro blanco especial de Poseidón. ¡Un nacimiento muy complicado!</li>
+                <li><span class="highlight-text-blue">Hogar:</span> El <span class="highlight-text-green">Laberinto de Creta</span>, una construcción tan compleja que una vez dentro, ¡era imposible encontrar la salida! Diseñado por el ingenioso Dédalo.</li>
+            </ul>
+            <blockquote class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-md italic">
+                <i class="fas fa-lightbulb text-yellow-600 mr-2"></i><span class="font-bold">Dato Curioso:</span> La palabra "laberinto" viene del griego "labýrinthos", que se cree que significa "casa del hacha doble", refiriéndose a un símbolo cretense.
+            </blockquote>
+        </section>
+
+        <!-- Sección 3: El Terrible Tributo -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-heart-broken text-red-500 mr-3"></i>El Terrible Tributo</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Cada <span class="highlight-text-blue">nueve años</span>, Atenas debía enviar a Creta:
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="font-bold text-green-600">7 Jóvenes Valientes</span> <i class="fas fa-user-friends"></i></li>
+                <li><span class="font-bold text-green-600">7 Doncellas Hermosas</span> <i class="fas fa-female"></i></li>
+            </ul>
+            <p class="text-lg text-gray-700 text-center font-bold text-red-600">
+                ¿Para qué? ¡Para ser devorados por el Minotauro en el Laberinto! <span class="text-4xl">😱</span>
+            </p>
+        </section>
+
+        <!-- Sección 4: El Héroe -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-fist-raised text-red-500 mr-3"></i>El Héroe: ¡Teseo al Rescate!</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Teseo, el príncipe de Atenas, no podía soportar esta injusticia. ¡Decidió poner fin al sufrimiento de su pueblo!
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">La Promesa:</span> Le dijo a su padre, el Rey Egeo, que si regresaba victorioso, cambiaría las velas de su barco de <span class="highlight-text-purple">negras (luto)</span> a <span class="highlight-text-green">blancas (victoria)</span>.</li>
+                <li><span class="highlight-text-blue">El Viaje:</span> Partió hacia Creta, lleno de determinación.</li>
+            </ul>
+        </section>
+
+        <!-- Sección 5: La Ayuda Inesperada -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-hand-holding-heart text-red-500 mr-3"></i>La Ayuda Inesperada: Ariadna</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Al llegar a Creta, Teseo conoció a Ariadna, la hija del Rey Minos. ¡Ella se enamoró perdidamente de él y decidió ayudarlo!
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">El Plan:</span> Ariadna le dio a Teseo un <span class="highlight-text-purple">ovillo de hilo mágico</span> (el famoso "hilo de Ariadna") y una <span class="highlight-text-purple">espada</span> para enfrentar al Minotauro.</li>
+                <li><span class="highlight-text-blue">La Estrategia:</span> Teseo ataría un extremo del hilo a la entrada del Laberinto y lo desenrollaría a medida que avanzaba. ¡Así podría encontrar la salida!</li>
+            </ul>
+        </section>
+
+        <!-- Sección 6: El Enfrentamiento Final -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-gavel text-red-500 mr-3"></i>El Enfrentamiento Final</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Dentro del Laberinto, Teseo siguió el hilo, encontró al Minotauro y... ¡lo enfrentó valientemente!
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">La Batalla:</span> Con la espada de Ariadna, Teseo luchó contra la bestia y finalmente, ¡lo derrotó! <span class="text-2xl">🥳</span></li>
+                <li><span class="highlight-text-blue">La Salida:</span> Siguiendo el hilo de Ariadna, Teseo y los jóvenes atenienses lograron escapar del Laberinto. ¡Libres!</li>
+            </ul>
+        </section>
+
+        <!-- Sección 7: El Regreso... y la Tragedia -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-ship text-red-500 mr-3"></i>El Regreso... y la Tragedia</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                Teseo y sus compañeros zarparon de Creta, pero en medio de la alegría, Teseo olvidó algo crucial:
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">El Olvido:</span> ¡Olvidó cambiar las velas negras por las blancas! <span class="text-2xl">🤦‍♂️</span></li>
+                <li><span class="highlight-text-blue">La Tragedia:</span> El Rey Egeo, al ver las velas negras desde la costa, pensó que su hijo había muerto. Lleno de dolor, se arrojó al mar, que desde entonces lleva su nombre: <span class="highlight-text-purple">¡El Mar Egeo!</span> <span class="text-2xl">🌊</span></li>
+            </ul>
+        </section>
+
+        <!-- Sección 8: El Legado de Teseo -->
+        <section class="card">
+            <h2 class="section-title mb-4"><i class="fas fa-crown text-red-500 mr-3"></i>El Legado de Teseo</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                A pesar de la tristeza final, Teseo fue recordado como un <span class="highlight-text-green">gran héroe</span> que liberó a Atenas de un terrible destino. Su historia nos enseña sobre:
+            </p>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2 mb-6">
+                <li><span class="highlight-text-blue">Valores:</span> Valentía, ingenio, sacrificio.</li>
+                <li><span class="highlight-text-blue">Conexión:</span> La importancia de la ayuda y la estrategia.</li>
+            </ul>
+            <p class="text-lg text-gray-700 text-center font-bold text-indigo-700">
+                <span class="text-2xl">¡Fin de la Aventura!</span> ¿Qué te pareció esta historia épica? ¡La mitología está llena de lecciones y emociones!
+            </p>
+        </section>
+
+        <!-- Sección de Menús Desplegables (Interactivos) -->
+        <section class="card mt-10">
+            <h2 class="section-title mb-6 text-center"><i class="fas fa-mouse-pointer text-red-500 mr-3"></i>Descubre el Mito: Menús Desplegables</h2>
+
+            <!-- Acordeón 1 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content1')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-building text-yellow-300 mr-2"></i>El Laberinto y su Bestia</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content1" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">El Laberinto:</span> Un diseño arquitectónico <span class="highlight-text-purple">imposible de escapar</span> creado por el genio Dédalo para el Rey Minos en Creta. ¡Piensa en un rompecabezas gigante y mortal!</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-puzzle-piece text-green-600 mr-1"></i> <span class="font-semibold">Función:</span> Contener al Minotauro.</li>
+                        <li><i class="fas fa-tools text-green-600 mr-1"></i> <span class="font-semibold">Creador:</span> Dédalo, el arquitecto más hábil de su tiempo.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">El Minotauro:</span> No era un toro común, sino una criatura <span class="highlight-text-purple">híbrida</span> con cuerpo de hombre y cabeza de toro. Su existencia era un secreto vergonzoso para el Rey Minos.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-bull text-green-600 mr-1"></i> <span class="font-semibold">Apariencia:</span> Mitad hombre, mitad toro.</li>
+                        <li><i class="fas fa-chain-broken text-green-600 mr-1"></i> <span class="font-semibold">Simbolismo:</span> Representa lo salvaje y lo indomable.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acordeón 2 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content2')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-ship text-yellow-300 mr-2"></i>El Tributo de Sangre</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content2" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">La Deuda de Atenas:</span> Tras una guerra, Atenas fue derrotada por Creta y obligada a pagar un tributo cruel.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-calendar-alt text-green-600 mr-1"></i> <span class="font-semibold">Frecuencia:</span> Cada 9 años.</li>
+                        <li><i class="fas fa-users text-green-600 mr-1"></i> <span class="font-semibold">Víctimas:</span> 7 jóvenes y 7 doncellas atenienses.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">El Destino:</span> Estos jóvenes eran enviados al Laberinto para ser el alimento del Minotauro. ¡Una condena sin esperanza!</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-skull text-green-600 mr-1"></i> <span class="font-semibold">Propósito:</span> Sacrificio al Minotauro.</li>
+                        <li><i class="fas fa-sad-tear text-green-600 mr-1"></i> <span class="font-semibold">Emoción:</span> Desesperación y tristeza en Atenas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acordeón 3 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content3')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-user-shield text-yellow-300 mr-2"></i>Teseo: El Héroe que Desafió al Destino</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content3" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">La Valentía de Teseo:</span> Hijo del Rey Egeo de Atenas, Teseo no pudo tolerar más el sufrimiento de su pueblo.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-shield-alt text-green-600 mr-1"></i> <span class="font-semibold">Motivación:</span> Salvar a Atenas.</li>
+                        <li><i class="fas fa-anchor text-green-600 mr-1"></i> <span class="font-semibold">Viaje:</span> Voluntario a Creta, mezclándose con las víctimas.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">La Promesa al Padre:</span> Antes de partir, Teseo hizo una promesa a su padre sobre las velas del barco, un detalle que se volvería crucial.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-flag text-green-600 mr-1"></i> <span class="font-semibold">Victoria:</span> Velas blancas.</li>
+                        <li><i class="fas fa-flag text-green-600 mr-1"></i> <span class="font-semibold">Derrota/Luto:</span> Velas negras.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acordeón 4 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content4')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-heart text-yellow-300 mr-2"></i>El Hilo Mágico de Ariadna</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content4" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">Un Amor Inesperado:</span> Ariadna, la hija del Rey Minos, se enamoró de Teseo al verlo.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-hand-holding-heart text-green-600 mr-1"></i> <span class="font-semibold">Sentimiento:</span> Amor y compasión.</li>
+                        <li><i class="fas fa-key text-green-600 mr-1"></i> <span class="font-semibold">Rol:</span> La clave para la supervivencia de Teseo.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">La Ayuda Crucial:</span> Ariadna le proporcionó a Teseo dos elementos vitales para su misión.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-wind text-green-600 mr-1"></i> <span class="font-semibold">El Hilo:</span> Para encontrar la salida del Laberinto.</li>
+                        <li><i class="fas fa-sword text-green-600 mr-1"></i> <span class="font-semibold">La Espada:</span> Para enfrentar al Minotauro.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acordeón 5 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content5')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-gavel text-yellow-300 mr-2"></i>El Clímax: Batalla y Escape</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content5" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">Dentro del Laberinto:</span> Teseo siguió el hilo de Ariadna, adentrándose en la oscuridad y el silencio hasta encontrar a la bestia.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-shoe-prints text-green-600 mr-1"></i> <span class="font-semibold">Guía:</span> El hilo como rastro.</li>
+                        <li><i class="fas fa-paw text-green-600 mr-1"></i> <span class="font-semibold">Encuentro:</span> El Minotauro.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">La Victoria:</span> Tras una feroz batalla, Teseo logró matar al Minotauro, liberando a Atenas de su pesadilla.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-swords text-green-600 mr-1"></i> <span class="font-semibold">Resultado:</span> Minotauro derrotado.</li>
+                        <li><i class="fas fa-door-open text-green-600 mr-1"></i> <span class="font-semibold">Éxito:</span> Escape de Teseo y los jóvenes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acordeón 6 -->
+            <div class="mb-4">
+                <div class="accordion-header" onclick="toggleAccordion('content6')">
+                    <h3 class="text-xl font-semibold"><i class="fas fa-water text-yellow-300 mr-2"></i>El Trágico Final: El Mar Egeo</h3>
+                    <i class="fas fa-chevron-down transform transition-transform duration-300"></i>
+                </div>
+                <div id="content6" class="accordion-content">
+                    <p class="mb-2"><span class="font-bold text-indigo-700">La Alegría y el Olvido:</span> En la euforia de la victoria, Teseo cometió un error fatal.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-exclamation-triangle text-green-600 mr-1"></i> <span class="font-semibold">Error:</span> Olvidó cambiar las velas.</li>
+                        <li><i class="fas fa-ship text-green-600 mr-1"></i> <span class="font-semibold">Regreso:</span> El barco con velas negras.</li>
+                    </ul>
+                    <p class="mt-4 mb-2"><span class="font-bold text-indigo-700">El Sacrificio de Egeo:</span> El Rey Egeo, al ver las velas negras, creyó que su hijo había muerto y se lanzó al mar.</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-700">
+                        <li><i class="fas fa-frown text-green-600 mr-1"></i> <span class="font-semibold">Dolor:</span> La desesperación del rey.</li>
+                        <li><i class="fas fa-water text-green-600 mr-1"></i> <span class="font-semibold">Legado:</span> El Mar Egeo, un recordatorio de su sacrificio.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Sección de Sopa de Letras -->
+        <section class="card mt-10">
+            <h2 class="section-title mb-6 text-center"><i class="fas fa-puzzle-piece text-red-500 mr-3"></i>Sopa de Letras: ¡Encuentra el Mito!</h2>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                ¡Encuentra todas las palabras clave del mito de Teseo y el Minotauro en la sopa de letras!
+            </p>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <div id="word-search-container" class="w-full md:w-1/2 flex flex-col items-center">
+                    <div id="word-search-grid" class="w-full aspect-square" style="--grid-cols: 15;">
+                        <!-- Grid cells will be rendered here by JavaScript -->
+                    </div>
+                    <div id="word-search-controls" class="mt-4">
+                        <button onclick="resetGame()">Reiniciar Juego</button>
+                    </div>
+                </div>
+
+                <div id="word-list-container" class="w-full md:w-1/2 flex flex-col items-center">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-3">Palabras a Encontrar:</h3>
+                    <div id="word-list" class="flex flex-wrap justify-center gap-3">
+                        <!-- Word list will be rendered here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección del Juego de Emparejamiento -->
+        <section class="card mt-10">
+            <h2 class="section-title mb-6 text-center"><i class="fas fa-link text-red-500 mr-3"></i>Conecta el Héroe: ¿Quién es Quién?</h2>
+            <p class="text-lg text-gray-700 mb-6 text-center">
+                Haz clic en un personaje y luego en la descripción que le corresponda. ¡Encuentra todos los pares!
+            </p>
+
+            <div id="matching-game-container" class="flex flex-col items-center">
+                <div class="matching-pair-container w-full max-w-2xl">
+                    <div id="characters-column" class="matching-column">
+                        <!-- Characters will be rendered here -->
+                    </div>
+                    <div id="references-column" class="matching-column">
+                        <!-- References will be rendered here -->
+                    </div>
+                </div>
+                <div id="matching-game-controls" class="mt-4">
+                    <button onclick="resetMatchingGame()">Reiniciar Juego</button>
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="text-center mt-10 text-gray-600 text-sm">
+            <p>&copy; 2025 Asistente de IA para Diseño Instruccional. Todos los derechos reservados.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // JavaScript para los menús desplegables (Acordeón)
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            const icon = header.querySelector('i.fa-chevron-down');
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                content.style.maxHeight = '0';
+                icon.classList.remove('rotate-180');
+            } else {
+                // Close all other open accordions
+                document.querySelectorAll('.accordion-content.active').forEach(openContent => {
+                    openContent.classList.remove('active');
+                    openContent.style.maxHeight = '0';
+                    openContent.previousElementSibling.querySelector('i.fa-chevron-down').classList.remove('rotate-180');
+                });
+
+                // Open the clicked accordion
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px'; // Set max-height to content height
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // JavaScript para la Sopa de Letras
+        const words = [
+            "TESEO", "MINOTAURO", "LABERINTO", "ARIADNA", "CRETA",
+            "ATENAS", "EGEO", "HILO", "ESPADA", "TRIBUTO",
+            "POSEIDON", "PASIFAE", "MINOS", "DEDALO", "VELAS"
+        ];
+        const gridSize = 15;
+        let grid = [];
+        let foundWords = new Set();
+        let selectedCells = [];
+        let isDragging = false; // To handle drag selection
+
+        const wordSearchGrid = document.getElementById('word-search-grid');
+        const wordListElement = document.getElementById('word-list');
+
+        // Initialize the game when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeGame(); // For word search
+            initializeMatchingGame(); // For matching game
+        });
+
+        // Function to initialize the word search game
+        function initializeGame() {
+            grid = createEmptyGrid(gridSize);
+            placeWords(words, grid);
+            fillEmptyCells(grid);
+            renderGrid(grid);
+            renderWordList(words);
+            foundWords.clear();
+            selectedCells = [];
+            resetCellHighlights();
+        }
+
+        // Creates an empty grid filled with nulls
+        function createEmptyGrid(size) {
+            return Array.from({ length: size }, () => Array(size).fill(null));
+        }
+
+        // Fills remaining empty cells with random letters
+        function fillEmptyCells(grid) {
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    if (grid[r][c] === null) {
+                        grid[r][c] = getRandomLetter();
+                    }
+                }
+            }
+        }
+
+        // Generates a random uppercase letter
+        function getRandomLetter() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+
+        // Places words in the grid
+        function placeWords(wordsToPlace, grid) {
+            const directions = [
+                { dr: 0, dc: 1 },   // Horizontal (right)
+                { dr: 0, dc: -1 },  // Horizontal (left)
+                { dr: 1, dc: 0 },   // Vertical (down)
+                { dr: -1, dc: 0 },  // Vertical (up)
+                { dr: 1, dc: 1 },   // Diagonal (down-right)
+                { dr: 1, dc: -1 },  // Diagonal (down-left)
+                { dr: -1, dc: 1 },  // Diagonal (up-right)
+                { dr: -1, dc: -1 }  // Diagonal (up-left)
+            ];
+
+            for (const word of wordsToPlace) {
+                let placed = false;
+                let attempts = 0;
+                const maxAttempts = 1000; // Prevent infinite loops
+
+                while (!placed && attempts < maxAttempts) {
+                    const dir = directions[Math.floor(Math.random() * directions.length)];
+                    const startRow = Math.floor(Math.random() * gridSize);
+                    const startCol = Math.floor(Math.random() * gridSize);
+
+                    // Check if the word fits and doesn't conflict
+                    if (canPlaceWord(word, startRow, startCol, dir, grid)) {
+                        for (let i = 0; i < word.length; i++) {
+                            const r = startRow + i * dir.dr;
+                            const c = startCol + i * dir.dc;
+                            grid[r][c] = word[i];
+                        }
+                        placed = true;
+                    }
+                    attempts++;
+                }
+                if (!placed) {
+                    console.warn(`Could not place word: ${word}`);
+                }
+            }
+        }
+
+        // Checks if a word can be placed at a given position and direction
+        function canPlaceWord(word, startRow, startCol, dir, grid) {
+            for (let i = 0; i < word.length; i++) {
+                const r = startRow + i * dir.dr;
+                const c = startCol + i * dir.dc;
+
+                // Check boundaries
+                if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) {
+                    return false;
+                }
+                // Check for conflicts with existing letters (only if not null and not matching)
+                if (grid[r][c] !== null && grid[r][c] !== word[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Renders the grid in the HTML
+        function renderGrid(grid) {
+            wordSearchGrid.innerHTML = '';
+            wordSearchGrid.style.setProperty('--grid-cols', gridSize); // Set CSS variable for grid columns
+
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('grid-cell');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.innerHTML = `<span>${grid[r][c]}</span>`;
+                    cell.addEventListener('mousedown', startSelection);
+                    cell.addEventListener('mouseenter', continueSelection);
+                    cell.addEventListener('mouseup', endSelection);
+                    wordSearchGrid.appendChild(cell);
+                }
+            }
+        }
+
+        // Renders the list of words to find
+        function renderWordList(wordsToFind) {
+            wordListElement.innerHTML = '';
+            wordsToFind.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.classList.add('word-item');
+                wordItem.textContent = word;
+                wordItem.dataset.word = word; // Store the word for easy lookup
+                wordListElement.appendChild(wordItem);
+            });
+        }
+
+        // Resets highlights on all cells
+        function resetCellHighlights() {
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.classList.remove('selected', 'found');
+            });
+        }
+
+        // Handles starting a selection (mousedown)
+        function startSelection(event) {
+            isDragging = true;
+            selectedCells = [];
+            resetCellHighlights(); // Clear previous selection highlights
+            const cell = event.target.closest('.grid-cell');
+            if (cell) {
+                selectedCells.push({ row: parseInt(cell.dataset.row), col: parseInt(cell.dataset.col), element: cell });
+                cell.classList.add('selected');
+            }
+        }
+
+        // Handles continuing a selection (mouseenter while dragging)
+        function continueSelection(event) {
+            if (!isDragging) return;
+
+            const cell = event.target.closest('.grid-cell');
+            if (cell) {
+                const newCellCoords = { row: parseInt(cell.dataset.row), col: parseInt(cell.dataset.col) };
+
+                // Check if the cell is already in selectedCells
+                const isAlreadySelected = selectedCells.some(sc => sc.row === newCellCoords.row && sc.col === newCellCoords.col);
+
+                if (!isAlreadySelected) {
+                    // Simple check for adjacency or straight line for now
+                    // For a more robust solution, you'd check if it forms a straight line from the first cell
+                    const lastSelected = selectedCells[selectedCells.length - 1];
+                    const dr = Math.abs(newCellCoords.row - lastSelected.row);
+                    const dc = Math.abs(newCellCoords.col - lastSelected.col);
+
+                    // Allow horizontal, vertical, or diagonal movement
+                    if ((dr <= 1 && dc === 0) || (dr === 0 && dc <= 1) || (dr <= 1 && dc <= 1 && dr === dc)) {
+                        selectedCells.push({ row: newCellCoords.row, col: newCellCoords.col, element: cell });
+                        cell.classList.add('selected');
+                    } else {
+                        // If not adjacent or in a straight line, clear selection and start new
+                        selectedCells.forEach(sc => sc.element.classList.remove('selected'));
+                        selectedCells = [{ row: newCellCoords.row, col: newCellCoords.col, element: cell }];
+                        cell.classList.add('selected');
+                    }
+                }
+            }
+        }
+
+        // Handles ending a selection (mouseup)
+        function endSelection() {
+            isDragging = false;
+            checkSelectedWord();
+            selectedCells = []; // Clear selected cells after checking
+        }
+
+        // Checks the word formed by selected cells
+        function checkSelectedWord() {
+            if (selectedCells.length < 2) {
+                selectedCells.forEach(cell => cell.element.classList.remove('selected'));
+                return;
+            }
+
+            // Sort cells to ensure consistent order for word reconstruction
+            // This is crucial for checking words placed backwards or diagonally
+            selectedCells.sort((a, b) => {
+                if (a.row !== b.row) return a.row - b.row;
+                return a.col - b.col;
+            });
+
+            const selectedLetters = selectedCells.map(cell => grid[cell.row][cell.col]).join('');
+            const reversedSelectedLetters = selectedLetters.split('').reverse().join('');
+
+            let foundMatch = false;
+
+            for (const word of words) {
+                if (!foundWords.has(word)) { // Only check for words not yet found
+                    if (selectedLetters === word || reversedSelectedLetters === word) {
+                        foundWords.add(word);
+                        foundMatch = true;
+                        // Highlight cells and mark word as found
+                        selectedCells.forEach(cell => {
+                            cell.element.classList.remove('selected');
+                            cell.element.classList.add('found');
+                        });
+                        const wordItem = document.querySelector(`.word-item[data-word="${word}"]`);
+                        if (wordItem) {
+                            wordItem.classList.add('found-word');
+                        }
+                        break; // Word found, no need to check other words
+                    }
+                }
+            }
+
+            if (!foundMatch) {
+                // If no word found, remove 'selected' class
+                selectedCells.forEach(cell => cell.element.classList.remove('selected'));
+            }
+        }
+
+        // Reset game function for word search
+        function resetGame() {
+            initializeGame();
+        }
+
+        // Add event listeners for mouse up on the document to ensure selection ends even if mouse leaves grid
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                endSelection();
+            }
+        });
+
+        // JavaScript para el Juego de Emparejamiento
+        const matchPairs = [
+            { character: "TESEO", reference: "Mató al Minotauro" },
+            { character: "MINOTAURO", reference: "Bestia mitad hombre, mitad toro" },
+            { character: "ARIADNA", reference: "Le dio el hilo mágico a Teseo" },
+            { character: "REY MINOS", reference: "Gobernante de Creta" },
+            { character: "REY EGEO", reference: "Se arrojó al mar por tristeza" },
+            { character: "DÉDALO", reference: "Diseñó el Laberinto" },
+            { character: "PASIFAE", reference: "Madre del Minotauro" },
+            { character: "POSEIDÓN", reference: "Padre del toro blanco" }
+        ];
+
+        let characters = [];
+        let references = [];
+        let selectedCharacter = null;
+        let selectedReference = null;
+        let matchedPairsCount = 0;
+
+        const charactersColumn = document.getElementById('characters-column');
+        const referencesColumn = document.getElementById('references-column');
+
+        // Function to initialize the matching game
+        function initializeMatchingGame() {
+            characters = matchPairs.map(pair => ({ value: pair.character, id: pair.character, type: 'character' }));
+            references = matchPairs.map(pair => ({ value: pair.reference, id: pair.character, type: 'reference' })); // Use character as ID for matching
+
+            shuffleArray(characters);
+            shuffleArray(references);
+
+            renderMatchingGame();
+            selectedCharacter = null;
+            selectedReference = null;
+            matchedPairsCount = 0;
+        }
+
+        // Fisher-Yates (Knuth) Shuffle algorithm
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+
+        // Renders the matching game elements
+        function renderMatchingGame() {
+            charactersColumn.innerHTML = '';
+            referencesColumn.innerHTML = '';
+
+            characters.forEach(item => {
+                const charElement = document.createElement('div');
+                charElement.classList.add('matching-item');
+                charElement.textContent = item.value;
+                charElement.dataset.id = item.id;
+                charElement.dataset.type = item.type;
+                charElement.addEventListener('click', handleMatchingClick);
+                charactersColumn.appendChild(charElement);
+            });
+
+            references.forEach(item => {
+                const refElement = document.createElement('div');
+                refElement.classList.add('matching-item');
+                refElement.textContent = item.value;
+                refElement.dataset.id = item.id;
+                refElement.dataset.type = item.type;
+                refElement.addEventListener('click', handleMatchingClick);
+                referencesColumn.appendChild(refElement);
+            });
+        }
+
+        // Handles click events for matching game items
+        function handleMatchingClick(event) {
+            const clickedItem = event.target;
+            const itemType = clickedItem.dataset.type;
+
+            if (clickedItem.classList.contains('matched')) {
+                return; // Ignore clicks on already matched items
+            }
+
+            // Clear previous selections if clicking within the same type or already selected
+            if (itemType === 'character') {
+                if (selectedCharacter) {
+                    selectedCharacter.classList.remove('selected-match');
+                }
+                selectedCharacter = clickedItem;
+                selectedCharacter.classList.add('selected-match');
+            } else { // itemType === 'reference'
+                if (selectedReference) {
+                    selectedReference.classList.remove('selected-match');
+                }
+                selectedReference = clickedItem;
+                selectedReference.classList.add('selected-match');
+            }
+
+            // If both a character and a reference are selected, check for a match
+            if (selectedCharacter && selectedReference) {
+                checkMatch();
+            }
+        }
+
+        // Checks if the selected character and reference form a valid pair
+        function checkMatch() {
+            const characterId = selectedCharacter.dataset.id;
+            const referenceId = selectedReference.dataset.id;
+
+            if (characterId === referenceId) {
+                // Match found!
+                selectedCharacter.classList.remove('selected-match');
+                selectedReference.classList.remove('selected-match');
+
+                selectedCharacter.classList.add('matched');
+                selectedReference.classList.add('matched');
+                
+                matchedPairsCount++;
+                selectedCharacter = null;
+                selectedReference = null;
+
+                if (matchedPairsCount === matchPairs.length) {
+                    // All pairs found, display success message (optional)
+                    setTimeout(() => {
+                        alert('¡Felicidades! ¡Has encontrado todos los pares!');
+                    }, 500); // Small delay for animation to complete
+                }
+
+            } else {
+                // No match
+                selectedCharacter.classList.add('incorrect');
+                selectedReference.classList.add('incorrect');
+
+                setTimeout(() => {
+                    selectedCharacter.classList.remove('selected-match', 'incorrect');
+                    selectedReference.classList.remove('selected-match', 'incorrect');
+                    selectedCharacter = null;
+                    selectedReference = null;
+                }, 700); // Brief visual feedback before resetting
+            }
+        }
+
+        // Resets the matching game
+        function resetMatchingGame() {
+            initializeMatchingGame();
+        }
+    </script>
+</body>
+</html>
