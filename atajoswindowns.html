@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html cclang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Interactiva de Atajos de Windows</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues & Neons -->
+    <!-- Application Structure Plan: Se diseñó una SPA con navegación por pestañas para segmentar los atajos en categorías (Generales, Edición, etc.). Esta estructura evita el largo desplazamiento de una lista y fomenta la exploración activa. Al hacer clic en una pestaña, el contenido se actualiza dinámicamente, mostrando tarjetas interactivas para cada atajo. Esta arquitectura es superior para el aprendizaje y la consulta rápida en comparación con un documento estático. -->
+    <!-- Visualization & Content Choices: 1. Categorías (Meta: Organizar) -> Pestañas de navegación interactivas (HTML/JS/Tailwind) para un control de usuario claro. 2. Atajos (Meta: Informar) -> Cuadrícula de tarjetas (HTML/JS/Tailwind) para una presentación visualmente atractiva y modular. La interacción incluye un botón para copiar el atajo, añadiendo utilidad real. 3. Iconos (Meta: Informar) -> Caracteres Unicode (Emojis) para mantener un tono amigable y moderno sin usar imágenes. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active {
+            color: #58a6ff;
+            border-bottom-color: #58a6ff;
+        }
+        .shortcut-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .shortcut-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+            border-color: #58a6ff;
+        }
+        .copy-btn {
+            background-color: #21262d;
+            transition: background-color 0.2s ease;
+        }
+        .copy-btn:hover {
+            background-color: #30363d;
+        }
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-3">Domina Windows como un Ninja 🥷</h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">Deja de usar el ratón para todo. Explora, aprende y copia los atajos de teclado más útiles para volar por tu PC.</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-gray-700 mb-8">
+            <div id="tabs-container" class="flex flex-wrap justify-center space-x-4 md:space-x-8">
+                <!-- Las pestañas se generarán aquí -->
+            </div>
+        </nav>
+
+        <main id="shortcuts-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <!-- Las tarjetas de atajos se generarán aquí -->
+        </main>
+
+        <footer class="text-center mt-12 pt-8 border-t border-gray-800">
+            <p class="text-gray-500">Diseñado para estudiantes que quieren ser más productivos (y veloces) ⚡</p>
+        </footer>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const shortcutsData = {
+            'generales': {
+                name: '🖥️ Generales',
+                items: [
+                    { key: 'Win + D', desc: 'Muestra y oculta el escritorio al instante.' },
+                    { key: 'Win + M', desc: '¡Minimiza todas las ventanas abiertas!' },
+                    { key: 'Win + L', desc: 'Bloquea tu equipo o cambia de usuario.' },
+                    { key: 'Win + E', desc: 'Abre el Explorador de archivos al toque.' },
+                    { key: 'Win + S', desc: 'Abre la búsqueda de Windows. ¡Encuentra todo!' },
+                    { key: 'Win + R', desc: 'Abre el cuadro "Ejecutar" para comandos.' },
+                    { key: 'Win + PrtScn', desc: 'Captura de pantalla completa y la guarda.' },
+                    { key: 'Win + Shift + S', desc: 'Recorta solo una parte de la pantalla.' },
+                    { key: 'Ctrl + Shift + Esc', desc: 'Abre el Administrador de tareas. ¡Arréglalo todo!' },
+                    { key: 'Alt + Tab', desc: 'Cambia entre ventanas. ¡Multitarea PRO!' },
+                    { key: 'Alt + F4', desc: 'Cierra la ventana activa o apaga el PC.' },
+                    { key: 'F2', desc: 'Renombra el archivo o carpeta seleccionado.' },
+                    { key: 'F5', desc: 'Actualiza la ventana. ¡Refresca la vista!' }
+                ]
+            },
+            'edicion': {
+                name: '✍️ Edición de Texto',
+                items: [
+                    { key: 'Ctrl + C', desc: 'Copiar el texto o elemento seleccionado.' },
+                    { key: 'Ctrl + X', desc: 'Cortar el texto o elemento seleccionado.' },
+                    { key: 'Ctrl + V', desc: 'Pegar el contenido copiado o cortado.' },
+                    { key: 'Ctrl + Z', desc: '¡Deshacer! El salvavidas de los errores.' },
+                    { key: 'Ctrl + Y', desc: 'Rehacer la acción deshecha.' },
+                    { key: 'Ctrl + A', desc: 'Seleccionar todo el contenido.' },
+                    { key: 'Ctrl + S', desc: '¡Guardar! Hazlo a menudo para no perder nada.' },
+                    { key: 'Ctrl + F', desc: 'Buscar palabras en un documento o web.' },
+                    { key: 'Ctrl + P', desc: 'Imprimir el documento actual.' },
+                    { key: 'Supr', desc: 'Eliminar y enviar a la Papelera.' },
+                    { key: 'Shift + Supr', desc: 'Eliminar permanentemente. ¡Con cuidado!' },
+                    { key: 'Ctrl + Inicio', desc: 'Ir al principio del documento.' },
+                    { key: 'Ctrl + Fin', desc: 'Ir al final del documento.' }
+                ]
+            },
+            'explorador': {
+                name: '📁 Explorador',
+                items: [
+                    { key: 'Alt + Flecha Izquierda', desc: 'Retroceder a la carpeta anterior.' },
+                    { key: 'Alt + Flecha Derecha', desc: 'Avanzar a la carpeta siguiente.' },
+                    { key: 'Alt + Flecha Arriba', desc: 'Subir un nivel a la carpeta principal.' },
+                    { key: 'Ctrl + N', desc: 'Abrir una nueva ventana del Explorador.' },
+                    { key: 'Ctrl + Shift + N', desc: '¡Crear una nueva carpeta al instante!' }
+                ]
+            },
+            'organizacion': {
+                name: '🧩 Organización',
+                items: [
+                    { key: 'Win + Tab', desc: 'Abre la "Vista de tareas" y escritorios virtuales.' },
+                    { key: 'Win + Ctrl + D', desc: 'Crear un nuevo escritorio virtual.' },
+                    { key: 'Win + Ctrl + F4', desc: 'Cerrar el escritorio virtual actual.' },
+                    { key: 'Win + Ctrl + Flechas', desc: 'Cambiar entre escritorios virtuales.' },
+                    { key: 'Win + Flecha Izq/Der', desc: 'Ancla la ventana a la mitad de la pantalla.' },
+                    { key: 'Win + Flecha Arr/Abj', desc: 'Maximiza o minimiza la ventana.' }
+                ]
+            }
+        };
+
+        const tabsContainer = document.getElementById('tabs-container');
+        const shortcutsGrid = document.getElementById('shortcuts-grid');
+        let activeTab = 'generales';
+
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            for (const key in shortcutsData) {
+                const tab = document.createElement('button');
+                tab.className = `tab-btn font-bold py-2 px-1 md:px-4 text-gray-400 hover:text-white ${key === activeTab ? 'active' : ''}`;
+                tab.textContent = shortcutsData[key].name;
+                tab.dataset.tab = key;
+                tab.addEventListener('click', () => {
+                    activeTab = key;
+                    renderTabs();
+                    renderShortcuts();
+                });
+                tabsContainer.appendChild(tab);
+            }
+        }
+
+        function renderShortcuts() {
+            shortcutsGrid.innerHTML = '';
+            const category = shortcutsData[activeTab];
+            category.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'shortcut-card rounded-lg p-4 flex flex-col justify-between';
+                
+                const content = `
+                    <div>
+                        <p class="text-sm text-gray-400 mb-2">${category.name.split(' ')[1]}</p>
+                        <p class="text-lg font-bold text-white mb-2">${item.desc}</p>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <code class="bg-gray-800 text-cyan-400 font-mono text-sm py-1 px-2 rounded">${item.key}</code>
+                        <button class="copy-btn text-xs text-gray-300 py-1 px-2 rounded" title="Copiar atajo">Copiar</button>
+                    </div>
+                `;
+                
+                card.innerHTML = content;
+                
+                card.querySelector('.copy-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const textToCopy = item.key;
+                    const textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                        const btn = e.target;
+                        btn.textContent = '¡Copiado!';
+                        setTimeout(() => { btn.textContent = 'Copiar'; }, 1500);
+                    } catch (err) {
+                        console.error('No se pudo copiar el texto', err);
+                    }
+                    document.body.removeChild(textarea);
+                });
+
+                shortcutsGrid.appendChild(card);
+            });
+        }
+
+        renderTabs();
+        renderShortcuts();
+    });
+    </script>
+</body>
+</html>
