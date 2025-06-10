@@ -1,0 +1,283 @@
+DOCTYPE html><!
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Interactiva de Atajos de Windows</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: Se ha diseñado una aplicación de página única con una barra lateral de navegación fija (en escritorio) y un área de contenido principal. Esta estructura permite a los usuarios ver todas las categorías de un vistazo y navegar rápidamente. La interacción principal es una barra de búsqueda en tiempo real que filtra todos los atajos, solucionando el problema principal de encontrar un comando específico en una larga lista. La estructura está pensada para la usabilidad y el descubrimiento rápido, superando a un documento estático. -->
+    <!-- Visualization & Content Choices: El contenido (atajos) se presenta en formato de "tarjetas" visuales dentro de secciones categóricas. Info: Atajo de teclado. Goal: Informar y organizar. Viz/Method: Tarjetas HTML/CSS estilizadas con Tailwind. Interaction: Búsqueda en vivo (JavaScript) y navegación por anclas. Justification: Las tarjetas son fáciles de leer y la búsqueda es la forma más eficiente de que un usuario encuentre lo que necesita. Library: Vanilla JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .active-nav {
+            background-color: #eab308; /* yellow-500 */
+            color: #1e293b; /* slate-800 */
+            font-weight: 600;
+        }
+        .shortcut-card kbd {
+            background-color: #f1f5f9; /* slate-100 */
+            border: 1px solid #cbd5e1; /* slate-300 */
+            border-radius: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            font-weight: 600;
+            color: #1e293b; /* slate-800 */
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            margin: 0 0.125rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 sticky top-0 md:h-screen z-20">
+            <div class="p-4 border-b border-slate-200">
+                <h1 class="text-xl font-bold text-slate-900">🚀 Atajos de Windows</h1>
+                <p class="text-sm text-slate-500">La guía definitiva</p>
+            </div>
+            <nav id="navigation" class="p-4 space-y-2">
+                <!-- Navigation links will be injected here -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header and Search -->
+                <header class="mb-8">
+                    <h2 class="text-3xl font-bold text-slate-900">Conviértete en un Mago del Teclado</h2>
+                    <p class="mt-2 text-slate-600">Usa el buscador para encontrar cualquier atajo al instante o explora las categorías en el menú.</p>
+                    <div class="mt-6 relative">
+                        <input type="text" id="search-input" placeholder="Buscar atajos (ej: copiar, ventana, capturar...)" class="w-full p-3 pl-10 border border-slate-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+                    </div>
+                </header>
+
+                <!-- Shortcuts container -->
+                <div id="shortcuts-container" class="space-y-12">
+                    <!-- Shortcut sections will be injected here -->
+                </div>
+                 <p id="no-results" class="text-center text-slate-500 py-12 text-lg hidden">
+                    🙁 No se encontraron atajos. Intenta con otra palabra.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const shortcutsData = [
+            {
+                category: "Básicos y Súper Útiles",
+                id: "basicos",
+                icon: "✨",
+                items: [
+                    { keys: ["Ctrl", "C"], description: "Copiar (¡Guardas algo en el portapapeles!)", emoji: "📋" },
+                    { keys: ["Ctrl", "X"], description: "Cortar (¡Lo sacas de un lado para llevarlo a otro!)", emoji: "✂️" },
+                    { keys: ["Ctrl", "V"], description: "Pegar (¡Pones lo que copiaste o cortaste!)", emoji: "📝" },
+                    { keys: ["Ctrl", "Z"], description: "Deshacer (¡Oops, un error? ¡Regrésate!)", emoji: "⏪" },
+                    { keys: ["Ctrl", "Y"], description: "Rehacer (¡Volver a hacer lo que deshiciste!)", emoji: "⏩" },
+                    { keys: ["Ctrl", "S"], description: "Guardar (¡No pierdas tu progreso!)", emoji: "💾" },
+                    { keys: ["Ctrl", "P"], description: "Imprimir (¡Para entregar trabajos físicos!)", emoji: "🖨️" },
+                    { keys: ["Ctrl", "A"], description: "Seleccionar Todo (¡Marca todo el texto o archivos!)", emoji: "🎯" },
+                ]
+            },
+            {
+                category: "Explorador de Archivos",
+                id: "explorador",
+                icon: "�",
+                items: [
+                    { keys: ["Windows", "E"], description: "Abre el Explorador de Archivos al instante. ¡Tu centro de operaciones!", emoji: "📂" },
+                    { keys: ["Alt", "←"], description: "Volver a la carpeta anterior.", emoji: "⬅️" },
+                    { keys: ["Alt", "→"], description: "Ir a la carpeta siguiente (si ya regresaste).", emoji: "➡️" },
+                    { keys: ["Alt", "↑"], description: "Subir un nivel en la jerarquía de carpetas.", emoji: "⬆️" },
+                    { keys: ["F2"], description: "Renombrar el archivo o carpeta que tienes seleccionado.", emoji: "✍️" },
+                    { keys: ["Ctrl", "Shift", "N"], description: "Crear una Nueva Carpeta. ¡Organización máxima!", emoji: "➕📁" },
+                ]
+            },
+            {
+                category: "Manejo de Ventanas",
+                id: "ventanas",
+                icon: "🖼️",
+                items: [
+                    { keys: ["Alt", "Tab"], description: "Cambiar entre las ventanas abiertas. ¡Mantenlos presionados para elegir!", emoji: "🔄" },
+                    { keys: ["Windows", "D"], description: "Mostrar/Ocultar el escritorio. ¡Para cuando necesitas verlo rápido!", emoji: "💻" },
+                    { keys: ["Windows", "L"], description: "Bloquear el equipo. ¡Que nadie vea tu pantalla!", emoji: "🔒" },
+                    { keys: ["Windows", "↑"], description: "Maximizar la ventana (ocupa toda la pantalla).", emoji: "⬆️" },
+                    { keys: ["Windows", "↓"], description: "Restaurar o minimizar la ventana.", emoji: "⬇️" },
+                    { keys: ["Windows", "←/→"], description: "Ajustar la ventana a la mitad de la pantalla.", emoji: "↔️" },
+                ]
+            },
+            {
+                category: "Barra de Tareas",
+                id: "barra-tareas",
+                icon: "🚀",
+                items: [
+                     { keys: ["Windows", "1...9"], description: "Abrir la app anclada en esa posición.", emoji: "🔢" },
+                     { keys: ["Ctrl", "Shift", "Esc"], description: "Abrir el Administrador de Tareas. ¡Si algo se congela, aquí lo solucionas!", emoji: "🚨" },
+                     { keys: ["Windows", "T"], description: "Recorrer las aplicaciones abiertas en la barra de tareas.", emoji: "🚶‍♀️" },
+                ]
+            },
+            {
+                category: "Capturas de Pantalla",
+                id: "capturas",
+                icon: "📸",
+                items: [
+                    { keys: ["Impr Pant"], description: "Captura toda la pantalla y la copia al portapapeles.", emoji: "📋" },
+                    { keys: ["Windows", "Impr Pant"], description: "Captura toda la pantalla y la guarda como archivo.", emoji: "📁📸" },
+                    { keys: ["Alt", "Impr Pant"], description: "Captura SOLO la ventana activa y la copia.", emoji: "🖼️" },
+                    { keys: ["Windows", "Shift", "S"], description: "Abre la Herramienta de Recorte para seleccionar un área.", emoji: "✂️" },
+                ]
+            },
+             {
+                category: "Consejos y Advertencias",
+                id: "consejos",
+                icon: "💡",
+                isSpecial: true,
+                items: [
+                    { 
+                        type: 'tip',
+                        title: 'Pro Tip: Historial del Portapapeles',
+                        keys: ["Windows", "V"], 
+                        description: "¿Sabías que Windows puede guardar varias cosas que has copiado? Usa este atajo para abrir el historial. Si lo usas por primera vez, te preguntará si quieres activarlo. ¡Es súper útil!",
+                        emoji: "🤯"
+                    },
+                    { 
+                        type: 'warning',
+                        title: '¡Cuidado con estos atajos!',
+                        keys: ["Shift", "Supr"], 
+                        description: "Elimina permanentemente un elemento, ¡no va a la Papelera de reciclaje! Una vez que lo borras así, es muy difícil recuperarlo. ¡Úsalo con mucha precaución!",
+                        emoji: "😱"
+                    }
+                ]
+            }
+        ];
+
+        const navigationEl = document.getElementById('navigation');
+        const containerEl = document.getElementById('shortcuts-container');
+        const searchInput = document.getElementById('search-input');
+        const noResultsEl = document.getElementById('no-results');
+
+        function renderKeys(keys) {
+            return keys.map(key => `<kbd>${key}</kbd>`).join('+');
+        }
+
+        function renderShortcuts(data) {
+            containerEl.innerHTML = '';
+            let found = false;
+            data.forEach(section => {
+                if (section.items.length > 0) {
+                    found = true;
+                    let sectionHTML;
+                    if (section.isSpecial) {
+                        sectionHTML = `<section id="${section.id}" class="scroll-mt-24">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">${section.icon} ${section.category}</h3>
+                            <div class="space-y-4">
+                                ${section.items.map(item => {
+                                    const baseClass = 'p-5 rounded-lg border-2';
+                                    const colorClass = item.type === 'tip' 
+                                        ? 'bg-blue-50 border-blue-200 text-blue-900' 
+                                        : 'bg-red-50 border-red-200 text-red-900';
+                                    return `
+                                    <div class="${baseClass} ${colorClass}">
+                                        <h4 class="font-bold text-lg mb-2">${item.emoji} ${item.title}</h4>
+                                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                                            <div class="shortcut-card">${renderKeys(item.keys)}</div>
+                                            <p class="flex-1 text-sm sm:text-base">${item.description}</p>
+                                        </div>
+                                    </div>
+                                    `
+                                }).join('')}
+                            </div>
+                        </section>`;
+                    } else {
+                        sectionHTML = `<section id="${section.id}" class="scroll-mt-24">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">${section.icon} ${section.category}</h3>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                ${section.items.map(item => `
+                                    <div class="shortcut-card bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-yellow-400 transition flex items-center gap-4">
+                                        <span class="text-3xl">${item.emoji}</span>
+                                        <div class="flex-1">
+                                            <div>${renderKeys(item.keys)}</div>
+                                            <p class="text-slate-600 mt-2 text-sm">${item.description}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </section>`;
+                    }
+                    containerEl.innerHTML += sectionHTML;
+                }
+            });
+             noResultsEl.classList.toggle('hidden', found);
+        }
+
+        function renderNavigation() {
+            navigationEl.innerHTML = shortcutsData.map(section => `
+                <a href="#${section.id}" class="nav-link flex items-center gap-3 p-2 rounded-md text-slate-700 hover:bg-slate-100 transition">
+                    ${section.icon}
+                    <span>${section.category}</span>
+                </a>
+            `).join('');
+        }
+
+        function handleSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            if (query === "") {
+                renderShortcuts(shortcutsData);
+                return;
+            }
+
+            const filteredData = shortcutsData.map(section => {
+                const filteredItems = section.items.filter(item => {
+                    const keysText = item.keys.join(' ').toLowerCase();
+                    const descriptionText = item.description.toLowerCase();
+                    return keysText.includes(query) || descriptionText.includes(query);
+                });
+                return { ...section, items: filteredItems };
+            }).filter(section => section.items.length > 0);
+
+            renderShortcuts(filteredData);
+        }
+        
+        function handleScroll() {
+            const scrollPosition = window.scrollY;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            shortcutsData.forEach(section => {
+                const el = document.getElementById(section.id);
+                if (el && el.offsetTop <= scrollPosition + 120) {
+                    currentSection = section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active-nav');
+                }
+            });
+        }
+
+        searchInput.addEventListener('keyup', handleSearch);
+        window.addEventListener('scroll', handleScroll);
+
+        // Initial render
+        renderNavigation();
+        renderShortcuts(shortcutsData);
+        handleScroll();
+    </script>
+
+</body>
+</html>
+�
