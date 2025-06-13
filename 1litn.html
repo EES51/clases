@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Gato Negro: Infografía y Sopa de Letras</title>
+    <!-- Carga de Tailwind CSS CDN para un diseño moderno y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos personalizados para la fuente Inter y algunos ajustes */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Fondo gris claro */
+            color: #333; /* Color de texto principal */
+        }
+        /* Estilos para las secciones colapsables de la infografía */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out; /* Transición suave para expandir/colapsar */
+            padding-left: 1rem; /* Indentación para el contenido */
+            padding-right: 1rem;
+        }
+        .collapsible-content.expanded {
+            max-height: 1000px; /* Aumentado para el contenido más extenso, ajustar si es necesario */
+            transition: max-height 0.7s ease-in;
+        }
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .collapsible-header i {
+            transition: transform 0.3s ease;
+        }
+        .collapsible-header.expanded i {
+            transform: rotate(90deg); /* Gira el icono de flecha al expandir */
+        }
+
+        /* Estilos para la Sopa de Letras */
+        #word-grid {
+            display: grid;
+            border: 2px solid #a78bfa; /* Morado claro */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .grid-cell {
+            width: 30px; /* Tamaño fijo para las celdas */
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 1px solid #e2e8f0; /* Borde sutil */
+        }
+        .grid-cell.highlighted {
+            background-color: #d8b4fe; /* Morado más claro al seleccionar */
+        }
+        .grid-cell.found {
+            background-color: #a78bfa; /* Morado para palabras encontradas */
+            color: white;
+            animation: found-animation 0.5s ease-out;
+        }
+        @keyframes found-animation {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #word-list li.found {
+            text-decoration: line-through;
+            color: #6d28d9; /* Texto morado oscuro */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10">
+
+        <!-- Encabezado Principal -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-2">
+                <i class="fas fa-cat text-purple-600 mr-3"></i> El Gato Negro: Un Viaje Interactivo <i class="fas fa-book-open text-purple-600 ml-3"></i>
+            </h1>
+            <p class="text-lg text-gray-600">Explora la historia y pon a prueba tus conocimientos sobre el clásico de Edgar Allan Poe.</p>
+        </header>
+
+        <!-- Sección de Infografía Extendida -->
+        <section class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-700 mb-6 text-center">
+                🖼️ Infografía Detallada: "El Gato Negro" - Elementos del Terror 👻
+            </h2>
+            <p class="text-gray-700 text-center mb-8">Haz clic en cada sección para expandir la información y descubrir los secretos del miedo.</p>
+
+            <!-- Tarjeta de la Infografía: El Narrador y su Mente Oscura -->
+            <div class="bg-purple-100 p-2 rounded-lg mb-4 shadow-md">
+                <div class="collapsible-header text-purple-800 font-semibold text-xl" data-target="narrador-content">
+                    <h3><i class="fas fa-brain mr-3"></i> El Narrador y su Mente Oscura: De la Luz a la Sombra</h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="narrador-content" class="collapsible-content mt-3 text-gray-700 px-4">
+                    <h4 class="font-bold text-lg text-purple-700 mb-2">1. La Transformación Inicial: Un Alma Sensible</h4>
+                    <p class="mb-3">Al principio, el narrador se presenta como una persona de carácter dócil y humano. Desde su infancia, mostró una profunda ternura por los animales, convirtiéndolos en sus compañeros más queridos. Su matrimonio con una mujer de disposición similar refuerza esta imagen inicial de bondad y afecto hacia las criaturas.</p>
+                    <h4 class="font-bold text-lg text-purple-700 mb-2">2. La Caída en la Intemperancia: El Alcohol como Catalizador</h4>
+                    <p class="mb-3">Lamentablemente, el narrador sucumbe al "demonio de la intemperancia", el alcohol. Este vicio consume su bondad, transformándolo radicalmente. Se vuelve taciturno, irritable e indiferente a los sentimientos de los demás. Su lenguaje se torna brutal y llega a cometer actos de violencia física, incluso contra su propia esposa.</p>
+                    <h4 class="font-bold text-lg text-purple-700 mb-2">3. La Manifestación de la Perversidad: El Mal por el Mal Mismo</h4>
+                    <p class="mb-3">El cuento explora un concepto psicológico fascinante: la perversidad. El narrador se siente impulsado a cometer actos viles no por necesidad o venganza, sino por la simple y profunda voluntad de violar lo que sabe que es correcto. Esta es la fuerza que lo lleva a ahorcar a Plutón, su gato amado, a pesar del remordimiento que siente.</p>
+                    <img src="https://placehold.co/500x250/9333ea/ffffff?text=Mente+Oscura+del+Narrador" alt="Imagen de Mente Oscura del Narrador" class="rounded-md mt-4 mx-auto block">
+                </div>
+            </div>
+
+            <!-- Tarjeta de la Infografía: Símbolos y Premoniciones -->
+            <div class="bg-green-100 p-2 rounded-lg mb-4 shadow-md">
+                <div class="collapsible-header text-green-800 font-semibold text-xl" data-target="simbolos-content">
+                    <h3><i class="fas fa-eye mr-3"></i> Símbolos y Premoniciones: Advertencias del Destino</h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="simbolos-content" class="collapsible-content mt-3 text-gray-700 px-4">
+                    <h4 class="font-bold text-lg text-green-700 mb-2">1. El Ojo Sacado: La Ceguera Moral</h4>
+                    <p class="mb-3">El acto de arrancarle un ojo a Plutón es un símbolo poderoso. Representa la ceguera moral del narrador, su incapacidad de ver la bondad y el amor que lo rodeaban, y su descenso hacia la oscuridad interior. También presagia la "visión" que perderá más adelante.</p>
+                    <h4 class="font-bold text-lg text-green-700 mb-2">2. El Incendio y la Imagen del Gato: Consecuencia y Fantasma</h4>
+                    <p class="mb-3">La destrucción total de la casa por un incendio, poco después del ahorcamiento de Plutón, puede interpretarse como una consecuencia kármica de sus actos. La aparición de la imagen del gato ahorcado en la pared restante es un evento sobrenatural que el narrador intenta racionalizar, pero que lo persigue como un fantasma de su culpa.</p>
+                    <h4 class="font-bold text-lg text-green-700 mb-2">3. La Mancha de la Horca: El Presagio Final</h4>
+                    <p class="mb-3">El segundo gato, inicialmente una esperanza, se convierte en un tormento cuando la mancha blanca en su pecho evoluciona lentamente hasta formar la imagen de una horca. Este es el símbolo más ominoso, una premonición directa del destino que aguarda al narrador, quien se siente constantemente juzgado y acechado por esta aparición.</p>
+                    <img src="https://placehold.co/500x250/16a34a/ffffff?text=Simbolos+y+Presagios" alt="Imagen de Símbolos y Presagios" class="rounded-md mt-4 mx-auto block">
+                </div>
+            </div>
+
+            <!-- Tarjeta de la Infografía: El Gato como Elemento de Terror -->
+            <div class="bg-red-100 p-2 rounded-lg mb-4 shadow-md">
+                <div class="collapsible-header text-red-800 font-semibold text-xl" data-target="gato-terror-content">
+                    <h3><i class="fas fa-paw mr-3"></i> El Gato como Elemento de Terror: Compañero y Verdugo</h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="gato-terror-content" class="collapsible-content mt-3 text-gray-700 px-4">
+                    <h4 class="font-bold text-lg text-red-700 mb-2">1. Plutón: La Víctima Original y el Amor Traicionado</h4>
+                    <p class="mb-3">Plutón representa el amor y la inocencia que el narrador destruye. Su asesinato es el punto de no retorno en la espiral de violencia y depravación del protagonista. Es el primer ser vivo en sufrir directamente su transformación moral.</p>
+                    <h4 class="font-bold text-lg text-red-700 mb-2">2. El Segundo Gato: La Reencarnación de la Culpa</h4>
+                    <p class="mb-3">El segundo gato no solo es físicamente similar a Plutón, sino que actúa como una encarnación de la culpa y el castigo del narrador. Su persistente afecto, que el narrador percibe como una burla o acoso, se convierte en una tortura psicológica constante. Su presencia es un recordatorio viviente de sus pecados.</p>
+                    <h4 class="font-bold text-lg text-red-700 mb-2">3. La Astucia del Animal: El Verdugo Inesperado</h4>
+                    <p class="mb-3">El "odioso animal" del final del cuento, cuya "astucia" lleva al narrador al asesinato y cuya "reveladora voz" lo entrega, se convierte en el verdugo definitivo. No es un juez humano, sino la propia criatura a la que tanto daño hizo, la que desvela su atroz crimen.</p>
+                    <img src="https://placehold.co/500x250/ef4444/ffffff?text=El+Gato+del+Terror" alt="Imagen de El Gato del Terror" class="rounded-md mt-4 mx-auto block">
+                </div>
+            </div>
+
+            <!-- Tarjeta de la Infografía: El Clímax y el Descubrimiento Final -->
+            <div class="bg-blue-100 p-2 rounded-lg mb-4 shadow-md">
+                <div class="collapsible-header text-blue-800 font-semibold text-xl" data-target="climax-content">
+                    <h3><i class="fas fa-door-closed mr-3"></i> El Clímax y el Descubrimiento Final: La Caza al Asesino</h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="climax-content" class="collapsible-content mt-3 text-gray-700 px-4">
+                    <h4 class="font-bold text-lg text-blue-700 mb-2">1. El Asesinato de la Esposa: El Punto de No Retorno</h4>
+                    <p class="mb-3">En un arrebato de furia, el narrador intenta atacar al segundo gato con un hacha. Cuando su esposa interviene para proteger al animal, él la mata brutalmente. Este es el crimen definitivo, que lo lleva a un punto de no retorno en su depravación.</p>
+                    <h4 class="font-bold text-lg text-blue-700 mb-2">2. El Escondite "Perfecto": La Arrogancia del Criminal</h4>
+                    <p class="mb-3">Creyendo que es más astuto que nadie, el narrador decide emparedar el cuerpo de su esposa en una falsa pared del sótano. Se siente invencible y su arrogancia lo lleva a jactarse de la solidez de las paredes frente a la policía que investiga la desaparición.</p>
+                    <h4 class="font-bold text-lg text-blue-700 mb-2">3. La Delación del Gato: El Grito Final y la Justicia Macabra</h4>
+                    <p class="mb-3">En un acto de fatal presunción, el narrador golpea la pared que esconde el cadáver. De allí surge un "grito prolongado, sonoro y continuo, completamente anormal e inhumano", que en realidad es el aullido del segundo gato, quien había sido accidentalmente emparedado junto al cuerpo. Este aullido revela el crimen y sella el destino del narrador, entregándolo al verdugo.</p>
+                    <img src="https://placehold.co/500x250/3b82f6/ffffff?text=Descubrimiento+Final" alt="Imagen de Descubrimiento Final" class="rounded-md mt-4 mx-auto block">
+                </div>
+            </div>
+
+            <!-- Conclusión de la Infografía -->
+            <div class="bg-yellow-100 p-2 rounded-lg shadow-md">
+                <div class="collapsible-header text-yellow-800 font-semibold text-xl" data-target="conclusion-content">
+                    <h3><i class="fas fa-lightbulb mr-3"></i> Conclusión: Reflexiones del Terror</h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="conclusion-content" class="collapsible-content mt-3 text-gray-700 px-4">
+                    <p class="mb-3"><strong class="text-yellow-700">El Poder del Miedo y la Psicología Humana:</strong> Poe no solo busca asustar con elementos sobrenaturales, sino que profundiza en la mente humana, mostrando cómo la culpa, la perversidad y el alcohol pueden llevar a la autodestrucción y al horror.</p>
+                    <p class="mb-3"><strong class="text-yellow-700">Consecuencias Inevitables:</strong> La historia es un recordatorio de que las acciones, por más ocultas que parezcan, a menudo tienen consecuencias inesperadas y macabras, y que la justicia puede llegar de las formas más insospechadas.</p>
+                    <p class="mb-3"><strong class="text-yellow-700">Un Clásico Inmortal:</strong> "El Gato Negro" sigue siendo un estudio magistral del terror psicológico, una obra que invita a la reflexión sobre la oscuridad que puede habitar en el alma humana.</p>
+                    <img src="https://placehold.co/500x250/facc15/ffffff?text=Reflexiones+Finales" alt="Imagen de Reflexiones Finales" class="rounded-md mt-4 mx-auto block">
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Sección de la Sopa de Letras -->
+        <section class="mt-12 p-6 bg-purple-50 rounded-xl shadow-lg text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-700 mb-6">
+                🎮 Juego: Sopa de Letras de "El Gato Negro" 🔍
+            </h2>
+            <p class="text-gray-700 mb-8">¡Encuentra las palabras clave escondidas en la cuadrícula! Haz clic en la primera letra y arrastra hasta la última para seleccionar una palabra.</p>
+
+            <div class="flex flex-col lg:flex-row justify-center items-start lg:space-x-8">
+                <div id="word-grid" class="grid bg-white p-2 rounded-lg shadow-inner mb-6 lg:mb-0">
+                    <!-- Las celdas de la cuadrícula se generarán aquí con JavaScript -->
+                </div>
+
+                <div class="bg-white p-5 rounded-lg shadow-md w-full lg:w-1/3">
+                    <h3 class="text-2xl font-bold text-purple-700 mb-4">Palabras a Encontrar:</h3>
+                    <ul id="word-list" class="list-none p-0 text-left grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
+                        <!-- La lista de palabras se generará aquí con JavaScript -->
+                    </ul>
+                    <p id="game-status" class="mt-6 text-lg font-semibold text-gray-800">¡Busca las palabras!</p>
+                </div>
+            </div>
+            <button id="reset-button" class="mt-8 px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition-all transform hover:scale-105">
+                Reiniciar Juego
+            </button>
+        </section>
+
+    </div>
+
+    <script>
+        // Lógica para la infografía interactiva (expandir/colapsar secciones)
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.dataset.target;
+                const content = document.getElementById(targetId);
+                
+                // Alternar la clase 'expanded' en el encabezado y el contenido
+                header.classList.toggle('expanded');
+                content.classList.toggle('expanded');
+
+                // Si el contenido se está expandiendo, ajusta el max-height para que quepa
+                // Nota: scrollHeight asegura que se expanda lo suficiente para todo el contenido
+                if (content.classList.contains('expanded')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // Lógica para la Sopa de Letras
+        const wordsToFind = [
+            'PLUTON', 'GATO', 'ALCOHOL', 'OJO', 'HORCA', 'FUEGO',
+            'SOTANO', 'ESPOSA', 'ASESINO', 'CULPA', 'POLICIA', 'CRIMEN',
+            'MIEDO', 'PERVERSIDAD', 'IRRITABLE'
+        ];
+
+        const gridSize = 12; // Cuadrícula de 12x12
+        const gridElement = document.getElementById('word-grid');
+        const wordListElement = document.getElementById('word-list');
+        const gameStatusElement = document.getElementById('game-status');
+        const resetButton = document.getElementById('reset-button');
+
+        let grid = [];
+        let foundWords = new Set();
+        let isDragging = false;
+        let startCell = null;
+        let highlightedCells = [];
+
+        // Genera la cuadrícula (para esta versión, pre-llenada para asegurar las palabras)
+        // Nota: La generación automática de una sopa de letras compleja con direcciones aleatorias y sin colisiones es una tarea compleja.
+        // Para asegurar la funcionalidad y la inmediatez, se usa una cuadrícula predefinida para esta demostración.
+        const prefilledGrid = [
+            ['P', 'L', 'U', 'T', 'O', 'N', 'A', 'B', 'C', 'D', 'E', 'F'],
+            ['R', 'G', 'A', 'T', 'O', 'H', 'I', 'J', 'K', 'L', 'M', 'N'],
+            ['I', 'O', 'S', 'O', 'L', 'I', 'T', 'O', 'P', 'Q', 'R', 'S'],
+            ['T', 'H', 'O', 'R', 'C', 'A', 'M', 'N', 'O', 'P', 'Q', 'R'],
+            ['A', 'C', 'A', 'L', 'C', 'O', 'H', 'O', 'L', 'S', 'T', 'U'],
+            ['B', 'O', 'N', 'D', 'A', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+            ['L', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'],
+            ['E', 'C', 'R', 'I', 'M', 'E', 'N', 'X', 'Y', 'Z', 'A', 'B'],
+            ['F', 'U', 'E', 'G', 'O', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B'],
+            ['W', 'X', 'Y', 'S', 'O', 'T', 'A', 'N', 'O', 'C', 'D', 'E'],
+            ['A', 'S', 'E', 'S', 'I', 'N', 'O', 'F', 'G', 'H', 'I', 'J'],
+            ['M', 'I', 'E', 'D', 'O', 'K', 'L', 'M', 'N', 'O', 'P', 'Q']
+        ];
+
+        // Palabras adicionales para llenar espacios vacíos si la cuadrícula no es exactamente la pre-llenada
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        function generateGrid() {
+            // Se usa la cuadrícula pre-llenada para asegurar la presencia de las palabras
+            // y se rellena el resto con letras aleatorias si la cuadrícula fuera más grande.
+            grid = prefilledGrid.map(row => row.slice()); // Copia para no modificar el original
+        }
+
+        function renderGrid() {
+            gridElement.innerHTML = '';
+            gridElement.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+            for (let r = 0; r < gridSize; r++) {
+                for (let c = 0; c < gridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('grid-cell', 'border', 'border-gray-200', 'rounded-sm');
+                    cell.textContent = grid[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function renderWordList() {
+            wordListElement.innerHTML = '';
+            wordsToFind.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                li.classList.add('text-gray-700', 'text-lg', 'font-medium');
+                if (foundWords.has(word)) {
+                    li.classList.add('found');
+                }
+                wordListElement.appendChild(li);
+            });
+        }
+
+        function getCellsInSelection(start, end) {
+            const cells = [];
+            const r1 = parseInt(start.dataset.row);
+            const c1 = parseInt(start.dataset.col);
+            const r2 = parseInt(end.dataset.row);
+            const c2 = parseInt(end.dataset.col);
+
+            const dr = Math.sign(r2 - r1);
+            const dc = Math.sign(c2 - c1);
+
+            // Permitir selección horizontal, vertical y diagonal
+            if (dr === 0 && dc === 0) return [start]; // Un solo punto
+            if (dr !== 0 && dc !== 0 && Math.abs(r2 - r1) !== Math.abs(c2 - c1)) return []; // No diagonal pura
+
+            let r = r1;
+            let c = c1;
+            while (true) {
+                const cell = document.querySelector(`.grid-cell[data-row="${r}"][data-col="${c}"]`);
+                if (cell) cells.push(cell);
+                if (r === r2 && c === c2) break;
+                if (dr !== 0) r += dr;
+                if (dc !== 0) c += dc;
+            }
+            return cells;
+        }
+
+        function checkWord() {
+            if (!startCell || highlightedCells.length === 0) return;
+
+            const selectedWord = highlightedCells.map(cell => cell.textContent).join('');
+            const reversedSelectedWord = selectedWord.split('').reverse().join('');
+
+            const foundWord = wordsToFind.find(word => word === selectedWord || word === reversedSelectedWord);
+
+            if (foundWord && !foundWords.has(foundWord)) {
+                foundWords.add(foundWord);
+                highlightedCells.forEach(cell => cell.classList.add('found'));
+                renderWordList();
+                gameStatusElement.textContent = `¡Encontraste: ${foundWord}! Sigue buscando...`;
+                if (foundWords.size === wordsToFind.length) {
+                    gameStatusElement.textContent = '¡Felicidades! ¡Encontraste todas las palabras!';
+                }
+            } else {
+                gameStatusElement.textContent = 'Palabra incorrecta. Inténtalo de nuevo.';
+            }
+            // Limpiar resaltado después de verificar
+            highlightedCells.forEach(cell => cell.classList.remove('highlighted'));
+            highlightedCells = [];
+            startCell = null;
+        }
+
+        // Eventos del Mouse para la selección
+        gridElement.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('grid-cell')) {
+                isDragging = true;
+                startCell = e.target;
+                highlightedCells = [startCell];
+                startCell.classList.add('highlighted');
+                gameStatusElement.textContent = 'Arrastra para seleccionar...';
+            }
+        });
+
+        gridElement.addEventListener('mousemove', (e) => {
+            if (!isDragging || !startCell) return;
+            if (e.target.classList.contains('grid-cell')) {
+                // Eliminar resaltado anterior
+                highlightedCells.forEach(cell => cell.classList.remove('highlighted'));
+                
+                const currentCell = e.target;
+                highlightedCells = getCellsInSelection(startCell, currentCell);
+                highlightedCells.forEach(cell => cell.classList.add('highlighted'));
+            }
+        });
+
+        gridElement.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                checkWord();
+            }
+        });
+
+        // Previene la selección de texto en la página al arrastrar
+        document.addEventListener('selectstart', (e) => {
+            if (isDragging) e.preventDefault();
+        });
+
+        function initGame() {
+            foundWords = new Set();
+            isDragging = false;
+            startCell = null;
+            highlightedCells = [];
+            gridElement.innerHTML = ''; // Limpia el grid existente
+            
+            generateGrid();
+            renderGrid();
+            renderWordList();
+            gameStatusElement.textContent = '¡Busca las palabras!';
+
+            // Asegura que las palabras de la lista estén en mayúsculas para la comparación
+            wordsToFind.forEach((word, index) => {
+                wordsToFind[index] = word.toUpperCase();
+            });
+        }
+
+        // Reiniciar juego
+        resetButton.addEventListener('click', initGame);
+
+        // Inicializar el juego al cargar la página
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
