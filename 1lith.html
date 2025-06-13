@@ -47,26 +47,6 @@
             transform: translateY(-50%) rotate(0deg); /* No rotation needed for '-' */
         }
 
-        /* Specific styles for trivia buttons */
-        .trivia-button {
-            @apply bg-purple-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-purple-600 transition-all duration-300 ease-in-out transform hover:scale-105;
-        }
-        .trivia-button.correct {
-            @apply bg-green-500 hover:bg-green-600;
-        }
-        .trivia-button.incorrect {
-            @apply bg-red-500 hover:bg-red-600;
-        }
-        .feedback-message {
-            @apply p-4 rounded-lg mt-4 font-semibold;
-        }
-        .feedback-correct {
-            @apply bg-green-100 text-green-800;
-        }
-        .feedback-incorrect {
-            @apply bg-red-100 text-red-800;
-        }
-
         /* Custom styles for the infographic sections */
         .infographic-section {
             @apply relative p-8 md:p-12 rounded-2xl shadow-xl transition-all duration-500 ease-in-out transform hover:scale-102 cursor-pointer overflow-hidden;
@@ -122,14 +102,95 @@
             @apply text-9xl text-gray-800 opacity-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0;
         }
 
-        /* Styles for multiple choice options with colored backgrounds */
-        .option-button {
-            @apply py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out text-white font-bold text-lg hover:scale-105;
+        /* Crossword Game Specific Styles */
+        .crossword-container {
+            @apply flex flex-col items-center justify-center p-6 bg-emerald-50 rounded-xl shadow-md;
+            min-height: 700px; /* Increased height for the larger grid */
         }
-        .option-A { @apply bg-blue-500 hover:bg-blue-600; }
-        .option-B { @apply bg-green-500 hover:bg-green-600; }
-        .option-C { @apply bg-orange-500 hover:bg-orange-600; }
-        .option-D { @apply bg-red-500 hover:bg-red-600; }
+
+        .crossword-grid-container {
+            @apply mb-8;
+            border: 2px solid #6b7280; /* Gray-500 */
+            background-color: #e5e7eb; /* Gray-200 */
+            display: grid;
+            grid-template-columns: repeat(var(--grid-cols), 30px); /* Adjust cell size as needed */
+            grid-template-rows: repeat(var(--grid-rows), 30px);
+            max-width: fit-content;
+            margin: 0 auto; /* Center the grid */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Ensure cells stay within bounds */
+        }
+
+        .crossword-cell {
+            @apply w-full h-full flex items-center justify-center border border-gray-300 bg-white text-center text-lg font-bold text-gray-800;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            outline: none; /* Remove default focus outline */
+            cursor: text;
+        }
+
+        .crossword-cell.empty {
+            @apply bg-gray-600 border-gray-600; /* Darker background for empty cells */
+            cursor: default;
+        }
+
+        .crossword-cell input {
+            @apply w-full h-full text-center text-lg font-bold text-gray-800 bg-transparent border-none outline-none;
+            padding: 0; /* Remove default padding */
+            text-transform: uppercase; /* Ensure input is uppercase */
+        }
+        .crossword-cell.filled input {
+             background-color: #d1fae5; /* Light green for filled cells */
+        }
+
+        .crossword-cell.clue-number {
+            @apply relative;
+        }
+        .clue-number-label {
+            @apply absolute top-0.5 left-0.5 text-xs font-semibold text-gray-600;
+        }
+
+        /* Style for acrostic letters */
+        .crossword-cell.acrostic-letter {
+            background-color: #ffcfcf; /* Light red for acrostic letters */
+            color: #d90f0f; /* Dark red for letter */
+            font-weight: 900;
+            cursor: default;
+        }
+        .crossword-cell.acrostic-letter input {
+            cursor: default;
+            pointer-events: none; /* Make input non-interactive */
+        }
+
+        .clues-container {
+            @apply grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-lg mx-auto mb-8;
+        }
+
+        .clue-list {
+            @apply bg-blue-100 p-6 rounded-lg shadow-inner;
+        }
+        .clue-list h4 {
+            @apply text-xl font-bold text-blue-800 mb-4;
+        }
+        .clue-list ol {
+            @apply list-decimal list-inside space-y-2;
+        }
+        .clue-list li {
+            @apply text-gray-700;
+        }
+
+        .game-buttons {
+            @apply flex justify-center gap-4 mt-8;
+        }
+        .game-button {
+            @apply bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-emerald-700 transition-all duration-300 ease-in-out transform hover:scale-105;
+        }
+        .restart-button {
+            @apply bg-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-700 transition-all duration-300 ease-in-out transform hover:scale-105;
+        }
+        .game-message {
+            @apply text-3xl font-extrabold text-center mt-8 text-indigo-700;
+        }
     </style>
 </head>
 <body class="p-6 md:p-10 lg:p-16">
@@ -231,7 +292,8 @@
             <table class="min-w-full bg-white rounded-lg shadow-md">
                 <thead>
                     <tr class="bg-green-100 text-green-800">
-                        <th class="py-3 px-4 text-left rounded-tl-lg">Tema Central</th>
+                        <th class="py-3 px-4 text-left rounded-tl-lg">Icono</th>
+                        <th class="py-3 px-4 text-left">Tema Central</th>
                         <th class="py-3 px-4 text-left rounded-tr-lg">Descripción</th>
                     </tr>
                 </thead>
@@ -404,176 +466,37 @@
     <section class="mb-16 bg-white p-8 rounded-xl shadow-lg">
         <h2 class="text-4xl font-bold text-emerald-600 mb-8 text-center">🎮 Zona de Juego: ¡Desafía tu Mente con la Casa de Azúcar!</h2>
         <p class="text-lg text-gray-700 mb-10 text-center">
-            ¡Ponete a prueba! Demostrá cuánto aprendiste y divertite con estos juegos interactivos.
+            ¡Ponete a prueba! Demostrá cuánto aprendiste y divertite con este juego interactivo.
         </p>
 
-        <!-- Trivia Game -->
-        <div class="mb-12 p-6 bg-emerald-50 rounded-xl shadow-md">
-            <h3 class="text-3xl font-semibold text-emerald-700 mb-6 text-center">Descifra el Misterio de la Casa de Azúcar (Trivia Interactiva)</h3>
+        <!-- Crossword Game -->
+        <div class="crossword-container">
+            <h3 class="text-3xl font-semibold text-emerald-700 mb-6 text-center">Crucigrama Acróstico: "LA CASA DE AZUCAR"</h3>
             <p class="text-lg text-gray-700 mb-6 text-center">
-                <b>Mecánica:</b> Responde preguntas de opción múltiple o verdadero/falso. ¡Cada respuesta correcta te acerca a desvelar el enigma!
+                <b>Mecánica:</b> La frase **"LA CASA DE AZUCAR"** se deletrea verticalmente en el centro del crucigrama (celdas rojas). Tu misión es rellenar las palabras que cruzan horizontalmente desde cada una de sus letras.
             </p>
-            <p class="text-sm text-gray-500 italic mb-8 text-center">
-                (Imagina botones interactivos para las respuestas, un contador de puntos que sube y efectos de sonido para aciertos y errores. ¡Una barra de "Misterio Resuelto" que se va llenando!)</p>
 
-            <!-- Question 1 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 1:</b> ¿Qué característica principal tenía la casa que Daniel heredó?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(1, 'A')">A) Era muy grande y lujosa.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(1, 'B')">B) Solo él podía verla.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(1, 'C')">C) Estaba destinada a ser habitada por una "verdadera" Cristina.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(1, 'D')">D) Estaba llena de objetos de azúcar.</button>
-                </div>
-                <div id="feedback-q1" class="feedback-message hidden"></div>
+            <div id="crossword-grid" class="crossword-grid-container">
+                <!-- Crossword grid will be generated here by JavaScript -->
             </div>
 
-            <!-- Question 2 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 2:</b> ¿Qué tema central aborda el cuento al hablar del destino de Cristina?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(2, 'A')">A) El amor incondicional.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(2, 'B')">B) La lucha por la libertad.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(2, 'C')">C) El destino inevitable.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(2, 'D')">D) La importancia de la comunicación en la pareja.</button>
+            <div class="clues-container">
+                <div class="clue-list">
+                    <h4>Pistas</h4>
+                    <ol id="across-clues">
+                        <!-- Clues will be populated here -->
+                    </ol>
                 </div>
-                <div id="feedback-q2" class="feedback-message hidden"></div>
             </div>
 
-            <!-- Question 3 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 3 (Verdadero/Falso):</b> Daniel quería que Cristina se pareciera físicamente a su madre.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(3, 'Falso')">Falso</button>
-                    <button class="option-button option-B" onclick="checkAnswer(3, 'Verdadero')">Verdadero</button>
-                </div>
-                <div id="feedback-q3" class="feedback-message hidden"></div>
+            <div class="game-buttons">
+                <button id="check-answers-button" class="game-button">Comprobar Respuestas</button>
+                <button id="restart-button" class="restart-button">Reiniciar Juego</button>
             </div>
-
-            <!-- New Questions Start Here -->
-
-            <!-- Question 4 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 4:</b> ¿Cuál es el motivo principal por el que Daniel lleva a Cristina a la casa?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(4, 'A')">A) Para que la decore a su gusto.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(4, 'B')">B) Para cumplir una antigua profecía familiar.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(4, 'C')">C) Porque era la única propiedad que les quedaba.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(4, 'D')">D) Para esconder un tesoro.</button>
-                </div>
-                <div id="feedback-q4" class="feedback-message hidden"></div>
+            
+            <div id="game-message" class="game-message hidden">
+                ¡Felicidades, has completado el crucigrama y desentrañado el enigma de la Casa de Azúcar!
             </div>
-
-            <!-- Question 5 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 5:</b> ¿Qué objeto de la casa le genera una particular inquietud a Cristina?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(5, 'A')">A) Un viejo reloj de pie.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(5, 'B')">B) El retrato de una mujer desconocida.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(5, 'C')">C) Un espejo que no reflejaba.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(5, 'D')">D) Una jaula vacía.</button>
-                </div>
-                <div id="feedback-q5" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 6 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 6:</b> ¿Qué sensación experimenta Cristina al mudarse a la casa?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(6, 'A')">A) Alegría y emoción por el nuevo hogar.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(6, 'B')">B) Despersonalización y la sensación de ser otra.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(6, 'C')">C) Miedo a los fantasmas.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(6, 'D')">D) Curiosidad por explorar cada rincón.</button>
-                </div>
-                <div id="feedback-q6" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 7 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 7:</b> ¿Cómo reacciona Daniel ante las preocupaciones de Cristina sobre la casa?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(7, 'A')">A) La escucha atentamente y busca soluciones.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(7, 'B')">B) Las minimiza o las ignora.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(7, 'C')">C) Se asusta y quiere mudarse.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(7, 'D')">D) Le confiesa un secreto sobre la casa.</button>
-                </div>
-                <div id="feedback-q7" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 8 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 8:</b> ¿Qué le sucede a la Cristina original al final del cuento?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(8, 'A')">A) Decide abandonar a Daniel y la casa.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(8, 'B')">B) Es absorbida o desaparece dentro de la casa.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(8, 'C')">C) Logra romper la maldición de la casa.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(8, 'D')">D) Se convierte en la dueña absoluta de la casa.</button>
-                </div>
-                <div id="feedback-q8" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 9 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 9:</b> ¿Qué simboliza la "Casa de Azúcar" en el cuento?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(9, 'A')">A) La dulzura del amor.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(9, 'B')">B) Un refugio seguro y feliz.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(9, 'C')">C) El destino, una trampa o la obsesión.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(9, 'D')">D) La riqueza y el lujo.</button>
-                </div>
-                <div id="feedback-q9" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 10 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 10:</b> ¿Qué tipo de narrador predomina en la historia?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(10, 'A')">A) Primera persona (la propia Cristina).</button>
-                    <button class="option-button option-B" onclick="checkAnswer(10, 'B')">B) Tercera persona omnisciente.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(10, 'C')">C) Primera persona (el propio Daniel).</button>
-                    <button class="option-button option-D" onclick="checkAnswer(10, 'D')">D) Un narrador testigo.</button>
-                </div>
-                <div id="feedback-q10" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 11 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 11:</b> ¿Qué elemento fantástico se presenta en el cuento?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(11, 'A')">A) Animales que hablan.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(11, 'B')">B) Viajes en el tiempo.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(11, 'C')">C) Las sucesivas Cristinas y la casa con vida propia.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(11, 'D')">D) Objetos que levitan.</button>
-                </div>
-                <div id="feedback-q11" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 12 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 12:</b> ¿Cuál es la actitud de Daniel hacia las otras "Cristinas" que habitaron la casa?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(12, 'A')">A) Las recuerda con nostalgia.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(12, 'B')">B) Indiferencia y aceptación de su destino.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(12, 'C')">C) Siente remordimiento por ellas.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(12, 'D')">D) Intenta contactarlas.</button>
-                </div>
-                <div id="feedback-q12" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- Question 13 -->
-            <div class="mb-8 p-6 bg-white rounded-lg shadow-inner">
-                <p class="text-xl font-medium text-gray-800 mb-4"><b>Pregunta 13:</b> ¿Qué atmósfera general predomina en el cuento?</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="option-button option-A" onclick="checkAnswer(13, 'A')">A) Romántica y alegre.</button>
-                    <button class="option-button option-B" onclick="checkAnswer(13, 'B')">B) Cómica y divertida.</button>
-                    <button class="option-button option-C" onclick="checkAnswer(13, 'C')">C) Misterio, inquietud y fatalidad.</button>
-                    <button class="option-button option-D" onclick="checkAnswer(13, 'D')">D) Aventurera y heroica.</button>
-                </div>
-                <div id="feedback-q13" class="feedback-message hidden"></div>
-            </div>
-
-            <!-- New Questions End Here -->
-
         </div>
     </section>
 
@@ -582,111 +505,278 @@
     </footer>
 
     <script>
-        // Trivia Answers
-        const answers = {
-            1: 'C',
-            2: 'C',
-            3: 'Falso',
-            4: 'B', // New question answers
-            5: 'B',
-            6: 'B',
-            7: 'B',
-            8: 'B',
-            9: 'C',
-            10: 'B',
-            11: 'C',
-            12: 'B',
-            13: 'C'
+        const crosswordGridElement = document.getElementById('crossword-grid');
+        const acrossCluesElement = document.getElementById('across-clues');
+        const checkAnswersButton = document.getElementById('check-answers-button');
+        const restartButton = document.getElementById('restart-button');
+        const gameMessage = document.getElementById('game-message');
+
+        const crosswordData = {
+            gridSize: 15, // Grid size to accommodate acrostic and crossing words
+            acrostic: {
+                word: "LACASADEAZUCAR", // The acrostic phrase
+                startCol: 7, // Column where the acrostic word is placed vertically
+            },
+            words: [
+                // Horizontal words crossing the acrostic.
+                // start.row must match the acrostic letter's row index (0-based)
+                // start.col is where the word starts horizontally, making sure it crosses acrostic.startCol
+                { answer: "LUGAR", clue: "Sinónimo de 'casa'.", start: { row: 0, col: 5 }, direction: "across", clueNum: 1 }, // L
+                { answer: "AIRE", clue: "Lo que se siente pesado en la casa.", start: { row: 1, col: 4 }, direction: "across", clueNum: 2 }, // A
+                { answer: "CRISTINA", clue: "La protagonista del cuento, esposa de Daniel.", start: { row: 2, col: 0 }, direction: "across", clueNum: 3 }, // C
+                { answer: "AZUCAR", clue: "Ingrediente dulce que da nombre a la casa.", start: { row: 3, col: 2 }, direction: "across", clueNum: 4 }, // A
+                { answer: "SECRETO", clue: "Lo que oculta la casa.", start: { row: 4, col: 1 }, direction: "across", clueNum: 5 }, // S
+                { answer: "AMOR", clue: "Sentimiento entre Daniel y Cristina que se vuelve obsesión.", start: { row: 5, col: 4 }, direction: "across", clueNum: 6 }, // A
+                { answer: "DANIEL", clue: "El esposo obsesionado con la casa.", start: { row: 6, col: 2 }, direction: "across", clueNum: 7 }, // D
+                { answer: "ENIGMA", clue: "Otro nombre para el misterio del cuento.", start: { row: 7, col: 1 }, direction: "across", clueNum: 8 }, // E
+                { answer: "ABANDONO", clue: "Estado de la casa al inicio del cuento.", start: { row: 8, col: 0 }, direction: "across", clueNum: 9 }, // A
+                { answer: "ZONA", clue: "Espacio con un aura especial.", start: { row: 9, col: 4 }, direction: "across", clueNum: 10 }, // Z
+                { answer: "UNICO", clue: "Adjetivo para la Cristina que Daniel busca.", start: { row: 10, col: 3 }, direction: "across", clueNum: 11 }, // U
+                { answer: "CICLO", clue: "La repetición de los eventos en la casa.", start: { row: 11, col: 3 }, direction: "across", clueNum: 12 }, // C
+                { answer: "ANSIEDAD", clue: "Sentimiento de Cristina en la casa.", start: { row: 12, col: 0 }, direction: "across", clueNum: 13 }, // A
+                { answer: "REALIDAD", clue: "Lo que se difumina en el cuento.", start: { row: 13, col: 0 }, direction: "across", clueNum: 14 } // R
+            ]
         };
 
-        function checkAnswer(questionNum, selectedAnswer) {
-            const feedbackDiv = document.getElementById(`feedback-q${questionNum}`);
-            const buttons = Array.from(document.querySelector(`#feedback-q${questionNum}`).previousElementSibling.querySelectorAll('button'));
+        let crosswordGrid = []; // Will store the grid data (character, clueNum, isAcrosticLetter)
+        let inputCells = {}; // Maps {row}-{col} to the input element
 
-            // Reset button styles
-            buttons.forEach(button => {
-                button.classList.remove('correct', 'incorrect');
-                // button.disabled = false; // Keep disabled after first attempt as per previous logic
+        /**
+         * Initializes the crossword game.
+         */
+        function initializeGame() {
+            createEmptyGrid();
+            placeAcrosticWord();
+            placeCrossingWordsInGrid();
+            renderCrosswordGrid();
+            renderClues();
+            gameMessage.classList.add('hidden');
+            checkAnswersButton.disabled = false;
+        }
+
+        /**
+         * Creates an empty grid filled with null values.
+         */
+        function createEmptyGrid() {
+            crosswordGrid = Array(crosswordData.gridSize).fill(null).map(() =>
+                Array(crosswordData.gridSize).fill({ char: null, clueNum: null, inputId: null, isAcrosticLetter: false })
+            );
+        }
+
+        /**
+         * Places the acrostic word into the grid data structure.
+         */
+        function placeAcrosticWord() {
+            const acrosticWord = crosswordData.acrostic.word.toUpperCase();
+            const startCol = crosswordData.acrostic.startCol;
+
+            for (let i = 0; i < acrosticWord.length; i++) {
+                const char = acrosticWord[i];
+                const row = i; // Acrostic word goes down vertically
+
+                if (row < crosswordData.gridSize && startCol < crosswordData.gridSize) {
+                    crosswordGrid[row][startCol] = {
+                        char: char,
+                        clueNum: null, // No clue number for acrostic letters
+                        inputId: `cell-${row}-${startCol}`, // Still assign an ID
+                        isAcrosticLetter: true
+                    };
+                }
+            }
+        }
+
+        /**
+         * Places crossing words into the crossword grid data structure.
+         */
+        function placeCrossingWordsInGrid() {
+            crosswordData.words.forEach(wordData => {
+                const answer = wordData.answer.toUpperCase();
+                let { row, col } = wordData.start;
+
+                for (let i = 0; i < answer.length; i++) {
+                    // Check if the current row and column are within bounds before accessing
+                    if (row >= crosswordData.gridSize || col >= crosswordData.gridSize || row < 0 || col < 0) {
+                        console.error(`Error: Word '${wordData.answer}' goes out of bounds at [${row}, ${col}]. Grid size is ${crosswordData.gridSize}.`);
+                        break; // Stop placing this word
+                    }
+
+                    const char = answer[i];
+                    const currentCell = crosswordGrid[row][col];
+
+                    // Determine clue number for the first letter
+                    let newClueNum = currentCell.clueNum;
+                    if (i === 0) {
+                        newClueNum = wordData.clueNum;
+                    }
+
+                    // Ensure acrostic letter overrides if already placed, otherwise place word char
+                    if (!currentCell.isAcrosticLetter) {
+                        crosswordGrid[row][col] = {
+                            char: char,
+                            clueNum: newClueNum,
+                            inputId: `cell-${row}-${col}`,
+                            isAcrosticLetter: false
+                        };
+                    } else if (currentCell.isAcrosticLetter && currentCell.char === char) {
+                        // If it's an acrostic letter and matches the crossing word's letter,
+                        // just update its clueNum if needed and keep it as acrostic.
+                        crosswordGrid[row][col].clueNum = newClueNum || currentCell.clueNum;
+                    } else if (currentCell.isAcrosticLetter && currentCell.char !== char) {
+                        console.warn(`Conflict detected at [${row}, ${col}]: Acrostic letter '${currentCell.char}' vs. word '${wordData.answer}' letter '${char}'.`);
+                        // This indicates a bad crossword design, but for this example, we'll let acrostic win.
+                        // In a real generator, this would require backtracking or a different layout.
+                    }
+
+                    if (wordData.direction === "across") {
+                        col++;
+                    } else { // "down"
+                        row++;
+                    }
+                }
+            });
+        }
+
+        /**
+         * Renders the HTML grid based on the crosswordGrid data.
+         */
+        function renderCrosswordGrid() {
+            crosswordGridElement.innerHTML = '';
+            crosswordGridElement.style.setProperty('--grid-cols', crosswordData.gridSize);
+            crosswordGridElement.style.setProperty('--grid-rows', crosswordData.gridSize);
+            inputCells = {}; // Reset inputCells map
+
+            for (let r = 0; r < crosswordData.gridSize; r++) {
+                for (let c = 0; c < crosswordData.gridSize; c++) {
+                    const cellData = crosswordGrid[r][c];
+                    const cellElement = document.createElement('div');
+                    cellElement.classList.add('crossword-cell');
+
+                    if (cellData.char === null) {
+                        cellElement.classList.add('empty');
+                    } else {
+                        if (cellData.isAcrosticLetter) {
+                            cellElement.classList.add('acrostic-letter');
+                            cellElement.textContent = cellData.char; // Display the acrostic letter directly
+                        } else {
+                            // This is a regular input cell for a crossing word
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.maxLength = 1;
+                            input.id = cellData.inputId;
+                            inputCells[cellData.inputId] = input; // Store reference to input
+                            
+                            // Add an event listener to highlight input on focus
+                            input.addEventListener('focus', (e) => {
+                                e.target.closest('.crossword-cell').classList.add('filled');
+                            });
+                            input.addEventListener('blur', (e) => {
+                                if (e.target.value === '') {
+                                    e.target.closest('.crossword-cell').classList.remove('filled');
+                                }
+                            });
+                            cellElement.appendChild(input);
+                        }
+                        
+                        if (cellData.clueNum !== null) {
+                            const clueNumLabel = document.createElement('span');
+                            clueNumLabel.classList.add('clue-number-label');
+                            clueNumLabel.textContent = cellData.clueNum;
+                            cellElement.appendChild(clueNumLabel);
+                        }
+                    }
+                    crosswordGridElement.appendChild(cellElement);
+                }
+            }
+        }
+
+        /**
+         * Renders the clues in their respective lists.
+         */
+        function renderClues() {
+            acrossCluesElement.innerHTML = ''; // Only 'across' for this acrostic style
+            
+            const sortedWords = [...crosswordData.words].sort((a, b) => a.clueNum - b.clueNum);
+
+            sortedWords.forEach(wordData => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${wordData.clueNum}. ${wordData.clue}`;
+                acrossCluesElement.appendChild(listItem);
+            });
+        }
+
+        /**
+         * Checks the user's answers against the correct answers.
+         */
+        function checkAnswers() {
+            let allCorrect = true;
+
+            crosswordData.words.forEach(wordData => {
+                const answer = wordData.answer.toUpperCase();
+                let { row, col } = wordData.start;
+                let userAnswer = "";
+                let wordCorrect = true; // Track if current word is correct
+
+                for (let i = 0; i < answer.length; i++) {
+                    const inputId = `cell-${row}-${col}`;
+                    const inputElement = inputCells[inputId];
+                    const currentGridChar = crosswordGrid[row][col].char;
+
+                    if (inputElement) { // If it's a user-fillable cell
+                        userAnswer += inputElement.value.toUpperCase();
+                        if (inputElement.value.toUpperCase() !== currentGridChar) {
+                            wordCorrect = false;
+                        }
+                    } else if (crosswordGrid[row][col].isAcrosticLetter) {
+                        // If it's an acrostic letter, it's considered correct by default
+                        userAnswer += currentGridChar;
+                    }
+
+                    if (wordData.direction === "across") {
+                        col++;
+                    } else { // "down" - (Not used in this acrostic structure, but kept for robustness)
+                        row++;
+                    }
+                }
+
+                // Apply visual feedback for the entire word
+                let { r, c } = wordData.start;
+                for (let i = 0; i < answer.length; i++) {
+                    const cellData = crosswordGrid[r][c];
+                    if (!cellData.isAcrosticLetter) { // Only change background for fillable cells
+                        const inputElement = document.getElementById(cellData.inputId);
+                        if (inputElement) {
+                            const cellElement = inputElement.closest('.crossword-cell');
+                            if (wordCorrect) {
+                                cellElement.style.backgroundColor = '#dcfce7'; /* Green-100 */
+                            } else {
+                                cellElement.style.backgroundColor = '#fee2e2'; /* Red-100 */
+                                allCorrect = false; // Only set allCorrect to false if *any* word is wrong
+                            }
+                        }
+                    }
+
+                    if (wordData.direction === "across") {
+                        c++;
+                    } else {
+                        r++;
+                    }
+                }
             });
 
-            // Hide previous feedback
-            feedbackDiv.classList.add('hidden');
-            feedbackDiv.classList.remove('feedback-correct', 'feedback-incorrect');
-
-            // Check answer
-            if (selectedAnswer === answers[questionNum]) {
-                feedbackDiv.innerHTML = `<b>¡Correcto!</b> ${getCorrectFeedback(questionNum)}`;
-                feedbackDiv.classList.add('feedback-correct');
-                // Highlight the correct button
-                buttons.forEach(button => {
-                    // For multiple choice, check if the text content includes the selected option letter
-                    // For True/False, check if the button text matches the selected answer
-                    if ((questionNum <= 2 && button.textContent.includes(selectedAnswer)) ||
-                        (questionNum === 3 && button.textContent === selectedAnswer) ||
-                        (questionNum > 3 && button.textContent.includes(selectedAnswer.substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
-                        button.classList.add('correct');
-                    }
-                });
+            if (allCorrect) {
+                gameMessage.classList.remove('hidden');
+                checkAnswersButton.disabled = true; // Disable checking after solved
             } else {
-                feedbackDiv.innerHTML = `<b>¡Ups!</b> ${getIncorrectFeedback(questionNum)}`;
-                feedbackDiv.classList.add('feedback-incorrect');
-                // Highlight the incorrect button clicked and the correct one
-                buttons.forEach(button => {
-                    if ((questionNum <= 2 && button.textContent.includes(selectedAnswer)) ||
-                        (questionNum === 3 && button.textContent === selectedAnswer) ||
-                        (questionNum > 3 && button.textContent.includes(selectedAnswer.substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
-                        button.classList.add('incorrect');
-                    }
-                    if ((questionNum <= 2 && button.textContent.includes(answers[questionNum])) ||
-                        (questionNum === 3 && button.textContent === answers[questionNum]) ||
-                        (questionNum > 3 && button.textContent.includes(answers[questionNum].substring(0,1)))) { // Check for 'A', 'B', 'C', 'D' for new questions
-                        button.classList.add('correct'); // Show correct answer
-                    }
-                });
-            }
-            feedbackDiv.classList.remove('hidden');
-
-            // Disable all buttons for this question after an attempt
-            buttons.forEach(button => button.disabled = true);
-        }
-
-        function getCorrectFeedback(questionNum) {
-            switch (questionNum) {
-                case 1: return "Esa casa tenía un destino particular para Daniel. ¡Seguí así!";
-                case 2: return "El destino es un hilo conductor en 'La Casa de Azúcar'. ¡Sos un/a crack!";
-                case 3: return "Falso. La casa no se trataba de su madre, sino de una misteriosa 'verdadera' Cristina. ¡Atento al detalle!";
-                case 4: return "¡Exacto! La profecía familiar era clave.";
-                case 5: return "¡Bien! El retrato era un elemento inquietante para Cristina.";
-                case 6: return "¡Correcto! La casa la hacía sentir que perdía su propia identidad.";
-                case 7: return "Así es. Daniel solía restar importancia a sus miedos.";
-                case 8: return "¡Lamentablemente, sí! La casa la consume.";
-                case 9: return "¡Perfecto! Simboliza la fatalidad y la obsesión.";
-                case 10: return "¡Correcto! Un narrador que sabe todo lo que pasa.";
-                case 11: return "¡Muy bien! Esos elementos le dan el toque fantástico al cuento.";
-                case 12: return "¡Sí! Daniel acepta el ciclo de la casa con indiferencia.";
-                case 13: return "¡Exacto! Una atmósfera que te mantiene en vilo.";
-                default: return "¡Excelente!";
+                gameMessage.classList.add('hidden'); // Hide message if not all correct
             }
         }
 
-        function getIncorrectFeedback(questionNum) {
-            switch (questionNum) {
-                case 1: return "Vuelve a leer la descripción de la casa. Recuerda que no era una casa cualquiera. ¡Intenta de nuevo!";
-                case 2: return "Este cuento nos hace reflexionar mucho sobre el destino. ¡Revisa los temas principales!";
-                case 3: return "No se trataba de su madre... ¡Volvé a leer el cuento!";
-                case 4: return "No era solo por decoración. Hay un motivo más profundo.";
-                case 5: return "Revisa los detalles que le causaban incomodidad a Cristina en la casa.";
-                case 6: return "La casa no le generaba alegría. ¿Qué otra sensación experimentaba?";
-                case 7: return "Daniel no la apoyaba mucho en ese sentido. ¿Cómo reaccionaba?";
-                case 8: return "El final de Cristina es bastante oscuro. ¿Qué le sucede realmente?";
-                case 9: return "La casa no es tan 'dulce' como parece. ¿Qué representa?";
-                case 10: return "¿Quién nos cuenta la historia? ¿Desde qué punto de vista?";
-                case 11: return "Piensa en los elementos que no son 'normales' en la historia.";
-                case 12: return "¿Cómo se siente Daniel con las Cristinas anteriores? ¿Le importa?";
-                case 13: return "El cuento no es precisamente alegre. ¿Qué tipo de ambiente crea?";
-                default: return "¡Intenta de nuevo!";
-            }
-        }
+        // Event Listeners
+        checkAnswersButton.addEventListener('click', checkAnswers);
+        restartButton.addEventListener('click', initializeGame);
+
+        // Initialize the game when the page loads
+        document.addEventListener('DOMContentLoaded', initializeGame);
     </script>
 </body>
 </html>
