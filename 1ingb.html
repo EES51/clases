@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple: Mi Semana, Mi Rutina ¡Fácil y Divertido!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuentes atractivas y legibles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F9FF; /* Un azul muy claro, amigable */
+            color: #333; /* Gris oscuro para el texto principal */
+        }
+        h1, h2, h3 {
+            font-family: 'Arial Black', sans-serif; /* Fuente impactante para títulos */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra suave para que resalten */
+        }
+        /* Estilos generales para las tarjetas de contenido */
+        .content-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* Bordes bien redondeados */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada */
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e0f2f7; /* Borde sutil */
+        }
+        /* Estilo para iconos */
+        .icon-lg {
+            font-size: 3rem; /* Iconos grandes */
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        .icon-md {
+            font-size: 1.8rem; /* Iconos medianos */
+            margin-right: 0.75rem;
+        }
+        /* Colores para resaltar texto y ejemplos */
+        .text-primary { color: #2563EB; } /* Azul vibrante */
+        .text-secondary { color: #EC4899; } /* Rosa chicle */
+        .text-accent { color: #10B981; } /* Verde menta */
+        .text-warning { color: #F59E0B; } /* Naranja energético */
+        /* Estilos para tablas */
+        .custom-table th, .custom-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .custom-table th {
+            background-color: #DBEAFE; /* Fondo azul claro para encabezados */
+            font-weight: 700;
+            color: #1E3A8A; /* Azul oscuro */
+        }
+        .custom-table tr:last-child td {
+            border-bottom: none; /* Eliminar borde inferior de la última fila */
+        }
+        /* Animación para resaltar */
+        @keyframes pulse-once {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pulse-once {
+            animation: pulse-once 1s ease-out;
+        }
+
+        /* Estilos para "juegos" simulados */
+        .game-box {
+            background-color: #EFF6FF; /* Fondo claro para los juegos */
+            border: 2px dashed #93C5FD; /* Borde punteado divertido */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-style: italic;
+            color: #1E40AF;
+        }
+        .game-box strong {
+            color: #1E3A8A;
+        }
+        .game-box ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+        .game-box li {
+            background-color: #CCE4FF;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        /* Estilos específicos para la actividad de unir con flechas */
+        .match-activity-grid {
+            display: grid;
+            grid-template-columns: 1fr 50px 1fr; /* Columna para el sujeto, espacio para la flecha, columna para el verbo */
+            gap: 10px;
+            align-items: center;
+            font-size: 1.1rem;
+            text-align: left;
+            max-width: 400px; /* Ancho máximo para la actividad */
+            margin: 1.5rem auto;
+            padding: 1rem;
+            background-color: #E0F2FE;
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .match-activity-grid .left-col,
+        .match-activity-grid .right-col {
+            background-color: #DBEAFE;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            color: #1E3A8A;
+        }
+        .match-activity-grid .arrow-col {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #60A5FA;
+        }
+
+        /* Estilos para "Click y Revela" */
+        .reveal-question {
+            background-color: #FFFAE6;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 2px solid #FCD34D;
+            margin-bottom: 1rem;
+        }
+        .reveal-answer {
+            background-color: #D1FAE5;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            color: #065F46;
+            font-weight: bold;
+            display: none; /* Se oculta por defecto */
+        }
+        .reveal-button {
+            @apply bg-yellow-500 text-white font-bold py-2 px-4 rounded-full mt-2 hover:bg-yellow-600 transition-colors duration-200;
+        }
+
+        /* Estilos para "Elige la Opción Correcta" */
+        .choice-question {
+            background-color: #F0F9FF; /* Fondo claro */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #BFDBFE;
+            margin-bottom: 1rem;
+            text-align: left; /* Alineación del texto a la izquierda */
+        }
+        .choice-options button {
+            @apply bg-blue-200 text-blue-800 font-semibold py-2 px-4 rounded-full mr-2 mb-2 hover:bg-blue-300 transition-colors duration-200;
+        }
+        /* Estilo para las secciones de vocabulario */
+        .vocab-section {
+            background-color: #FEFCE8; /* Fondo suave para vocabulario */
+            border: 1px solid #FDE68A;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .vocab-section h3 {
+            color: #D97706; /* Naranja oscuro para títulos de vocabulario */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        /* Estilo específico para las tablas de vocabulario */
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse; /* Elimina espacios entre celdas */
+        }
+        .vocab-table th, .vocab-table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #FCD34D; /* Bordes para cada celda */
+            text-align: left;
+        }
+        .vocab-table th {
+            background-color: #FCD34D; /* Color de fondo para encabezados */
+            color: #6D3A02; /* Color de texto para encabezados */
+            font-weight: 700;
+        }
+        .vocab-table td strong {
+            color: #4B5563; /* Gris oscuro para la palabra en inglés */
+        }
+        .vocab-table td span {
+            color: #6B7280; /* Gris medio para la traducción */
+            font-style: italic;
+        }
+        .vocab-table tr:nth-child(even) {
+            background-color: #FFFBEB; /* Un poco de contraste para filas alternas */
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- Encabezado Principal -->
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-10 px-6 rounded-b-3xl shadow-2xl text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animate-pulse-once">
+            <span class="text-yellow-300">¡Mi Día a Día en Inglés!</span> 🗓️✨
+        </h1>
+        <p class="text-xl md:text-2xl font-light">
+            Aprendiendo el <strong>Present Simple</strong> para hablar de tu rutina
+        </p>
+    </header>
+
+    <!-- Contenedor Principal de la Infografía -->
+    <main class="container mx-auto px-4 py-12">
+
+        <!-- Sección 1: ¿Qué es el Present Simple? -->
+        <section class="content-card">
+            <h2 class="text-4xl text-primary font-bold mb-6 text-center flex items-center justify-center">
+                <span class="icon-md">💡</span> ¿Qué es el Present Simple?
+            </h2>
+            <p class="text-lg text-gray-700 mb-6 text-center max-w-2xl mx-auto">
+                El **Present Simple** es como tu "superpoder" para hablar de cosas que haces **siempre**, **todos los días**, o de cosas que **son verdad**. ¡Es ideal para contar tu rutina!
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-blue-50 p-6 rounded-xl flex items-center shadow-md">
+                    <span class="icon-md text-blue-600">✅</span>
+                    <p class="text-lg text-gray-800"><span class="font-bold text-blue-700">Tus Hábitos y Rutinas:</span> Lo que pasa regularmente.<br><span class="italic">"I <strong>brush</strong> my teeth every morning."</span> (Me cepillo los dientes todas las mañanas.)</p>
+                </div>
+                <div class="bg-pink-50 p-6 rounded-xl flex items-center shadow-md">
+                    <span class="icon-md text-pink-600">🧠</span>
+                    <p class="text-lg text-gray-800"><span class="font-bold text-pink-700">Hechos y Verdades:</span> Cosas que siempre son así.<br><span class="italic">"The Earth <strong>goes</strong> around the sun."</span> (La Tierra gira alrededor del sol.)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: ¿Cómo Armamos el Present Simple? -->
+        <section class="content-card bg-purple-50">
+            <h2 class="text-4xl text-secondary font-bold mb-6 text-center flex items-center justify-center">
+                <span class="icon-md">🛠️</span> ¡Armando Oraciones con Present Simple!
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center max-w-xl mx-auto">
+                Para armar una oración, ¡vas a usar al **sujeto** (quién hace la acción) y el **verbo** (la acción)!
+            </p>
+
+            <!-- Afirmativo -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8 border border-purple-200">
+                <h3 class="text-3xl text-accent font-bold mb-4 flex items-center">
+                    <span class="icon-md">➕</span> Oraciones Afirmativas: ¡Haciendo Cosas!
+                </h3>
+                <p class="text-lg text-gray-700 mb-4">
+                    ¡Acordate de la **"S" mágica**! Solo con **He, She, It** (él, ella, eso/ello) le agregamos una <strong>-S</strong> al verbo. Con los demás, el verbo va normal.
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full custom-table rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th>SUJETO</th>
+                                <th>VERBO (forma base)</th>
+                                <th>EJEMPLO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>I, You, We, They</strong></td>
+                                <td><span class="font-bold text-blue-700">play, study, eat</span></td>
+                                <td>I <strong>play</strong> football. <br> You <strong>study</strong> English.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>He, She, It</strong></td>
+                                <td><span class="font-bold text-red-500">plays, studies, eats</span></td>
+                                <td>He <strong>plays</strong> football. <br> She <strong>studies</strong> English.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-gray-600 mt-4 italic">
+                    <strong>¡Atención con la -S!</strong>
+                    <br> Si el verbo termina en -s, -sh, -ch, -x, -z, -o ➡️ sumá **-es** (ej. go ➡️ goes, wash ➡️ washes).
+                    <br> Si termina en consonante + y ➡️ cambiá la "y" por "i" y sumá **-es** (ej. study ➡️ studies).
+                    <br> ¡El resto solo lleva -s! (ej. play ➡️ plays, eat ➡️ eats).
+                </p>
+            </div>
+
+            <!-- Negativo -->
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8 border border-purple-200">
+                <h3 class="text-3xl text-warning font-bold mb-4 flex items-center">
+                    <span class="icon-md">➖</span> Oraciones Negativas: ¡Decimos "No"!
+                </h3>
+                <p class="text-lg text-gray-700 mb-4">
+                    Para decir que NO hacés algo, usamos <strong>don't</strong> o <strong>doesn't</strong>. ¡Lo importante es que el verbo **siempre va en su forma normal** después de estas palabras!
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full custom-table rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th>SUJETO</th>
+                                <th>AUXILIAR + NOT</th>
+                                <th>VERBO (base)</th>
+                                <th>EJEMPLO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>I, You, We, They</strong></td>
+                                <td><span class="font-bold text-blue-700">don't</span></td>
+                                <td><span class="font-bold text-blue-700">play, study, eat</span></td>
+                                <td>I <strong>don't play</strong> video games. <br> They <strong>don't like</strong> Mondays.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>He, She, It</strong></td>
+                                <td><span class="font-bold text-red-500">doesn't</span></td>
+                                <td><span class="font-bold text-red-500">play, study, eat</span></td>
+                                <td>She <strong>doesn't like</strong> broccoli. <br> He <strong>doesn't go</strong> to the cinema.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-lg text-gray-800 mt-4 italic">
+                    <span class="font-bold text-blue-700">Recordatorio:</span> Después de <strong>don't</strong> y <strong>doesn't</strong>, el verbo va **sin la -S**, ¡siempre en su forma base!
+                </p>
+            </div>
+
+            <!-- Interrogativo -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-purple-200">
+                <h3 class="text-3xl text-blue-700 font-bold mb-4 flex items-center">
+                    <span class="icon-md">❓</span> Oraciones Interrogativas: ¡Preguntando!
+                </h3>
+                <p class="text-lg text-gray-700 mb-4">
+                    Para hacer preguntas, empezamos con <strong>Do</strong> o <strong>Does</strong>. ¡El verbo también va en su forma normal!
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full custom-table rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th>AUXILIAR</th>
+                                <th>SUJETO</th>
+                                <th>VERBO (base)</th>
+                                <th>EJEMPLO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="font-bold text-blue-700">Do</span></td>
+                                <td><strong>I, you, we, they</strong></td>
+                                <td><span class="font-bold text-blue-700">live, go, listen</span></td>
+                                <td><strong>Do</strong> you <strong>live</strong> in Palermo? <br> <strong>Do</strong> they <strong>listen</strong> to reggaeton?</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-red-500">Does</span></td>
+                                <td><strong>he, she, it</strong></td>
+                                <td><span class="font-bold text-red-500">live, go, listen</span></td>
+                                <strong>Does</strong> he <strong>go</strong> to this school? <br> <strong>Does</strong> she <strong>listen</strong> to rock?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-lg text-gray-800 mt-4 italic">
+                    <span class="font-bold text-blue-700">¡Súper Importante!</span> Después de <strong>Do</strong> y <strong>Does</strong>, el verbo **NO LLEVA LA -S**, ¡siempre en su forma base!
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección 3: ¡Vocabulario para tu Rutina! -->
+        <section class="content-card bg-yellow-50">
+            <h2 class="text-4xl text-warning font-bold mb-6 text-center flex items-center justify-center">
+                <span class="icon-md">📚</span> ¡Vocabulario para tu Rutina!
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">
+                ¡Aprendé estas palabras clave para hablar de tus días y actividades!
+            </p>
+
+            <!-- Días de la Semana - Ahora en tabla -->
+            <div class="vocab-section mb-8">
+                <h3 class="text-2xl font-bold mb-4">Días de la Semana (Days of the Week) 🗓️</h3>
+                <div class="overflow-x-auto">
+                    <table class="vocab-table">
+                        <thead>
+                            <tr>
+                                <th>Inglés</th>
+                                <th>Español</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Monday</strong></td><td>Lunes</td></tr>
+                            <tr><td><strong>Tuesday</strong></td><td>Martes</td></tr>
+                            <tr><td><strong>Wednesday</strong></td><td>Miércoles</td></tr>
+                            <tr><td><strong>Thursday</strong></td><td>Jueves</td></tr>
+                            <tr><td><strong>Friday</strong></td><td>Viernes</td></tr>
+                            <tr><td><strong>Saturday</strong></td><td>Sábado</td></tr>
+                            <tr><td><strong>Sunday</strong></td><td>Domingo</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Meses del Año - Ahora en tabla -->
+            <div class="vocab-section mb-8">
+                <h3 class="text-2xl font-bold mb-4">Meses del Año (Months of the Year) 📆</h3>
+                <div class="overflow-x-auto">
+                    <table class="vocab-table">
+                        <thead>
+                            <tr>
+                                <th>Inglés</th>
+                                <th>Español</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>January</strong></td><td>Enero</td></tr>
+                            <tr><td><strong>February</strong></td><td>Febrero</td></tr>
+                            <tr><td><strong>March</strong></td><td>Marzo</td></tr>
+                            <tr><td><strong>April</strong></td><td>Abril</td></tr>
+                            <tr><td><strong>May</strong></td><td>Mayo</td></tr>
+                            <tr><td><strong>June</strong></td><td>Junio</td></tr>
+                            <tr><td><strong>July</strong></td><td>Julio</td></tr>
+                            <tr><td><strong>August</strong></td><td>Agosto</td></tr>
+                            <tr><td><strong>September</strong></td><td>Septiembre</td></tr>
+                            <tr><td><strong>October</strong></td><td>Octubre</td></tr>
+                            <tr><td><strong>November</strong></td><td>Noviembre</td></tr>
+                            <tr><td><strong>December</strong></td><td>Diciembre</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Verbos de Rutinas Diarias - Ahora en tabla -->
+            <div class="vocab-section">
+                <h3 class="text-2xl font-bold mb-4">Verbos de Rutinas Diarias (Daily Routines Verbs) ⏰</h3>
+                <div class="overflow-x-auto">
+                    <table class="vocab-table">
+                        <thead>
+                            <tr>
+                                <th>Inglés</th>
+                                <th>Español</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>get up</strong></td><td>levantarse</td></tr>
+                            <tr><td><strong>brush teeth</strong></td><td>cepillarse los dientes</td></tr>
+                            <tr><td><strong>have breakfast/lunch/dinner</strong></td><td>desayunar/almorzar/cenar</td></tr>
+                            <tr><td><strong>go to school</strong></td><td>ir a la escuela</td></tr>
+                            <tr><td><strong>study</strong></td><td>estudiar</td></tr>
+                            <tr><td><strong>do homework</strong></td><td>hacer la tarea</td></tr>
+                            <tr><td><strong>play sports/video games</strong></td><td>hacer deportes/jugar videojuegos</td></tr>
+                            <tr><td><strong>watch TV</strong></td><td>mirar TV</td></tr>
+                            <tr><td><strong>listen to music</strong></td><td>escuchar música</td></tr>
+                            <tr><td><strong>read a book</strong></td><td>leer un libro</td></tr>
+                            <tr><td><strong>go to bed</strong></td><td>irse a dormir</td></tr>
+                            <tr><td><strong>sleep</strong></td><td>dormir</td></tr>
+                            <tr><td><strong>go to the park</strong></td><td>ir al parque</td></tr>
+                            <tr><td><strong>visit friends</strong></td><td>visitar amigos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Sección 4: ¡Juguemos con el Present Simple y tu Rutina! -->
+        <section class="content-card bg-blue-50">
+            <h2 class="text-4xl text-primary font-bold mb-6 text-center flex items-center justify-center">
+                <span class="icon-md">🎮</span> ¡Juguemos con el Present Simple y tu Rutina!
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">
+                Ahora que ya sabés cómo se arma y tenés vocabulario, ¡vamos a practicar con juegos divertidos!
+            </p>
+
+            <!-- Juego 1: ¡Click y Revela la Respuesta! -->
+            <div class="game-box mb-8">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">💡</span> Juego 1: ¡Click y Revela la Respuesta!
+                </h3>
+                <p><strong>Instrucción:</strong> Pensá la respuesta a cada pregunta en Present Simple, usando el vocabulario que aprendimos. Cuando estés listo/a, ¡hacé clic en el botón para ver si acertaste!</p>
+                <div class="text-left mt-4">
+                    <div class="reveal-question">
+                        <p class="font-semibold text-gray-800">1. What do you <strong>do</strong> on <strong>Saturdays</strong>?</p>
+                        <button class="reveal-button" onclick="document.getElementById('answer1').style.display='block'; this.style.display='none'">Revelar respuesta</button>
+                        <p id="answer1" class="reveal-answer"><strong>Respuesta posible:</strong> I <strong>play</strong> video games. (Juego videojuegos)</p>
+                    </div>
+                    <div class="reveal-question">
+                        <p class="font-semibold text-gray-800">2. Does your mom <strong>work</strong> on <strong>Sundays</strong>?</p>
+                        <button class="reveal-button" onclick="document.getElementById('answer2').style.display='block'; this.style.display='none'">Revelar respuesta</button>
+                        <p id="answer2" class="reveal-answer"><strong>Respuesta posible:</strong> No, she <strong>doesn't work</strong> on Sundays. (No, ella no trabaja los domingos).</p>
+                    </div>
+                    <div class="reveal-question">
+                        <p class="font-semibold text-gray-800">3. When do you <strong>have lunch</strong>?</p>
+                        <button class="reveal-button" onclick="document.getElementById('answer3').style.display='block'; this.style.display='none'">Revelar respuesta</button>
+                        <p id="answer3" class="reveal-answer"><strong>Respuesta posible:</strong> I <strong>have lunch</strong> at 1:00 PM. (Almuerzo a la 1:00 PM).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-box mb-8">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">✨</span> Juego 2: ¡Elige la Opción Correcta!
+                </h3>
+                <p><strong>Instrucción:</strong> Leé cada oración y elegí la forma correcta del verbo para completarla. ¡Atención a la "S" mágica! Usamos verbos de rutinas.</p>
+                <div class="text-left mt-4">
+                    <div class="choice-question">
+                        <p class="font-semibold text-gray-800">1. My sister ______ (watch / watches) TV every evening.</p>
+                        <div class="choice-options">
+                            <button onclick="alert('¡Incorrecto! Con \'sister\' (she) va la -S.')">watch</button>
+                            <button onclick="alert('¡Correcto! 💪')">watches</button>
+                        </div>
+                    </div>
+                    <div class="choice-question">
+                        <p class="font-semibold text-gray-800">2. We ______ (go / goes) to school on <strong>Mondays</strong>.</p>
+                        <div class="choice-options">
+                            <button onclick="alert('¡Correcto! 💪')">go</button>
+                            <button onclick="alert('¡Incorrecto! Con \'we\' no va la -S.')">goes</button>
+                        </div>
+                    </div>
+                    <div class="choice-question">
+                        <p class="font-semibold text-gray-800">3. My dad ______ (brush / brushes) his teeth after <strong>dinner</strong>.</p>
+                        <div class="choice-options">
+                            <button onclick="alert('¡Incorrecto! Con \'dad\' (he) va la -S.')">brush</button>
+                            <button onclick="alert('¡Correcto! 💪')">brushes</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-4 text-sm"><em>(Hacé clic en la opción que creas correcta. ¡Podés seguir practicando cuantas veces quieras!)</em></p>
+            </div>
+
+
+            <div class="game-box mb-8">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">🔗</span> Juego 3: ¡Arrastrá el Verbo Correcto a la Rutina!
+                </h3>
+                <p><strong>Instrucción:</strong> Imaginate que tenés que arrastrar la forma correcta del verbo (¡con o sin "S"!) y ponerla en la rutina diaria que corresponde.</p>
+                <p class="mt-4"><strong>Opciones de Verbos para arrastrar:</strong> **get up** / **gets up**, **study** / **studies**, **have** / **has**</p>
+                <ul class="text-left mt-4">
+                    <li>1. I ______ at 7:00 AM every <strong>weekday</strong>.</li>
+                    <li>2. My friend ______ English on <strong>Tuesdays</strong>.</li>
+                    <li>3. We ______ <strong>breakfast</strong> together on <strong>Sundays</strong>.</li>
+                </ul>
+                <p class="mt-4 text-sm"><em>(Este es un desafío de "arrastrar y soltar" virtual. ¡Usá los verbos que aprendiste!)</em></p>
+            </div>
+
+            <div class="game-box">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">🏹</span> Juego 4: ¡Uní las Parejas de Días y Verbos!
+                </h3>
+                <p><strong>Instrucción:</strong> Conectá cada persona o pronombre con la forma correcta del verbo y pensá en una rutina diaria. ¡Recordá la "S" mágica!</p>
+                <div class="match-activity-grid">
+                    <div class="left-col">I</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>play</strong> (fútbol los sábados)</div>
+                    <div class="left-col">She</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>studies</strong> (inglés los lunes)</div>
+                    <div class="left-col">They</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>go</strong> (a la escuela todos los días)</div>
+                    <div class="left-col">He</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>eats</strong> (pizza los viernes)</div>
+                    <div class="left-col">We</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>watch</strong> (TV por la noche)</div>
+                </div>
+                <p class="mt-4 text-sm"><em>(Imaginá que dibujás una flecha para unir cada uno con su pareja correcta. ¡Qué divertido!)</em></p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-8 px-4 text-center rounded-t-3xl shadow-lg">
+        <p class="text-lg mb-2">¡Genial! 🎉 Ya estás armando tus propias oraciones en Present Simple.</p>
+        <p class="text-md font-light">
+            <strong>Recordá:</strong> La clave es practicar. Contale a tu compañero tu rutina, inventen oraciones sobre su familia. ¡Cuánto más lo uses, más fácil te va a salir!
+        </p>
+        <p class="text-sm mt-4">Con cariño, tu Profe de Inglés de Buenos Aires.</p>
+    </footer>
+    <script>
+        // Simple JavaScript para los botones de Click y Revela
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            if (answer.style.display === 'none' || answer.style.display === '') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        }
+        // Este JS permite que el botón se oculte al hacer clic y la respuesta aparezca.
+        // Si se necesitan más funcionalidades, se agregaría aquí.
+    </script>
+</body>
+</html>
