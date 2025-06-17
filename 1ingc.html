@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Hello, English! Have/Has y Vocabulario (¡Más Completa!)</title>
+    <!-- Carga de Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos personalizados para la fuente Inter y algunos ajustes */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un fondo azul muy claro */
+            color: #2d3748; /* Texto gris oscuro */
+        }
+        /* Colores para las secciones y efectos visuales */
+        .section-pink { background-color: #fce7f3; } /* Rosa claro */
+        .section-purple { background-color: #ede9fe; } /* Púrpura muy claro */
+        .section-green { background-color: #d1fae5; } /* Verde menta */
+        .section-yellow { background-color: #fffbeb; } /* Amarillo pálido */
+        .section-blue { background-color: #e0f2fe; } /* Azul muy claro */
+        .text-pink-600 { color: #db2777; }
+        .text-purple-600 { color: #8b5cf6; }
+        .text-green-600 { color: #059669; }
+        .text-yellow-600 { color: #d97706; }
+        .text-blue-600 { color: #2563eb; }
+
+        /* Estilos para las secciones colapsables (click y revela) */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 1rem;
+        }
+        .collapsible-content.expanded {
+            max-height: 500px;
+            padding: 1rem;
+            transition: max-height 0.5s ease-in, padding 0.5s ease-in;
+        }
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .collapsible-header i {
+            transition: transform 0.3s ease;
+        }
+        .collapsible-header.expanded i {
+            transform: rotate(90deg);
+        }
+
+        /* Estilos para el Ahorcado */
+        #hangman-display {
+            font-size: 2rem;
+            letter-spacing: 0.15rem;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        #guessed-letters {
+            font-size: 1rem;
+            color: #718096;
+            margin-bottom: 0.8rem;
+        }
+        #keyboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+            gap: 0.4rem;
+            margin-top: 0.8rem;
+        }
+        .letter-button {
+            background-color: #8b5cf6;
+            color: white;
+            padding: 0.6rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .letter-button:hover:not(:disabled) {
+            background-color: #7c3aed;
+            transform: translateY(-1px);
+        }
+        .letter-button:disabled {
+            background-color: #cbd5e0;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        #hangman-drawing {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #a0aec0;
+            margin: 0 auto 1rem;
+            position: relative;
+            background-color: #edf2f7;
+            overflow: hidden;
+        }
+        .hangman-part {
+            background-color: #2d3748;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #base { width: 80%; height: 6px; bottom: 0; left: 10%; }
+        #pole { width: 6px; height: 80%; bottom: 6px; left: calc(50% - 3px); }
+        #top-beam { width: 50%; height: 6px; top: 0; left: 50%; }
+        #rope { width: 3px; height: 20%; top: 6px; left: calc(75% - 1.5px); }
+        #head { width: 25px; height: 25px; border-radius: 50%; top: 35px; left: calc(75% - 12.5px); border: 3px solid #2d3748; background-color: transparent; }
+        #body { width: 6px; height: 35px; top: 60px; left: calc(75% - 3px); }
+        #arm-left { width: 25px; height: 6px; top: 68px; left: calc(75% - 25px); transform: rotate(-45deg); }
+        #arm-right { width: 25px; height: 6px; top: 68px; left: calc(75% + 3px); transform: rotate(45deg); }
+        #leg-left { width: 25px; height: 6px; top: 90px; left: calc(75% - 25px); transform: rotate(45deg); }
+        #leg-right { width: 25px; height: 6px; top: 90px; left: calc(75% + 3px); transform: rotate(-45deg); }
+        .hangman-part.visible { opacity: 1; }
+
+        /* Estilos para Unir con Flechas */
+        .matching-pair-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .matching-columns {
+            display: flex;
+            flex-direction: column; /* Cambiado a columna para mejor adaptación en móvil */
+            align-items: center;
+            gap: 1.5rem; /* Espacio entre columnas */
+            width: 100%;
+        }
+        @media (min-width: 640px) { /* Para pantallas más grandes, volver a fila */
+            .matching-columns {
+                flex-direction: row;
+                justify-content: center;
+                gap: 3rem; /* Más espacio para separar */
+            }
+        }
+        .matching-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem; /* Espacio entre tarjetas */
+            width: 90%; /* Ajuste de ancho */
+            max-width: 250px; /* Ancho máximo para columnas */
+        }
+        .matching-card {
+            background-color: white;
+            padding: 0.8rem; /* Padding ligeramente reducido */
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, border 0.2s ease;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid transparent;
+            font-size: 1.05rem; /* Tamaño de fuente ligeramente más pequeño */
+        }
+        .matching-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .matching-card.selected {
+            border-color: #8b5cf6; /* Púrpura */
+            background-color: #f3e8ff; /* Púrpura muy claro */
+            transform: scale(1.02);
+        }
+        .matching-card.correct {
+            background-color: #d1fae5; /* Verde menta */
+            border-color: #059669; /* Verde oscuro */
+            cursor: default;
+            pointer-events: none; /* Deshabilita el clic */
+        }
+        .matching-card.incorrect {
+            background-color: #fee2e2; /* Rojo claro */
+            border-color: #dc2626; /* Rojo oscuro */
+        }
+        #matching-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Estilos para Sopa de Letras */
+        #word-search-grid-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        #word-search-grid {
+            display: grid;
+            border: 2px solid #2563eb; /* Azul */
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: white;
+        }
+        .word-search-cell {
+            width: 35px; /* Tamaño fijo para las celdas */
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 1px solid #e0f2fe; /* Borde sutil */
+            transition: background-color 0.1s ease;
+        }
+        .word-search-cell.highlighted {
+            background-color: #bfdbfe; /* Azul claro al seleccionar */
+        }
+        .word-search-cell.found {
+            background-color: #2563eb; /* Azul para palabras encontradas */
+            color: white;
+            animation: found-animation 0.5s ease-out;
+        }
+        @keyframes found-animation {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #word-search-list li.found-word {
+            text-decoration: line-through;
+            color: #1e3a8a; /* Azul oscuro */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-2xl p-6 sm:p-10 border-4 border-yellow-300">
+
+        <!-- Encabezado Principal y Saludo de la Profe -->
+        <header class="text-center mb-10 bg-gradient-to-r from-blue-300 to-green-300 p-6 rounded-lg shadow-xl">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-800 mb-4 drop-shadow-lg">
+                <i class="fas fa-magic text-purple-700 mr-3 animate-bounce"></i> ¡Hello, English Explorers! 🥳
+            </h1>
+            <p class="text-xl sm:text-2xl text-blue-700 font-semibold mb-3">
+                Soy la Profe Gemini y estoy ¡súper contenta! de que estemos juntos aprendiendo inglés.
+            </p>
+            <p class="text-lg text-blue-600">
+                Hoy vamos a explorar cómo decir "tener" en inglés con `have` y `has`. ¡También aprenderemos palabras nuevas sobre la familia y la escuela! ¡Va a ser fácil y divertido!
+            </p>
+        </header>
+
+        <!-- Sección 1: Have / Has - ¡La Regla de Oro! -->
+        <section class="mb-12 section-pink p-6 rounded-lg shadow-lg border-2 border-pink-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-pink-600 mb-6 text-center">
+                ✨ Have / Has: ¡La Regla Principal para "Tener"! ✨
+            </h2>
+            <p class="text-lg text-pink-700 mb-4 text-center">
+                `Have` y `has` significan lo mismo: **"Tener"** en español. Pero, ¡hay una pequeña regla para saber cuál usar! Es muy simple, ¡mira!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-5 rounded-lg shadow-md border-b-4 border-pink-500">
+                    <h3 class="text-2xl font-bold text-pink-800 mb-3"><i class="fas fa-hand-holding-heart mr-2"></i> Usamos `HAVE` con:</h3>
+                    <ul class="list-disc list-inside text-gray-700 text-lg">
+                        <li class="mb-2"><strong>I <span class="font-bold text-pink-600">have</span></strong> (Yo tengo)
+                            <p class="font-light italic text-sm ml-4">Ej: I have a blue pen. (Yo tengo una lapicera azul.)</p>
+                        </li>
+                        <li class="mb-2"><strong>You <span class="font-bold text-pink-600">have</span></strong> (Tú/Ustedes tienen)
+                            <p class="font-light italic text-sm ml-4">Ej: You have a red backpack. (Tú tienes una mochila roja.)</p>
+                        </li>
+                        <li class="mb-2"><strong>We <span class="font-bold text-pink-600">have</span></strong> (Nosotros/as tenemos)
+                            <p class="font-light italic text-sm ml-4">Ej: We have many books. (Nosotros tenemos muchos libros.)</p>
+                        </li>
+                        <li><strong>They <span class="font-bold text-pink-600">have</span></strong> (Ellos/as tienen)
+                            <p class="font-light italic text-sm ml-4">Ej: They have a big family. (Ellos tienen una familia grande.)</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-md border-b-4 border-pink-500">
+                    <h3 class="text-2xl font-bold text-pink-800 mb-3"><i class="fas fa-star mr-2"></i> Usamos `HAS` con:</h3>
+                    <p class="text-gray-700 text-lg mb-3">¡Esta es la especial! `HAS` lo usamos solo cuando hablamos de una **sola persona o cosa** que es "él", "ella" o "eso".</p>
+                    <ul class="list-disc list-inside text-gray-700 text-lg">
+                        <li class="mb-2"><strong>He <span class="font-bold text-pink-600">has</span></strong> (Él tiene)
+                            <p class="font-light italic text-sm ml-4">Ej: He has a new laptop. (Él tiene una laptop nueva.)</p>
+                        </li>
+                        <li class="mb-2"><strong>She <span class="font-bold text-pink-600">has</span></strong> (Ella tiene)
+                            <p class="font-light italic text-sm ml-4">Ej: She has two sisters. (Ella tiene dos hermanas.)</p>
+                        </li>
+                        <li><strong>It <span class="font-bold text-pink-600">has</span></strong> (Eso/Ello tiene - para un objeto o animal singular)
+                            <p class="font-light italic text-sm ml-4">Ej: The school <span class="font-bold text-pink-600">has</span> a big library. (La escuela tiene una biblioteca grande.)</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-center text-pink-800 font-semibold text-xl mt-6 p-3 bg-pink-200 rounded-lg shadow-inner">
+                ¡Recuerda! Con `He`, `She`, `It` (¡una sola persona o cosa!), usamos `HAS`. Con `I`, `You`, `We`, `They` (¡yo y más de uno!), usamos `HAVE`! ¡Así de fácil! 😉
+            </p>
+        </section>
+
+        <!-- Nueva Sección: Tabla de Ejemplos Have/Has + Vocabulario -->
+        <section class="mb-12 section-blue p-6 rounded-lg shadow-lg border-2 border-blue-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-6 text-center">
+                📊 Ejemplos Clave: Have / Has en Acción 📚
+            </h2>
+            <p class="text-lg text-blue-700 mb-6 text-center">
+                ¡Miren esta tabla para ver más ejemplos de cómo usar `have` y `has` con el vocabulario que estamos aprendiendo!
+            </p>
+            <div class="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-100">
+                        <tr>
+                            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-blue-800 uppercase tracking-wider rounded-tl-lg">Sujeto / Pron.</th>
+                            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">Verbo</th>
+                            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">Vocabulario</th>
+                            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">Oración (Inglés)</th>
+                            <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-blue-800 uppercase tracking-wider rounded-tr-lg">Oración (Español)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">I</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">have</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">backpack</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">I have a new backpack.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Yo tengo una mochila nueva.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">You</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">have</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">ruler</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">You have a long ruler.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Tú/Ustedes tienen una regla larga.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">He / My brother</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">has</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">tablet</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">He has a tablet. / My brother has a tablet.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Él tiene una tablet. / Mi hermano tiene una tablet.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">She / My mom</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">has</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">sister</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">She has two sisters. / My mom has two sisters.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Ella tiene dos hermanas. / Mi mamá tiene dos hermanas.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">We</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">have</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">pens</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">We have many pens.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Nosotros tenemos muchas lapiceras.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">They / My grandparents</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">have</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">house</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">They have a big house. / My grandparents have a big house.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">Ellos tienen una casa grande. / Mis abuelos tienen una casa grande.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">The school</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-semibold">has</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">library</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">The school has a big library.</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">La escuela tiene una biblioteca grande.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center text-blue-800 font-semibold text-xl mt-6 p-3 bg-blue-200 rounded-lg shadow-inner">
+                ¡Con esta tabla, tienen todos los ejemplos clarísimos! ¡A seguir practicando!
+            </p>
+        </section>
+
+        <!-- Sección 2: Vocabulario Familiar - ¡Mi Familia en Inglés! -->
+        <section class="mb-12 section-purple p-6 rounded-lg shadow-lg border-2 border-purple-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-purple-600 mb-6 text-center">
+                👨‍👩‍👧‍👦 Vocabulary: My Family! ¡Mi Gente en Inglés! 👩‍👧‍👦
+            </h2>
+            <p class="text-lg text-purple-700 mb-4 text-center">
+                ¡La familia es muy importante! Vamos a aprender cómo decir los nombres de algunos familiares en inglés. Haz clic en cada palabra para ver qué significa y un ejemplo simple.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Mother / Mom -->
+                <div class="collapsible-header bg-white text-purple-800 font-semibold text-xl" data-target="mom-content">
+                    <h3><i class="fas fa-female mr-2"></i> Mother / Mom <span class="text-sm text-gray-500">(Madre / Mamá)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="mom-content" class="collapsible-content bg-purple-50 text-gray-700 rounded-lg border-t-2 border-purple-300">
+                    <p class="mb-2">**Mother** o **Mom** es tu mamá.</p>
+                    <p class="italic">Ej: My mom <span class="font-bold text-purple-600">has</span> long hair. (Mi mamá tiene el pelo largo.)</p>
+                    <img src="https://placehold.co/300x150/d8b4fe/ffffff?text=Mother+and+Child" alt="Image of a mother and child" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Father / Dad -->
+                <div class="collapsible-header bg-white text-purple-800 font-semibold text-xl" data-target="dad-content">
+                    <h3><i class="fas fa-male mr-2"></i> Father / Dad <span class="text-sm text-gray-500">(Padre / Papá)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="dad-content" class="collapsible-content bg-purple-50 text-gray-700 rounded-lg border-t-2 border-purple-300">
+                    <p class="mb-2">**Father** o **Dad** es tu papá.</p>
+                    <p class="italic">Ej: My dad <span class="font-bold text-purple-600">has</span> a blue car. (Mi papá tiene un auto azul.)</p>
+                    <img src="https://placehold.co/300x150/d8b4fe/ffffff?text=Father+and+Child" alt="Image of a father and child" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Brother -->
+                <div class="collapsible-header bg-white text-purple-800 font-semibold text-xl" data-target="bro-content">
+                    <h3><i class="fas fa-child mr-2"></i> Brother <span class="text-sm text-gray-500">(Hermano)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="bro-content" class="collapsible-content bg-purple-50 text-gray-700 rounded-lg border-t-2 border-purple-300">
+                    <p class="mb-2">**Brother** es tu hermano.</p>
+                    <p class="italic">Ej: My brother <span class="font-bold text-purple-600">has</span> a new video game. (Mi hermano tiene un videojuego nuevo.)</p>
+                    <img src="https://placehold.co/300x150/d8b4fe/ffffff?text=Boy+playing" alt="Image of a boy playing" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Sister -->
+                <div class="collapsible-header bg-white text-purple-800 font-semibold text-xl" data-target="sis-content">
+                    <h3><i class="fas fa-child mr-2"></i> Sister <span class="text-sm text-gray-500">(Hermana)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="sis-content" class="collapsible-content bg-purple-50 text-gray-700 rounded-lg border-t-2 border-purple-300">
+                    <p class="mb-2">**Sister** es tu hermana.</p>
+                    <p class="italic">Ej: My sister <span class="font-bold text-purple-600">has</span> a beautiful doll. (Mi hermana tiene una muñeca hermosa.)</p>
+                    <img src="https://placehold.co/300x150/d8b4fe/ffffff?text=Girl+drawing" alt="Image of a girl drawing" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Grandparents -->
+                <div class="collapsible-header bg-white text-purple-800 font-semibold text-xl" data-target="grandparents-content">
+                    <h3><i class="fas fa-users mr-2"></i> Grandparents <span class="text-sm text-gray-500">(Abuelos)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="grandparents-content" class="collapsible-content bg-purple-50 text-gray-700 rounded-lg border-t-2 border-purple-300">
+                    <p class="mb-2">**Grandparents** son tus abuelos.</p>
+                    <p class="italic">Ej: My grandparents <span class="font-bold text-purple-600">have</span> a big house. (Mis abuelos tienen una casa grande.)</p>
+                    <img src="https://placehold.co/300x150/d8b4fe/ffffff?text=Grandparents+reading" alt="Image of grandparents reading" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+            </div>
+            <p class="text-center text-purple-800 font-semibold text-xl mt-6 p-3 bg-purple-200 rounded-lg shadow-inner">
+                ¡Muy bien! ¡Ya sabes cómo presentar a tu familia en inglés! ¡Qué genial!
+            </p>
+        </section>
+
+        <!-- Sección 3: Vocabulario Escolar - ¡Mi Mochila y la Clase! -->
+        <section class="mb-12 section-green p-6 rounded-lg shadow-lg border-2 border-green-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-600 mb-6 text-center">
+                🎒 Vocabulary: My School Objects! ¡Qué hay en mi mochila! ✏️
+            </h2>
+            <p class="text-lg text-green-700 mb-4 text-center">
+                ¡Ahora vamos a ver las cosas que usamos en la escuela todos los días! ¡Haz clic en cada objeto para ver su nombre en inglés y un ejemplo!
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backpack -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="backpack-content">
+                    <h3><i class="fas fa-school mr-2"></i> Backpack <span class="text-sm text-gray-500">(Mochila)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="backpack-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **backpack** es una bolsa para llevar tus cosas a la escuela.</p>
+                    <p class="italic">Ej: I <span class="font-bold text-green-600">have</span> a blue backpack. (Yo tengo una mochila azul.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Backpack" alt="Image of a backpack" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Books -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="books-content">
+                    <h3><i class="fas fa-book mr-2"></i> Books <span class="text-sm text-gray-500">(Libros)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="books-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">**Books** son los libros que leemos y usamos en clase.</p>
+                    <p class="italic">Ej: We <span class="font-bold text-green-600">have</span> English books. (Nosotros tenemos libros de inglés.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Books" alt="Image of books" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Notebooks -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="notebooks-content">
+                    <h3><i class="fas fa-journal-whills mr-2"></i> Notebooks <span class="text-sm text-gray-500">(Cuadernos)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="notebooks-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">**Notebooks** son los cuadernos donde escribimos.</p>
+                    <p class="italic">Ej: She <span class="font-bold text-green-600">has</span> two notebooks. (Ella tiene dos cuadernos.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Notebooks" alt="Image of notebooks" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Pens -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="pens-content">
+                    <h3><i class="fas fa-pen mr-2"></i> Pens <span class="text-sm text-gray-500">(Lapiceras)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="pens-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">**Pens** son las lapiceras para escribir con tinta.</p>
+                    <p class="italic">Ej: He <span class="font-bold text-green-600">has</span> many pens. (Él tiene muchas lapiceras.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Pens" alt="Image of pens" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Pencils -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="pencils-content">
+                    <h3><i class="fas fa-pencil-alt mr-2"></i> Pencils <span class="text-sm text-gray-500">(Lápices)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="pencils-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">**Pencils** son los lápices para dibujar y escribir.</p>
+                    <p class="italic">Ej: I <span class="font-bold text-green-600">have</span> three pencils. (Yo tengo tres lápices.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Pencils" alt="Image of pencils" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Eraser -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="eraser-content">
+                    <h3><i class="fas fa-eraser mr-2"></i> Eraser <span class="text-sm text-gray-500">(Goma de borrar)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="eraser-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">An **eraser** es una goma para borrar lo que escribes con lápiz.</p>
+                    <p class="italic">Ej: My friend <span class="font-bold text-green-600">has</span> a pink eraser. (Mi amigo tiene una goma de borrar rosa.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Eraser" alt="Image of an eraser" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Ruler -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="ruler-content">
+                    <h3><i class="fas fa-ruler mr-2"></i> Ruler <span class="text-sm text-gray-500">(Regla)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="ruler-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **ruler** es una regla para dibujar líneas rectas y medir.</p>
+                    <p class="italic">Ej: Do you <span class="font-bold text-green-600">have</span> a long ruler? (¿Tienes una regla larga?)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Ruler" alt="Image of a ruler" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Laptop -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="laptop-content">
+                    <h3><i class="fas fa-laptop mr-2"></i> Laptop <span class="text-sm text-gray-500">(Computadora portátil)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="laptop-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **laptop** es una computadora que puedes llevar a todos lados.</p>
+                    <p class="italic">Ej: She <span class="font-bold text-green-600">has</span> a new laptop for school. (Ella tiene una laptop nueva para la escuela.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Laptop" alt="Image of a laptop" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Tablet -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="tablet-content">
+                    <h3><i class="fas fa-tablet-alt mr-2"></i> Tablet <span class="text-sm text-gray-500">(Tablet)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="tablet-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **tablet** es como una computadora plana, con pantalla táctil.</p>
+                    <p class="italic">Ej: I <span class="font-bold text-green-600">have</span> a small tablet. (Yo tengo una tablet pequeña.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Tablet" alt="Image of a tablet" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Calculator -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="calculator-content">
+                    <h3><i class="fas fa-calculator mr-2"></i> Calculator <span class="text-sm text-gray-500">(Calculadora)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="calculator-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **calculator** es para hacer cuentas de matemática.</p>
+                    <p class="italic">Ej: He <span class="font-bold text-green-600">has</span> a new calculator for math class. (Él tiene una calculadora nueva para la clase de matemáticas.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Calculator" alt="Image of a calculator" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+
+                <!-- Lunchbox -->
+                <div class="collapsible-header bg-white text-green-800 font-semibold text-lg" data-target="lunchbox-content">
+                    <h3><i class="fas fa-box mr-2"></i> Lunchbox <span class="text-sm text-gray-500">(Lonchera / Vianda)</span></h3>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div id="lunchbox-content" class="collapsible-content bg-green-50 text-gray-700 rounded-lg border-t-2 border-green-300">
+                    <p class="mb-2">A **lunchbox** es el recipiente para llevar tu almuerzo o vianda.</p>
+                    <p class="italic">Ej: My sister <span class="font-bold text-green-600">has</span> a pink lunchbox. (Mi hermana tiene una lonchera rosa.)</p>
+                    <img src="https://placehold.co/200x100/a7f3d0/065f46?text=Lunchbox" alt="Image of a lunchbox" class="rounded-md mt-3 mx-auto shadow-md">
+                </div>
+            </div>
+            <p class="text-center text-green-800 font-semibold text-xl mt-6 p-3 bg-green-200 rounded-lg shadow-inner">
+                ¡Fantástico! Ahora ya sabes nombrar un montón de cosas que usamos en la escuela. ¡A seguir practicando!
+            </p>
+        </section>
+
+        <!-- Sección 4: Actividad 1 - Fill in the Blanks (Completar Espacios) -->
+        <section class="mb-12 section-yellow p-6 rounded-lg shadow-lg border-2 border-yellow-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-yellow-600 mb-6 text-center">
+                ✍️ Activity 1: Fill in the Blanks! (¡Completar Espacios con `Have` o `Has`!) ✍️
+            </h2>
+            <p class="text-lg text-yellow-700 mb-6 text-center">
+                ¡Es hora de poner a prueba lo aprendido! Lean cada oración y completen el espacio en blanco con `have` o `has`. ¡Después, hagan clic en "Check My Answers!" para ver si acertaron!
+            </p>
+
+            <div id="fill-in-blanks-quiz" class="bg-white p-6 rounded-lg shadow-md">
+                <!-- Preguntas de completar espacios se cargarán aquí -->
+            </div>
+            <button id="check-blanks-button" class="mt-6 px-6 py-3 bg-yellow-600 text-white font-bold rounded-full shadow-lg hover:bg-yellow-700 transition-all transform hover:scale-105">
+                Check My Answers!
+            </button>
+            <p id="blanks-feedback" class="mt-4 text-center text-lg font-semibold"></p>
+        </section>
+
+        <!-- Sección 5: Actividad 2 - Hangman (Ahorcado) -->
+        <section class="mb-12 section-pink p-6 rounded-lg shadow-lg border-2 border-pink-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-pink-600 mb-6 text-center">
+                🪢 Activity 2: Hangman! (¡Ahorcado con Vocabulario de Familia y Escuela!) 🕹️
+            </h2>
+            <p class="text-lg text-pink-700 mb-6 text-center">
+                ¡Vamos a jugar al ahorcado con las palabras de vocabulario que acabamos de aprender! ¡Traten de adivinar la palabra letra por letra antes de que se complete el dibujo! Si la adivinan, ¡ganan! Si no, ¡a seguir practicando! Good luck! 🍀
+            </p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md text-center max-w-xl mx-auto">
+                <div id="hangman-drawing" class="relative">
+                    <!-- Partes del ahorcado, ocultas por defecto -->
+                    <div id="base" class="hangman-part absolute bg-gray-700 rounded-sm"></div>
+                    <div id="pole" class="hangman-part absolute bg-gray-700 rounded-sm"></div>
+                    <div id="top-beam" class="hangman-part absolute bg-gray-700 rounded-sm"></div>
+                    <div id="rope" class="hangman-part absolute bg-gray-700 rounded-sm"></div>
+                    <div id="head" class="hangman-part rounded-full border-4 border-gray-700"></div>
+                    <div id="body" class="hangman-part bg-gray-700 rounded-sm"></div>
+                    <div id="arm-left" class="hangman-part bg-gray-700 rounded-sm"></div>
+                    <div id="arm-right" class="hangman-part bg-gray-700 rounded-sm"></div>
+                    <div id="leg-left" class="hangman-part bg-gray-700 rounded-sm"></div>
+                    <div id="leg-right" class="hangman-part bg-gray-700 rounded-sm"></div>
+                </div>
+
+                <p id="hangman-display"></p>
+                <p id="guessed-letters"></p>
+                <p id="hangman-status" class="text-lg font-semibold mt-4 mb-4"></p>
+
+                <div id="keyboard" class="grid grid-cols-7 sm:grid-cols-10 gap-2">
+                    <!-- Botones de letras se generarán aquí -->
+                </div>
+                <button id="reset-hangman-button" class="mt-8 px-6 py-3 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition-all transform hover:scale-105">
+                    Play Again!
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección 6: Actividad 3 - Matching Game (Unir con Flechas - Familia) -->
+        <section class="mb-12 section-blue p-6 rounded-lg shadow-lg border-2 border-blue-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-6 text-center">
+                🔗 Activity 3: Matching Game! (¡Unir con Flechas: Have/Has!) 🎯
+            </h2>
+            <p class="text-lg text-blue-700 mb-6 text-center">
+                ¡Conecta el sujeto (la persona o cosa) con la forma correcta del verbo `have` o `has`! Haz clic en un sujeto de la izquierda y luego en la forma del verbo de la derecha. ¡Concentración!
+            </p>
+
+            <div id="matching-game-container" class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+                <div class="matching-columns mb-4">
+                    <div id="english-column" class="matching-column">
+                        <!-- Tarjetas de inglés (sujetos) se cargarán aquí -->
+                    </div>
+                    <div id="spanish-column" class="matching-column">
+                        <!-- Tarjetas de verbos (have/has) se cargarán aquí -->
+                    </div>
+                </div>
+                <p id="matching-feedback" class="text-center"></p>
+                <button id="reset-matching-button" class="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all transform hover:scale-105 block mx-auto">
+                    Play Again!
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección 7: Actividad 4 - Word Search (Sopa de Letras - Útiles Escolares) -->
+        <section class="mb-12 section-yellow p-6 rounded-lg shadow-lg border-2 border-yellow-400">
+            <h2 class="text-3xl sm:text-4xl font-bold text-yellow-600 mb-6 text-center">
+                🔍 Activity 4: Word Search! (¡Sopa de Letras: Útiles Escolares!) 📚
+            </h2>
+            <p class="text-lg text-yellow-700 mb-6 text-center">
+                ¡Encuentra todas las palabras de útiles escolares escondidas en la cuadrícula! Haz clic en la primera letra y arrastra hasta la última para seleccionar una palabra. ¡Good luck!
+            </p>
+
+            <div class="flex flex-col lg:flex-row justify-center items-start lg:space-x-8 max-w-4xl mx-auto">
+                <div id="word-search-grid-container" class="mb-6 lg:mb-0">
+                    <div id="word-search-grid" class="grid bg-white p-2 rounded-lg shadow-inner">
+                        <!-- Las celdas de la cuadrícula se generarán aquí con JavaScript -->
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-lg shadow-md w-full lg:w-1/3">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-4">Palabras a Encontrar:</h3>
+                    <ul id="word-search-list" class="list-none p-0 text-left grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 text-gray-700 text-lg font-medium">
+                        <!-- La lista de palabras se generará aquí con JavaScript -->
+                    </ul>
+                    <p id="word-search-status" class="mt-6 text-lg font-semibold text-gray-800">¡Busca las palabras!</p>
+                </div>
+            </div>
+            <button id="reset-word-search-button" class="mt-8 px-6 py-3 bg-yellow-600 text-white font-bold rounded-full shadow-lg hover:bg-yellow-700 transition-all transform hover:scale-105 block mx-auto">
+                Play Again!
+            </button>
+        </section>
+
+        <!-- Conclusión -->
+        <footer class="mt-12 text-center text-gray-600 text-lg p-4 bg-blue-100 rounded-lg shadow-inner">
+            <p><i class="fas fa-heart text-red-500"></i> ¡Espero que hayan disfrutado mucho aprendiendo inglés hoy!</p>
+            <p class="mt-2">Recuerden que la práctica hace al maestro. ¡Sigan usando `have` y `has` y revisando el vocabulario! ¡Serán unos genios del inglés!</p>
+            <p class="mt-2 font-bold text-blue-800">See you next class! Bye bye! 👋</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Lógica para las secciones colapsables (Click and Reveal)
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.dataset.target;
+                const content = document.getElementById(targetId);
+                
+                header.classList.toggle('expanded');
+                content.classList.toggle('expanded');
+
+                if (content.classList.contains('expanded')) {
+                    content.style.maxHeight = content.scrollHeight + "px"; 
+                } else {
+                    content.style.maxHeight = "0";
+                }
+            });
+        });
+
+        // Lógica para Actividad 1: Fill in the Blanks (Completar Espacios)
+        const blanksQuestions = [
+            {
+                sentence: "I ___ a red backpack.",
+                correct: "have"
+            },
+            {
+                sentence: "She ___ two brothers.",
+                correct: "has"
+            },
+            {
+                sentence: "We ___ many books in our school.",
+                correct: "have"
+            },
+            {
+                sentence: "My father ___ a new laptop.",
+                correct: "has"
+            },
+            {
+                sentence: "They ___ a big family.",
+                correct: "have"
+            },
+            {
+                sentence: "He ___ a green pencil.",
+                correct: "has"
+            },
+            {
+                sentence: "You ___ a nice eraser.",
+                correct: "have"
+            },
+            {
+                sentence: "My grandmother ___ a beautiful garden.",
+                correct: "has"
+            },
+            {
+                sentence: "The school ___ a big library.",
+                correct: "has"
+            },
+            {
+                sentence: "My sister ___ a pink lunchbox.",
+                correct: "has"
+            }
+        ];
+
+        const blanksQuizDiv = document.getElementById('fill-in-blanks-quiz');
+        const checkBlanksButton = document.getElementById('check-blanks-button');
+        const blanksFeedback = document.getElementById('blanks-feedback');
+
+        function renderBlanksQuestions() {
+            blanksQuizDiv.innerHTML = '';
+            blanksQuestions.forEach((q, index) => {
+                const parts = q.sentence.split('___');
+                const questionDiv = document.createElement('p');
+                questionDiv.classList.add('mb-3', 'text-lg');
+                questionDiv.innerHTML = `${index + 1}. ${parts[0]}<input type="text" id="blank-${index}" class="border border-gray-300 rounded-md p-1 w-24 text-center text-blue-700 font-semibold" data-correct="${q.correct.toLowerCase()}">${parts[1]}`;
+                blanksQuizDiv.appendChild(questionDiv);
+            });
+        }
+
+        checkBlanksButton.addEventListener('click', () => {
+            let allCorrect = true;
+            blanksQuestions.forEach((q, index) => {
+                const input = document.getElementById(`blank-${index}`);
+                if (input.value.toLowerCase() === q.correct.toLowerCase()) {
+                    input.classList.remove('border-red-500');
+                    input.classList.add('border-green-500');
+                } else {
+                    input.classList.remove('border-green-500');
+                    input.classList.add('border-red-500');
+                    allCorrect = false;
+                }
+            });
+
+            if (allCorrect) {
+                blanksFeedback.textContent = '¡Excelente! ¡Todas correctas! 🎉';
+                blanksFeedback.classList.remove('text-red-600');
+                blanksFeedback.classList.add('text-green-600');
+            } else {
+                blanksFeedback.textContent = '¡Ups! Hay algunas incorrectas. ¡Sigue practicando! 🤔';
+                blanksFeedback.classList.remove('text-green-600');
+                blanksFeedback.classList.add('text-red-600');
+            }
+        });
+
+        // Lógica para Actividad 2: Hangman (Ahorcado)
+        const hangmanWords = [
+            'MOTHER', 'FATHER', 'BROTHER', 'SISTER', 'GRANDPARENTS',
+            'BACKPACK', 'BOOKS', 'NOTEBOOKS', 'PENS', 'PENCILS',
+            'ERASER', 'RULER', 'LAPTOP', 'TABLET', 'CALCULATOR', 'LUNCHBOX'
+        ];
+        const hangmanParts = [
+            'base', 'pole', 'top-beam', 'rope', 'head', 'body', 'arm-left', 'arm-right', 'leg-left', 'leg-right'
+        ];
+
+        let selectedHangmanWord = '';
+        let guessedLetters = [];
+        let mistakes = 0;
+        let correctGuesses = 0;
+
+        const hangmanDisplay = document.getElementById('hangman-display');
+        const guessedLettersDisplay = document.getElementById('guessed-letters');
+        const hangmanStatus = document.getElementById('hangman-status');
+        const keyboardDiv = document.getElementById('keyboard');
+        const resetHangmanButton = document.getElementById('reset-hangman-button');
+
+        function initializeHangmanGame() {
+            selectedHangmanWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+            guessedLetters = [];
+            mistakes = 0;
+            correctGuesses = 0;
+            hangmanStatus.textContent = '';
+
+            // Hide all hangman parts
+            hangmanParts.forEach(partId => {
+                document.getElementById(partId).classList.remove('visible');
+            });
+
+            // Generate keyboard buttons
+            keyboardDiv.innerHTML = '';
+            for (let i = 65; i <= 90; i++) { // Letters A-Z
+                const letter = String.fromCharCode(i);
+                const button = document.createElement('button');
+                button.classList.add('letter-button');
+                button.textContent = letter;
+                button.addEventListener('click', () => handleGuess(letter));
+                keyboardDiv.appendChild(button);
+            }
+            updateHangmanDisplay();
+            updateGuessedLettersDisplay();
+        }
+
+        function updateHangmanDisplay() {
+            let displayWord = '';
+            let currentCorrectGuesses = 0;
+            for (let i = 0; i < selectedHangmanWord.length; i++) {
+                if (guessedLetters.includes(selectedHangmanWord[i])) {
+                    displayWord += selectedHangmanWord[i];
+                    currentCorrectGuesses++;
+                } else {
+                    displayWord += '_';
+                }
+                displayWord += ' '; // Add space to separate letters
+            }
+            hangmanDisplay.textContent = displayWord.trim();
+            correctGuesses = currentCorrectGuesses;
+
+            if (correctGuesses === selectedHangmanWord.length) {
+                hangmanStatus.textContent = `¡Felicitaciones! ¡Adivinaste la palabra: ${selectedHangmanWord}! 🎉`;
+                disableKeyboard();
+            } else if (mistakes >= hangmanParts.length) {
+                hangmanStatus.textContent = `¡Oh no! Perdiste. La palabra era: ${selectedHangmanWord}. 😔`;
+                disableKeyboard();
+            }
+        }
+
+        function updateGuessedLettersDisplay() {
+            guessedLettersDisplay.textContent = `Letras adivinadas: ${guessedLetters.join(', ')}`;
+        }
+
+        function handleGuess(letter) {
+            if (guessedLetters.includes(letter)) {
+                hangmanStatus.textContent = `Ya adivinaste la letra "${letter}".`;
+                return;
+            }
+
+            guessedLetters.push(letter);
+            updateGuessedLettersDisplay();
+
+            if (selectedHangmanWord.includes(letter)) {
+                updateHangmanDisplay(); // Update displayed word
+                hangmanStatus.textContent = `¡Bien! La letra "${letter}" está en la palabra.`;
+            } else {
+                mistakes++;
+                if (mistakes <= hangmanParts.length) {
+                    document.getElementById(hangmanParts[mistakes - 1]).classList.add('visible');
+                }
+                hangmanStatus.textContent = `¡Incorrecto! La letra "${letter}" no está. Te quedan ${hangmanParts.length - mistakes} errores.`;
+            }
+            
+            // Disable the guessed letter's button
+            Array.from(keyboardDiv.children).find(btn => btn.textContent === letter).disabled = true;
+
+            updateHangmanDisplay(); // Call again to check if won or lost
+        }
+
+        function disableKeyboard() {
+            Array.from(keyboardDiv.children).forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        resetHangmanButton.addEventListener('click', initializeHangmanGame);
+
+        // Lógica para Actividad 3: Matching Game (Unir con Flechas - Familia)
+        const matchingPairs = [
+            { subject: "I", verb: "HAVE" },
+            { subject: "YOU", verb: "HAVE" },
+            { subject: "WE", verb: "HAVE" },
+            { subject: "THEY", verb: "HAVE" },
+            { subject: "HE", verb: "HAS" },
+            { subject: "SHE", verb: "HAS" },
+            { subject: "IT", verb: "HAS" },
+            { subject: "MY MOM", verb: "HAS" },
+            { subject: "MY BROTHER", verb: "HAS" },
+            { subject: "MY PARENTS", verb: "HAVE" },
+            { subject: "THE SCHOOL", verb: "HAS" },
+            { subject: "MY FRIENDS", verb: "HAVE" }
+        ];
+
+        let selectedMatchingCard = null;
+        let correctMatches = 0;
+
+        const englishColumn = document.getElementById('english-column');
+        const spanishColumn = document.getElementById('spanish-column'); // Renombrado a spanishColumn, pero contendrá verbos
+        const matchingFeedback = document.getElementById('matching-feedback');
+        const resetMatchingButton = document.getElementById('reset-matching-button');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initializeMatchingGame() {
+            englishColumn.innerHTML = '';
+            spanishColumn.innerHTML = '';
+            matchingFeedback.textContent = '';
+            selectedMatchingCard = null;
+            correctMatches = 0;
+
+            const shuffledSubjects = shuffleArray(matchingPairs.map(p => ({ value: p.subject, originalVerb: p.verb, type: 'subject' })));
+            const shuffledVerbs = shuffleArray(matchingPairs.map(p => ({ value: p.verb, originalSubject: p.subject, type: 'verb' })));
+
+            // Remove duplicates from verbs, just use HAVE and HAS
+            const uniqueVerbs = shuffleArray(Array.from(new Set(matchingPairs.map(p => p.verb))).map(verb => ({ value: verb, type: 'verb' })));
+            
+            // Limit subjects and verbs to ensure matchability, or make more complex
+            // For simplicity, let's keep the shuffled subjects and just use unique HAVE/HAS verbs
+            const subjectsToDisplay = shuffledSubjects;
+            const verbsToDisplay = uniqueVerbs;
+
+
+            subjectsToDisplay.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('matching-card', 'bg-blue-100', 'hover:bg-blue-200'); // Color azul para matching
+                card.textContent = item.value;
+                card.dataset.value = item.value; // Store the subject itself
+                card.dataset.correctVerb = item.originalVerb; // Store the correct verb
+                card.dataset.type = 'subject';
+                card.addEventListener('click', handleMatchingCardClick);
+                englishColumn.appendChild(card);
+            });
+
+            verbsToDisplay.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('matching-card', 'bg-blue-100', 'hover:bg-blue-200'); // Color azul para matching
+                card.textContent = item.value;
+                card.dataset.value = item.value; // Store the verb (HAVE or HAS)
+                card.dataset.type = 'verb';
+                card.addEventListener('click', handleMatchingCardClick);
+                spanishColumn.appendChild(card); // Now this column holds verbs
+            });
+        }
+
+        function handleMatchingCardClick(event) {
+            const clickedCard = event.target;
+
+            // Ignore if already matched or if it's the same card
+            if (clickedCard.classList.contains('correct') || clickedCard === selectedMatchingCard) {
+                return;
+            }
+
+            if (selectedMatchingCard) {
+                // Second card clicked
+                const type1 = selectedMatchingCard.dataset.type;
+                const type2 = clickedCard.dataset.type;
+
+                // Ensure different types are selected (Subject + Verb)
+                if (type1 === type2) {
+                    matchingFeedback.textContent = "¡Oops! Elige un Sujeto y un Verbo.";
+                    matchingFeedback.classList.add('text-red-600');
+                    selectedMatchingCard.classList.remove('selected');
+                    selectedMatchingCard = null;
+                    return;
+                }
+
+                let isMatch = false;
+                if (type1 === 'subject' && type2 === 'verb') {
+                    isMatch = selectedMatchingCard.dataset.correctVerb === clickedCard.dataset.value;
+                } else if (type1 === 'verb' && type2 === 'subject') {
+                    isMatch = clickedCard.dataset.correctVerb === selectedMatchingCard.dataset.value;
+                }
+
+                if (isMatch) {
+                    // Match found!
+                    selectedMatchingCard.classList.remove('selected');
+                    selectedMatchingCard.classList.add('correct');
+                    clickedCard.classList.add('correct');
+                    matchingFeedback.textContent = "¡Correcto! 🎉";
+                    matchingFeedback.classList.remove('text-red-600');
+                    matchingFeedback.classList.add('text-green-600');
+                    correctMatches++;
+
+                    // Check if all subjects are matched (or all verbs, whichever is simpler to track)
+                    // We'll consider a pair correctly matched if both cards are 'correct'
+                    const allCards = document.querySelectorAll('.matching-card');
+                    const totalCorrectCards = Array.from(allCards).filter(card => card.classList.contains('correct')).length;
+
+                    if (totalCorrectCards === matchingPairs.length * 2) { // Each pair has 2 cards
+                        matchingFeedback.textContent = "¡Felicidades! ¡Encontraste todos los pares! 🥳";
+                        matchingFeedback.classList.remove('text-red-600');
+                        matchingFeedback.classList.add('text-green-600');
+                    }
+
+                } else {
+                    // No match
+                    selectedMatchingCard.classList.remove('selected');
+                    selectedMatchingCard.classList.add('incorrect');
+                    clickedCard.classList.add('incorrect');
+                    matchingFeedback.textContent = "¡Incorrecto! Vuelve a intentar. 🤔";
+                    matchingFeedback.classList.remove('text-green-600');
+                    matchingFeedback.classList.add('text-red-600');
+
+                    setTimeout(() => {
+                        selectedMatchingCard.classList.remove('incorrect');
+                        clickedCard.classList.remove('incorrect');
+                    }, 800); // Remove incorrect highlight after a short delay
+                }
+                selectedMatchingCard = null;
+            } else {
+                // First card clicked
+                selectedMatchingCard = clickedCard;
+                selectedMatchingCard.classList.add('selected');
+                matchingFeedback.textContent = ''; // Clear previous feedback
+                matchingFeedback.classList.remove('text-red-600', 'text-green-600');
+            }
+        }
+
+        resetMatchingButton.addEventListener('click', initializeMatchingGame);
+
+
+        // Lógica para Actividad 4: Word Search (Sopa de Letras - Útiles Escolares)
+        const schoolWords = [
+            'BACKPACK', 'BOOKS', 'NOTEBOOKS', 'PENS', 'PENCILS',
+            'ERASER', 'RULER', 'LAPTOP', 'TABLET', 'CALCULATOR', 'LUNCHBOX'
+        ];
+        const wordSearchGridSize = 12; // Cuadrícula de 12x12
+
+        const wordSearchGridElement = document.getElementById('word-search-grid');
+        const wordSearchListElement = document.getElementById('word-search-list');
+        const wordSearchStatusElement = document.getElementById('word-search-status');
+        const resetWordSearchButton = document.getElementById('reset-word-search-button');
+
+        let wordSearchGrid = [];
+        let foundWordSearchWords = new Set();
+        let isWordSearchDragging = false;
+        let wordSearchStartCell = null;
+        let wordSearchHighlightedCells = [];
+
+        // Simple grid generation (for demonstration, filling with random letters)
+        // For actual word placement, a more robust algorithm would be needed.
+        // For simplicity for a beginner level, we'll place words manually or use a fixed grid.
+        // Let's create a fixed grid with words for direct testing.
+        const fixedWordSearchGrid = [
+            ['B', 'O', 'O', 'K', 'S', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D'],
+            ['A', 'R', 'U', 'L', 'E', 'R', 'F', 'G', 'H', 'I', 'J', 'K'],
+            ['C', 'L', 'N', 'C', 'A', 'L', 'C', 'U', 'L', 'A', 'T', 'O'],
+            ['K', 'A', 'O', 'U', 'E', 'N', 'P', 'R', 'Q', 'S', 'T', 'R'],
+            ['P', 'P', 'T', 'N', 'R', 'P', 'E', 'N', 'S', 'V', 'W', 'P'],
+            ['A', 'A', 'E', 'C', 'S', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
+            ['C', 'C', 'B', 'H', 'O', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+            ['E', 'I', 'O', 'K', 'R', 'L', 'M', 'N', 'O', 'P', 'Q', 'R'],
+            ['N', 'L', 'O', 'A', 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
+            ['S', 'H', 'U', 'L', 'C', 'H', 'B', 'O', 'X', 'I', 'J', 'K'],
+            ['X', 'O', 'T', 'E', 'B', 'O', 'O', 'K', 'S', 'M', 'N', 'O'],
+            ['Y', 'Z', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
+        ];
+
+
+        function generateWordSearchGrid() {
+            // Using a fixed grid for simplicity and guaranteed word placement for this level
+            wordSearchGrid = fixedWordSearchGrid.map(row => row.slice());
+        }
+
+        function renderWordSearchGrid() {
+            wordSearchGridElement.innerHTML = '';
+            wordSearchGridElement.style.gridTemplateColumns = `repeat(${wordSearchGridSize}, 1fr)`;
+            for (let r = 0; r < wordSearchGridSize; r++) {
+                for (let c = 0; c < wordSearchGridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('word-search-cell', 'border', 'border-gray-200', 'rounded-sm');
+                    cell.textContent = wordSearchGrid[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    wordSearchGridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function renderWordSearchList() {
+            wordSearchListElement.innerHTML = '';
+            schoolWords.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                if (foundWordSearchWords.has(word)) {
+                    li.classList.add('found-word');
+                }
+                wordSearchListElement.appendChild(li);
+            });
+        }
+
+        function getWordSearchCellsInSelection(start, end) {
+            const cells = [];
+            const r1 = parseInt(start.dataset.row);
+            const c1 = parseInt(start.dataset.col);
+            const r2 = parseInt(end.dataset.row);
+            const c2 = parseInt(end.dataset.col);
+
+            const dr = Math.sign(r2 - r1);
+            const dc = Math.sign(c2 - c1);
+
+            if (dr === 0 && dc === 0) return [start];
+            // Only allow horizontal, vertical, and perfect diagonal
+            if (!(dr === 0 || dc === 0 || Math.abs(r2 - r1) === Math.abs(c2 - c1))) return [];
+
+            let r = r1;
+            let c = c1;
+            while (true) {
+                const cell = document.querySelector(`.word-search-cell[data-row="${r}"][data-col="${c}"]`);
+                if (cell) cells.push(cell);
+                if (r === r2 && c === c2) break;
+                if (dr !== 0) r += dr;
+                if (dc !== 0) c += dc;
+            }
+            return cells;
+        }
+
+        function checkWordSearchWord() {
+            if (!wordSearchStartCell || wordSearchHighlightedCells.length === 0) return;
+
+            const selectedWord = wordSearchHighlightedCells.map(cell => cell.textContent).join('');
+            const reversedSelectedWord = selectedWord.split('').reverse().join('');
+
+            const foundWord = schoolWords.find(word => word === selectedWord || word === reversedSelectedWord);
+
+            if (foundWord && !foundWordSearchWords.has(foundWord)) {
+                foundWordSearchWords.add(foundWord);
+                wordSearchHighlightedCells.forEach(cell => cell.classList.add('found'));
+                renderWordSearchList();
+                wordSearchStatusElement.textContent = `¡Encontraste: ${foundWord}! Sigue buscando...`;
+                wordSearchStatusElement.classList.remove('text-red-600');
+                wordSearchStatusElement.classList.add('text-green-600');
+
+                if (foundWordSearchWords.size === schoolWords.length) {
+                    wordSearchStatusElement.textContent = '¡Felicidades! ¡Encontraste todas las palabras! 🥳';
+                    wordSearchStatusElement.classList.remove('text-red-600');
+                    wordSearchStatusElement.classList.add('text-green-600');
+                }
+            } else {
+                wordSearchStatusElement.textContent = 'Palabra incorrecta. Inténtalo de nuevo.';
+                wordSearchStatusElement.classList.remove('text-green-600');
+                wordSearchStatusElement.classList.add('text-red-600');
+            }
+            // Limpiar resaltado después de verificar
+            wordSearchHighlightedCells.forEach(cell => cell.classList.remove('highlighted'));
+            wordSearchHighlightedCells = [];
+            wordSearchStartCell = null;
+        }
+
+        wordSearchGridElement.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('word-search-cell')) {
+                isWordSearchDragging = true;
+                wordSearchStartCell = e.target;
+                wordSearchHighlightedCells = [wordSearchStartCell];
+                wordSearchStartCell.classList.add('highlighted');
+                wordSearchStatusElement.textContent = 'Arrastra para seleccionar...';
+                wordSearchStatusElement.classList.remove('text-red-600', 'text-green-600');
+            }
+        });
+
+        wordSearchGridElement.addEventListener('mousemove', (e) => {
+            if (!isWordSearchDragging || !wordSearchStartCell) return;
+            if (e.target.classList.contains('word-search-cell')) {
+                wordSearchHighlightedCells.forEach(cell => cell.classList.remove('highlighted'));
+                
+                const currentCell = e.target;
+                wordSearchHighlightedCells = getWordSearchCellsInSelection(wordSearchStartCell, currentCell);
+                wordSearchHighlightedCells.forEach(cell => cell.classList.add('highlighted'));
+            }
+        });
+
+        wordSearchGridElement.addEventListener('mouseup', () => {
+            if (isWordSearchDragging) {
+                isWordSearchDragging = false;
+                checkWordSearchWord();
+            }
+        });
+
+        document.addEventListener('selectstart', (e) => {
+            if (isWordSearchDragging) e.preventDefault();
+        });
+
+        function initializeWordSearchGame() {
+            foundWordSearchWords = new Set();
+            isWordSearchDragging = false;
+            wordSearchStartCell = null;
+            wordSearchHighlightedCells = [];
+            wordSearchGridElement.innerHTML = '';
+            
+            generateWordSearchGrid();
+            renderWordSearchGrid();
+            renderWordSearchList();
+            wordSearchStatusElement.textContent = '¡Busca las palabras!';
+            wordSearchStatusElement.classList.remove('text-red-600', 'text-green-600');
+        }
+
+        resetWordSearchButton.addEventListener('click', initializeWordSearchGame);
+
+        // Inicializar todas las actividades al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBlanksQuestions();
+            initializeHangmanGame();
+            initializeMatchingGame();
+            initializeWordSearchGame();
+        });
+
+    </script>
+</body>
+</html>
