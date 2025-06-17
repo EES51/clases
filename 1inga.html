@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Verbo To Be: ¡Tu Info Personal en Inglés! 🤩</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fuente Inter (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un azul grisáceo suave */
+            color: #2d3748; /* Gris oscuro para el texto */
+        }
+        .section-title {
+            font-size: 2.8rem; /* Letras grandes y llamativas */
+            font-weight: 700;
+            color: #3182ce; /* Azul vibrante */
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            border-bottom: 5px solid #63b3ed; /* Línea decorativa más gruesa */
+            padding-bottom: 0.75rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 2rem; /* Bordes aún más redondeados */
+            /* Sombra suavizada: antes 0 15px 30px, ahora 0 8px 16px */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.4s ease-in-out; /* Transición para todo al hover */
+        }
+        .card:hover {
+            /* Sombra suavizada en hover: antes 0 20px 40px, ahora 0 12px 24px */
+            transform: translateY(-8px) scale(1.01); /* Efecto hover más notorio */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Sombra más suave al pasar el mouse */
+        }
+        .icon-large {
+            font-size: 3.5rem; /* Íconos más grandes */
+            color: #48bb78; /* Verde esmeralda */
+            margin-bottom: 1.2rem;
+            animation: bounceIn 0.8s ease-out; /* Animación de entrada */
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .concept-box {
+            background-color: #ebf8ff; /* Azul claro */
+            border-left: 8px solid #4299e1; /* Borde azul vibrante y grueso */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .example-box {
+            background-color: #fefcbf; /* Amarillo pastel */
+            border-left: 8px solid #f6e05e; /* Borde amarillo vibrante y grueso */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e0f2f7; /* Azul muy claro para encabezados */
+            font-weight: 700;
+            color: #2c5282;
+        }
+        tr:nth-child(even) {
+            background-color: #f7fafc; /* Rayas sutiles en la tabla */
+        }
+        .highlight-text {
+            color: #e53e3e; /* Rojo vibrante */
+            font-weight: 700;
+        }
+        .accent-button {
+            background-color: #3182ce; /* Azul principal */
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .accent-button:hover {
+            background-color: #2b6cb0; /* Azul más oscuro al pasar el mouse */
+        }
+        .correct-answer {
+            background-color: #d4edda; /* Verde claro */
+            border-left-color: #28a745; /* Borde verde */
+        }
+        .wrong-answer {
+            background-color: #f8d7da; /* Rojo claro */
+            border-left-color: #dc3545; /* Borde rojo */
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #3182ce;
+            padding: 1rem 0;
+            border-bottom: 2px solid #a0aec0;
+            transition: color 0.3s ease;
+        }
+        details summary:hover {
+            color: #2b6cb0;
+        }
+        details[open] summary {
+            color: #2b6cb0;
+            border-bottom-color: transparent;
+        }
+
+        /* Estilos para el juego de "Elegí la Mejor Oración" */
+        .sentence-option {
+            background-color: #f0f9ff;
+            border: 2px solid #a7d9f7;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .sentence-option:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-2px);
+        }
+        .sentence-option.selected {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <!-- Encabezado Principal -->
+    <header class="text-center mb-16">
+        <h1 class="text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight">
+            ¡TO BE o no TO BE! 🤔
+        </h1>
+        <p class="text-2xl text-gray-700 mt-6">
+            ¡Tu guía exprés para presentarte en inglés como un campeón!
+        </p>
+    </header>
+
+    <main class="max-w-5xl mx-auto">
+
+        <!-- Sección: ¿Qué es el Verbo "To Be"? -->
+        <section class="card">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-question-circle icon-large mr-4 text-pink-500"></i> ¿Qué es el Verbo "To Be"? (Ser o Estar)
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                ¡Atenti! El verbo <span class="highlight-text">"TO BE"</span> es uno de los más usados en inglés. ¡Es la base para un montón de oraciones y lo vas a usar TODO el tiempo! Lo copado es que tiene un doble sentido, ¡es como un camaleón de los verbos! Puede significar <strong>"SER"</strong> (para hablar de quién sos, qué sos) o <strong>"ESTAR"</strong> (para decir cómo te sentís o dónde estás), ¡depende del contexto en que lo uses!
+            </p>
+            <div class="concept-box">
+                <p class="font-bold text-lg text-blue-800 mb-2">¡Ojo al piojo! La doble vida del "TO BE"</p>
+                <p>A diferencia de la mayoría de los verbos que significan una sola cosa (como "eat" que es "comer", o "run" que es "correr"), el "TO BE" es especial. Imaginate que un día lo usás para decir <strong>quién sos o qué sos</strong> (SER), y otro día para decir <strong>dónde estás o cómo te sentís</strong> (ESTAR). Por eso es clave entender las situaciones y el resto de la oración.</p>
+            </div>
+            <div class="example-box">
+                <p class="font-bold text-lg text-yellow-800 mb-2">Por ejemplo, ¡mirá cómo cambia!</p>
+                <p><span class="highlight-text">I am a student.</span> (Yo <strong>soy</strong> un estudiante) &mdash; Aquí significa <strong>SER</strong> (identidad)</p>
+                <p><span class="highlight-text">I am in Buenos Aires.</span> (Yo <strong>estoy</strong> en Buenos Aires) &mdash; Aquí significa <strong>ESTAR</strong> (ubicación)</p>
+                <p><span class="highlight-text">She is happy.</span> (Ella <strong>está</strong> feliz) &mdash; Aquí significa <strong>ESTAR</strong> (sentimiento)</p>
+                <p><span class="highlight-text">He is a doctor.</span> (Él <strong>es</strong> un doctor) &mdash; Aquí significa <strong>SER</strong> (profesión)</p>
+            </div>
+            <div class="concept-box mt-6">
+                <p class="font-bold text-lg text-blue-800 mb-2">¿Un truco para recordarlo?</p>
+                <p>Pensá en "SER" para cosas que suelen ser <strong>permanentes</strong> o definen a algo/alguien (identidad, nacionalidad, profesión). Y "ESTAR" para cosas que son <strong>temporales</strong> o que indican un estado/ubicación (sentimientos, dónde estás ahora).</p>
+            </div>
+        </section>
+
+        <!-- Sección: Las Formas del "To Be" -->
+        <section class="card">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-chart-bar icon-large mr-4 text-purple-500"></i> Las Formas del "To Be": ¡No te pierdas!
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                El "to be" es un verbo irregular, lo que significa que cambia su forma según quién está haciendo la acción (el sujeto de la oración). ¡Pero no te asustes! En presente, solo tiene <strong>3 formas principales</strong> que tenés que aprender y son re fáciles de recordar. ¡Son como los tres mosqueteros del "to be": <strong>AM, IS, ARE</strong>! Acá te las muestro en una tablita para que las tengas re claras:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th><strong>Pronombre Personal (Who?)</strong></th>
+                        <th><strong>Forma del "To Be" (Am, Is, Are?)</strong></th>
+                        <th><strong>Contracción (¡más común y canchero!)</strong></th>
+                        <th><strong>Ejemplo con significado y situación</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">I</span> (Yo)</td>
+                        <td>am</td>
+                        <td><span class="highlight-text">I'm</span></td>
+                        <td><span class="highlight-text">I'm</span> from Argentina. (Soy de Argentina.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">You</span> (Vos / Ustedes)</td>
+                        <td>are</td>
+                        <td><span class="highlight-text">You're</span></td>
+                        <td><span class="highlight-text">You're</span> a great student. (Sos un gran estudiante.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">He</span> (Él)</td>
+                        <td>is</td>
+                        <td><span class="highlight-text">He's</span></td>
+                        <td><span class="highlight-text">He's</span> my friend. (Él es mi amigo.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">She</span> (Ella)</td>
+                        <td>is</td>
+                        <td><span class="highlight-text">She's</span></td>
+                        <td><span class="highlight-text">She's</span> happy. (Ella está feliz.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">It</span> (Eso / Ello - para cosas o animales en singular)</td>
+                        <td>is</td>
+                        <td><span class="highlight-text">It's</span></td>
+                        <td><span class="highlight-text">It's</span> a sunny day. (Es un día soleado.) / <span class="highlight-text">It's</span> my cat. (Es mi gato.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">We</span> (Nosotros/as)</td>
+                        <td>are</td>
+                        <td><span class="highlight-text">We're</span></td>
+                        <td><span class="highlight-text">We're</span> in the same class. (Estamos en la misma clase.)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-semibold text-gray-800">They</span> (Ellos/as)</td>
+                        <td>are</td>
+                        <td><span class="highlight-text">They're</span></td>
+                        <td><span class="highlight-text">They're</span> good at English. (Ellos/as son buenos en inglés.)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="concept-box">
+                <p class="font-bold text-lg text-blue-800 mb-2">¡Tip de la profe!</p>
+                <p>Las <span class="highlight-text">contracciones</span> son súper comunes en el inglés hablado y escrito informal. ¡Usalas sin miedo! Suenan más naturales y te hacen parecer que hablás inglés re bien. Para armarlas, ¡simplemente unís el pronombre y el verbo con un apóstrofe ( ' )!</p>
+                <p class="mt-2">Por ejemplo: "I am" se vuelve "I'm". "You are" se vuelve "You're". ¡Fácil!</p>
+            </div>
+        </section>
+
+        <!-- Sección: Usando "To Be" para Información Personal -->
+        <section class="card">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-id-card icon-large mr-4 text-green-500"></i> ¡Contá sobre vos con "To Be"!
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                Acá es donde se pone divertido y práctico. El "to be" es el verbo estrella para presentarte, hablar de tus amigos, tu familia, cómo te sentís y hasta dónde estás. ¡Mirá cómo lo usamos para tu información personal y mucho más!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-signature mr-3 text-indigo-600"></i> Nombre e Identidad (SER)
+                    </h3>
+                    <p>Para decir tu nombre, el de tus amigos, o quiénes son ustedes.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> Sofía. / <span class="highlight-text">My name is</span> Sofía. (Soy Sofía)</p>
+                        <p><span class="highlight-text">He is</span> my best friend. (Él es mi mejor amigo)</p>
+                        <p><span class="highlight-text">We are</span> students. (Somos estudiantes)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-birthday-cake mr-3 text-red-600"></i> Edad (SER)
+                    </h3>
+                    <p>¡Ojo! En inglés siempre con "to be" para hablar de la edad, ¡nunca con "have"! Es una de las cosas más importantes de recordar.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> 12 years old. (Tengo 12 años)</p>
+                        <p><span class="highlight-text">She is</span> 13. (Ella tiene 13)</p>
+                        <p><span class="highlight-text">Are you</span> 14? (¿Vos tenés 14?)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-globe-americas mr-3 text-yellow-600"></i> Nacionalidad / Origen (SER)
+                    </h3>
+                    <p>Contá de dónde sos o qué nacionalidad tenés. ¡Un orgullo!</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> from Argentina. (Soy de Argentina)</p>
+                        <p><span class="highlight-text">He is</span> Brazilian. (Él es brasileño)</p>
+                        <p><span class="highlight-text">They are</span> from Peru. (Ellos son de Perú)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-briefcase mr-3 text-teal-600"></i> Profesión / Ocupación (SER)
+                    </h3>
+                    <p>A qué se dedican vos, tu familia o tus amigos. Si sos estudiante, ¡esa es tu ocupación principal!</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> a student. (Soy estudiante)</p>
+                        <p><span class="highlight-text">My father is</span> an engineer. (Mi papá es ingeniero)</p>
+                        <p><span class="highlight-text">She is</span> a teacher. (Ella es una profesora)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-smile-beam mr-3 text-orange-600"></i> Estados de Ánimo / Sentimientos (ESTAR)
+                    </h3>
+                    <p>Cómo te sentís en un momento específico, o para describir la personalidad de alguien.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> happy today. (Estoy feliz hoy)</p>
+                        <p><span class="highlight-text">They are</span> tired. (Ellos están cansados)</p>
+                        <p><span class="highlight-text">He is</span> shy. (Él es tímido)</p>
+                        <p><span class="highlight-text">She is</span> excited! (¡Ella está emocionada!)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-3 text-gray-600"></i> Ubicación (ESTAR)
+                    </h3>
+                    <p>Dónde estás vos, dónde está tu escuela, tu casa o tus amigos.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> in Buenos Aires right now. (Estoy en Buenos Aires ahora mismo)</p>
+                        <p><span class="highlight-text">Our school is</span> big. (Nuestra escuela es grande) - *Aquí es una característica, como "ser" grande*</p>
+                        <p><span class="highlight-text">My friends are</span> at the park. (Mis amigos están en el parque)</p>
+                    </div>
+                </div>
+
+                 <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-tags mr-3 text-pink-600"></i> Descripción (SER)
+                    </h3>
+                    <p>Para describir cómo son las personas o las cosas.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">He is</span> tall. (Él es alto)</p>
+                        <p><span class="highlight-text">The book is</span> interesting. (El libro es interesante)</p>
+                        <p><span class="highlight-text">They are</span> friendly. (Ellos son amigables)</p>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-2 flex items-center">
+                        <i class="fas fa-clock mr-3 text-brown-600"></i> La Hora (ES)
+                    </h3>
+                    <p>Para decir qué hora es.</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">It is</span> ten o'clock. (Son las diez.)</p>
+                        <p><span class="highlight-text">It is</span> half past two. (Son las dos y media.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Estructuras del "To Be" -->
+        <section class="card">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-cogs icon-large mr-4 text-blue-600"></i> Estructuras: ¡Armá tus Oraciones!
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                Una vez que conocés las formas de "to be" (am, is, are) y con qué pronombres van, ¡es el momento de construir oraciones completas! Es re fácil, ¡es como armar un rompecabezas! Solo tenés que seguir estas fórmulas mágicas para hablar en afirmativo, negativo o hacer preguntas. ¡Mirá!
+            </p>
+
+            <details class="mb-6 card p-6">
+                <summary class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-check-circle mr-3 text-green-500"></i> Oraciones Afirmativas: ¡Para afirmar!
+                </summary>
+                <div class="mt-4">
+                    <p class="text-lg text-gray-700 mb-2"><strong>Fórmula Mágica:</strong> Sujeto + To Be (am/is/are) + Complemento</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am</span> a student. (Yo soy un estudiante.)</p>
+                        <p><span class="highlight-text">You are</span> a good person. (Vos sos una buena persona.)</p>
+                        <p><span class="highlight-text">She is</span> from Rosario. (Ella es de Rosario.)</p>
+                        <p><span class="highlight-text">We are</span> happy. (Nosotros estamos felices.)</p>
+                        <p><span class="highlight-text">It is</span> my dog. (Es mi perro.)</p>
+                        <p><span class="highlight-text">They are</span> friends. (Ellos son amigos.)</p>
+                    </div>
+                </div>
+            </details>
+
+            <details class="mb-6 card p-6">
+                <summary class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-times-circle mr-3 text-red-500"></i> Oraciones Negativas: ¡Para decir que NO!
+                </summary>
+                <div class="mt-4">
+                    <p class="text-lg text-gray-700 mb-2"><strong>Fórmula Mágica:</strong> Sujeto + To Be (am/is/are) + <strong>NOT</strong> + Complemento</p>
+                    <div class="concept-box mt-3 text-base">
+                        <p>También podés usar <span class="highlight-text">contracciones negativas</span>, ¡son más rápidas, informales y comunes!</p>
+                        <ul>
+                            <li><span class="highlight-text">is + not = isn't</span></li>
+                            <li><span class="highlight-text">are + not = aren't</span></li>
+                            <li>(¡Ojo! Para "am not" no hay contracción con el "not", solo "I'm not")</li>
+                        </ul>
+                    </div>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">I am not</span> tired. / <span class="highlight-text">I'm not</span> tired. (No estoy cansado.)</p>
+                        <p><span class="highlight-text">You are not</span> happy. / <span class="highlight-text">You aren't</span> happy. (No estás feliz.)</p>
+                        <p><span class="highlight-text">He is not</span> a teacher. / <span class="highlight-text">He isn't</span> a teacher. (Él no es un profesor.)</p>
+                        <p><span class="highlight-text">They are not</span> from here. / <span class="highlight-text">They aren't</span> from here. (Ellos no son de acá.)</p>
+                    </div>
+                </div>
+            </details>
+
+            <details class="mb-6 card p-6">
+                <summary class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-question mr-3 text-orange-500"></i> Oraciones Interrogativas (Preguntas): ¡Para saber!
+                </summary>
+                <div class="mt-4">
+                    <p class="text-lg text-gray-700 mb-2"><strong>Fórmula Mágica:</strong> <strong>To Be (am/is/are)</strong> + Sujeto + Complemento + ?</p>
+                    <div class="example-box mt-3 text-base">
+                        <p><span class="highlight-text">Are you</span> a student? (¿Sos un estudiante?)</p>
+                        <p><span class="highlight-text">Is she</span> from Cordoba? (¿Ella es de Córdoba?)</p>
+                        <p><span class="highlight-text">Am I</span> late? (¿Llegué tarde?)</p>
+                        <p><span class="highlight-text">Are they</span> friends? (¿Ellos son amigos?)</p>
+                        <p><span class="highlight-text">Is it</span> a big school? (¿Es una escuela grande?)</p>
+                    </div>
+                </div>
+            </details>
+
+            <details class="mb-6 card p-6">
+                <summary class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-reply-all mr-3 text-purple-500"></i> Respuestas Cortas: ¡Para contestar rápido!
+                </summary>
+                <div class="mt-4">
+                    <p class="text-lg text-gray-700 mb-2">Cuando te hacen una pregunta con "to be", podés responder corto usando la misma forma del "to be".</p>
+                    <div class="example-box mt-3 text-base">
+                        <p>A: <span class="highlight-text">Are you</span> happy?</p>
+                        <p>B: Yes, <span class="highlight-text">I am</span>. / No, <span class="highlight-text">I'm not</span>.</p>
+                        <p>A: <span class="highlight-text">Is he</span> a teacher?</p>
+                        <p>B: Yes, <span class="highlight-text">he is</span>. / No, <span class="highlight-text">he isn't</span>.</p>
+                        <p>A: <span class="highlight-text">Are they</span> from here?</p>
+                        <p>B: Yes, <span class="highlight-text">they are</span>. / No, <span class="highlight-text">they aren't</span>.</p>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <!-- Sección: ¡A Practicar y Jugar! -->
+        <section class="card">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-gamepad icon-large mr-4 text-purple-600"></i> ¡A Practicar y Jugar!
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                ¡Ahora que ya sabes todo del "to be", es hora de ponerlo en práctica con algunos juegos y actividades! ¡Dale, que es divertido y vas a aprender un montón!
+            </p>
+
+            <!-- Actividad 1: Completar la Oración (10 preguntas) -->
+            <div class="mb-8 p-6 bg-blue-50 rounded-lg shadow-md border-l-4 border-blue-400">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                    <i class="fas fa-edit mr-3"></i> Actividad 1: Completar la Oración
+                </h3>
+                <p class="text-gray-700 mb-4">Elegí la forma correcta del "to be" (am, is, are) para cada oración. ¡Vamos!</p>
+                <div id="fill-in-the-blanks-quiz">
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">1. I ____ from Buenos Aires.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q1" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q1" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q1" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">2. She ____ 12 years old.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q2" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q2" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q2" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">3. My friends ____ at school.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q3" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q3" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q3" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">4. We ____ happy to learn English.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q4" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q4" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q4" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">5. It ____ a sunny day in Buenos Aires.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q5" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q5" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q5" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                     <div class="mb-4">
+                        <p class="font-semibold text-gray-800">6. You ____ a new student, right?</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q6" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q6" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q6" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">7. My cat ____ very playful.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q7" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q7" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q7" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">8. They ____ my cousins.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q8" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q8" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q8" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">9. He ____ from Mendoza.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q9" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q9" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q9" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">10. We ____ in the classroom.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="q10" value="am" class="form-radio text-blue-600"> <span class="ml-2">am</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q10" value="is" class="form-radio text-blue-600"> <span class="ml-2">is</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="q10" value="are" class="form-radio text-blue-600"> <span class="ml-2">are</span></label>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="checkFillInTheBlanks()" class="accent-button mt-4"><i class="fas fa-check mr-2"></i> Revisar Respuestas</button>
+                <div id="fill-in-result" class="mt-4 text-lg font-semibold"></div>
+            </div>
+
+            <!-- Actividad 2: ¿Verdadero o Falso? (10 preguntas) -->
+            <div class="mb-8 p-6 bg-green-50 rounded-lg shadow-md border-l-4 border-green-400">
+                <h3 class="text-2xl font-bold text-green-800 mb-4 flex items-center">
+                    <i class="fas fa-lightbulb mr-3"></i> Actividad 2: ¿Verdadero o Falso?
+                </h3>
+                <p class="text-gray-700 mb-4">Leé las oraciones y decidí si son verdaderas o falsas sobre el uso del "to be". ¡A pensar!</p>
+                <div id="true-false-quiz">
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">1. "I is a student" es una oración correcta en inglés.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf1" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf1" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">2. "She are happy" es la forma correcta de decir "Ella está feliz".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf2" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf2" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">3. Usamos "am" con el pronombre "I".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf3" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf3" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">4. "We're" es la contracción de "We are".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf4" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf4" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">5. Para decir tu edad, se usa "I have 12 years old".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf5" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf5" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">6. "It is a dog" puede usarse para un perro.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf6" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf6" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">7. "You'm happy" es una contracción correcta.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf7" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf7" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">8. "Are we students?" es una pregunta bien hecha.</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf8" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf8" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">9. El "to be" solo significa "ser".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf9" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf9" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-800">10. "They is tired" es una oración correcta para decir "Ellos están cansados".</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <label class="inline-flex items-center"><input type="radio" name="tf10" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="tf10" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="checkTrueFalse()" class="accent-button mt-4"><i class="fas fa-check-double mr-2"></i> Revisar Verdadero/Falso</button>
+                <div id="true-false-result" class="mt-4 text-lg font-semibold"></div>
+            </div>
+
+            <!-- Actividad 3: Conectá la Pareja -->
+            <div class="mb-8 p-6 bg-yellow-50 rounded-lg shadow-md border-l-4 border-yellow-400">
+                <h3 class="text-2xl font-bold text-yellow-800 mb-4 flex items-center">
+                    <i class="fas fa-link mr-3"></i> Actividad 3: Conectá la Pareja
+                </h3>
+                <p class="text-gray-700 mb-4">Uní cada pronombre con la forma correcta del "to be". ¡Hace click en uno y después en su pareja! Cuando terminás, podés reiniciar.</p>
+                <div id="match-game" class="grid grid-cols-2 gap-4">
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="I">I</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="am">am</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="You">You</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are">are</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="He">He</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is">is</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="She">She</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_2">is</button> <!-- Unique value for this 'is' -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="It">It</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_3">is</button> <!-- Unique value for this 'is' -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="We">We</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_2">are</button> <!-- Unique value for this 'are' -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="They">They</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_3">are</button> <!-- Unique value for this 'are' -->
+                </div>
+                <button onclick="resetMatchGame()" class="accent-button mt-6 bg-gray-500 hover:bg-gray-600"><i class="fas fa-redo-alt mr-2"></i> Reiniciar Juego</button>
+                <div id="match-result" class="mt-4 text-lg font-semibold"></div>
+            </div>
+
+            <!-- Actividad 4: ¡Elegí la Mejor Oración! (Nuevo Juego) -->
+            <div class="mb-8 p-6 bg-purple-50 rounded-lg shadow-md border-l-4 border-purple-400">
+                <h3 class="text-2xl font-bold text-purple-800 mb-4 flex items-center">
+                    <i class="fas fa-check-square mr-3"></i> Actividad 4: ¡Elegí la Mejor Oración!
+                </h3>
+                <p class="text-gray-700 mb-4">Solo una oración está escrita correctamente usando el "to be". ¡Encontrala haciendo click!</p>
+                <div id="best-sentence-quiz">
+                    <!-- Pregunta 1 -->
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">1. ¿Cuál es la oración correcta?</p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="sentence-option" data-q="best1" data-answer="You are happy.">You are happy.</div>
+                            <div class="sentence-option" data-q="best1" data-answer="I is from Argentina.">I is from Argentina.</div>
+                            <div class="sentence-option" data-q="best1" data-answer="She are a student.">She are a student.</div>
+                            <div class="sentence-option" data-q="best1" data-answer="We am friends.">We am friends.</div>
+                        </div>
+                    </div>
+                    <!-- Pregunta 2 -->
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">2. ¿Cuál es la oración correcta?</p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="sentence-option" data-q="best2" data-answer="My brother is 10 years old.">My brother is 10 years old.</div>
+                            <div class="sentence-option" data-q="best2" data-answer="My brother are 10 years old.">My brother are 10 years old.</div>
+                            <div class="sentence-option" data-q="best2" data-answer="My brother am 10 years old.">My brother am 10 years old.</div>
+                            <div class="sentence-option" data-q="best2" data-answer="My brother have 10 years old.">My brother have 10 years old.</div>
+                        </div>
+                    </div>
+                     <!-- Pregunta 3 -->
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">3. ¿Cuál es la forma correcta negativa?</p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="sentence-option" data-q="best3" data-answer="They aren't happy.">They aren't happy.</div>
+                            <div class="sentence-option" data-q="best3" data-answer="They not are happy.">They not are happy.</div>
+                            <div class="sentence-option" data-q="best3" data-answer="They isn't happy.">They isn't happy.</div>
+                            <div class="sentence-option" data-q="best3" data-answer="They don't are happy.">They don't are happy.</div>
+                        </div>
+                    </div>
+                     <!-- Pregunta 4 -->
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">4. ¿Cuál es la pregunta correcta?</p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="sentence-option" data-q="best4" data-answer="Are you a teacher?">Are you a teacher?</div>
+                            <div class="sentence-option" data-q="best4" data-answer="Is you a teacher?">Is you a teacher?</div>
+                            <div class="sentence-option" data-q="best4" data-answer="Am you a teacher?">Am you a teacher?</div>
+                            <div class="sentence-option" data-q="best4" data-answer="You are a teacher?">You are a teacher?</div>
+                        </div>
+                    </div>
+                     <!-- Pregunta 5 -->
+                    <div class="mb-6">
+                        <p class="font-semibold text-gray-800 mb-2">5. ¿Cuál es la oración correcta?</p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class="sentence-option" data-q="best5" data-answer="It's cold today.">It's cold today.</div>
+                            <div class="sentence-option" data-q="best5" data-answer="It am cold today.">It am cold today.</div>
+                            <div class="sentence-option" data-q="best5" data-answer="It are cold today.">It are cold today.</div>
+                            <div class="sentence-option" data-q="best5" data-answer="It have cold today.">It have cold today.</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="best-sentence-result" class="mt-4 text-lg font-semibold"></div>
+            </div>
+
+            <!-- Actividad 5: Ahorcado del "To Be" -->
+            <div class="mb-8 p-6 bg-blue-50 rounded-lg shadow-md border-l-4 border-blue-400">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                    <i class="fas fa-gavel mr-3"></i> Actividad 5: ¡Ahorcado del "To Be"!
+                </h3>
+                <p class="text-gray-700 mb-4">¡Adiviná la palabra clave del "to be" antes de que se arme el ahorcado! ¡Tenés 6 intentos!</p>
+                <div class="bg-gray-100 p-6 rounded-lg shadow-inner text-center">
+                    <pre id="hangman-drawing" class="text-xl font-mono mb-4 text-gray-800"></pre>
+                    <p id="word-display" class="text-3xl font-bold tracking-widest mb-4 text-purple-800"></p>
+                    <p id="guessed-letters" class="text-lg text-gray-600 mb-4">Letras usadas: </p>
+                    <input type="text" id="letter-input" maxlength="1" class="w-20 p-3 text-center border-2 border-purple-300 rounded-lg focus:outline-none focus:border-purple-500 text-xl uppercase" placeholder="Letra">
+                    <button id="guess-button" class="accent-button mt-4 ml-2"><i class="fas fa-hand-point-right mr-2"></i> Adivinar</button>
+                    <button id="reset-button-hangman" class="accent-button mt-4 ml-2 bg-gray-500 hover:bg-gray-600"><i class="fas fa-redo-alt mr-2"></i> Reiniciar</button>
+                    <p id="game-message" class="mt-4 text-lg font-semibold text-green-700"></p>
+                </div>
+            </div>
+
+            <!-- Actividad 6: ¡Armá tu Propia Oración! -->
+            <div class="mb-8 p-6 bg-red-50 rounded-lg shadow-md border-l-4 border-red-400">
+                <h3 class="text-2xl font-bold text-red-800 mb-4 flex items-center">
+                    <i class="fas fa-comment-dots mr-3"></i> Actividad 6: ¡Armá tu Propia Oración!
+                </h3>
+                <p class="text-gray-700 mb-4">Escribí una oración usando el verbo "to be" para contar algo sobre vos, tu familia, tus amigos o tu escuela. ¡Animate a escribir y usá lo que aprendiste! ¡Yo te doy una devolución!</p>
+                <textarea id="sentence-input" class="w-full p-3 border-2 border-red-300 rounded-lg focus:outline-none focus:border-red-500 text-lg" rows="3" placeholder="Ej: I am a student. / My friend is happy."></textarea>
+                <button onclick="checkSentence()" class="accent-button mt-4 bg-red-600 hover:bg-red-700"><i class="fas fa-paper-plane mr-2"></i> Enviar Oración</button>
+                <div id="sentence-result" class="mt-4 text-lg font-semibold"></div>
+            </div>
+
+        </section>
+
+        <!-- Sección Extra: ¡Desafío Extra: Hablá con el "To Be"! -->
+        <section class="card" id="desafio-extra">
+            <h2 class="section-title flex items-center">
+                <i class="fas fa-brain icon-large mr-4 text-orange-500"></i> ¡Desafío Extra: Hablá con el "To Be"!
+            </h2>
+            <p class="text-xl text-gray-700 mb-6">
+                ¡Ya que sos un experto/a en el "to be", es hora de usarlo para hablar de vos y de los que te rodean! Este es un ejercicio para hacer en clase, ¡o para practicar en casa con tu familia o amigos! ¡La idea es que lo digas en voz alta!
+            </p>
+            <div class="concept-box mb-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-3 flex items-center">
+                    <i class="fas fa-user-circle mr-3"></i> ¡Contame de vos! (My Personal Info)
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                    <li><span class="font-bold">Tu nombre:</span> "I am [Tu Nombre Completo]." (Ej: "I am María Sol.")</li>
+                    <li><span class="font-bold">Tu edad:</span> "I am [Tu Edad] years old." (Ej: "I am 12 years old.")</li>
+                    <li><span class="font-bold">Tu origen:</span> "I am from [Tu Barrio/Ciudad/País]." (Ej: "I am from Palermo, Buenos Aires, Argentina.")</li>
+                    <li><span class="font-bold">Tu ocupación:</span> "I am a student." (Soy un/a estudiante.)</li>
+                    <li><span class="font-bold">Cómo te sentís hoy:</span> "I am [happy/tired/excited/bored] today." (Estoy [feliz/cansado/emocionado/aburrido] hoy.)</li>
+                    <li><span class="font-bold">Cómo sos:</span> "I am [friendly/shy/tall/short]." (Soy [amigable/tímido/alto/bajo].)</li>
+                </ul>
+                <div class="example-box mt-4">
+                    <p class="font-bold text-yellow-800">¡Mirá mi ejemplo!</p>
+                    <p>"Hello! My name is Paula. I am your English teacher. I am from Buenos Aires, and I am very excited to teach you!"</p>
+                </div>
+            </div>
+            <div class="example-box mb-6">
+                <h3 class="text-2xl font-bold text-yellow-800 mb-3 flex items-center">
+                    <i class="fas fa-users mr-3"></i> ¡Contá de otros! (About Others)
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                    <li><span class="font-bold">Un amigo/a:</span> "[Nombre del amigo] is [edad] years old. He/She is [descripción]." (Ej: "Lucas is 12 years old. He is funny.")</li>
+                    <li><span class="font-bold">Tu mascota:</span> "It is my [tipo de mascota]. It is [descripción]." (Ej: "It is my dog. It is small and cute.")</li>
+                    <li><span class="font-bold">Tus padres/hermanos:</span> "My mom is a [profesión]. My brother is [edad]." (Ej: "My mom is a doctor. My brother is 15.")</li>
+                    <li><span class="font-bold">Tus compañeros:</span> "My classmates are [friendly/smart/funny]." (Mis compañeros son [amigables/inteligentes/divertidos].) / "They are in the classroom." (Ellos están en el aula.)</li>
+                </ul>
+            </div>
+            <p class="text-xl text-gray-700 mt-6">
+                ¡La clave es usar el "to be" en cada oración! Podés escribirlo en tu carpeta, o practicar decirlo en voz alta con tu familia o amigos. ¡Mientras más lo uses, más fácil te va a resultar! ¡Vos podés! 💪
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-gray-600 text-base mt-16 p-6">
+        <p>¡Esperamos que esta guía te sirva un montón para usar el verbo "To Be"!</p>
+        <p class="mt-2">Recordá que la práctica hace al maestro. ¡Seguí usando el "to be" todos los días y vas a ver qué rápido se vuelve súper fácil!</p>
+        <p class="mt-2">© 2025 Tu Profe de Inglés de Buenos Aires. Hecho con ❤️ para mis alumnos de primer año.</p>
+    </footer>
+
+    <script>
+        // Lógica para Actividad 1: Completar la Oración
+        function checkFillInTheBlanks() {
+            const answers = {
+                q1: 'am', q2: 'is', q3: 'are', q4: 'are', q5: 'is',
+                q6: 'are', q7: 'is', q8: 'are', q9: 'is', q10: 'are'
+            };
+            let score = 0;
+            let totalQuestions = 0;
+            const quizContainer = document.getElementById('fill-in-the-blanks-quiz');
+            const questions = quizContainer.querySelectorAll('div[class*="mb-4"]');
+
+            questions.forEach((questionDiv, index) => {
+                totalQuestions++;
+                const questionName = `q${index + 1}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const resultDiv = questionDiv;
+
+                resultDiv.classList.remove('correct-answer', 'wrong-answer'); // Limpia clases anteriores
+
+                if (selectedOption) {
+                    if (selectedOption.value === answers[questionName]) {
+                        score++;
+                        resultDiv.classList.add('correct-answer');
+                    } else {
+                        resultDiv.classList.add('wrong-answer');
+                    }
+                } else {
+                    resultDiv.classList.add('wrong-answer'); // Marcar como incorrecta si no respondió
+                }
+            });
+
+            const resultElement = document.getElementById('fill-in-result');
+            if (score === totalQuestions) {
+                resultElement.textContent = `¡Excelente! ¡Tuviste ${score} de ${totalQuestions} correctas! ¡Sos un crack/una crack! 🎉`;
+                resultElement.classList.add('text-green-700');
+                resultElement.classList.remove('text-red-700');
+            } else {
+                resultElement.textContent = `¡Bien, pero podés mejorar! Tuviste ${score} de ${totalQuestions} correctas. ¡Revisá las que te equivocaste!`;
+                resultElement.classList.add('text-red-700');
+                resultElement.classList.remove('text-green-700');
+            }
+        }
+
+        // Lógica para Actividad 2: ¿Verdadero o Falso?
+        function checkTrueFalse() {
+            const answers = {
+                tf1: 'false', tf2: 'false', tf3: 'true', tf4: 'true', tf5: 'false',
+                tf6: 'true', tf7: 'false', tf8: 'true', tf9: 'false', tf10: 'false'
+            };
+            let score = 0;
+            let totalQuestions = 0;
+            const quizContainer = document.getElementById('true-false-quiz');
+            const questions = quizContainer.querySelectorAll('div[class*="mb-4"]');
+
+            questions.forEach((questionDiv, index) => {
+                totalQuestions++;
+                const questionName = `tf${index + 1}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const resultDiv = questionDiv;
+
+                resultDiv.classList.remove('correct-answer', 'wrong-answer'); // Limpia clases anteriores
+
+                if (selectedOption) {
+                    if (selectedOption.value === answers[questionName]) {
+                        score++;
+                        resultDiv.classList.add('correct-answer');
+                    } else {
+                        resultDiv.classList.add('wrong-answer');
+                    }
+                } else {
+                     resultDiv.classList.add('wrong-answer'); // Marcar como incorrecta si no respondió
+                }
+            });
+
+            const resultElement = document.getElementById('true-false-result');
+            if (score === totalQuestions) {
+                resultElement.textContent = `¡Genial! ¡${score} de ${totalQuestions} correctas! ¡Dominás el V/F! 🤩`;
+                resultElement.classList.add('text-green-700');
+                resultElement.classList.remove('text-red-700');
+            } else {
+                resultElement.textContent = `¡Casi! Tuviste ${score} de ${totalQuestions} correctas. ¡Repasemos un poco más!`;
+                resultElement.classList.add('text-red-700');
+                resultElement.classList.remove('text-green-700');
+            }
+        }
+
+        // Lógica para Actividad 3: Conectá la Pareja
+        let selectedPronounButton = null;
+        let selectedVerbButton = null;
+
+        const matchPairs = {
+            'I': 'am',
+            'You': 'are',
+            'He': 'is',
+            'She': 'is_2', // Differentiated to make sure they match specific buttons
+            'It': 'is_3',
+            'We': 'are_2',
+            'They': 'are_3'
+        };
+        let matchedCount = 0;
+        const totalMatches = Object.keys(matchPairs).length;
+
+        document.getElementById('match-game').addEventListener('click', function(event) {
+            const clickedButton = event.target;
+            if (!clickedButton.classList.contains('accent-button') || clickedButton.disabled) {
+                return;
+            }
+
+            const buttonType = clickedButton.dataset.type;
+            const matchResultElement = document.getElementById('match-result');
+            matchResultElement.textContent = '';
+
+            // Deseleccionar si se hace click en el mismo botón
+            if (buttonType === 'pronoun') {
+                if (selectedPronounButton === clickedButton) {
+                    selectedPronounButton.classList.remove('ring-4', 'ring-purple-500');
+                    selectedPronounButton = null;
+                } else {
+                    if (selectedPronounButton) selectedPronounButton.classList.remove('ring-4', 'ring-purple-500');
+                    selectedPronounButton = clickedButton;
+                    selectedPronounButton.classList.add('ring-4', 'ring-purple-500');
+                }
+            } else if (buttonType === 'verb') {
+                if (selectedVerbButton === clickedButton) {
+                    selectedVerbButton.classList.remove('ring-4', 'ring-pink-500');
+                    selectedVerbButton = null;
+                } else {
+                    if (selectedVerbButton) selectedVerbButton.classList.remove('ring-4', 'ring-pink-500');
+                    selectedVerbButton = clickedButton;
+                    selectedVerbButton.classList.add('ring-4', 'ring-pink-500');
+                }
+            }
+
+            // Si ambos están seleccionados, intenta hacer el match
+            if (selectedPronounButton && selectedVerbButton) {
+                const pronounValue = selectedPronounButton.dataset.value;
+                const verbValue = selectedVerbButton.dataset.value;
+
+                if (matchPairs[pronounValue] === verbValue) {
+                    matchResultElement.textContent = `¡Match correcto! ¡Bien hecho! ✅`;
+                    matchResultElement.classList.add('text-green-700');
+                    matchResultElement.classList.remove('text-red-700');
+
+                    selectedPronounButton.disabled = true;
+                    selectedVerbButton.disabled = true;
+                    selectedPronounButton.classList.remove('ring-4', 'ring-purple-500');
+                    selectedVerbButton.classList.remove('ring-4', 'ring-pink-500');
+                    selectedPronounButton.classList.add('bg-green-300', 'cursor-not-allowed');
+                    selectedVerbButton.classList.add('bg-green-300', 'cursor-not-allowed');
+
+                    selectedPronounButton = null;
+                    selectedVerbButton = null;
+                    matchedCount++;
+
+                    if (matchedCount === totalMatches) {
+                        matchResultElement.textContent = `¡Excelente! ¡Completaste todos los matches! 🥳`;
+                        matchResultElement.classList.add('text-blue-700');
+                    }
+
+                } else {
+                    matchResultElement.textContent = `¡Mmm, ese no es el match! Intentá de nuevo. ❌`;
+                    matchResultElement.classList.add('text-red-700');
+                    matchResultElement.classList.remove('text-green-700');
+
+                    setTimeout(() => {
+                        selectedPronounButton.classList.remove('ring-4', 'ring-purple-500');
+                        selectedVerbButton.classList.remove('ring-4', 'ring-pink-500');
+                        selectedPronounButton = null;
+                        selectedVerbButton = null;
+                        matchResultElement.textContent = '';
+                    }, 800);
+                }
+            }
+        });
+
+        function resetMatchGame() {
+            const buttons = document.querySelectorAll('#match-game .accent-button');
+            buttons.forEach(button => {
+                button.disabled = false;
+                button.classList.remove('bg-green-300', 'cursor-not-allowed', 'ring-4', 'ring-purple-500', 'ring-pink-500');
+            });
+            selectedPronounButton = null;
+            selectedVerbButton = null;
+            matchedCount = 0;
+            document.getElementById('match-result').textContent = '';
+        }
+
+
+        // Lógica para Actividad 4: ¡Elegí la Mejor Oración!
+        function setupBestSentenceQuiz() {
+            const quizContainer = document.getElementById('best-sentence-quiz');
+            quizContainer.addEventListener('click', function(event) {
+                const clickedOption = event.target.closest('.sentence-option');
+                if (!clickedOption) return;
+
+                const questionName = clickedOption.dataset.q;
+                const optionsInQuestion = document.querySelectorAll(`[data-q="${questionName}"]`);
+                
+                optionsInQuestion.forEach(option => {
+                    option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                });
+
+                clickedOption.classList.add('selected');
+
+                const answers = {
+                    best1: 'You are happy.',
+                    best2: 'My brother is 10 years old.',
+                    best3: 'They aren\'t happy.',
+                    best4: 'Are you a teacher?',
+                    best5: 'It\'s cold today.'
+                };
+
+                if (clickedOption.textContent.trim() === answers[questionName].trim()) {
+                    clickedOption.classList.add('correct-answer');
+                } else {
+                    clickedOption.classList.add('wrong-answer');
+                    
+                    setTimeout(() => {
+                        optionsInQuestion.forEach(option => {
+                            if (option.textContent.trim() === answers[questionName].trim()) {
+                                option.classList.add('correct-answer');
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+        setupBestSentenceQuiz();
+
+        // Lógica para Actividad 5: Ahorcado
+        const hangmanWords = [
+            'AM', 'IS', 'ARE', 'CONTRACTION', 'STUDENT', 'HAPPY',
+            'ARGENTINA', 'TEACHER', 'FRIEND', 'FAMILY', 'BUENOSAIRES',
+            'OLD', 'YOUNG', 'TALL', 'SHORT', 'SHY', 'EXCITED'
+        ];
+        let selectedHangmanWord = '';
+        let guessedHangmanWord = [];
+        let wrongHangmanGuesses = 0;
+        let guessedHangmanLetters = [];
+        const maxWrongHangmanGuesses = 6;
+
+        const hangmanDrawingElement = document.getElementById('hangman-drawing');
+        const hangmanWordDisplayElement = document.getElementById('word-display');
+        const hangmanGuessedLettersElement = document.getElementById('guessed-letters');
+        const hangmanLetterInput = document.getElementById('letter-input');
+        const hangmanGuessButton = document.getElementById('guess-button');
+        const hangmanResetButton = document.getElementById('reset-button-hangman');
+        const hangmanGameMessageElement = document.getElementById('game-message');
+
+        const hangmanStages = [
+            `
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========`,
+            `
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========`,
+        ];
+
+        function initializeHangmanGame() {
+            selectedHangmanWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+            guessedHangmanWord = Array(selectedHangmanWord.length).fill('_');
+            wrongHangmanGuesses = 0;
+            guessedHangmanLetters = [];
+
+            hangmanDrawingElement.textContent = hangmanStages[0];
+            hangmanWordDisplayElement.textContent = guessedHangmanWord.join(' ');
+            hangmanGuessedLettersElement.textContent = 'Letras usadas: ';
+            hangmanGameMessageElement.textContent = '';
+            hangmanLetterInput.value = '';
+            hangmanLetterInput.disabled = false;
+            hangmanGuessButton.disabled = false;
+            hangmanGameMessageElement.classList.remove('text-green-700', 'text-red-700', 'text-blue-700');
+        }
+
+        function updateHangmanDisplay() {
+            hangmanDrawingElement.textContent = hangmanStages[wrongHangmanGuesses];
+            hangmanWordDisplayElement.textContent = guessedHangmanWord.join(' ');
+            hangmanGuessedLettersElement.textContent = 'Letras usadas: ' + guessedHangmanLetters.join(', ');
+        }
+
+        function handleHangmanGuess() {
+            const guess = hangmanLetterInput.value.toUpperCase();
+            hangmanLetterInput.value = '';
+
+            if (!guess.match(/^[A-Z]$/)) {
+                hangmanGameMessageElement.textContent = 'Por favor, ingresa una sola letra válida.';
+                hangmanGameMessageElement.style.color = '#dc2626';
+                return;
+            }
+
+            if (guessedHangmanLetters.includes(guess)) {
+                hangmanGameMessageElement.textContent = `Ya adivinaste la letra "${guess}".`;
+                hangmanGameMessageElement.style.color = '#f97316';
+                return;
+            }
+
+            guessedHangmanLetters.push(guess);
+            hangmanGameMessageElement.textContent = '';
+
+            if (selectedHangmanWord.includes(guess)) {
+                for (let i = 0; i < selectedHangmanWord.length; i++) {
+                    if (selectedHangmanWord[i] === guess) {
+                        guessedHangmanWord[i] = guess;
+                    }
+                }
+                hangmanGameMessageElement.textContent = `¡Bien! La letra "${guess}" es correcta.`;
+                hangmanGameMessageElement.style.color = '#10b981';
+            } else {
+                wrongHangmanGuesses++;
+                hangmanGameMessageElement.textContent = `¡Uy! La letra "${guess}" no está.`;
+                hangmanGameMessageElement.style.color = '#dc2626';
+            }
+
+            updateHangmanDisplay();
+            checkHangmanGameStatus();
+        }
+
+        function checkHangmanGameStatus() {
+            if (guessedHangmanWord.join('') === selectedHangmanWord) {
+                hangmanGameMessageElement.textContent = `¡Felicitaciones! Adivinaste la palabra: "${selectedHangmanWord}" 🎉`;
+                hangmanGameMessageElement.style.color = '#4f46e5';
+                hangmanLetterInput.disabled = true;
+                hangmanGuessButton.disabled = true;
+            } else if (wrongHangmanGuesses >= maxWrongHangmanGuesses) {
+                hangmanGameMessageElement.textContent = `¡Perdiste! La palabra era: "${selectedHangmanWord}" 😭`;
+                hangmanGameMessageElement.style.color = '#dc2626';
+                hangmanLetterInput.disabled = true;
+                hangmanGuessButton.disabled = true;
+            }
+        }
+
+        hangmanGuessButton.addEventListener('click', handleHangmanGuess);
+        hangmanLetterInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleHangmanGuess();
+            }
+        });
+        hangmanResetButton.addEventListener('click', initializeHangmanGame);
+        initializeHangmanGame();
+
+
+        // Lógica para Actividad 6: ¡Armá tu Propia Oración!
+        function checkSentence() {
+            const sentenceInput = document.getElementById('sentence-input');
+            const sentence = sentenceInput.value.trim();
+            const sentenceResult = document.getElementById('sentence-result');
+
+            if (sentence.length < 5) {
+                sentenceResult.textContent = '¡Escribí una oración un poquito más larga, che!';
+                sentenceResult.classList.add('text-red-700');
+                sentenceResult.classList.remove('text-green-700');
+                return;
+            }
+
+            const containsToBe = sentence.toLowerCase().includes(' am ') ||
+                                 sentence.toLowerCase().includes(' is ') ||
+                                 sentence.toLowerCase().includes(' are ') ||
+                                 sentence.toLowerCase().includes(" i'm ") ||
+                                 sentence.toLowerCase().includes(" you're ") ||
+                                 sentence.toLowerCase().includes(" he's ") ||
+                                 sentence.toLowerCase().includes(" she's ") ||
+                                 sentence.toLowerCase().includes(" it's ") ||
+                                 sentence.toLowerCase().includes(" we're ") ||
+                                 sentence.toLowerCase().includes(" they're ") ||
+                                 sentence.toLowerCase().startsWith('i am ') ||
+                                 sentence.toLowerCase().startsWith('it is ') ||
+                                 sentence.toLowerCase().startsWith('he is ') ||
+                                 sentence.toLowerCase().startsWith('she is ') ||
+                                 sentence.toLowerCase().startsWith('we are ') ||
+                                 sentence.toLowerCase().startsWith('you are ') ||
+                                 sentence.toLowerCase().startsWith('they are ');
+
+
+            if (containsToBe) {
+                sentenceResult.textContent = '¡Excelente oración! ¡Seguí practicando así! ✨';
+                sentenceResult.classList.add('text-green-700');
+                sentenceResult.classList.remove('text-red-700');
+            } else {
+                sentenceResult.textContent = '¡Mmm, no veo el "to be" en tu oración! Recordá usar "am", "is" o "are" (o sus contracciones). ¡Dale, intentá de nuevo!';
+                sentenceResult.classList.add('text-red-700');
+                sentenceResult.classList.remove('text-green-700');
+            }
+        }
+    </script>
+</body>
+</html>
