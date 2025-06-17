@@ -91,8 +91,8 @@
             border-radius: 0.5rem;
         }
 
-        /* Estilos para "Elige la Opción Correcta" */
-        .choice-question {
+        /* Estilos para "Elige la Opción Correcta" y nuevos juegos */
+        .choice-question, .fill-in-blank-question, .true-false-question {
             background-color: #F0F9FF; /* Fondo claro */
             padding: 1rem;
             border-radius: 0.75rem;
@@ -103,6 +103,26 @@
         .choice-options button {
             @apply bg-blue-200 text-blue-800 font-semibold py-2 px-4 rounded-full mr-2 mb-2 hover:bg-blue-300 transition-colors duration-200;
         }
+        .fill-in-blank-question input[type="text"] {
+            @apply border-b-2 border-blue-400 bg-transparent text-blue-800 text-center font-semibold outline-none focus:border-blue-600 transition-colors duration-200;
+            width: 120px; /* Ancho fijo para el input */
+            padding: 0 5px;
+            margin: 0 5px;
+        }
+        /* Estilo para la retroalimentación en línea */
+        .feedback-message {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: block; /* Para que ocupe su propia línea */
+        }
+        .feedback-correct {
+            color: #10B981; /* Verde menta */
+        }
+        .feedback-incorrect {
+            color: #EC4899; /* Rosa chicle */
+        }
+
         /* Estilo para las secciones de vocabulario */
         .vocab-section {
             background-color: #FEFCE8; /* Fondo suave para vocabulario */
@@ -213,6 +233,17 @@
                 padding: 0.5rem 0.2rem;
             }
         }
+
+        /* Estilos específicos para el juego Verdadero o Falso */
+        .true-false-options {
+            display: flex;
+            gap: 1rem; /* Aumenta el espacio entre los botones */
+            flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
+        }
+        .true-false-options button {
+             margin-right: 0 !important; /* Elimina el margen derecho si estaba aplicado globalmente */
+        }
+
     </style>
 </head>
 <body class="leading-relaxed">
@@ -236,16 +267,16 @@
                 <span class="icon-md">💡</span> ¿Qué es el Present Simple?
             </h2>
             <p class="text-lg text-gray-700 mb-6 text-center max-w-2xl mx-auto">
-                El **Present Simple** es como tu "superpoder" para hablar de cosas que haces **siempre**, **todos los días**, o de cosas que **son verdad**. ¡Es ideal para contar tu rutina!
+                El <strong>Present Simple</strong> es un tiempo verbal que usamos para hablar de acciones o situaciones que ocurren regularmente, son hábitos o rutinas, o son verdades generales que no cambian. ¡Es perfecto para describir tu día a día o hechos que siempre son ciertos!
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div class="bg-blue-50 p-6 rounded-xl flex items-center shadow-md">
                     <span class="icon-md text-blue-600">✅</span>
-                    <p class="text-lg text-gray-800"><span class="font-bold text-blue-700">Tus Hábitos y Rutinas:</span> Lo que pasa regularmente.<br><span class="italic">"I <strong>brush</strong> my teeth every morning."</span> (Me cepillo los dientes todas las mañanas.)</p>
+                    <p class="text-lg text-gray-800"><span class="font-bold text-blue-700">Tus Hábitos y Rutinas:</span> Se refiere a actividades que realizas de forma repetida. Por ejemplo, "I <strong>brush</strong> my teeth every morning." (Me cepillo los dientes todas las mañanas.)</p>
                 </div>
                 <div class="bg-pink-50 p-6 rounded-xl flex items-center shadow-md">
                     <span class="icon-md text-pink-600">🧠</span>
-                    <p class="text-lg text-gray-800"><span class="font-bold text-pink-700">Hechos y Verdades:</span> Cosas que siempre son así.<br><span class="italic">"The Earth <strong>goes</strong> around the sun."</span> (La Tierra gira alrededor del sol.)</p>
+                    <p class="text-lg text-gray-800"><span class="font-bold text-pink-700">Hechos y Verdades Generales:</span> Para cosas que son universalmente ciertas o que no cambian. Por ejemplo, "The Earth <strong>goes</strong> around the sun." (La Tierra gira alrededor del sol.)</p>
                 </div>
             </div>
         </section>
@@ -256,7 +287,7 @@
                 <span class="icon-md">🛠️</span> ¡Armando Oraciones con Present Simple!
             </h2>
             <p class="text-lg text-gray-700 mb-8 text-center max-w-xl mx-auto">
-                Para armar una oración, ¡vas a usar al **sujeto** (quién hace la acción) y el **verbo** (la acción)!
+                Para construir una oración en Present Simple, siempre vas a necesitar un <strong>sujeto</strong> (quién realiza la acción) y un <strong>verbo</strong> (la acción en sí). La clave está en la forma del verbo.
             </p>
 
             <!-- Afirmativo -->
@@ -265,7 +296,7 @@
                     <span class="icon-md">➕</span> Oraciones Afirmativas: ¡Haciendo Cosas!
                 </h3>
                 <p class="text-lg text-gray-700 mb-4">
-                    ¡Acordate de la **"S" mágica**! Solo con **He, She, It** (él, ella, eso/ello) le agregamos una <strong>-S</strong> al verbo. Con los demás, el verbo va normal.
+                    Acordate de la <strong>"S" mágica</strong>. Solo con <strong>He, She, It</strong> (él, ella, eso/ello) le agregamos una -S al verbo. Con los demás, el verbo va normal.
                 </p>
                 <div class="overflow-x-auto">
                     <table class="w-full custom-table rounded-lg overflow-hidden">
@@ -292,8 +323,8 @@
                 </div>
                 <p class="text-sm text-gray-600 mt-4 italic">
                     <strong>¡Atención con la -S!</strong>
-                    <br> Si el verbo termina en -s, -sh, -ch, -x, -z, -o ➡️ sumá **-es** (ej. go ➡️ goes, wash ➡️ washes).
-                    <br> Si termina en consonante + y ➡️ cambiá la "y" por "i" y sumá **-es** (ej. study ➡️ studies).
+                    <br> Si el verbo termina en -s, -sh, -ch, -x, -z, -o ➡️ sumá <strong>-es</strong> (ej. go ➡️ goes, wash ➡️ washes).
+                    <br> Si termina en consonante + y ➡️ cambiá la "y" por "i" y sumá <strong>-es</strong> (ej. study ➡️ studies).
                     <br> ¡El resto solo lleva -s! (ej. play ➡️ plays, eat ➡️ eats).
                 </p>
             </div>
@@ -304,7 +335,7 @@
                     <span class="icon-md">➖</span> Oraciones Negativas: ¡Decimos "No"!
                 </h3>
                 <p class="text-lg text-gray-700 mb-4">
-                    Para decir que NO hacés algo, usamos <strong>don't</strong> o <strong>doesn't</strong>. ¡Lo importante es que el verbo **siempre va en su forma normal** después de estas palabras!
+                    Para expresar que NO haces algo o que algo NO es cierto, necesitamos usar unas palabras auxiliares: <strong>don't</strong> (que es la contracción de "do not") o <strong>doesn't</strong> (contracción de "does not"). Lo más importante aquí es que el verbo que sigue a <strong>don't</strong> o <strong>doesn't</strong> siempre va en su forma base, ¡nunca lleva la "S" mágica!
                 </p>
                 <div class="overflow-x-auto">
                     <table class="w-full custom-table rounded-lg overflow-hidden">
@@ -333,7 +364,7 @@
                     </table>
                 </div>
                 <p class="text-lg text-gray-800 mt-4 italic">
-                    <span class="font-bold text-blue-700">Recordatorio:</span> Después de <strong>don't</strong> y <strong>doesn't</strong>, el verbo va **sin la -S**, ¡siempre en su forma base!
+                    <span class="font-bold text-blue-700">Recordatorio:</span> Después de <strong>don't</strong> y <strong>doesn't</strong>, el verbo va sin la -S, ¡siempre en su forma base! Esto es porque la "S" ya está "incluida" en la palabra "doesn't".
                 </p>
             </div>
 
@@ -343,7 +374,7 @@
                     <span class="icon-md">❓</span> Oraciones Interrogativas: ¡Preguntando!
                 </h3>
                 <p class="text-lg text-gray-700 mb-4">
-                    Para hacer preguntas, empezamos con <strong>Do</strong> o <strong>Does</strong>. ¡El verbo también va en su forma normal!
+                    Para hacer preguntas en Present Simple, las palabras auxiliares <strong>Do</strong> o <strong>Does</strong> van al principio de la oración. Al igual que en las oraciones negativas, el verbo que acompaña a <strong>Do</strong> o <strong>Does</strong> siempre va en su forma base, ¡sin la "S" mágica!
                 </p>
                 <div class="overflow-x-auto">
                     <table class="w-full custom-table rounded-lg overflow-hidden">
@@ -366,13 +397,13 @@
                                 <td><span class="font-bold text-red-500">Does</span></td>
                                 <td><strong>he, she, it</strong></td>
                                 <td><span class="font-bold text-red-500">live, go, listen</span></td>
-                                <strong>Does</strong> he <strong>go</strong> to this school? <br> <strong>Does</strong> she <strong>listen</strong> to rock?</td>
+                                <td><strong>Does</strong> he <strong>go</strong> to this school? <br> <strong>Does</strong> she <strong>listen</strong> to rock?</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-lg text-gray-800 mt-4 italic">
-                    <span class="font-bold text-blue-700">¡Súper Importante!</span> Después de <strong>Do</strong> y <strong>Does</strong>, el verbo **NO LLEVA LA -S**, ¡siempre en su forma base!
+                    <span class="font-bold text-blue-700">¡Súper Importante!</span> Después de <strong>Do</strong> y <strong>Does</strong>, el verbo no lleva la -S, ¡siempre en su forma base!
                 </p>
             </div>
         </section>
@@ -526,28 +557,59 @@
                 <p><strong>Instrucción:</strong> Leé cada oración y elegí la forma correcta del verbo para completarla. ¡Atención a la "S" mágica! Usamos verbos de rutinas.</p>
                 <div class="text-left mt-4">
                     <div class="choice-question">
-                        <p class="font-semibold text-gray-800">1. My sister ______ (watch / watches) TV every evening.</p>
+                        <p class="font-semibold text-gray-800">1. My sister <span id="q1-feedback" class="feedback-message"></span> (watch / watches) TV every evening.</p>
                         <div class="choice-options">
-                            <button onclick="alert('¡Incorrecto! Con \'sister\' (she) va la -S.')">watch</button>
-                            <button onclick="alert('¡Correcto! 💪')">watches</button>
+                            <button onclick="checkChoice(this, 'q1', false)">watch</button>
+                            <button onclick="checkChoice(this, 'q1', true)">watches</button>
                         </div>
                     </div>
                     <div class="choice-question">
-                        <p class="font-semibold text-gray-800">2. We ______ (go / goes) to school on <strong>Mondays</strong>.</p>
+                        <p class="font-semibold text-gray-800">2. We <span id="q2-feedback" class="feedback-message"></span> (go / goes) to school on <strong>Mondays</strong>.</p>
                         <div class="choice-options">
-                            <button onclick="alert('¡Correcto! 💪')">go</button>
-                            <button onclick="alert('¡Incorrecto! Con \'we\' no va la -S.')">goes</button>
+                            <button onclick="checkChoice(this, 'q2', true)">go</button>
+                            <button onclick="checkChoice(this, 'q2', false)">goes</button>
                         </div>
                     </div>
                     <div class="choice-question">
-                        <p class="font-semibold text-gray-800">3. My dad ______ (brush / brushes) his teeth after <strong>dinner</strong>.</p>
+                        <p class="font-semibold text-gray-800">3. My dad <span id="q3-feedback" class="feedback-message"></span> (brush / brushes) his teeth after <strong>dinner</strong>.</p>
                         <div class="choice-options">
-                            <button onclick="alert('¡Incorrecto! Con \'dad\' (he) va la -S.')">brush</button>
-                            <button onclick="alert('¡Correcto! 💪')">brushes</button>
+                            <button onclick="checkChoice(this, 'q3', false)">brush</button>
+                            <button onclick="checkChoice(this, 'q3', true)">brushes</button>
                         </div>
                     </div>
                 </div>
                 <p class="mt-4 text-sm"><em>(Hacé clic en la opción que creas correcta. ¡Podés seguir practicando cuantas veces quieras!)</em></p>
+            </div>
+
+            <!-- Juego 3: Completar Espacios en Blanco -->
+            <div class="game-box mb-8">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">📝</span> Juego 3: ¡Completa los Espacios!
+                </h3>
+                <p><strong>Instrucción:</strong> Escribe la forma correcta del verbo entre paréntesis en cada espacio en blanco.</p>
+                <div id="fill-in-blanks-questions" class="text-left mt-4 flex flex-col items-start">
+                    <!-- Preguntas generadas dinámicamente aquí -->
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="checkFillInBlanksBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mr-2">Comprobar</button>
+                    <button id="resetFillInBlanksBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">Reiniciar</button>
+                </div>
+                <p id="fill-in-blanks-message" class="feedback-message mt-2 text-center"></p>
+            </div>
+
+            <!-- Juego 4: Verdadero o Falso -->
+            <div class="game-box mb-8">
+                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
+                    <span class="icon-md">💡</span> Juego 4: ¡Verdadero o Falso!
+                </h3>
+                <p><strong>Instrucción:</strong> Lee cada afirmación y decide si es verdadera o falsa según lo que aprendiste del Present Simple.</p>
+                <div id="true-false-questions" class="text-left mt-4 flex flex-col items-start">
+                    <!-- Preguntas generadas dinámicamente aquí -->
+                </div>
+                <div class="mt-4 text-center">
+                    <button id="resetTrueFalseBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">Reiniciar</button>
+                </div>
+                <p id="true-false-message" class="feedback-message mt-2 text-center"></p>
             </div>
 
         </section>
@@ -595,28 +657,28 @@
             { word: "WATCHTV", hint: "Lo que hacés para ver tu serie favorita." },
             { word: "LISTENTOMUSIC", hint: "Lo que hacés con auriculares para relajarte." },
             { word: "READABOOK", hint: "Una actividad para sumergirte en historias." },
-            { word: "GOTO BED", hint: "Lo que hacés al final del día para dormir." },
+            { word: "GOTOBED", hint: "Lo que hacés al final del día para dormir." },
             { word: "SLEEP", hint: "Lo que hacés durante la noche para descansar." },
             { word: "GOTOTHEPARK", hint: "Un lugar verde donde jugás al aire libre." },
             { word: "VISITFRIENDS", hint: "Ir a ver a tus compañeros para pasar el rato." }
         ];
 
         let chosenWord = ''; // La palabra a adivinar
-        let guessedWord = []; // La palabra con los espacios y letras adivinadas
-        let lives = 7; // Número de vidas del ahorcado
-        let correctGuesses = 0; // Contador de letras correctas
+        let guessedWord = []; // La palabra con los espacios y letras adivinadas (ej: ['_', '_', 'A', '_'])
+        let lives = 7; // Número de vidas del ahorcado (errores permitidos)
         let incorrectLetters = []; // Letras incorrectas adivinadas
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Abecedario para los botones
 
         const hangmanDrawingArea = document.getElementById('hangman-drawing-area');
         const wordDisplay = document.getElementById('word-display');
+        const wordHint = document.getElementById('word-hint');
         const alphabetButtonsContainer = document.getElementById('alphabet-buttons');
         const gameMessage = document.getElementById('game-message');
         const resetButton = document.getElementById('reset-button');
-        const wordHint = document.getElementById('word-hint');
 
-        // Dibujos del ahorcado para cada vida perdida
-        const hangmanStages = [
-            `<pre>
+        // Dibujos del ahorcado según las vidas restantes
+        const hangmanDrawings = [
+            `
   +---+
   |   |
       |
@@ -624,26 +686,26 @@
       |
       |
 ========
-</pre>`, // 7 vidas
-            `<pre>
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-========
-</pre>`, // 6 vidas
-            `<pre>
+            `, // 7 vidas
+            `
   +---+
   |   |
   O   |
+      |
+      |
+      |
+========
+            `, // 6 vidas
+            `
+  +---+
+  |   |
+  O   |
   |   |
       |
       |
 ========
-</pre>`, // 5 vidas
-            `<pre>
+            `, // 5 vidas
+            `
   +---+
   |   |
   O   |
@@ -651,8 +713,8 @@
       |
       |
 ========
-</pre>`, // 4 vidas
-            `<pre>
+            `, // 4 vidas
+            `
   +---+
   |   |
   O   |
@@ -660,8 +722,8 @@
       |
       |
 ========
-</pre>`, // 3 vidas
-            `<pre>
+            `, // 3 vidas
+            `
   +---+
   |   |
   O   |
@@ -669,8 +731,8 @@
  /    |
       |
 ========
-</pre>`, // 2 vidas
-            `<pre>
+            `, // 2 vidas
+            `
   +---+
   |   |
   O   |
@@ -678,126 +740,400 @@
  / \\  |
       |
 ========
-</pre>`, // 1 vida
-            `<pre>
+            `, // 1 vida
+            `
   +---+
   |   |
   O   |
  /|\\  |
  / \\  |
-=========
- ¡GAME OVER!
-</pre>` // 0 vidas - GAME OVER
+(x x) |  <- GAME OVER!
+========
+            ` // 0 vidas (muerto)
         ];
 
-        // Función para inicializar o reiniciar el juego
-        function initGame() {
-            // Reiniciar variables
+        /**
+         * Inicializa o reinicia el juego del Ahorcado.
+         */
+        function startGame() {
+            // Reiniciar estado del juego
             lives = 7;
-            correctGuesses = 0;
-            incorrectLetters = [];
+            incorrectLetters = []; // Reiniciar letras incorrectas
             gameMessage.textContent = '';
-            resetButton.style.display = 'none'; // Ocultar botón de reinicio al inicio
+            resetButton.classList.add('hidden'); // Ocultar botón de reinicio
+            updateHangmanDrawing(); // Mostrar el ahorcado inicial
 
             // Elegir una palabra aleatoria
             const randomIndex = Math.floor(Math.random() * hangmanWords.length);
-            const selectedItem = hangmanWords[randomIndex];
-            chosenWord = selectedItem.word.toUpperCase().replace(/\s/g, ''); // Eliminar espacios y pasar a mayúsculas
-            wordHint.textContent = `Pista: (${selectedItem.hint})`;
+            chosenWord = hangmanWords[randomIndex].word.toUpperCase();
+            wordHint.textContent = `Pista: (${hangmanWords[randomIndex].hint})`;
 
-            // Inicializar la palabra con guiones bajos
+            // Inicializar la palabra a adivinar con guiones bajos
             guessedWord = Array(chosenWord.length).fill('_');
+            wordDisplay.textContent = guessedWord.join(' ');
 
-            // Actualizar el dibujo del ahorcado y la palabra
-            updateHangmanDrawing();
-            updateWordDisplay();
-
-            // Generar y habilitar los botones del abecedario
+            // Generar los botones del abecedario
             generateAlphabetButtons();
         }
 
-        // Función para actualizar el dibujo del ahorcado
-        function updateHangmanDrawing() {
-            hangmanDrawingArea.innerHTML = hangmanStages[7 - lives];
-        }
-
-        // Función para actualizar la visualización de la palabra (guiones y letras adivinadas)
-        function updateWordDisplay() {
-            wordDisplay.textContent = guessedWord.join(' ');
-        }
-
-        // Función para generar los botones del abecedario
+        /**
+         * Genera los botones para cada letra del abecedario.
+         */
         function generateAlphabetButtons() {
             alphabetButtonsContainer.innerHTML = ''; // Limpiar botones anteriores
-            for (let i = 65; i <= 90; i++) { // Código ASCII para A-Z
-                const letter = String.fromCharCode(i);
+            for (let i = 0; i < alphabet.length; i++) {
+                const letter = alphabet[i];
                 const button = document.createElement('button');
-                button.textContent = letter;
                 button.classList.add('alpha-button');
+                button.textContent = letter;
                 button.addEventListener('click', () => handleGuess(letter, button));
                 alphabetButtonsContainer.appendChild(button);
             }
         }
 
-        // Función para manejar el clic en una letra
+        /**
+         * Maneja la lógica cuando el usuario adivina una letra.
+         * @param {string} letter - La letra adivinada por el usuario.
+         * @param {HTMLElement} button - El botón de la letra que fue presionado.
+         */
         function handleGuess(letter, button) {
-            if (button.disabled) return; // Si el botón ya está deshabilitado, no hacer nada
+            if (button.disabled) return; // No hacer nada si el botón ya está deshabilitado
 
-            button.disabled = true; // Deshabilitar el botón después de clic
-            button.classList.add('used'); // Marcar como usado con estilo
+            button.disabled = true; // Deshabilitar el botón después de usarlo
 
-            let found = false;
-            for (let i = 0; i < chosenWord.length; i++) {
-                if (chosenWord[i] === letter) {
-                    guessedWord[i] = letter;
-                    found = true;
-                    correctGuesses++;
+            // Convertir la palabra elegida a un array para facilitar la búsqueda
+            const chosenWordArray = chosenWord.split('');
+            let foundLetter = false;
+
+            for (let i = 0; i < chosenWordArray.length; i++) {
+                if (chosenWordArray[i] === letter) {
+                    guessedWord[i] = letter; // Revelar la letra en la palabra adivinada
+                    foundLetter = true;
                 }
             }
 
-            if (found) {
-                updateWordDisplay();
-                gameMessage.style.color = '#10B981'; // Verde para acierto
-                gameMessage.textContent = `¡Bien! La letra "${letter}" es correcta.`;
-            } else {
-                lives--;
-                updateHangmanDrawing();
+            wordDisplay.textContent = guessedWord.join(' '); // Actualizar la visualización de la palabra
+
+            if (!foundLetter) {
+                lives--; // Restar una vida si la letra es incorrecta
                 incorrectLetters.push(letter);
-                gameMessage.style.color = '#C53030'; // Rojo para error
-                gameMessage.textContent = `¡Oh no! La letra "${letter}" es incorrecta. Te quedan ${lives} vidas.`;
+                updateHangmanDrawing(); // Actualizar el dibujo del ahorcado
+                gameMessage.textContent = `¡Incorrecto! Te quedan ${lives} vidas. Letras incorrectas: ${incorrectLetters.join(', ')}`;
+                gameMessage.style.color = '#C53030'; // Rojo para incorrecto
+            } else {
+                gameMessage.textContent = '¡Correcto!';
+                gameMessage.style.color = '#38A169'; // Verde para correcto
             }
 
-            checkGameStatus();
+            checkGameStatus(); // Verificar si el juego ha terminado
         }
 
-        // Función para verificar el estado del juego (ganar/perder)
+        /**
+         * Actualiza el dibujo del ahorcado según las vidas restantes.
+         */
+        function updateHangmanDrawing() {
+            const drawingIndex = 7 - lives; // El índice va de 0 (7 vidas) a 7 (0 vidas)
+            hangmanDrawingArea.querySelector('pre').textContent = hangmanDrawings[drawingIndex];
+        }
+
+        /**
+         * Verifica el estado actual del juego (ganado o perdido).
+         */
         function checkGameStatus() {
-            if (lives === 0) {
-                gameMessage.style.color = '#C53030';
-                gameMessage.textContent = `¡Perdiste! 😵 La palabra era: ${chosenWord}`;
-                disableAlphabetButtons();
-                resetButton.style.display = 'block';
-            } else if (guessedWord.join('') === chosenWord) {
-                gameMessage.style.color = '#1E40AF'; // Azul para ganar
-                gameMessage.textContent = `¡Felicitaciones! 🎉 Adivinaste la palabra: ${chosenWord}`;
-                disableAlphabetButtons();
-                resetButton.style.display = 'block';
+            if (guessedWord.join('') === chosenWord) {
+                gameMessage.textContent = `¡Felicitaciones! ¡Adivinaste la palabra: ${chosenWord}! 🎉`;
+                gameMessage.style.color = '#2563EB'; // Azul para ganar
+                disableAllAlphabetButtons();
+                resetButton.classList.remove('hidden');
+            } else if (lives === 0) {
+                gameMessage.textContent = `¡GAME OVER! La palabra era: ${chosenWord}. 😭`;
+                gameMessage.style.color = '#C53030'; // Rojo para perder
+                disableAllAlphabetButtons();
+                resetButton.classList.remove('hidden');
             }
         }
 
-        // Función para deshabilitar todos los botones del abecedario al finalizar el juego
-        function disableAlphabetButtons() {
+        /**
+         * Deshabilita todos los botones del abecedario.
+         */
+        function disableAllAlphabetButtons() {
             const buttons = alphabetButtonsContainer.querySelectorAll('.alpha-button');
             buttons.forEach(button => {
                 button.disabled = true;
             });
         }
 
-        // Event listener para el botón de reinicio
-        resetButton.addEventListener('click', initGame);
+        // --- Lógica del Juego "Elige la Opción Correcta" ---
+        /**
+         * Verifica la opción elegida en las preguntas.
+         * @param {HTMLElement} button - El botón que fue presionado.
+         * @param {string} questionId - El ID de la pregunta para ubicar el feedback (ej: 'q1').
+         * @param {boolean} isCorrect - Indica si la opción seleccionada es la correcta.
+         */
+        function checkChoice(button, questionId, isCorrect) {
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            // Deshabilitar todos los botones de la pregunta después de la selección
+            const optionsContainer = button.closest('.choice-options');
+            Array.from(optionsContainer.children).forEach(btn => btn.disabled = true);
 
-        // Iniciar el juego cuando la página carga
-        document.addEventListener('DOMContentLoaded', initGame);
+            if (isCorrect) {
+                feedbackElement.textContent = '¡Correcto! 💪';
+                feedbackElement.classList.add('feedback-correct');
+                feedbackElement.classList.remove('feedback-incorrect');
+            } else {
+                feedbackElement.textContent = '¡Incorrecto! Intenta de nuevo. 🤔';
+                feedbackElement.classList.add('feedback-incorrect');
+                feedbackElement.classList.remove('feedback-correct');
+            }
+        }
+
+        // --- Lógica del Juego "Completar Espacios en Blanco" ---
+        const fillInBlanksData = [
+            { text: "My mom ______ (cook) dinner every day.", answer: "COOKS" },
+            { text: "I ______ (read) a book before bed.", answer: "READ" },
+            { text: "They ______ (not play) soccer on Sundays.", answer: "DON'T PLAY" },
+            { text: "He ______ (go) to the gym three times a week.", answer: "GOES" },
+            { text: "She ______ (not study) on weekends.", answer: "DOESN'T STUDY" },
+            { text: "We ______ (live) in a big city.", answer: "LIVE" },
+            { text: "The sun ______ (rise) in the east.", answer: "RISES" },
+            { text: "My brother ______ (watch) cartoons every morning.", answer: "WATCHES" },
+            { text: "Dogs ______ (love) to play.", answer: "LOVE" },
+            { text: "My cat ______ (sleep) a lot.", answer: "SLEEPS" }
+        ];
+
+        const fillInBlanksQuestionsContainer = document.getElementById('fill-in-blanks-questions');
+        const checkFillInBlanksBtn = document.getElementById('checkFillInBlanksBtn');
+        const resetFillInBlanksBtn = document.getElementById('resetFillInBlanksBtn');
+        const fillInBlanksMessage = document.getElementById('fill-in-blanks-message');
+
+        /**
+         * Genera las preguntas para el juego de Completar Espacios en Blanco.
+         */
+        function generateFillInBlanksQuestions() {
+            fillInBlanksQuestionsContainer.innerHTML = ''; // Limpiar preguntas anteriores
+            fillInBlanksMessage.textContent = ''; // Limpiar mensaje de feedback
+
+            fillInBlanksData.forEach((data, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('fill-in-blank-question', 'w-full');
+                questionDiv.dataset.questionIndex = index;
+
+                const parts = data.text.split('______');
+                const pElement = document.createElement('p');
+                pElement.classList.add('font-semibold', 'text-gray-800');
+
+                pElement.textContent = parts[0]; // Primera parte de la oración
+
+                const inputElement = document.createElement('input');
+                inputElement.type = 'text';
+                inputElement.maxLength = data.answer.length + 2; // Suficiente espacio para la respuesta
+                inputElement.classList.add('border-b-2', 'border-blue-400', 'bg-transparent', 'text-blue-800', 'text-center', 'font-semibold', 'outline-none', 'focus:border-blue-600', 'transition-colors', 'duration-200');
+                inputElement.style.width = `${data.answer.length * 10 + 30}px`; // Ajustar el ancho del input dinámicamente
+                pElement.appendChild(inputElement);
+
+                if (parts.length > 1) {
+                    pElement.appendChild(document.createTextNode(parts[1])); // Segunda parte (con el verbo entre paréntesis)
+                }
+                
+                const feedbackSpan = document.createElement('span');
+                feedbackSpan.id = `fib-feedback-${index}`;
+                feedbackSpan.classList.add('feedback-message');
+                pElement.appendChild(feedbackSpan);
+
+                questionDiv.appendChild(pElement);
+                fillInBlanksQuestionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        /**
+         * Comprueba las respuestas del juego de Completar Espacios en Blanco.
+         */
+        function checkFillInBlanks() {
+            let allCorrect = true;
+            fillInBlanksData.forEach((data, index) => {
+                const inputElement = fillInBlanksQuestionsContainer.querySelector(`div[data-question-index="${index}"] input`);
+                const feedbackElement = document.getElementById(`fib-feedback-${index}`);
+                
+                if (inputElement) {
+                    const userAnswer = inputElement.value.toUpperCase().trim();
+                    if (userAnswer === data.answer) {
+                        feedbackElement.textContent = '¡Correcto! 💪';
+                        feedbackElement.classList.add('feedback-correct');
+                        feedbackElement.classList.remove('feedback-incorrect');
+                        inputElement.disabled = true; // Deshabilitar input si es correcto
+                    } else {
+                        feedbackElement.textContent = '¡Incorrecto! Intenta de nuevo. 🤔';
+                        feedbackElement.classList.add('feedback-incorrect');
+                        feedbackElement.classList.remove('feedback-correct');
+                        allCorrect = false;
+                    }
+                }
+            });
+
+            if (allCorrect) {
+                fillInBlanksMessage.textContent = "¡Todas las respuestas son correctas! ¡Excelente trabajo! 🎉";
+                fillInBlanksMessage.classList.add('feedback-correct');
+                fillInBlanksMessage.classList.remove('feedback-incorrect');
+            } else {
+                fillInBlanksMessage.textContent = "Revisa tus respuestas, hay algunos errores. ¡Sigue practicando! 😉";
+                fillInBlanksMessage.classList.add('feedback-incorrect');
+                fillInBlanksMessage.classList.remove('feedback-correct');
+            }
+        }
+
+        /**
+         * Reinicia el juego de Completar Espacios en Blanco.
+         */
+        function resetFillInBlanks() {
+            generateFillInBlanksQuestions();
+            const inputs = fillInBlanksQuestionsContainer.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.disabled = false; // Habilitar inputs nuevamente
+            });
+        }
+
+        // --- Lógica del Juego "Verdadero o Falso" ---
+        const trueFalseData = [
+            { question: "Con 'He', 'She', 'It' el verbo en Present Simple siempre lleva '-S' o '-ES' en afirmativo.", correct: true },
+            { question: "Para negar con 'I', 'You', 'We', 'They' usamos 'doesn't'.", correct: false },
+            { question: "En preguntas con 'Do' o 'Does', el verbo siempre va en su forma base (sin -S).", correct: true },
+            { question: "El Present Simple se usa para hablar de acciones que están ocurriendo ahora mismo.", correct: false },
+            { question: "Los verbos que terminan en -y precedida de vocal (ej. play) cambian la 'y' por 'i' antes de agregar '-es' para 'He, She, It'.", correct: false } // 'play' -> 'plays', doesn't change 'y'
+        ];
+
+        const trueFalseQuestionsContainer = document.getElementById('true-false-questions');
+        const resetTrueFalseBtn = document.getElementById('resetTrueFalseBtn');
+        const trueFalseMessage = document.getElementById('true-false-message');
+
+        /**
+         * Genera las preguntas para el juego de Verdadero o Falso.
+         */
+        function generateTrueFalseQuestions() {
+            trueFalseQuestionsContainer.innerHTML = ''; // Limpiar preguntas anteriores
+            trueFalseMessage.textContent = ''; // Limpiar mensaje de feedback
+
+            trueFalseData.forEach((data, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('true-false-question', 'w-full');
+                questionDiv.dataset.questionIndex = index;
+
+                const pElement = document.createElement('p');
+                pElement.classList.add('font-semibold', 'text-gray-800');
+                pElement.textContent = `${index + 1}. ${data.question}`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('true-false-options', 'mt-2'); // Agregado flex y gap en CSS
+
+                const trueButton = document.createElement('button');
+                trueButton.textContent = 'Verdadero';
+                trueButton.onclick = () => checkTrueFalse(trueButton, index, true, data.correct);
+                optionsDiv.appendChild(trueButton);
+
+                const falseButton = document.createElement('button');
+                falseButton.textContent = 'Falso';
+                falseButton.onclick = () => checkTrueFalse(falseButton, index, false, data.correct);
+                optionsDiv.appendChild(falseButton);
+
+                const feedbackSpan = document.createElement('span');
+                feedbackSpan.id = `tf-feedback-${index}`;
+                feedbackSpan.classList.add('feedback-message');
+                optionsDiv.appendChild(feedbackSpan);
+
+                questionDiv.appendChild(pElement);
+                questionDiv.appendChild(optionsDiv);
+                trueFalseQuestionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        /**
+         * Comprueba la respuesta del juego de Verdadero o Falso.
+         * @param {HTMLElement} button - El botón que fue presionado.
+         * @param {number} index - El índice de la pregunta.
+         * @param {boolean} userAnswer - La respuesta del usuario (true para Verdadero, false para Falso).
+         * @param {boolean} correctAnswer - La respuesta correcta de la pregunta.
+         */
+        function checkTrueFalse(button, index, userAnswer, correctAnswer) {
+            const feedbackElement = document.getElementById(`tf-feedback-${index}`);
+            const optionsContainer = button.closest('.true-false-options');
+            Array.from(optionsContainer.children).forEach(btn => {
+                if (btn.tagName === 'BUTTON') { // Deshabilitar solo los botones, no el span de feedback
+                    btn.disabled = true;
+                }
+            });
+
+            if (userAnswer === correctAnswer) {
+                feedbackElement.textContent = '¡Correcto! 💪';
+                feedbackElement.classList.add('feedback-correct');
+                feedbackElement.classList.remove('feedback-incorrect');
+            } else {
+                feedbackElement.textContent = `¡Incorrecto! La respuesta correcta era: ${correctAnswer ? 'Verdadero' : 'Falso'}. 🤔`;
+                feedbackElement.classList.add('feedback-incorrect');
+                feedbackElement.classList.remove('feedback-correct');
+            }
+            // Después de responder, mostrar el mensaje general si todas están respondidas.
+            checkAllTrueFalseAnswered();
+        }
+
+        /**
+         * Verifica si todas las preguntas de Verdadero o Falso han sido respondidas.
+         */
+        function checkAllTrueFalseAnswered() {
+            const totalQuestions = trueFalseData.length;
+            let answeredQuestions = 0;
+            let correctCount = 0;
+
+            trueFalseData.forEach((data, index) => {
+                const feedbackElement = document.getElementById(`tf-feedback-${index}`);
+                if (feedbackElement && feedbackElement.textContent !== '') {
+                    answeredQuestions++;
+                    if (feedbackElement.classList.contains('feedback-correct')) {
+                        correctCount++;
+                    }
+                }
+            });
+
+            if (answeredQuestions === totalQuestions) {
+                if (correctCount === totalQuestions) {
+                    trueFalseMessage.textContent = `¡Has respondido todas correctamente! ¡Increíble! 🎉`;
+                    trueFalseMessage.classList.add('feedback-correct');
+                    trueFalseMessage.classList.remove('feedback-incorrect');
+                } else {
+                    trueFalseMessage.textContent = `Has respondido ${correctCount} de ${totalQuestions} correctamente. ¡Sigue practicando! �`;
+                    trueFalseMessage.classList.add('feedback-incorrect');
+                    trueFalseMessage.classList.remove('feedback-correct');
+                }
+            }
+        }
+
+        /**
+         * Reinicia el juego de Verdadero o Falso.
+         */
+        function resetTrueFalse() {
+            generateTrueFalseQuestions();
+        }
+
+        // Inicializar todos los juegos al cargar la página
+        window.onload = function() {
+            startGame(); // Inicia el juego del Ahorcado
+            generateFillInBlanksQuestions(); // Genera las preguntas de Completar Espacios
+            generateTrueFalseQuestions(); // Genera las preguntas de Verdadero o Falso
+
+            // Configurar los botones de reinicio y comprobación
+            resetButton.addEventListener('click', startGame); // Ahorcado
+            checkFillInBlanksBtn.addEventListener('click', checkFillInBlanks); // Completar Espacios
+            resetFillInBlanksBtn.addEventListener('click', resetFillInBlanks); // Completar Espacios
+            resetTrueFalseBtn.addEventListener('click', resetTrueFalse); // Verdadero o Falso
+
+            // Función para simular reproducción de audiolibro (placeholder)
+            function playAmbientAudio() {
+                console.log("Simulando reproducción de audiolibro para ambientar la clase.");
+                // En un entorno real, aquí cargarías un archivo de audio o usarías una API de audio.
+                // Por la limitación de no usar URLs externas de audio, esto es solo un placeholder.
+            }
+            playAmbientAudio();
+        };
     </script>
 </body>
 </html>
+�
