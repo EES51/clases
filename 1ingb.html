@@ -90,55 +90,6 @@
             margin-bottom: 0.5rem;
             border-radius: 0.5rem;
         }
-        /* Estilos específicos para la actividad de unir con flechas */
-        .match-activity-grid {
-            display: grid;
-            grid-template-columns: 1fr 50px 1fr; /* Columna para el sujeto, espacio para la flecha, columna para el verbo */
-            gap: 10px;
-            align-items: center;
-            font-size: 1.1rem;
-            text-align: left;
-            max-width: 400px; /* Ancho máximo para la actividad */
-            margin: 1.5rem auto;
-            padding: 1rem;
-            background-color: #E0F2FE;
-            border-radius: 0.75rem;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .match-activity-grid .left-col,
-        .match-activity-grid .right-col {
-            background-color: #DBEAFE;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            color: #1E3A8A;
-        }
-        .match-activity-grid .arrow-col {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #60A5FA;
-        }
-
-        /* Estilos para "Click y Revela" */
-        .reveal-question {
-            background-color: #FFFAE6;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border: 2px solid #FCD34D;
-            margin-bottom: 1rem;
-        }
-        .reveal-answer {
-            background-color: #D1FAE5;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            margin-top: 0.5rem;
-            color: #065F46;
-            font-weight: bold;
-            display: none; /* Se oculta por defecto */
-        }
-        .reveal-button {
-            @apply bg-yellow-500 text-white font-bold py-2 px-4 rounded-full mt-2 hover:bg-yellow-600 transition-colors duration-200;
-        }
 
         /* Estilos para "Elige la Opción Correcta" */
         .choice-question {
@@ -190,6 +141,77 @@
         }
         .vocab-table tr:nth-child(even) {
             background-color: #FFFBEB; /* Un poco de contraste para filas alternas */
+        }
+
+        /* Estilos para el Ahorcado (Hangman) */
+        #hangman-drawing-area {
+            font-family: 'Courier New', monospace; /* Fuente monoespaciada para el dibujo */
+            white-space: pre; /* Mantiene los espacios en blanco y saltos de línea */
+            text-align: center;
+            font-size: 1.2rem;
+            color: #2D3748;
+            margin-bottom: 1.5rem;
+            background-color: #F3F4F6; /* Fondo ligero para el dibujo */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-height: 150px; /* Asegura espacio para el dibujo */
+        }
+        #word-display {
+            font-size: 2.5rem; /* Más grande para la palabra */
+            font-weight: bold;
+            letter-spacing: 0.8rem; /* Espaciado entre letras */
+            margin-bottom: 1.5rem;
+            color: #38A169; /* Verde para la palabra oculta */
+            min-height: 40px; /* Evita CLS */
+        }
+        #alphabet-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30px, 1fr)); /* Autoajustar y tamaño mínimo */
+            gap: 0.4rem; /* Menor espacio entre letras */
+            max-width: 600px; /* Más ancho para el abecedario */
+            margin: 0 auto;
+        }
+        .alpha-button {
+            background-color: #63B3ED; /* Azul claro para las letras */
+            color: white;
+            padding: 0.6rem 0.3rem; /* Menor padding */
+            border-radius: 0.3rem; /* Menor redondeado */
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            font-size: 1rem; /* Tamaño de fuente para las letras */
+        }
+        .alpha-button:hover:not([disabled]) {
+            background-color: #4299E1; /* Azul más oscuro al pasar el mouse */
+            transform: scale(1.05);
+        }
+        .alpha-button:disabled {
+            background-color: #A0AEC0; /* Gris para letras usadas o deshabilitadas */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        #game-message {
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #C53030; /* Rojo para mensajes de error/pérdida */
+            min-height: 30px; /* Evita CLS */
+        }
+        #reset-button {
+            @apply bg-purple-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-purple-700 transition-all duration-300 ease-in-out transform hover:scale-105 mt-6;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            #word-display {
+                font-size: 1.8rem;
+                letter-spacing: 0.5rem;
+            }
+            .alpha-button {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.2rem;
+            }
         }
     </style>
 </head>
@@ -456,34 +478,47 @@
                 <span class="icon-md">🎮</span> ¡Juguemos con el Present Simple y tu Rutina!
             </h2>
             <p class="text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">
-                Ahora que ya sabés cómo se arma y tenés vocabulario, ¡vamos a practicar con juegos divertidos!
+                ¡Ahora vamos a practicar con juegos que te desafían a usar el Present Simple!
             </p>
 
-            <!-- Juego 1: ¡Click y Revela la Respuesta! -->
+            <!-- Juego 1: ¡El Ahorcado Interactivo! -->
             <div class="game-box mb-8">
                 <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
-                    <span class="icon-md">💡</span> Juego 1: ¡Click y Revela la Respuesta!
+                    <span class="icon-md">☠️</span> Juego 1: ¡El Ahorcado del Vocabulario!
                 </h3>
-                <p><strong>Instrucción:</strong> Pensá la respuesta a cada pregunta en Present Simple, usando el vocabulario que aprendimos. Cuando estés listo/a, ¡hacé clic en el botón para ver si acertaste!</p>
-                <div class="text-left mt-4">
-                    <div class="reveal-question">
-                        <p class="font-semibold text-gray-800">1. What do you <strong>do</strong> on <strong>Saturdays</strong>?</p>
-                        <button class="reveal-button" onclick="document.getElementById('answer1').style.display='block'; this.style.display='none'">Revelar respuesta</button>
-                        <p id="answer1" class="reveal-answer"><strong>Respuesta posible:</strong> I <strong>play</strong> video games. (Juego videojuegos)</p>
+                <p><strong>Instrucción:</strong> ¡Adiviná la palabra oculta! Tenés 7 vidas (errores). Las palabras son del vocabulario de días, meses o rutinas que aprendimos.</p>
+                <p id="game-message" class="text-lg font-semibold mt-2 mb-4"></p>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                    <!-- Área de Dibujo del Ahorcado -->
+                    <div id="hangman-drawing-area" class="hangman-drawing">
+<pre>
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+========
+</pre>
                     </div>
-                    <div class="reveal-question">
-                        <p class="font-semibold text-gray-800">2. Does your mom <strong>work</strong> on <strong>Sundays</strong>?</p>
-                        <button class="reveal-button" onclick="document.getElementById('answer2').style.display='block'; this.style.display='none'">Revelar respuesta</button>
-                        <p id="answer2" class="reveal-answer"><strong>Respuesta posible:</strong> No, she <strong>doesn't work</strong> on Sundays. (No, ella no trabaja los domingos).</p>
-                    </div>
-                    <div class="reveal-question">
-                        <p class="font-semibold text-gray-800">3. When do you <strong>have lunch</strong>?</p>
-                        <button class="reveal-button" onclick="document.getElementById('answer3').style.display='block'; this.style.display='none'">Revelar respuesta</button>
-                        <p id="answer3" class="reveal-answer"><strong>Respuesta posible:</strong> I <strong>have lunch</strong> at 1:00 PM. (Almuerzo a la 1:00 PM).</p>
+
+                    <div class="flex flex-col items-center">
+                        <!-- Display de la palabra oculta -->
+                        <p id="word-display" class="word-blanks mb-4">_ _ _ _ _ _ _</p>
+                        <p id="word-hint" class="text-lg font-semibold text-gray-700">Pista: (es un día de la semana)</p>
+
+                        <!-- Botones del Abecedario -->
+                        <div id="alphabet-buttons" class="alphabet-grid mt-4">
+                            <!-- Los botones se generarán con JavaScript aquí -->
+                        </div>
+                        <button id="reset-button" class="mt-6 hidden">Jugar de Nuevo</button>
                     </div>
                 </div>
+                <p class="mt-6 text-sm"><em>(¡Hacé clic en las letras para adivinar! Cada error suma un paso al ahorcado.)</em></p>
             </div>
 
+            <!-- Juego 2: Elige la Opción Correcta -->
             <div class="game-box mb-8">
                 <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
                     <span class="icon-md">✨</span> Juego 2: ¡Elige la Opción Correcta!
@@ -515,40 +550,11 @@
                 <p class="mt-4 text-sm"><em>(Hacé clic en la opción que creas correcta. ¡Podés seguir practicando cuantas veces quieras!)</em></p>
             </div>
 
-
-            <div class="game-box mb-8">
-                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
-                    <span class="icon-md">🔗</span> Juego 3: ¡Arrastrá el Verbo Correcto a la Rutina!
-                </h3>
-                <p><strong>Instrucción:</strong> Imaginate que tenés que arrastrar la forma correcta del verbo (¡con o sin "S"!) y ponerla en la rutina diaria que corresponde.</p>
-                <p class="mt-4"><strong>Opciones de Verbos para arrastrar:</strong> **get up** / **gets up**, **study** / **studies**, **have** / **has**</p>
-                <ul class="text-left mt-4">
-                    <li>1. I ______ at 7:00 AM every <strong>weekday</strong>.</li>
-                    <li>2. My friend ______ English on <strong>Tuesdays</strong>.</li>
-                    <li>3. We ______ <strong>breakfast</strong> together on <strong>Sundays</strong>.</li>
-                </ul>
-                <p class="mt-4 text-sm"><em>(Este es un desafío de "arrastrar y soltar" virtual. ¡Usá los verbos que aprendiste!)</em></p>
-            </div>
-
-            <div class="game-box">
-                <h3 class="text-2xl font-bold mb-2 flex items-center justify-center">
-                    <span class="icon-md">🏹</span> Juego 4: ¡Uní las Parejas de Días y Verbos!
-                </h3>
-                <p><strong>Instrucción:</strong> Conectá cada persona o pronombre con la forma correcta del verbo y pensá en una rutina diaria. ¡Recordá la "S" mágica!</p>
-                <div class="match-activity-grid">
-                    <div class="left-col">I</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>play</strong> (fútbol los sábados)</div>
-                    <div class="left-col">She</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>studies</strong> (inglés los lunes)</div>
-                    <div class="left-col">They</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>go</strong> (a la escuela todos los días)</div>
-                    <div class="left-col">He</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>eats</strong> (pizza los viernes)</div>
-                    <div class="left-col">We</div> <div class="arrow-col">➡️</div> <div class="right-col"><strong>watch</strong> (TV por la noche)</div>
-                </div>
-                <p class="mt-4 text-sm"><em>(Imaginá que dibujás una flecha para unir cada uno con su pareja correcta. ¡Qué divertido!)</em></p>
-            </div>
-
         </section>
 
     </main>
 
+    <!-- Pie de página -->
     <footer class="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-8 px-4 text-center rounded-t-3xl shadow-lg">
         <p class="text-lg mb-2">¡Genial! 🎉 Ya estás armando tus propias oraciones en Present Simple.</p>
         <p class="text-md font-light">
@@ -556,18 +562,242 @@
         </p>
         <p class="text-sm mt-4">Con cariño, tu Profe de Inglés de Buenos Aires.</p>
     </footer>
+
     <script>
-        // Simple JavaScript para los botones de Click y Revela
-        function toggleAnswer(id) {
-            const answer = document.getElementById(id);
-            if (answer.style.display === 'none' || answer.style.display === '') {
-                answer.style.display = 'block';
-            } else {
-                answer.style.display = 'none';
+        // --- Lógica del Juego del Ahorcado ---
+        const hangmanWords = [
+            { word: "MONDAY", hint: "Un día de la semana, el primero de la escuela." },
+            { word: "TUESDAY", hint: "Un día de la semana, después del lunes." },
+            { word: "WEDNESDAY", hint: "El día del medio de la semana, ¡a veces el más largo!" },
+            { word: "THURSDAY", hint: "El día antes del viernes, ¡casi fin de semana!" },
+            { word: "FRIDAY", hint: "¡El último día de clases, yay!" },
+            { word: "SATURDAY", hint: "El primer día del fin de semana, ¡a descansar!" },
+            { word: "SUNDAY", hint: "El último día del fin de semana, ¡a recargar pilas!" },
+            { word: "JANUARY", hint: "El primer mes del año, ¡vacaciones!" },
+            { word: "FEBRUARY", hint: "El mes más corto, ¡a veces con carnavales!" },
+            { word: "MARCH", hint: "El mes donde empiezan las clases." },
+            { word: "APRIL", hint: "El mes de la Pascua." },
+            { word: "MAY", hint: "El mes de la escarapela en Argentina." },
+            { word: "JUNE", hint: "El mes del Día del Padre y el inicio del invierno." },
+            { word: "JULY", hint: "El mes de las vacaciones de invierno." },
+            { word: "AUGUST", hint: "El mes del Día del Niño." },
+            { word: "SEPTEMBER", hint: "El mes de la primavera y el Día del Estudiante." },
+            { word: "OCTOBER", hint: "El mes de Halloween." },
+            { word: "NOVEMBER", hint: "Casi fin de año, ¡a estudiar para los finales!" },
+            { word: "DECEMBER", hint: "El último mes del año, ¡navidad y vacaciones!" },
+            { word: "GETUP", hint: "La primera cosa que hacés en la mañana." },
+            { word: "BRUSHTEETH", hint: "Lo que hacés para tener una sonrisa limpia." },
+            { word: "HAVEBREAKFAST", hint: "La primera comida del día." },
+            { word: "GOTOSCHOOL", hint: "Lo que hacés de lunes a viernes por la mañana." },
+            { word: "STUDY", hint: "Lo que hacés para aprender y aprobar." },
+            { word: "DOHOMEWORK", hint: "Las actividades que la profe te da para casa." },
+            { word: "PLAYSPORTS", hint: "Actividad divertida con una pelota o raqueta." },
+            { word: "WATCHTV", hint: "Lo que hacés para ver tu serie favorita." },
+            { word: "LISTENTOMUSIC", hint: "Lo que hacés con auriculares para relajarte." },
+            { word: "READABOOK", hint: "Una actividad para sumergirte en historias." },
+            { word: "GOTO BED", hint: "Lo que hacés al final del día para dormir." },
+            { word: "SLEEP", hint: "Lo que hacés durante la noche para descansar." },
+            { word: "GOTOTHEPARK", hint: "Un lugar verde donde jugás al aire libre." },
+            { word: "VISITFRIENDS", hint: "Ir a ver a tus compañeros para pasar el rato." }
+        ];
+
+        let chosenWord = ''; // La palabra a adivinar
+        let guessedWord = []; // La palabra con los espacios y letras adivinadas
+        let lives = 7; // Número de vidas del ahorcado
+        let correctGuesses = 0; // Contador de letras correctas
+        let incorrectLetters = []; // Letras incorrectas adivinadas
+
+        const hangmanDrawingArea = document.getElementById('hangman-drawing-area');
+        const wordDisplay = document.getElementById('word-display');
+        const alphabetButtonsContainer = document.getElementById('alphabet-buttons');
+        const gameMessage = document.getElementById('game-message');
+        const resetButton = document.getElementById('reset-button');
+        const wordHint = document.getElementById('word-hint');
+
+        // Dibujos del ahorcado para cada vida perdida
+        const hangmanStages = [
+            `<pre>
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+========
+</pre>`, // 7 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+========
+</pre>`, // 6 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+========
+</pre>`, // 5 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+========
+</pre>`, // 4 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+========
+</pre>`, // 3 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+========
+</pre>`, // 2 vidas
+            `<pre>
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+========
+</pre>`, // 1 vida
+            `<pre>
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+=========
+ ¡GAME OVER!
+</pre>` // 0 vidas - GAME OVER
+        ];
+
+        // Función para inicializar o reiniciar el juego
+        function initGame() {
+            // Reiniciar variables
+            lives = 7;
+            correctGuesses = 0;
+            incorrectLetters = [];
+            gameMessage.textContent = '';
+            resetButton.style.display = 'none'; // Ocultar botón de reinicio al inicio
+
+            // Elegir una palabra aleatoria
+            const randomIndex = Math.floor(Math.random() * hangmanWords.length);
+            const selectedItem = hangmanWords[randomIndex];
+            chosenWord = selectedItem.word.toUpperCase().replace(/\s/g, ''); // Eliminar espacios y pasar a mayúsculas
+            wordHint.textContent = `Pista: (${selectedItem.hint})`;
+
+            // Inicializar la palabra con guiones bajos
+            guessedWord = Array(chosenWord.length).fill('_');
+
+            // Actualizar el dibujo del ahorcado y la palabra
+            updateHangmanDrawing();
+            updateWordDisplay();
+
+            // Generar y habilitar los botones del abecedario
+            generateAlphabetButtons();
+        }
+
+        // Función para actualizar el dibujo del ahorcado
+        function updateHangmanDrawing() {
+            hangmanDrawingArea.innerHTML = hangmanStages[7 - lives];
+        }
+
+        // Función para actualizar la visualización de la palabra (guiones y letras adivinadas)
+        function updateWordDisplay() {
+            wordDisplay.textContent = guessedWord.join(' ');
+        }
+
+        // Función para generar los botones del abecedario
+        function generateAlphabetButtons() {
+            alphabetButtonsContainer.innerHTML = ''; // Limpiar botones anteriores
+            for (let i = 65; i <= 90; i++) { // Código ASCII para A-Z
+                const letter = String.fromCharCode(i);
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.classList.add('alpha-button');
+                button.addEventListener('click', () => handleGuess(letter, button));
+                alphabetButtonsContainer.appendChild(button);
             }
         }
-        // Este JS permite que el botón se oculte al hacer clic y la respuesta aparezca.
-        // Si se necesitan más funcionalidades, se agregaría aquí.
+
+        // Función para manejar el clic en una letra
+        function handleGuess(letter, button) {
+            if (button.disabled) return; // Si el botón ya está deshabilitado, no hacer nada
+
+            button.disabled = true; // Deshabilitar el botón después de clic
+            button.classList.add('used'); // Marcar como usado con estilo
+
+            let found = false;
+            for (let i = 0; i < chosenWord.length; i++) {
+                if (chosenWord[i] === letter) {
+                    guessedWord[i] = letter;
+                    found = true;
+                    correctGuesses++;
+                }
+            }
+
+            if (found) {
+                updateWordDisplay();
+                gameMessage.style.color = '#10B981'; // Verde para acierto
+                gameMessage.textContent = `¡Bien! La letra "${letter}" es correcta.`;
+            } else {
+                lives--;
+                updateHangmanDrawing();
+                incorrectLetters.push(letter);
+                gameMessage.style.color = '#C53030'; // Rojo para error
+                gameMessage.textContent = `¡Oh no! La letra "${letter}" es incorrecta. Te quedan ${lives} vidas.`;
+            }
+
+            checkGameStatus();
+        }
+
+        // Función para verificar el estado del juego (ganar/perder)
+        function checkGameStatus() {
+            if (lives === 0) {
+                gameMessage.style.color = '#C53030';
+                gameMessage.textContent = `¡Perdiste! 😵 La palabra era: ${chosenWord}`;
+                disableAlphabetButtons();
+                resetButton.style.display = 'block';
+            } else if (guessedWord.join('') === chosenWord) {
+                gameMessage.style.color = '#1E40AF'; // Azul para ganar
+                gameMessage.textContent = `¡Felicitaciones! 🎉 Adivinaste la palabra: ${chosenWord}`;
+                disableAlphabetButtons();
+                resetButton.style.display = 'block';
+            }
+        }
+
+        // Función para deshabilitar todos los botones del abecedario al finalizar el juego
+        function disableAlphabetButtons() {
+            const buttons = alphabetButtonsContainer.querySelectorAll('.alpha-button');
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        // Event listener para el botón de reinicio
+        resetButton.addEventListener('click', initGame);
+
+        // Iniciar el juego cuando la página carga
+        document.addEventListener('DOMContentLoaded', initGame);
     </script>
 </body>
 </html>
