@@ -556,39 +556,64 @@
                 </h3>
                 <p class="text-gray-700 mb-4">Leé las oraciones y decidí si son verdaderas o falsas sobre el uso del "to be". ¡A pensar!</p>
                 <div id="true-false-quiz">
+                    <!-- Pregunta 1 -->
                     <div class="mb-4">
                         <p class="font-semibold text-gray-800">1. "I is a student" es una oración correcta en inglés.</p>
                         <div class="flex flex-wrap gap-2 mt-2">
-                            <label class="inline-flex items-center"><input type="radio" name="tf1" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
-                            <label class="inline-flex items-center"><input type="radio" name="tf1" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf1" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf1" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span>
+                            </label>
                         </div>
                     </div>
+                    <!-- Pregunta 2 -->
                     <div class="mb-4">
                         <p class="font-semibold text-gray-800">2. "She are happy" es la forma correcta de decir "Ella está feliz".</p>
                         <div class="flex flex-wrap gap-2 mt-2">
-                            <label class="inline-flex items-center"><input type="radio" name="tf2" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
-                            <label class="inline-flex items-center"><input type="radio" name="tf2" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf2" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf2" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span>
+                            </label>
                         </div>
                     </div>
+                     <!-- Pregunta 3 -->
                     <div class="mb-4">
                         <p class="font-semibold text-gray-800">3. Usamos "am" con el pronombre "I".</p>
                         <div class="flex flex-wrap gap-2 mt-2">
-                            <label class="inline-flex items-center"><input type="radio" name="tf3" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
-                            <label class="inline-flex items-center"><input type="radio" name="tf3" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf3" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf3" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span>
+                            </label>
                         </div>
                     </div>
+                     <!-- Pregunta 4 -->
                     <div class="mb-4">
                         <p class="font-semibold text-gray-800">4. "We're" es la contracción de "We are".</p>
                         <div class="flex flex-wrap gap-2 mt-2">
-                            <label class="inline-flex items-center"><input type="radio" name="tf4" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
-                            <label class="inline-flex items-center"><input type="radio" name="tf4" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf4" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf4" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span>
+                            </label>
                         </div>
                     </div>
+                     <!-- Pregunta 5 -->
                     <div class="mb-4">
                         <p class="font-semibold text-gray-800">5. Para decir tu edad, se usa "I have 12 years old".</p>
                         <div class="flex flex-wrap gap-2 mt-2">
-                            <label class="inline-flex items-center"><input type="radio" name="tf5" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span></label>
-                            <label class="inline-flex items-center"><input type="radio" name="tf5" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span></label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf5" value="false" class="form-radio text-green-600"> <span class="ml-2">Falso</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="tf5" value="true" class="form-radio text-green-600"> <span class="ml-2">Verdadero</span>
+                            </label>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -638,20 +663,23 @@
                 </h3>
                 <p class="text-gray-700 mb-4">Uní cada pronombre con la forma correcta del "to be". ¡Hace click en uno y después en su pareja! Cuando terminás, podés reiniciar.</p>
                 <div id="match-game" class="grid grid-cols-2 gap-4">
+                    <!-- Pronombres (izquierda) -->
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="I">I</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="am">am</button>
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="You">You</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are">are</button>
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="He">He</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is">is</button>
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="She">She</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_2">is</button> <!-- Unique value for this 'is' -->
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="It">It</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_3">is</button> <!-- Unique value for this 'is' -->
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="We">We</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_2">are</button> <!-- Unique value for this 'are' -->
                     <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="pronoun" data-value="They">They</button>
-                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_3">are</button> <!-- Unique value for this 'are' -->
+
+                    <!-- Verbos (derecha) - Estos serán barajados por JavaScript -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="am">am</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are">are</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is">is</button>
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_2">is</button> <!-- Differentiated to make sure they match specific buttons -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="is_3">is</button> <!-- Differentiated to make sure they match specific buttons -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_2">are</button> <!-- Differentiated to make sure they match specific buttons -->
+                    <button class="accent-button block w-full py-3 px-4 rounded-lg shadow-md hover:bg-yellow-600 transition duration-200" data-type="verb" data-value="are_3">are</button> <!-- Differentiated to make sure they match specific buttons -->
                 </div>
                 <button onclick="resetMatchGame()" class="accent-button mt-6 bg-gray-500 hover:bg-gray-600"><i class="fas fa-redo-alt mr-2"></i> Reiniciar Juego</button>
                 <div id="match-result" class="mt-4 text-lg font-semibold"></div>
@@ -665,53 +693,53 @@
                 <p class="text-gray-700 mb-4">Solo una oración está escrita correctamente usando el "to be". ¡Encontrala haciendo click!</p>
                 <div id="best-sentence-quiz">
                     <!-- Pregunta 1 -->
-                    <div class="mb-6">
+                    <div class="mb-6" data-question-id="best1">
                         <p class="font-semibold text-gray-800 mb-2">1. ¿Cuál es la oración correcta?</p>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div class="sentence-option" data-q="best1" data-answer="You are happy.">You are happy.</div>
-                            <div class="sentence-option" data-q="best1" data-answer="I is from Argentina.">I is from Argentina.</div>
-                            <div class="sentence-option" data-q="best1" data-answer="She are a student.">She are a student.</div>
-                            <div class="sentence-option" data-q="best1" data-answer="We am friends.">We am friends.</div>
+                        <div class="grid grid-cols-1 gap-2 sentence-options-container">
+                            <div class="sentence-option" data-answer="You are happy.">You are happy.</div>
+                            <div class="sentence-option" data-answer="I is from Argentina.">I is from Argentina.</div>
+                            <div class="sentence-option" data-answer="She are a student.">She are a student.</div>
+                            <div class="sentence-option" data-answer="We am friends.">We am friends.</div>
                         </div>
                     </div>
                     <!-- Pregunta 2 -->
-                    <div class="mb-6">
+                    <div class="mb-6" data-question-id="best2">
                         <p class="font-semibold text-gray-800 mb-2">2. ¿Cuál es la oración correcta?</p>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div class="sentence-option" data-q="best2" data-answer="My brother is 10 years old.">My brother is 10 years old.</div>
-                            <div class="sentence-option" data-q="best2" data-answer="My brother are 10 years old.">My brother are 10 years old.</div>
-                            <div class="sentence-option" data-q="best2" data-answer="My brother am 10 years old.">My brother am 10 years old.</div>
-                            <div class="sentence-option" data-q="best2" data-answer="My brother have 10 years old.">My brother have 10 years old.</div>
+                        <div class="grid grid-cols-1 gap-2 sentence-options-container">
+                            <div class="sentence-option" data-answer="My brother is 10 years old.">My brother is 10 years old.</div>
+                            <div class="sentence-option" data-answer="My brother are 10 years old.">My brother are 10 years old.</div>
+                            <div class="sentence-option" data-answer="My brother am 10 years old.">My brother am 10 years old.</div>
+                            <div class="sentence-option" data-answer="My brother have 10 years old.">My brother have 10 years old.</div>
                         </div>
                     </div>
                      <!-- Pregunta 3 -->
-                    <div class="mb-6">
+                    <div class="mb-6" data-question-id="best3">
                         <p class="font-semibold text-gray-800 mb-2">3. ¿Cuál es la forma correcta negativa?</p>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div class="sentence-option" data-q="best3" data-answer="They aren't happy.">They aren't happy.</div>
-                            <div class="sentence-option" data-q="best3" data-answer="They not are happy.">They not are happy.</div>
-                            <div class="sentence-option" data-q="best3" data-answer="They isn't happy.">They isn't happy.</div>
-                            <div class="sentence-option" data-q="best3" data-answer="They don't are happy.">They don't are happy.</div>
+                        <div class="grid grid-cols-1 gap-2 sentence-options-container">
+                            <div class="sentence-option" data-answer="They aren't happy.">They aren't happy.</div>
+                            <div class="sentence-option" data-answer="They not are happy.">They not are happy.</div>
+                            <div class="sentence-option" data-answer="They isn't happy.">They isn't happy.</div>
+                            <div class="sentence-option" data-answer="They don't are happy.">They don't are happy.</div>
                         </div>
                     </div>
                      <!-- Pregunta 4 -->
-                    <div class="mb-6">
+                    <div class="mb-6" data-question-id="best4">
                         <p class="font-semibold text-gray-800 mb-2">4. ¿Cuál es la pregunta correcta?</p>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div class="sentence-option" data-q="best4" data-answer="Are you a teacher?">Are you a teacher?</div>
-                            <div class="sentence-option" data-q="best4" data-answer="Is you a teacher?">Is you a teacher?</div>
-                            <div class="sentence-option" data-q="best4" data-answer="Am you a teacher?">Am you a teacher?</div>
-                            <div class="sentence-option" data-q="best4" data-answer="You are a teacher?">You are a teacher?</div>
+                        <div class="grid grid-cols-1 gap-2 sentence-options-container">
+                            <div class="sentence-option" data-answer="Are you a teacher?">Are you a teacher?</div>
+                            <div class="sentence-option" data-answer="Is you a teacher?">Is you a teacher?</div>
+                            <div class="sentence-option" data-answer="Am you a teacher?">Am you a teacher?</div>
+                            <div class="sentence-option" data-answer="You are a teacher?">You are a teacher?</div>
                         </div>
                     </div>
                      <!-- Pregunta 5 -->
-                    <div class="mb-6">
+                    <div class="mb-6" data-question-id="best5">
                         <p class="font-semibold text-gray-800 mb-2">5. ¿Cuál es la oración correcta?</p>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div class="sentence-option" data-q="best5" data-answer="It's cold today.">It's cold today.</div>
-                            <div class="sentence-option" data-q="best5" data-answer="It am cold today.">It am cold today.</div>
-                            <div class="sentence-option" data-q="best5" data-answer="It are cold today.">It are cold today.</div>
-                            <div class="sentence-option" data-q="best5" data-answer="It have cold today.">It have cold today.</div>
+                        <div class="grid grid-cols-1 gap-2 sentence-options-container">
+                            <div class="sentence-option" data-answer="It's cold today.">It's cold today.</div>
+                            <div class="sentence-option" data-answer="It am cold today.">It am cold today.</div>
+                            <div class="sentence-option" data-answer="It are cold today.">It are cold today.</div>
+                            <div class="sentence-option" data-answer="It have cold today.">It have cold today.</div>
                         </div>
                     </div>
                 </div>
@@ -798,6 +826,15 @@
     </footer>
 
     <script>
+        // Función de utilidad para barajar arrays (Fisher-Yates shuffle)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         // Lógica para Actividad 1: Completar la Oración
         function checkFillInTheBlanks() {
             const answers = {
@@ -850,7 +887,7 @@
             let score = 0;
             let totalQuestions = 0;
             const quizContainer = document.getElementById('true-false-quiz');
-            const questions = quizContainer.querySelectorAll('div[class*="mb-4"]');
+            const questions = quizContainer.querySelectorAll('div[class*="mb-4"]'); 
 
             questions.forEach((questionDiv, index) => {
                 totalQuestions++;
@@ -858,7 +895,7 @@
                 const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
                 const resultDiv = questionDiv;
 
-                resultDiv.classList.remove('correct-answer', 'wrong-answer'); // Limpia clases anteriores
+                resultDiv.classList.remove('correct-answer', 'wrong-answer');
 
                 if (selectedOption) {
                     if (selectedOption.value === answers[questionName]) {
@@ -868,7 +905,7 @@
                         resultDiv.classList.add('wrong-answer');
                     }
                 } else {
-                     resultDiv.classList.add('wrong-answer'); // Marcar como incorrecta si no respondió
+                    resultDiv.classList.add('wrong-answer');
                 }
             });
 
@@ -884,7 +921,7 @@
             }
         }
 
-        // Lógica para Actividad 3: Conectá la Pareja
+        // Lógica para Actividad 3: Conectá la Pareja (Ajustada para mezclar)
         let selectedPronounButton = null;
         let selectedVerbButton = null;
 
@@ -892,13 +929,50 @@
             'I': 'am',
             'You': 'are',
             'He': 'is',
-            'She': 'is_2', // Differentiated to make sure they match specific buttons
+            'She': 'is_2',
             'It': 'is_3',
             'We': 'are_2',
             'They': 'are_3'
         };
         let matchedCount = 0;
         const totalMatches = Object.keys(matchPairs).length;
+
+        // Función para inicializar/barajar el juego de emparejar
+        function initializeMatchGame() {
+            const matchGameContainer = document.getElementById('match-game');
+            const pronounButtons = Array.from(matchGameContainer.querySelectorAll('[data-type="pronoun"]'));
+            let verbButtons = Array.from(matchGameContainer.querySelectorAll('[data-type="verb"]'));
+
+            // Barajar los botones de verbos
+            verbButtons = shuffleArray(verbButtons);
+
+            // Vaciar el contenedor y rellenar en el nuevo orden
+            matchGameContainer.innerHTML = ''; // Elimina todo el contenido
+            
+            // Reinsertar los botones alternando pronombres y verbos
+            // Asumiendo que hay un número igual de pronombres y verbos para simplificar
+            for (let i = 0; i < pronounButtons.length; i++) {
+                matchGameContainer.appendChild(pronounButtons[i]);
+                // Para mantener la estructura de 2 columnas, insertamos el verbo después de cada pronombre
+                // Esto podría necesitar un ajuste más sofisticado para diseños más complejos
+                if (verbButtons[i]) { // Asegurarse de que el botón exista
+                    matchGameContainer.appendChild(verbButtons[i]);
+                }
+            }
+
+
+            // Restablecer estados visuales y lógicos
+            const allButtons = matchGameContainer.querySelectorAll('.accent-button');
+            allButtons.forEach(button => {
+                button.disabled = false;
+                button.classList.remove('bg-green-300', 'cursor-not-allowed', 'ring-4', 'ring-purple-500', 'ring-pink-500');
+            });
+            selectedPronounButton = null;
+            selectedVerbButton = null;
+            matchedCount = 0;
+            document.getElementById('match-result').textContent = '';
+        }
+
 
         document.getElementById('match-game').addEventListener('click', function(event) {
             const clickedButton = event.target;
@@ -974,58 +1048,55 @@
         });
 
         function resetMatchGame() {
-            const buttons = document.querySelectorAll('#match-game .accent-button');
-            buttons.forEach(button => {
-                button.disabled = false;
-                button.classList.remove('bg-green-300', 'cursor-not-allowed', 'ring-4', 'ring-purple-500', 'ring-pink-500');
-            });
-            selectedPronounButton = null;
-            selectedVerbButton = null;
-            matchedCount = 0;
-            document.getElementById('match-result').textContent = '';
+            initializeMatchGame(); // Llama a la función de inicialización para barajar de nuevo
         }
 
-
-        // Lógica para Actividad 4: ¡Elegí la Mejor Oración!
+        // Lógica para Actividad 4: ¡Elegí la Mejor Oración! (Ajustada para mezclar)
         function setupBestSentenceQuiz() {
             const quizContainer = document.getElementById('best-sentence-quiz');
-            quizContainer.addEventListener('click', function(event) {
-                const clickedOption = event.target.closest('.sentence-option');
-                if (!clickedOption) return;
+            const questionContainers = quizContainer.querySelectorAll('[data-question-id]');
 
-                const questionName = clickedOption.dataset.q;
-                const optionsInQuestion = document.querySelectorAll(`[data-q="${questionName}"]`);
-                
-                optionsInQuestion.forEach(option => {
-                    option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            questionContainers.forEach(qContainer => {
+                const optionsContainer = qContainer.querySelector('.sentence-options-container');
+                let options = Array.from(optionsContainer.children); // Obtener las opciones como array
+                shuffleArray(options); // Barajar las opciones
+
+                // Vaciar el contenedor y volver a añadir las opciones barajadas
+                optionsContainer.innerHTML = '';
+                options.forEach(option => optionsContainer.appendChild(option));
+
+                // Añadir listeners para los clics
+                optionsContainer.addEventListener('click', function(event) {
+                    const clickedOption = event.target.closest('.sentence-option');
+                    if (!clickedOption) return;
+
+                    // Remover clases de selección y resultado de todas las opciones de esta pregunta
+                    Array.from(optionsContainer.children).forEach(option => {
+                        option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                    });
+
+                    clickedOption.classList.add('selected');
+
+                    const correctAnswerText = clickedOption.dataset.answer; // La respuesta correcta está en el dataset
+
+                    if (clickedOption.textContent.trim() === correctAnswerText.trim()) {
+                        clickedOption.classList.add('correct-answer');
+                    } else {
+                        clickedOption.classList.add('wrong-answer');
+                        
+                        setTimeout(() => {
+                            // Mostrar la respuesta correcta después de un breve retraso
+                            Array.from(optionsContainer.children).forEach(option => {
+                                if (option.textContent.trim() === correctAnswerText.trim()) {
+                                    option.classList.add('correct-answer');
+                                }
+                            });
+                        }, 500);
+                    }
                 });
-
-                clickedOption.classList.add('selected');
-
-                const answers = {
-                    best1: 'You are happy.',
-                    best2: 'My brother is 10 years old.',
-                    best3: 'They aren\'t happy.',
-                    best4: 'Are you a teacher?',
-                    best5: 'It\'s cold today.'
-                };
-
-                if (clickedOption.textContent.trim() === answers[questionName].trim()) {
-                    clickedOption.classList.add('correct-answer');
-                } else {
-                    clickedOption.classList.add('wrong-answer');
-                    
-                    setTimeout(() => {
-                        optionsInQuestion.forEach(option => {
-                            if (option.textContent.trim() === answers[questionName].trim()) {
-                                option.classList.add('correct-answer');
-                            }
-                        });
-                    }, 500);
-                }
             });
         }
-        setupBestSentenceQuiz();
+        setupBestSentenceQuiz(); // Llamar para configurar al cargar la página
 
         // Lógica para Actividad 5: Ahorcado
         const hangmanWords = [
@@ -1186,7 +1257,7 @@
             }
         });
         hangmanResetButton.addEventListener('click', initializeHangmanGame);
-        initializeHangmanGame();
+        initializeHangmanGame(); // Inicializar el juego al cargar la página
 
 
         // Lógica para Actividad 6: ¡Armá tu Propia Oración!
@@ -1231,6 +1302,13 @@
                 sentenceResult.classList.remove('text-green-700');
             }
         }
+        
+        // Inicializar los juegos que necesitan configuración al cargar la página
+        window.onload = function() {
+            initializeMatchGame(); // Actividad 3
+            // setupBestSentenceQuiz(); // Ya se llama directamente después de su definición
+        };
+
     </script>
 </body>
 </html>
