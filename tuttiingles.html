@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutti Frutti (English)</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            background-color: #e0f2f7; /* Light blue background */
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center;
+        }
+        #letter-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #2c3e50; /* Darker blue */
+            border: 3px solid #007bff;
+            padding: 15px 30px;
+            min-width: 80px;
+            text-align: center;
+            background-color: #ecf0f1; /* Light grey */
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .button {
+            padding: 12px 25px;
+            font-size: 1.3em;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #startButton {
+            background-color: #28a745; /* Green */
+        }
+        #startButton:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        #stopButton {
+            background-color: #dc3545; /* Red */
+        }
+        #stopButton:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        #terminateButton {
+            background-color: #ffc107; /* Orange/Yellow */
+            color: #333; /* Dark text for contrast */
+        }
+        #terminateButton:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        #stopButton:disabled, #startButton:disabled, #calculateScoreButton:disabled, #terminateButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        #timer {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #e67e22; /* Orange */
+            min-width: 150px;
+            text-align: center;
+            background-color: #fefefe;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        table {
+            width: 90%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+        }
+        th, td {
+            border: 1px solid #ddeeff; /* Lighter blue border */
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff; /* Blue header */
+            color: white;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            position: sticky; /* Sticky headers for scrolling tables */
+            top: 0;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #b3d9ff; /* Light blue border */
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0,123,255,0.25);
+            outline: none;
+        }
+        input[type="text"]:disabled {
+            background-color: #eceff1; /* Light grey for disabled */
+            cursor: not-allowed;
+            border-color: #c0c0c0;
+        }
+        .score-section {
+            margin-top: 40px;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        #calculateScoreButton {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.4em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #calculateScoreButton:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            #letter-display {
+                font-size: 3em;
+                padding: 10px 20px;
+            }
+            .button {
+                width: 80%;
+                font-size: 1.1em;
+            }
+            #timer {
+                font-size: 1.8em;
+            }
+            table {
+                width: 95%;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+            input[type="text"] {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .score-section {
+                font-size: 1.4em;
+                padding: 15px 25px;
+            }
+            #calculateScoreButton {
+                font-size: 1.2em;
+                padding: 12px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                margin-top: 15px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+                text-align: center;
+            }
+            .controls {
+                padding: 15px;
+                gap: 10px;
+            }
+            #letter-display {
+                font-size: 2.5em;
+                padding: 8px 15px;
+            }
+            .button {
+                width: 90%;
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+            #timer {
+                font-size: 1.5em;
+                min-width: 120px;
+            }
+            table, .score-section {
+                width: 100%;
+                border-radius: 5px;
+            }
+            th, td {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+            input[type="text"] {
+                font-size: 0.8em;
+                padding: 6px;
+            }
+            #calculateScoreButton {
+                font-size: 1.1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <!-- Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Tutti Frutti (English Version)</h1>
+
+    <div class="controls">
+        <div id="letter-display">A</div>
+        <button id="startButton" class="button">Start Letter</button>
+        <button id="stopButton" class="button" disabled>Basta</button>
+        <button id="terminateButton" class="button" disabled>Terminate</button> <!-- New Terminate Button -->
+        <div id="timer">05:00</div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Adverbs of Time</th>
+                <th>Verbs</th>
+                <th>Countries/Cities</th>
+                <th>Animals</th>
+                <th>Nouns</th>
+                <th>Brands</th> <!-- New Brands column header -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" class="game-input" data-category="adverbsOfTime"></td>
+                <td><input type="text" class="game-input" data-category="verbs"></td>
+                <td><input type="text" class="game-input" data-category="countriesCities"></td>
+                <td><input type="text" class="game-input" data-category="animals"></td>
+                <td><input type="text" class="game-input" data-category="nouns"></td>
+                <td><input type="text" class="game-input" data-category="brands"></td> <!-- New Brands input field -->
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="calculateScoreButton" class="button">Calculate Score</button>
+
+    <div class="score-section">
+        Total Score: <span id="totalScore">0</span> points
+    </div>
+
+    <script>
+        // Get references to HTML elements
+        const letterDisplay = document.getElementById('letter-display');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const terminateButton = document.getElementById('terminateButton'); // Reference to the new Terminate button
+        const timerDisplay = document.getElementById('timer');
+        const gameInputs = document.querySelectorAll('.game-input');
+        const calculateScoreButton = document.getElementById('calculateScoreButton');
+        const totalScoreDisplay = document.getElementById('totalScore');
+
+        // Variables to control game state
+        let letterInterval; // Stores the interval ID for letter randomization
+        let countdownTimer; // Stores the interval ID for the countdown timer
+        let timeLeft = 300; // 5 minutes in seconds (5 * 60)
+        let currentLetter = ''; // Stores the letter chosen for the round
+        let gameStarted = false; // Flag to indicate if a game round has started
+
+        // Array of letters for randomization
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // --- Event Listener for "Start Letter" Button ---
+        startButton.addEventListener('click', () => {
+            if (!gameStarted) {
+                // Reset display and clear inputs for a new game
+                letterDisplay.textContent = 'A'; 
+                gameInputs.forEach(input => {
+                    input.value = ''; // Clear previous entries
+                    input.disabled = true; // Keep inputs disabled until "Basta"
+                });
+                totalScoreDisplay.textContent = '0'; // Reset score display
+
+                // Start rapid letter randomization
+                letterInterval = setInterval(() => {
+                    const randomIndex = Math.floor(Math.random() * alphabet.length);
+                    letterDisplay.textContent = alphabet[randomIndex];
+                }, 50); // Change letter every 50 milliseconds
+
+                // Disable "Start" and enable "Basta"
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                terminateButton.disabled = true; // Terminate button enabled only after Basta
+                calculateScoreButton.disabled = true; // Disable score button until game ends
+
+                gameStarted = true; // Set game state to started
+                timeLeft = 300; // Reset timer for a new game
+                timerDisplay.textContent = '05:00'; // Reset timer display
+            }
+        });
+
+        // --- Event Listener for "Basta" Button ---
+        stopButton.addEventListener('click', () => {
+            if (gameStarted) {
+                clearInterval(letterInterval); // Stop letter randomization
+                currentLetter = letterDisplay.textContent; // Capture the final letter
+                stopButton.disabled = true; // Disable "Basta" button
+                terminateButton.disabled = false; // Enable "Terminate" button
+
+                // Start the 5-minute countdown
+                startCountdown();
+                
+                // Enable inputs for typing answers
+                gameInputs.forEach(input => {
+                    input.disabled = false;
+                });
+            }
+        });
+
+        // --- Event Listener for "Terminate" Button ---
+        terminateButton.addEventListener('click', () => {
+            if (gameStarted) {
+                clearInterval(countdownTimer); // Stop the countdown timer immediately
+                endGame(); // End the game and calculate score
+            }
+        });
+
+        // --- Function to Start the Countdown Timer ---
+        function startCountdown() {
+            countdownTimer = setInterval(() => {
+                timeLeft--; // Decrease time left by 1 second
+
+                // Calculate minutes and seconds for display
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                // Update timer display
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer); // Stop the timer
+                    endGame(); // Call function to end the game
+                }
+            }, 1000); // Update every 1 second (1000 milliseconds)
+        }
+
+        // --- Function to End the Game ---
+        function endGame() {
+            gameInputs.forEach(input => {
+                input.disabled = true; // Disable all input fields
+            });
+            startButton.disabled = false; // Enable "Start Letter" for a new game
+            stopButton.disabled = true; // Ensure Basta is disabled
+            terminateButton.disabled = true; // Disable Terminate button
+            calculateScoreButton.disabled = false; // Enable calculate score button
+            
+            // Provide a visual/audible cue that time is up or game ended
+            if (timeLeft <= 0) { // If timer ran out naturally
+                alert("Time's up! Game Over. Calculate your score!"); 
+            } else { // If terminated manually
+                alert("Game terminated! Calculate your score.");
+            }
+            
+            // Automatically calculate score when time ends or game is terminated
+            calculateScore();
+            gameStarted = false; // Reset game state
+        }
+
+        // --- Event Listener for "Calculate Score" Button ---
+        calculateScoreButton.addEventListener('click', calculateScore);
+
+        // --- Function to Calculate the Score ---
+        function calculateScore() {
+            let totalScore = 0;
+            // Iterate over each input field
+            gameInputs.forEach(input => {
+                const value = input.value.trim(); // Get the trimmed value from the input
+
+                // Check if the input is not empty and starts with the current letter
+                // Case-insensitive check using toUpperCase()
+                if (value.length > 0 && value.toUpperCase().startsWith(currentLetter.toUpperCase())) {
+                    // Simple scoring: 10 points per correct word
+                    // You could add more complex logic here (e.g., checking for validity against a dictionary,
+                    // preventing duplicates, or varying points based on word length/difficulty)
+                    totalScore += 10;
+                }
+            });
+            totalScoreDisplay.textContent = totalScore; // Update the total score display
+        }
+
+        // --- Initial Game Setup ---
+        // Disable all inputs when the page loads, they will be enabled after "Basta" is clicked.
+        gameInputs.forEach(input => input.disabled = true);
+        calculateScoreButton.disabled = true; // Disable calculate score button initially
+        terminateButton.disabled = true; // Disable terminate button initially
+    </script>
+</body>
+</html>
