@@ -73,16 +73,16 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0,0,0,0.15);
         }
-        #terminateButton {
+        #finishButton { /* Changed ID to finishButton */
             background-color: #ffc107; /* Orange/Yellow */
             color: #333; /* Dark text for contrast */
         }
-        #terminateButton:hover {
+        #finishButton:hover { /* Changed ID to finishButton */
             background-color: #e0a800;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0,0,0,0.15);
         }
-        #stopButton:disabled, #startButton:disabled, #calculateScoreButton:disabled, #terminateButton:disabled {
+        #stopButton:disabled, #startButton:disabled, #calculateScoreButton:disabled, #finishButton:disabled { /* Changed ID to finishButton */
             opacity: 0.6;
             cursor: not-allowed;
             box-shadow: none;
@@ -259,7 +259,6 @@
             }
         }
     </style>
-    <!-- Google Fonts for Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -268,8 +267,8 @@
     <div class="controls">
         <div id="letter-display">A</div>
         <button id="startButton" class="button">Start Letter</button>
-        <button id="stopButton" class="button" disabled>Basta</button>
-        <button id="terminateButton" class="button" disabled>Terminate</button> <!-- New Terminate Button -->
+        <button id="stopButton" class="button" disabled>STOP</button>
+        <button id="finishButton" class="button" disabled>FINISH</button>
         <div id="timer">05:00</div>
     </div>
 
@@ -281,7 +280,7 @@
                 <th>Countries/Cities</th>
                 <th>Animals</th>
                 <th>Nouns</th>
-                <th>Brands</th> <!-- New Brands column header -->
+                <th>Trademarks</th> <!-- Changed from Brands to Trademarks -->
             </tr>
         </thead>
         <tbody>
@@ -291,7 +290,7 @@
                 <td><input type="text" class="game-input" data-category="countriesCities"></td>
                 <td><input type="text" class="game-input" data-category="animals"></td>
                 <td><input type="text" class="game-input" data-category="nouns"></td>
-                <td><input type="text" class="game-input" data-category="brands"></td> <!-- New Brands input field -->
+                <td><input type="text" class="game-input" data-category="trademarks"></td> <!-- Changed data-category to trademarks -->
             </tr>
         </tbody>
     </table>
@@ -307,7 +306,7 @@
         const letterDisplay = document.getElementById('letter-display');
         const startButton = document.getElementById('startButton');
         const stopButton = document.getElementById('stopButton');
-        const terminateButton = document.getElementById('terminateButton'); // Reference to the new Terminate button
+        const finishButton = document.getElementById('finishButton');
         const timerDisplay = document.getElementById('timer');
         const gameInputs = document.querySelectorAll('.game-input');
         const calculateScoreButton = document.getElementById('calculateScoreButton');
@@ -330,7 +329,7 @@
                 letterDisplay.textContent = 'A'; 
                 gameInputs.forEach(input => {
                     input.value = ''; // Clear previous entries
-                    input.disabled = true; // Keep inputs disabled until "Basta"
+                    input.disabled = true; // Keep inputs disabled until "STOP"
                 });
                 totalScoreDisplay.textContent = '0'; // Reset score display
 
@@ -340,10 +339,10 @@
                     letterDisplay.textContent = alphabet[randomIndex];
                 }, 50); // Change letter every 50 milliseconds
 
-                // Disable "Start" and enable "Basta"
+                // Disable "Start" and enable "STOP"
                 startButton.disabled = true;
                 stopButton.disabled = false;
-                terminateButton.disabled = true; // Terminate button enabled only after Basta
+                finishButton.disabled = true; // Finish button enabled only after STOP
                 calculateScoreButton.disabled = true; // Disable score button until game ends
 
                 gameStarted = true; // Set game state to started
@@ -352,13 +351,13 @@
             }
         });
 
-        // --- Event Listener for "Basta" Button ---
+        // --- Event Listener for "STOP" Button ---
         stopButton.addEventListener('click', () => {
             if (gameStarted) {
                 clearInterval(letterInterval); // Stop letter randomization
                 currentLetter = letterDisplay.textContent; // Capture the final letter
-                stopButton.disabled = true; // Disable "Basta" button
-                terminateButton.disabled = false; // Enable "Terminate" button
+                stopButton.disabled = true; // Disable "STOP" button
+                finishButton.disabled = false; // Enable "FINISH" button
 
                 // Start the 5-minute countdown
                 startCountdown();
@@ -370,8 +369,8 @@
             }
         });
 
-        // --- Event Listener for "Terminate" Button ---
-        terminateButton.addEventListener('click', () => {
+        // --- Event Listener for "FINISH" Button ---
+        finishButton.addEventListener('click', () => {
             if (gameStarted) {
                 clearInterval(countdownTimer); // Stop the countdown timer immediately
                 endGame(); // End the game and calculate score
@@ -403,15 +402,15 @@
                 input.disabled = true; // Disable all input fields
             });
             startButton.disabled = false; // Enable "Start Letter" for a new game
-            stopButton.disabled = true; // Ensure Basta is disabled
-            terminateButton.disabled = true; // Disable Terminate button
+            stopButton.disabled = true; // Ensure STOP is disabled
+            finishButton.disabled = true; // Disable FINISH button
             calculateScoreButton.disabled = false; // Enable calculate score button
             
             // Provide a visual/audible cue that time is up or game ended
             if (timeLeft <= 0) { // If timer ran out naturally
                 alert("Time's up! Game Over. Calculate your score!"); 
-            } else { // If terminated manually
-                alert("Game terminated! Calculate your score.");
+            } else { // If finished manually
+                alert("Game finished! Calculate your score.");
             }
             
             // Automatically calculate score when time ends or game is terminated
@@ -442,10 +441,10 @@
         }
 
         // --- Initial Game Setup ---
-        // Disable all inputs when the page loads, they will be enabled after "Basta" is clicked.
+        // Disable all inputs when the page loads, they will be enabled after "STOP" is clicked.
         gameInputs.forEach(input => input.disabled = true);
         calculateScoreButton.disabled = true; // Disable calculate score button initially
-        terminateButton.disabled = true; // Disable terminate button initially
+        finishButton.disabled = true; // Disable finish button initially
     </script>
 </body>
 </html>
