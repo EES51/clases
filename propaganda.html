@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicidad y Propaganda: ¡Exploración Extendida y Juegos!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e6f7ff; /* Lighter, more vibrant blue background */
+            color: #2c3e50; /* Darker, stronger text */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section-title {
+            color: #007bff; /* Bright blue for titles */
+            font-weight: 900; /* Extra bold */
+            letter-spacing: -0.02em; /* Slightly tighter spacing for impact */
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners for cards */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 2px solid #e0e0e0; /* Subtle border */
+        }
+        .card:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+        .interactive-box {
+            background-color: #ccedff; /* More vibrant light blue for interactive */
+            border: 3px solid #007bff; /* Bolder blue border */
+            border-radius: 1rem; /* More rounded */
+            padding: 1.25rem; /* More padding */
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .interactive-box:hover {
+            background-color: #a0dfff; /* Even brighter blue on hover */
+            border-color: #0056b3; /* Darker blue on hover */
+        }
+        .hidden-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #007bff; /* Bolder dashed line */
+            font-size: 1em; /* Slightly larger font */
+            color: #34495e; /* Stronger text color */
+        }
+        .revealed .hidden-content {
+            display: block;
+        }
+        /* Gradient for header/footer - More vibrant and distinct */
+        .gradient-bg {
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Deeper purple to bright blue gradient */
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Specific colors for sections */
+        .text-blue-700-new {
+            color: #0056b3; /* Darker, richer blue for old section headings */
+        }
+        .text-purple-700-new {
+            color: #8a2be2; /* Brighter purple for new section headings */
+        }
+        .text-blue-800-new {
+            color: #003366; /* Even darker blue for interactive box text */
+        }
+        .text-purple-800-new {
+            color: #5d008d; /* Even darker purple for interactive box text */
+        }
+        .bg-yellow-50-new {
+            background-color: #fff9c4; /* Brighter yellow background for impact section */
+        }
+        .text-yellow-800-new {
+            color: #a77c00; /* Stronger yellow text */
+        }
+        .hover\:underline-bold:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 3px; /* Bolder underline on hover */
+        }
+
+        /* Styles for the Quiz Section */
+        .quiz-option {
+            background-color: #f0f9ff;
+            border: 2px solid #a8dadc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+        .quiz-option:hover {
+            background-color: #e0f2f7;
+            border-color: #457b9d;
+        }
+        .quiz-option.correct {
+            background-color: #d4edda; /* Green for correct */
+            border-color: #28a745;
+        }
+        .quiz-option.incorrect {
+            background-color: #f8d7da; /* Red for incorrect */
+            border-color: #dc3545;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .quiz-button {
+            background-color: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .quiz-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="gradient-bg text-white p-8 shadow-2xl rounded-b-3xl">
+        <div class="container flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <h1 class="text-4xl font-extrabold mb-4 md:mb-0">Publicidad y Propaganda: ¡Ayer, Hoy y Siempre! 🚀✨</h1>
+            <nav>
+                <ul class="flex flex-wrap justify-center md:justify-start space-x-4 md:space-x-8">
+                    <li><a href="#intro" class="hover:underline-bold text-xl font-semibold">Inicio</a></li>
+                    <li><a href="#publicidad" class="hover:underline-bold text-xl font-semibold">Publicidad</a></li>
+                    <li><a href="#propaganda" class="hover:underline-bold text-xl font-semibold">Propaganda</a></li>
+                    <li><a href="#impacto" class="hover:underline-bold text-xl font-semibold">Impacto</a></li>
+                    <li><a href="#juegos" class="hover:underline-bold text-xl font-semibold">Juegos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow py-12">
+        <div id="intro" class="container text-center mb-16">
+            <h2 class="text-5xl font-extrabold section-title mb-6">¡Descifrando los Mensajes que nos Rodean! 🕵️‍♀️🔍</h2>
+            <p class="text-2xl text-gray-800 leading-relaxed max-w-3xl mx-auto">
+                ¿Alguna vez se preguntaron por qué ciertas cosas se ponen de moda o cómo nos convencen de comprar algo?
+                Desde las revistas que leían sus abuelos hasta las redes sociales de hoy, la publicidad y la propaganda
+                están por todos lados. ¡Prepárense para entender cómo funcionan y volverse unos expertos en detectarlas!
+            </p>
+        </div>
+
+        <!-- Section: Publicidad en Revistas Antiguas y Virtuales -->
+        <section id="publicidad" class="container mb-20">
+            <h2 class="text-4xl font-extrabold section-title mb-10 text-center">Publicidad: ¡De las Revistas al Clic! 📰📱</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Publicidad en Revistas de Antes -->
+                <div class="card p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-5 text-blue-700-new">Antes: El Encanto del Papel Impreso</h3>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            Imagina una revista de papel, con páginas que se sentían en las manos y un olor especial a tinta.
+                            Las publicidades eran obras de arte fijas, pensadas para captar tu atención con un solo vistazo.
+                            Eran parte de la experiencia de lectura, invitándote a soñar con productos que te harían la vida mejor.
+                        </p>
+                        <div class="interactive-box" onclick="toggleContent(this)">
+                            <p class="font-bold text-blue-800-new text-lg">👉 Haz clic para descubrir los secretos de la publicidad antigua:</p>
+                            <div class="hidden-content">
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Mensaje Unidireccional:</strong> La información fluía solo del anuncio hacia ti. No había forma de interactuar.</li>
+                                    <li><strong>Estética y Arte:</strong> Usaban ilustraciones detalladas, fotografías impactantes y tipografías que eran verdaderas piezas de diseño.</li>
+                                    <li><strong>Público Masivo:</strong> Intentaban llegar a la mayor cantidad de personas posible, sin mucha personalización.</li>
+                                    <li><strong>Técnicas Comunes:</strong> La repetición de eslóganes pegadizos, el uso de testimonios de personas "creíbles" y la apelación a sentimientos generales como la felicidad o el estatus.</li>
+                                    <li><strong>Ejemplos Clásicos:</strong> Anuncios de productos para el hogar, autos lujosos, bebidas refrescantes y cosméticos, que prometían un estilo de vida ideal.</li>
+                                    <li><strong>Influencias Artísticas y Moda:</strong> Las publicidades de antes reflejaban las corrientes artísticas del momento, como el Art Decó o el Pop Art, con sus colores, formas y estilos. También mostraban las "modas" de la época: ropa, peinados y accesorios que eran tendencia, creando un deseo de imitar esos estilos. Por ejemplo, en los años 50 se veía mucho el estilo "ama de casa perfecta" y en los 60 la moda juvenil y más rebelde.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Added hyperlink to the image -->
+                    <a href="https://webdepublicidad.com/publicidad-antigua/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://placehold.co/500x300/6a5acd/ffffff?text=Publicidad+Antigua+de+Revista" alt="Publicidad Antigua de Revista" class="w-full h-auto rounded-xl mt-8 shadow-xl border-2 border-gray-200">
+                    </a>
+                </div>
+
+                <!-- Publicidad en Revistas Virtuales -->
+                <div class="card p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-5 text-purple-700-new">Ahora: El Mundo Interactivo en tu Pantalla</h3>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            Hoy, las revistas y el contenido se consumen en celulares, tablets y computadoras.
+                            Las publicidades ya no son estáticas; son dinámicas, tienen videos que te atrapan,
+                            animaciones increíbles y enlaces que te llevan directamente a comprar. ¡El mundo es tu pantalla!
+                        </p>
+                        <div class="interactive-box" onclick="toggleContent(this)">
+                            <p class="font-bold text-purple-800-new text-lg">👉 Haz clic para entender la publicidad digital y sus trucos:</p>
+                            <div class="hidden-content">
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Interactividad Total:</strong> Puedes hacer clic, deslizar, ver videos, participar en encuestas, ¡e incluso probarte ropa con realidad aumentada!</li>
+                                    <li><strong>Personalización Extrema:</strong> Los anuncios se adaptan a tus búsquedas, tus gustos y hasta tu ubicación. ¡Es como si supieran lo que quieres antes que tú!</li>
+                                    <li><strong>Formatos Innovadores:</strong> Banners animados, pop-ups sorprendentes, anuncios nativos (que parecen parte del contenido), historias en redes sociales y videos cortos.</li>
+                                    <li><strong>Medición de Datos:</strong> Las empresas saben cuántas personas vieron el anuncio, cuántos hicieron clic, cuánto tiempo lo vieron y si compraron algo. ¡Todo se mide!</li>
+                                    <li><strong>Rol de Influencers:</strong> Muchas marcas usan a personas populares en redes sociales (influencers) para promocionar productos, ya que sus seguidores confían en ellos.</li>
+                                    <li><strong>Viralidad:</strong> Buscan que el contenido sea tan divertido o interesante que lo compartas con tus amigos, haciéndolo "viral".</li>
+                                    <li><strong>Tendencias y Publicidades Creativas:</strong> La publicidad digital vive de las tendencias: desde los "challenges" de TikTok hasta los memes virales. Las publicidades más creativas de hoy no parecen publicidades, sino contenido divertido que quieres compartir. Juegan con el humor, la sorpresa y la interacción directa con el usuario. Piensen en filtros de Instagram para una marca de ropa o videos musicales de artistas promocionando un producto.</li>
+                                    <li><strong>Artistas de la Industria Musical y Marcas:</strong> Hoy, los artistas musicales son grandes influenciadores. Las marcas los buscan para promocionar sus productos en videoclips, redes sociales o conciertos. Un cantante usando una marca de zapatillas, o una canción sonando en un anuncio, hace que ese producto se asocie con el éxito y el estilo del artista, ¡lo que hace que lo queramos tener!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://www.creaxid.com.mx/blog/publicidad-interactiva-una-forma-innovadora-de-cautivar-a-la-gente/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://placehold.co/500x300/9b59b6/ffffff?text=Publicidad+Digital+Interactiva" alt="Publicidad Digital Interactiva" class="w-full h-auto rounded-xl mt-8 shadow-xl border-2 border-gray-200">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="propaganda" class="container mb-20">
+            <h2 class="text-4xl font-extrabold section-title mb-10 text-center">Propaganda: ¡Más Allá de la Venta! 📢🗳️</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="card p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-5 text-indigo-700">Propaganda: ¿Qué es y Para qué sirve?</h3>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            A diferencia de la publicidad, la propaganda no busca que compres un producto, sino que adoptes una idea,
+                            una creencia, una ideología o que apoyes una causa social o política. Su objetivo es influir en tu forma de pensar y, a veces, en tu comportamiento a gran escala.
+                        </p>
+                        <div class="interactive-box" style="background-color: #e0e7ff; border-color: #4f46e5;" onclick="toggleContent(this)">
+                            <p class="font-bold text-indigo-800 text-lg">👉 Descubre cuándo un mensaje es propaganda:</p>
+                            <div class="hidden-content" style="border-top-color: #4f46e5;">
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Objetivo Principal:</strong> Cambiar opiniones o promover una ideología, no vender.</li>
+                                    <li><strong>Fin Político o Social:</strong> Se usa mucho en campañas electorales, para concientizar sobre el medio ambiente, o para promover valores.</li>
+                                    <li><strong>Mensajes Persuasivos:</strong> Intentan convencerte de que una idea es la "correcta" o la que "todos deberían seguir".</li>
+                                    <li><strong>Ejemplos:</strong> Campañas de un gobierno para fomentar la vacunación, mensajes de partidos políticos antes de elecciones, o campañas para defender los derechos de los animales.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://www.alfepsi.org/la-propaganda-politica/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://placehold.co/500x300/7c4dff/ffffff?text=Propaganda+Politica+Social" alt="Propaganda Política y Social" class="w-full h-auto rounded-xl mt-8 shadow-xl border-2 border-gray-200">
+                    </a>
+                </div>
+
+                <div class="card p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-5 text-indigo-700">Técnicas de Propaganda: ¡Para Abrir los Ojos!</h3>
+                        <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                            La propaganda usa trucos muy astutos para influirnos. Conocerlos nos hace más inteligentes y menos manipulables.
+                            ¡Vamos a ver algunos de los más comunes!
+                        </p>
+                        <div class="interactive-box" style="background-color: #e0e7ff; border-color: #4f46e5;" onclick="toggleContent(this)">
+                            <p class="font-bold text-indigo-800 text-lg">👉 Haz clic para desvelar las técnicas secretas de la propaganda:</p>
+                            <div class="hidden-content" style="border-top-color: #4f46e5;">
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Generalizaciones Brillantes:</strong> Usan palabras muy atractivas y positivas (libertad, progreso, justicia) sin dar detalles concretos.</li>
+                                    <li><strong>Transferencia:</strong> Asocian una idea o persona con algo muy respetado o rechazado (ej: asociar a un candidato con un símbolo patrio).</li>
+                                    <li><strong>Testimonios:</strong> Una persona "autoridad" o popular habla a favor de una idea o causa.</li>
+                                    <li><strong>Nombre Denigrante:</strong> Usan etiquetas negativas o despectivas para desprestigiar a un oponente o una idea.</li>
+                                    <li><strong>Subirse al Carro (Bandwagon):</strong> Te convencen de que "todos lo están haciendo" o "todos piensan así" para que te sumes al grupo.</li>
+                                    <li><strong>Argumentos Ad Hominem:</strong> Atacan a la persona que propone la idea, en lugar de atacar la idea en sí.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://www.cinconoticias.com/tecnicas-de-propaganda/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://placehold.co/500x300/9fa8da/ffffff?text=Tecnicas+de+Propaganda" alt="Técnicas de Propaganda" class="w-full h-auto rounded-xl mt-8 shadow-xl border-2 border-gray-200">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto" class="container mb-16 text-center">
+            <h2 class="text-4xl font-extrabold section-title mb-10">¡El Gran Impacto y Cómo Ser Ciudadanos Críticos! 🤔💡</h2>
+            <div class="bg-yellow-50-new p-10 rounded-3xl shadow-2xl border-2 border-yellow-200">
+                <p class="text-xl text-gray-800 mb-8 leading-relaxed font-semibold">
+                    La publicidad y la propaganda evolucionaron muchísimo, pero su objetivo principal sigue siendo el mismo:
+                    <strong>¡influir en nuestras decisiones y capturar nuestra atención!</strong> Antes, el papel era el rey; hoy, la pantalla lo es.
+                    La gran diferencia es la increíble capacidad de los mensajes virtuales para <strong>personalizarse</strong>
+                    y <strong>medir</strong> nuestro comportamiento de formas que antes no eran posibles, afectando desde lo que compramos hasta lo que pensamos.
+                </p>
+                <div class="interactive-box mx-auto max-w-2xl bg-yellow-100 border-yellow-500" onclick="toggleContent(this)">
+                    <p class="font-bold text-yellow-800-new text-xl">
+                        ✨ <strong>¿Cómo ser un consumidor y ciudadano crítico? ¡Haz clic para saber más y ser un experto!</strong>
+                    </p>
+                    <div class="hidden-content border-yellow-500">
+                        <ul class="list-disc list-inside text-left space-y-3 text-lg text-gray-700">
+                            <li><strong>Cuestiona el Mensaje:</strong> ¿Qué me están queriendo vender o decir? ¿Es información completa y equilibrada? ¡No te creas todo a la primera!</li>
+                            <li><strong>Identifica las Emociones:</strong> ¿Qué sentimientos te genera este anuncio o mensaje? ¿Te hace sentir feliz, inseguro, con ganas de algo, o miedo? Reconocer esto es clave.</li>
+                            <li><strong>Busca Información Adicional:</strong> ¿Es real lo que me prometen o afirman? ¡Investiga un poco más en fuentes confiables!</li>
+                            <li><strong>Compara y Elige:</strong> ¿Hay otras opciones, productos o puntos de vista sobre el tema? ¡Siempre es bueno tener alternativas y formar tu propia opinión!</li>
+                            <li><strong>Reconoce la Intención Oculta:</strong> ¿Es publicidad para vender algo o propaganda para difundir una idea? ¿A quién beneficia este mensaje? ¡Descubre su verdadero propósito!</li>
+                            <li><strong>Piensa en el Contexto:</strong> ¿Dónde y cuándo se está mostrando este mensaje? El contexto puede cambiar el significado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="juegos" class="container mb-16 text-center">
+            <h2 class="text-4xl font-extrabold section-title mb-10">¡Juegos para Ser un Súper Detective de Mensajes! 🎮🧠</h2>
+            <p class="text-xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Ahora que ya saben un montón sobre publicidad y propaganda, ¡es hora de poner a prueba sus habilidades!
+                Demuestren que son los mejores detectando y analizando mensajes.
+            </p>
+
+            <div class="bg-blue-50 p-8 rounded-3xl shadow-xl border-2 border-blue-200 mb-10">
+                <h3 class="text-3xl font-bold text-blue-700 mb-6">Quiz: Publicidad o Propaganda?</h3>
+                <p class="text-lg text-gray-800 mb-6">Lee la frase y decide si es un ejemplo de <strong>Publicidad</strong> o <strong>Propaganda</strong>.</p>
+
+                <div id="quiz-container" class="text-left max-w-xl mx-auto">
+                    <div class="mb-8">
+                        <p class="font-semibold text-xl mb-4">1. Un anuncio de TV que te muestra el nuevo celular con la cámara más avanzada.</p>
+                        <div class="quiz-option" data-question="1" data-answer="publicidad">Publicidad</div>
+                        <div class="quiz-option" data-question="1" data-answer="propaganda">Propaganda</div>
+                        <div id="feedback-1" class="quiz-feedback text-sm"></div>
+                    </div>
+
+                    <div class="mb-8">
+                        <p class="font-semibold text-xl mb-4">2. Una campaña del gobierno que te invita a reciclar la basura para cuidar el planeta.</p>
+                        <div class="quiz-option" data-question="2" data-answer="publicidad">Publicidad</div>
+                        <div class="quiz-option" data-question="2" data-answer="propaganda">Propaganda</div>
+                        <div id="feedback-2" class="quiz-feedback text-sm"></div>
+                    </div>
+
+                    <div class="mb-8">
+                        <p class="font-semibold text-xl mb-4">3. Un cartel en la calle que dice: "¡Vota por el candidato X para un futuro mejor!"</p>
+                        <div class="quiz-option" data-question="3" data-answer="publicidad">Publicidad</div>
+                        <div class="quiz-option" data-question="3" data-answer="propaganda">Propaganda</div>
+                        <div id="feedback-3" class="quiz-feedback text-sm"></div>
+                    </div>
+
+                    <div class="mb-8">
+                        <p class="font-semibold text-xl mb-4">4. La publicidad de una marca de zapatillas con un famoso deportista.</p>
+                        <div class="quiz-option" data-question="4" data-answer="publicidad">Publicidad</div>
+                        <div class="quiz-option" data-question="4" data-answer="propaganda">Propaganda</div>
+                        <div id="feedback-4" class="quiz-feedback text-sm"></div>
+                    </div>
+
+                    <div class="mb-8">
+                        <p class="font-semibold text-xl mb-4">5. Un mensaje en redes sociales que busca concientizar sobre la importancia de la lectura.</p>
+                        <div class="quiz-option" data-question="5" data-answer="publicidad">Publicidad</div>
+                        <div class="quiz-option" data-question="5" data-answer="propaganda">Propaganda</div>
+                        <div id="feedback-5" class="quiz-feedback text-sm"></div>
+                    </div>
+
+                    <button id="reset-quiz" class="quiz-button">Reiniciar Quiz</button>
+                </div>
+            </div>
+
+            <div class="bg-green-50 p-8 rounded-3xl shadow-xl border-2 border-green-200">
+                <h3 class="text-3xl font-bold text-green-700 mb-6">Próximos Desafíos: ¡Más Juegos!</h3>
+                <p class="text-lg text-gray-800 mb-4">
+                    Pronto agregaremos más juegos para que sigan poniendo a prueba sus habilidades de detectives de mensajes.
+                    ¡Prepárense para crucigramas, ahorcados, sopas de letras y mucho más!
+                </p>
+                <img src="https://placehold.co/300x150/d4edda/28a745?text=Mas+Juegos+Pronto" alt="Más Juegos Pronto" class="mx-auto rounded-lg shadow-md mt-6">
+            </div>
+        </section>
+    </main>
+
+    <footer class="gradient-bg text-white p-8 mt-12 rounded-t-3xl shadow-2xl">
+        <div class="container text-center text-md font-medium">
+            <p>&copy; 2025 Explorando Publicidad y Propaganda. ¡Gracias por participar y ser unos genios!</p>
+            <p>Hecho con mucha curiosidad, creatividad y ganas de aprender. ¡Hasta la próxima, detectives!</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript para la interactividad de "Click y Revela"
+        function toggleContent(element) {
+            element.classList.toggle('revealed');
+        }
+
+        // JavaScript para el Quiz Interactivo
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            const resetButton = document.getElementById('reset-quiz');
+
+            function handleOptionClick(event) {
+                const selectedOption = event.target;
+                const questionNumber = selectedOption.dataset.question;
+                const selectedAnswer = selectedOption.dataset.answer;
+                const feedbackElement = document.getElementById(`feedback-${questionNumber}`);
+                const optionsForQuestion = document.querySelectorAll(`.quiz-option[data-question="${questionNumber}"]`);
+
+                // Disable all options for this question after selection
+                optionsForQuestion.forEach(option => {
+                    option.style.pointerEvents = 'none'; // Disable click
+                    option.style.opacity = '0.7'; // Visually indicate disabled
+                });
+
+                // Define correct answers
+                const correctAnswers = {
+                    '1': 'publicidad',
+                    '2': 'propaganda',
+                    '3': 'propaganda',
+                    '4': 'publicidad',
+                    '5': 'propaganda'
+                };
+
+                if (selectedAnswer === correctAnswers[questionNumber]) {
+                    selectedOption.classList.add('correct');
+                    feedbackElement.textContent = '¡Correcto! Eres un/a gran detective.';
+                    feedbackElement.style.color = '#28a745'; // Green
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    feedbackElement.textContent = 'Incorrecto. ¡Sigue practicando!';
+                    feedbackElement.style.color = '#dc3545'; // Red
+
+                    // Highlight the correct answer if incorrect
+                    optionsForQuestion.forEach(option => {
+                        if (option.dataset.answer === correctAnswers[questionNumber]) {
+                            option.classList.add('correct'); // Show the correct one in green
+                        }
+                    });
+                }
+            }
+
+            function resetQuiz() {
+                quizOptions.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                    option.style.pointerEvents = 'auto'; // Enable click
+                    option.style.opacity = '1'; // Reset opacity
+                });
+                document.querySelectorAll('.quiz-feedback').forEach(feedback => {
+                    feedback.textContent = '';
+                });
+            }
+
+            quizOptions.forEach(option => {
+                option.addEventListener('click', handleOptionClick);
+            });
+
+            resetButton.addEventListener('click', resetQuiz);
+        });
+    </script>
+</body>
+</html>
