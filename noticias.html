@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Redacción de una Noticia</title>
+    <!-- Carga de Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente Inter para una lectura clara y moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Aplicación de la fuente Inter a todo el cuerpo del documento */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Estilos para el contenido interactivo que se expande/contrae */
+        .interactive-card-content {
+            max-height: 0; /* Por defecto, el contenido está oculto */
+            overflow: hidden; /* Oculta cualquier contenido que se desborde */
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Transición suave para expandir/contraer y para la opacidad */
+            opacity: 0; /* Invisible por defecto */
+        }
+
+        /* Estilos cuando el contenido interactivo está expandido */
+        .interactive-card-content.expanded {
+            max-height: 500px; /* Suficiente altura para mostrar el contenido (ajustar si es necesario) */
+            opacity: 1; /* Visible */
+            transition: max-height 0.5s ease-in, opacity 0.5s ease-in; /* Transición suave para expandir/contraer y para la opacidad */
+        }
+        /* Animación de giro para el ícono del botón */
+        .arrow-icon {
+            transition: transform 0.3s ease-out;
+        }
+        .toggle-button.expanded .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Efecto hover en las tarjetas para hacerlas más dinámicas */
+        .interactive-card:hover {
+            transform: translateY(-5px); /* Pequeño desplazamiento hacia arriba */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra más pronunciada */
+        }
+        .interactive-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        /* Estilos para las respuestas correctas/incorrectas */
+        .correct {
+            color: #16a34a; /* Tailwind green-600 */
+        }
+        .incorrect {
+            color: #dc2626; /* Tailwind red-600 */
+        }
+
+        /* Estilos específicos para el crucigrama acróstico */
+        .acrostic-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .acrostic-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .acrostic-letter {
+            font-weight: bold;
+            font-size: 1.5rem; /* 24px */
+            color: #b91c1c; /* red-700 */
+            width: 40px; /* Fixed width for the letter */
+            text-align: center;
+            margin-right: 8px;
+        }
+        .acrostic-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #fca5a5; /* red-300 */
+            border-radius: 0.375rem; /* rounded-md */
+            text-align: center;
+            font-size: 1.125rem; /* text-lg */
+            text-transform: lowercase; /* Ensure input is lowercase for checking */
+        }
+        .acrostic-input:focus {
+            outline: none;
+            border-color: #ef4444; /* red-500 */
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* ring-2 focus:ring-red-500 */
+        }
+        .acrostic-feedback {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        .acrostic-clues {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #fca5a5; /* red-300 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-red-50 to-red-100 text-gray-900 min-h-screen flex flex-col">
+    <!-- Contenedor principal de la infografía -->
+    <div class="container mx-auto p-4 md:p-8 flex-grow">
+        <!-- Encabezado de la infografía -->
+        <header class="bg-red-700 text-white p-6 md:p-10 rounded-3xl shadow-xl mb-10 text-center transform transition-transform duration-300 hover:scale-105">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-2 leading-tight">
+                ¡Desarmando la Noticia! 🕵️‍♀️🔍
+            </h1>
+            <p class="text-lg md:text-xl font-light opacity-90">
+                Tu guía divertida y "colorada" para entender cómo se escribe una noticia. ¡Preparate para ser un/a periodista estrella!
+            </p>
+        </header>
+
+        <!-- Sección de Introducción: ¿Qué es una Noticia? -->
+        <section id="intro" class="bg-white p-6 md:p-8 rounded-3xl shadow-lg mb-10 border-b-4 border-red-500">
+            <h2 class="text-2xl md:text-4xl font-bold text-red-800 mb-6 text-center">
+                ¿Qué es una Noticia? 🤔
+            </h2>
+            <p class="text-base md:text-lg mb-4 leading-relaxed">
+                Imagina que algo super interesante acaba de pasar en tu barrio, en la escuela o en el mundo. ¡Una noticia es la forma de contar ese suceso de manera clara, objetiva y rápida para que todos se enteren! Es como ser un detective que investiga un hecho y lo comparte con la gente.
+            </p>
+            <p class="text-base md:text-lg leading-relaxed">
+                Las noticias son esenciales porque nos mantienen <span class="font-bold text-red-600">informados</span> sobre lo que sucede. Nos ayudan a entender el mundo que nos rodea, a formar nuestra propia opinión y a saber qué está pasando cerca y lejos de Buenos Aires. ¡Son la "nafta" de la información!
+            </p>
+        </section>
+
+        <!-- Sección: Las "5W y la H" -->
+        <section id="5wh" class="bg-red-500 text-white p-6 md:p-8 rounded-3xl shadow-xl mb-10">
+            <h2 class="text-2xl md:text-4xl font-bold mb-6 text-center">
+                Las "5W y la H": ¡Los ingredientes secretos de la Noticia! 🕵️‍♂️📝
+            </h2>
+            <p class="text-base md:text-lg mb-8 leading-relaxed opacity-90">
+                Para que una noticia sea completa y nadie se quede con dudas, debe responder a estas seis preguntas mágicas. ¡Son tu checklist de periodista! Haz clic para descubrir más de cada una.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tarjeta: Qué -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            1. ¿Qué? <span class="text-gray-600 text-sm">(El Hecho)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿Cuál es el evento principal? ¿Qué pasó o va a pasar? Es el corazón de la noticia.</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"Una escuela en Recoleta lanzó un proyecto para construir robots con materiales reciclados."</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Quién -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            2. ¿Quién? <span class="text-gray-600 text-sm">(Los Protagonistas)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿Quiénes son las personas o entidades involucradas? ¿Quiénes son los afectados o los responsables?</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"...lanzado por alumnos de 2º año, su profesora de tecnología y la dirección de la escuela."</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Cuándo -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            3. ¿Cuándo? <span class="text-gray-600 text-sm">(El Momento)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿En qué momento preciso ocurrió o se anunció el hecho? Fecha, hora, período.</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"El proyecto fue presentado esta mañana, en el marco de la Semana de la Ciencia."</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Dónde -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            4. ¿Dónde? <span class="text-gray-600 text-sm">(El Lugar)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿Cuál fue el lugar exacto o la ubicación donde sucedió el hecho?</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"La presentación se realizó en el patio central de la Escuela N° 10, ubicada en Av. Libertador 1234."</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Por qué -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            5. ¿Por qué? <span class="text-gray-600 text-sm">(La Causa)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿Cuáles fueron las razones o motivos que llevaron a que ocurra el evento?</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"El objetivo es fomentar la conciencia ambiental y el interés por la robótica en los jóvenes."</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: Cómo -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-700">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            6. ¿Cómo? <span class="text-gray-600 text-sm">(La Forma)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">¿De qué manera o bajo qué circunstancias se desarrolló el hecho?</p>
+                        <p class="font-bold text-red-600">Ejemplo:</p>
+                        <p>"Los alumnos mostraron sus prototipos de robots, construidos con botellas, cartones y otros materiales de descarte, programados por ellos mismos."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: La Pirámide Invertida -->
+        <section id="pyramid" class="bg-white p-6 md:p-8 rounded-3xl shadow-lg mb-10 border-b-4 border-red-500">
+            <h2 class="text-2xl md:text-4xl font-bold text-red-800 mb-6 text-center">
+                La Pirámide Invertida: ¡De lo más importante a lo menos! 🔺 invertida
+            </h2>
+            <p class="text-base md:text-lg mb-8 leading-relaxed">
+                ¡Aquí viene un truco de periodista! Las noticias no se escriben como un cuento, de principio a fin cronológicamente. ¡Se usa la <span class="font-bold text-red-600">Pirámide Invertida</span>! Esto significa que la información más importante va SIEMPRE al principio.
+            </p>
+
+            <div class="flex flex-col items-center">
+                <!-- Parte Superior de la Pirámide: Lo más importante -->
+                <div class="w-full max-w-xl bg-red-600 text-white p-4 md:p-6 text-center rounded-t-2xl mb-2 shadow-md">
+                    <h3 class="text-xl md:text-2xl font-extrabold mb-1">
+                        1. El "GANCHO" o Lead (Entrada)
+                    </h3>
+                    <p class="text-sm md:text-base font-light">
+                        Aquí va lo más crucial. ¡Las 5W y H principales! Es el resumen de toda la noticia.
+                    </p>
+                </div>
+                <!-- Parte Media de la Pirámide: Detalles importantes -->
+                <div class="w-full max-w-md bg-red-500 text-white p-4 md:p-6 text-center mb-2 shadow-md">
+                    <h3 class="text-lg md:text-xl font-bold mb-1">
+                        2. El Cuerpo (Desarrollo)
+                    </h3>
+                    <p class="text-sm md:text-base font-light">
+                        Detalles que amplían la información del lead, explicaciones, declaraciones de protagonistas.
+                    </p>
+                </div>
+                <!-- Parte Inferior de la Pirámide: Información adicional -->
+                <div class="w-full max-w-sm bg-red-400 text-white p-4 md:p-6 text-center rounded-b-2xl shadow-md">
+                    <h3 class="text-md md:text-lg font-bold mb-1">
+                        3. La Cola (Cierre)
+                    </h3>
+                    <p class="text-sm md:text-base font-light">
+                        Datos complementarios, antecedentes que no son vitales, pero suman. Si cortan la noticia, no pasa nada.
+                    </p>
+                </div>
+            </div>
+
+            <button class="toggle-button bg-red-700 text-white px-6 py-3 rounded-full hover:bg-red-800 transition-colors duration-300 mt-8 block mx-auto text-lg font-semibold shadow-lg">
+                ¿Por qué es tan importante esta pirámide?
+                <span class="arrow-icon text-white ml-2">▼</span>
+            </button>
+            <div class="interactive-card-content mt-6 text-gray-700 text-base md:text-lg leading-relaxed">
+                <p class="mb-4">La pirámide invertida es la mejor amiga del periodista porque:</p>
+                <ul class="list-disc list-inside space-y-3 pl-4">
+                    <li>
+                        <span class="font-semibold text-red-600">Captura la atención al instante:</span> El lector se entera de lo más importante apenas empieza a leer, ¡ideal para los que tienen poco tiempo!
+                    </li>
+                    <li>
+                        <span class="font-semibold text-red-600">Facilita el trabajo del editor:</span> Si hay que recortar la noticia por espacio en el diario o en la web, se puede "cortar" desde abajo sin perder la información esencial.
+                    </li>
+                    <li>
+                        <span class="font-semibold text-red-600">Ayuda a la claridad:</span> Obliga al periodista a organizar sus ideas de forma lógica y directa.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección: Titular y Copete -->
+        <section id="headline-lead" class="bg-red-100 p-6 md:p-8 rounded-3xl shadow-lg mb-10 border-b-4 border-red-400">
+            <h2 class="text-2xl md:text-4xl font-bold text-red-800 mb-6 text-center">
+                ¡Titulares y Copetes que "enganchan"! ✨
+            </h2>
+            <p class="text-base md:text-lg mb-8 leading-relaxed">
+                Son la "vidriera" de tu noticia. ¡Si son buenos, la gente va a querer abrirla y leer todo! Son la primera impresión.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tarjeta: El Titular -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-600">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            1. El Titular <span class="text-gray-600 text-sm">(El Gran Anunciador)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">Es la frase más importante y llamativa. Debe ser corto, claro, directo y resumir lo esencial de la noticia para que el lector sepa de qué va. ¡Es como el título de una película!</p>
+                        <p class="font-bold text-red-600">Ejemplos:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+                            <li>"Histórico descubrimiento arqueológico en San Telmo."</li>
+                            <li>"Campeonato de fútbol intercolegial: ¡Victoria sorprendente del equipo 'Los Pibes del Sur'!"</li>
+                            <li>"Nueva ley protege a los animales callejeros en CABA."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tarjeta: El Copete / Bajada -->
+                <div class="interactive-card bg-white text-gray-900 p-5 rounded-xl shadow-md cursor-pointer border-l-4 border-red-600">
+                    <button class="toggle-button w-full flex justify-between items-center text-left focus:outline-none">
+                        <h3 class="text-xl md:text-2xl font-semibold text-red-700">
+                            2. El Copete / Bajada <span class="text-gray-600 text-sm">(El Pequeño Adelanto)</span>
+                        </h3>
+                        <span class="arrow-icon text-red-700 text-2xl">▼</span>
+                    </button>
+                    <div class="interactive-card-content mt-3 text-gray-700 text-base">
+                        <p class="mb-2">Es un párrafo corto que va justo debajo del titular. Amplía la información, da un adelanto de los puntos clave y despierta aún más el interés para seguir leyendo. ¡Es el tráiler de la noticia!</p>
+                        <p class="font-bold text-red-600">Ejemplo para el titular "Campeonato de fútbol intercolegial: ¡Victoria sorprendente del equipo 'Los Pibes del Sur'!"</p>
+                        <p>"El equipo de la escuela Juan XXIII, contra todos los pronósticos, se consagró campeón provincial de fútbol 7 tras vencer en una emocionante final al favorito, el colegio San Martín, en un partido que se definió por penales."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Objetividad y Veracidad -->
+        <section id="objectivity" class="bg-white p-6 md:p-8 rounded-3xl shadow-lg mb-10 border-b-4 border-red-500">
+            <h2 class="text-2xl md:text-4xl font-bold text-red-800 mb-6 text-center">
+                Objetividad y Veracidad: ¡La verdad y nada más que la verdad! ✅
+            </h2>
+            <p class="text-base md:text-lg mb-4 leading-relaxed">
+                Para ser un buen periodista, hay dos reglas de oro que NUNCA debes olvidar:
+            </p>
+            <ul class="list-disc list-inside text-base md:text-lg text-gray-700 space-y-3 pl-4">
+                <li>
+                    <span class="font-bold text-red-600">Objetividad:</span> Contá los hechos tal cual son, sin meter tu opinión o tus sentimientos. Imaginate que sos una cámara de fotos o una grabadora: solo registrás lo que pasó. ¡La noticia NO es un lugar para "creo que" o "me parece que"!
+                </li>
+                <li>
+                    <span class="font-bold text-red-600">Veracidad:</span> ¡Esto es CLAVE! Tenés que asegurarte de que toda la información que publicás es 100% real y está verificada. ¡No difundas chismes ni rumores! Chequeá tus datos, preguntá a varias fuentes y sé responsable.
+                </li>
+                <li>
+                    <span class="font-bold text-red-600">Fuentes:</span> Siempre es bueno decir de dónde sacaste la información (testigos, documentos oficiales, expertos). Esto le da mucha más <span class="font-bold text-red-600">credibilidad</span> a tu noticia. Por ejemplo: "Según declaraciones de la directora...", "El informe del Ministerio de Salud indica que...".
+                </li>
+            </ul>
+        </section>
+
+        <!-- Sección: Cómo organizar tus ideas -->
+        <section id="organize" class="bg-red-500 text-white p-6 md:p-8 rounded-3xl shadow-xl mb-10">
+            <h2 class="text-2xl md:text-4xl font-bold mb-6 text-center">
+                ¡Organiza tus ideas: El camino a una Noticia PRO! 🚀
+            </h2>
+            <p class="text-base md:text-lg mb-8 leading-relaxed opacity-90">
+                Escribir una noticia no es magia, ¡es método! Seguí estos pasos y vas a ver qué fácil es.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Paso 1 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">1. Investiga a fondo 🕵️‍♀️</h3>
+                    <p class="text-gray-700">Recopila toda la información posible. Habla con testigos, busca datos, lee documentos, mira videos. ¡Sé un buen detective!</p>
+                </div>
+                <!-- Paso 2 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">2. Identifica lo esencial ⭐</h3>
+                    <p class="text-gray-700">Una vez que tienes toda la información, identifica las 5W y H. ¿Qué es lo más importante que el lector debe saber primero?</p>
+                </div>
+                <!-- Paso 3 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">3. Escribe el Lead (Gancho) ✍️</h3>
+                    <p class="text-gray-700">Redacta el primer párrafo (lead) respondiendo a las preguntas clave (las 5W y H). ¡Tiene que enganchar y resumir todo!</p>
+                </div>
+                <!-- Paso 4 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">4. Desarrolla el Cuerpo 📄</h3>
+                    <p class="text-gray-700">Añade los detalles, explicaciones, declaraciones y el contexto siguiendo la pirámide invertida (de lo más a lo menos importante).</p>
+                </div>
+                <!-- Paso 5 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">5. Revisa y Edita 📝✅</h3>
+                    <p class="text-gray-700">Lee tu noticia varias veces. ¿Está clara? ¿Es objetiva? ¿Hay errores de ortografía o gramática? ¡Corrige todo! Pídele a un amigo que la lea.</p>
+                </div>
+                <!-- Paso 6 -->
+                <div class="bg-white text-gray-900 p-5 rounded-xl shadow-md interactive-card cursor-pointer border-l-4 border-red-700">
+                    <h3 class="text-xl md:text-2xl font-semibold text-red-700 mb-2">6. ¡Ponle Titular y Copete! 💥</h3>
+                    <p class="text-gray-700">Crea un titular que sea atractivo y un copete que complemente la información. ¡Recuerda que son la vidriera!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva Sección: Juegos y Desafíos -->
+        <section id="games" class="bg-red-50 text-gray-900 p-6 md:p-8 rounded-3xl shadow-lg mb-10 border-b-4 border-red-300">
+            <h2 class="text-2xl md:text-4xl font-bold text-red-800 mb-6 text-center">
+                ¡Ponele Play a tu Cerebro! 🧠🎮
+            </h2>
+            <p class="text-base md:text-lg mb-8 leading-relaxed">
+                Demostrá todo lo que aprendiste con estos desafíos interactivos. ¡A jugar!
+            </p>
+
+            <!-- Juego 1: Acróstico como Crucigrama Vertical -->
+            <div class="bg-white p-5 rounded-xl shadow-md mb-8 border-l-4 border-red-600">
+                <h3 class="text-xl md:text-3xl font-semibold text-red-700 mb-4">
+                    Acróstico "NOTICIA" (Crucigrama Vertical) ✒️
+                </h3>
+                <p class="text-base md:text-lg mb-4">
+                    ¡Completa las palabras que forman "NOTICIA" de forma vertical!
+                </p>
+                <div class="flex flex-col md:flex-row md:space-x-8">
+                    <div class="acrostic-grid flex-grow mb-6 md:mb-0">
+                        <!-- N -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">N</span>
+                            <input type="text" id="acrostic-n" class="acrostic-input" maxlength="8" placeholder="">
+                            <span id="feedback-n" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- O -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">O</span>
+                            <input type="text" id="acrostic-o" class="acrostic-input" maxlength="11" placeholder="">
+                            <span id="feedback-o" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- T -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">T</span>
+                            <input type="text" id="acrostic-t" class="acrostic-input" maxlength="7" placeholder="">
+                            <span id="feedback-t" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- I -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">I</span>
+                            <input type="text" id="acrostic-i" class="acrostic-input" maxlength="11" placeholder="">
+                            <span id="feedback-i" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- C -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">C</span>
+                            <input type="text" id="acrostic-c" class="acrostic-input" maxlength="6" placeholder="">
+                            <span id="feedback-c" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- I (repeated) -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">I</span>
+                            <input type="text" id="acrostic-i2" class="acrostic-input" maxlength="7" placeholder="">
+                            <span id="feedback-i2" class="acrostic-feedback"></span>
+                        </div>
+                        <!-- A -->
+                        <div class="acrostic-row">
+                            <span class="acrostic-letter">A</span>
+                            <input type="text" id="acrostic-a" class="acrostic-input" maxlength="9" placeholder="">
+                            <span id="feedback-a" class="acrostic-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="acrostic-clues flex-grow">
+                        <h4 class="text-xl md:text-2xl font-semibold text-red-700 mb-3">Referencias:</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li><span class="font-bold text-red-600">N:</span> Lo que es nuevo y se cuenta en la noticia.</li>
+                            <li><span class="font-bold text-red-600">O:</span> Cualidad de contar los hechos sin dar tu opinión.</li>
+                            <li><span class="font-bold text-red-600">T:</span> El título principal de la noticia, corto y llamativo.</li>
+                            <li><span class="font-bold text-red-600">I:</span> Lo que se transmite al público para mantenerlo al tanto.</li>
+                            <li><span class="font-bold text-red-600">C:</span> Párrafo que amplía el titular y va justo debajo.</li>
+                            <li><span class="font-bold text-red-600">I:</span> Lo que la noticia debe generar en el lector para que la lea.</li>
+                            <li><span class="font-bold text-red-600">A:</span> Que la noticia sea reciente y del momento.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex justify-center space-x-4 mt-6">
+                    <button id="acrostic-check" class="bg-red-700 text-white px-6 py-2 rounded-full hover:bg-red-800 transition-colors duration-300 text-lg font-semibold shadow-lg">
+                        Verificar
+                    </button>
+                    <button id="acrostic-reset" class="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition-colors duration-300 text-lg font-semibold shadow-lg">
+                        Reiniciar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Juego 2: Completar Espacios en Blanco -->
+            <div class="bg-white p-5 rounded-xl shadow-md mb-8 border-l-4 border-red-600">
+                <h3 class="text-xl md:text-3xl font-semibold text-red-700 mb-4">
+                    Completar Espacios en Blanco 🖊️
+                </h3>
+                <p class="text-base md:text-lg mb-4">
+                    Completa las siguientes frases con las palabras correctas. ¡Usa solo minúsculas!
+                </p>
+                <div class="space-y-4">
+                    <!-- Frase 1 -->
+                    <p class="text-gray-700">
+                        1. La información más importante en una noticia siempre va al principio, usando la
+                        <input type="text" id="blank1" class="w-32 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        invertida.
+                        <span id="feedback1" class="ml-2 font-semibold"></span>
+                    </p>
+                    <!-- Frase 2 -->
+                    <p class="text-gray-700">
+                        2. Las seis preguntas clave de toda noticia son las 5W y la
+                        <input type="text" id="blank2" class="w-20 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        .
+                        <span id="feedback2" class="ml-2 font-semibold"></span>
+                    </p>
+                    <!-- Frase 3 -->
+                    <p class="text-gray-700">
+                        3. El párrafo que va debajo del titular y amplía la información se llama
+                        <input type="text" id="blank3" class="w-32 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        o bajada.
+                        <span id="feedback3" class="ml-2 font-semibold"></span>
+                    </p>
+                    <!-- Frase 4 -->
+                    <p class="text-gray-700">
+                        4. Un buen periodista debe ser
+                        <input type="text" id="blank4" class="w-32 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        y verificar la
+                        <input type="text" id="blank5" class="w-32 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        de sus datos.
+                        <span id="feedback4_5" class="ml-2 font-semibold"></span>
+                    </p>
+                </div>
+                <button id="check-blanks" class="bg-red-700 text-white px-6 py-2 rounded-full hover:bg-red-800 transition-colors duration-300 mt-6 block mx-auto text-lg font-semibold shadow-lg">
+                    Verificar Respuestas
+                </button>
+                <button id="reset-blanks" class="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition-colors duration-300 mt-4 block mx-auto text-lg font-semibold shadow-lg">
+                    Reiniciar
+                </button>
+            </div>
+
+            <!-- Juego 3: Desafío de Conceptos (Mini-Crucigrama) -->
+            <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-red-600">
+                <h3 class="text-xl md:text-3xl font-semibold text-red-700 mb-4">
+                    Desafío de Conceptos: ¡Un mini-crucigrama! 🧩
+                </h3>
+                <p class="text-base md:text-lg mb-4">
+                    Adivina la palabra clave a partir de la pista. ¡Escribe solo minúsculas!
+                </p>
+                <div class="space-y-4">
+                    <!-- Concepto 1 -->
+                    <p class="text-gray-700">
+                        1. Es la primera frase de la noticia, el resumen de las 5W y H.
+                        <input type="text" id="concept1" class="w-40 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        <span id="conceptFeedback1" class="ml-2 font-semibold"></span>
+                    </p>
+                    <!-- Concepto 2 -->
+                    <p class="text-gray-700">
+                        2. Es el título de la noticia, debe ser corto y llamativo.
+                        <input type="text" id="concept2" class="w-40 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        <span id="conceptFeedback2" class="ml-2 font-semibold"></span>
+                    </p>
+                    <!-- Concepto 3 -->
+                    <p class="text-gray-700">
+                        3. La cualidad de contar los hechos sin dar tu opinión.
+                        <input type="text" id="concept3" class="w-40 p-1 border border-red-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent text-center" placeholder="...">
+                        <span id="conceptFeedback3" class="ml-2 font-semibold"></span>
+                    </p>
+                </div>
+                <button id="check-concepts" class="bg-red-700 text-white px-6 py-2 rounded-full hover:bg-red-800 transition-colors duration-300 mt-6 block mx-auto text-lg font-semibold shadow-lg">
+                    Verificar Conceptos
+                </button>
+                <button id="reset-concepts" class="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition-colors duration-300 mt-4 block mx-auto text-lg font-semibold shadow-lg">
+                    Reiniciar
+                </button>
+            </div>
+
+        </section>
+
+        <!-- Pie de página -->
+        <footer class="bg-red-700 text-white p-6 md:p-8 rounded-3xl shadow-xl mt-10 text-center transform transition-transform duration-300 hover:scale-105">
+            <p class="text-lg md:text-xl font-light leading-relaxed mb-2">
+                ¡Ahora que tenés todas las herramientas, anímate a escribir tu propia noticia!
+            </p>
+            <p class="text-lg md:text-xl font-bold leading-relaxed">
+                ¡El mundo espera tus historias! 📰🌟
+            </p>
+            <p class="text-sm mt-4 opacity-80">
+                Hecho con ganas para los futuros periodistas de las escuelas secundarias de Buenos Aires.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Espera a que el DOM esté completamente cargado para ejecutar el script
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecciona todos los botones que tienen la clase 'toggle-button'
+            const toggleButtons = document.querySelectorAll('.toggle-button');
+
+            // Itera sobre cada botón para añadir un event listener
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Selecciona el elemento de contenido adyacente al botón
+                    // Este es el div que contiene el texto expandible
+                    const content = button.nextElementSibling;
+                    // Selecciona el ícono de flecha dentro del botón
+                    const arrowIcon = button.querySelector('.arrow-icon');
+
+                    // Verifica si el contenido existe
+                    if (content) {
+                        // Alterna la clase 'expanded' en el contenido
+                        // Si está presente, la quita; si no, la añade
+                        content.classList.toggle('expanded');
+                        // Alterna la clase 'expanded' en el botón para manejar el estado del ícono
+                        button.classList.toggle('expanded');
+
+                        // Cambia el texto del botón según si el contenido está expandido o no
+                        // Esto mejora la experiencia del usuario, indicando la acción que se realizará
+                        if (content.classList.contains('expanded')) {
+                            if (button.textContent.includes('¿Por qué es importante?')) {
+                                button.childNodes[0].nodeValue = 'Ocultar detalles ';
+                            } else if (button.textContent.includes('¿Por qué es tan importante esta pirámide?')) {
+                                button.childNodes[0].nodeValue = 'Ocultar detalles ';
+                            } else if (button.textContent.includes('Ver Ejemplo') || button.textContent.includes('Ver Ejemplos')) {
+                                button.childNodes[0].nodeValue = 'Ocultar Ejemplo ';
+                            }
+                        } else {
+                            if (button.textContent.includes('Ocultar detalles')) {
+                                button.childNodes[0].nodeValue = '¿Por qué es tan importante esta pirámide? ';
+                            } else if (button.textContent.includes('Ocultar Ejemplo')) {
+                                button.childNodes[0].nodeValue = 'Ver Ejemplo ';
+                            } else if (button.textContent.includes('Ocultar Ejemplos')) {
+                                button.childNodes[0].nodeValue = 'Ver Ejemplos ';
+                            }
+                        }
+                    }
+                });
+            });
+
+            // --- Lógica para los juegos ---
+
+            // Acróstico como Crucigrama Vertical
+            const acrosticAnswers = {
+                'n': 'novedad',
+                'o': 'objetividad',
+                't': 'titular',
+                'i': 'informacion',
+                'c': 'copete',
+                'i2': 'interes', // Using i2 for the second 'I'
+                'a': 'actualidad'
+            };
+
+            const acrosticInputs = {
+                'n': document.getElementById('acrostic-n'),
+                'o': document.getElementById('acrostic-o'),
+                't': document.getElementById('acrostic-t'),
+                'i': document.getElementById('acrostic-i'),
+                'c': document.getElementById('acrostic-c'),
+                'i2': document.getElementById('acrostic-i2'),
+                'a': document.getElementById('acrostic-a')
+            };
+
+            const acrosticFeedbacks = {
+                'n': document.getElementById('feedback-n'),
+                'o': document.getElementById('feedback-o'),
+                't': document.getElementById('feedback-t'),
+                'i': document.getElementById('feedback-i'),
+                'c': document.getElementById('feedback-c'),
+                'i2': document.getElementById('feedback-i2'),
+                'a': document.getElementById('feedback-a')
+            };
+
+            const acrosticCheckButton = document.getElementById('acrostic-check');
+            const acrosticResetButton = document.getElementById('acrostic-reset');
+
+            function checkAcrostic() {
+                for (const key in acrosticInputs) {
+                    const inputElement = acrosticInputs[key];
+                    const feedbackElement = acrosticFeedbacks[key];
+                    const userAnswer = inputElement.value.trim().toLowerCase();
+                    const correctAnswer = acrosticAnswers[key];
+
+                    if (userAnswer === correctAnswer) {
+                        feedbackElement.textContent = '¡Correcto!';
+                        feedbackElement.className = 'acrostic-feedback correct';
+                    } else {
+                        feedbackElement.textContent = 'Incorrecto.';
+                        feedbackElement.className = 'acrostic-feedback incorrect';
+                    }
+                }
+            }
+
+            function resetAcrostic() {
+                for (const key in acrosticInputs) {
+                    acrosticInputs[key].value = '';
+                    acrosticFeedbacks[key].textContent = '';
+                    acrosticFeedbacks[key].className = 'acrostic-feedback';
+                }
+            }
+
+            acrosticCheckButton.addEventListener('click', checkAcrostic);
+            acrosticResetButton.addEventListener('click', resetAcrostic);
+
+
+            // Completar Espacios en Blanco
+            const blankInputs = {
+                blank1: { input: document.getElementById('blank1'), answer: 'piramide', feedback: document.getElementById('feedback1') },
+                blank2: { input: document.getElementById('blank2'), answer: 'h', feedback: document.getElementById('feedback2') },
+                blank3: { input: document.getElementById('blank3'), answer: 'copete', feedback: document.getElementById('feedback3') },
+                blank4: { input: document.getElementById('blank4'), answer: 'objetivo', feedback: null }, // Feedback para dos blanks
+                blank5: { input: document.getElementById('blank5'), answer: 'veracidad', feedback: null } // Feedback para dos blanks
+            };
+            const feedback4_5Span = document.getElementById('feedback4_5'); // Span para el feedback combinado
+            const checkBlanksButton = document.getElementById('check-blanks');
+            const resetBlanksButton = document.getElementById('reset-blanks');
+
+            function checkBlanks() {
+                let allCorrect = true;
+
+                // Check blank1
+                const val1 = blankInputs.blank1.input.value.trim().toLowerCase();
+                if (val1 === blankInputs.blank1.answer) {
+                    blankInputs.blank1.feedback.textContent = '¡Correcto!';
+                    blankInputs.blank1.feedback.className = 'ml-2 font-semibold correct';
+                } else {
+                    blankInputs.blank1.feedback.textContent = 'Incorrecto. Intenta de nuevo.';
+                    blankInputs.blank1.feedback.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                }
+
+                // Check blank2
+                const val2 = blankInputs.blank2.input.value.trim().toLowerCase();
+                if (val2 === blankInputs.blank2.answer) {
+                    blankInputs.blank2.feedback.textContent = '¡Correcto!';
+                    blankInputs.blank2.feedback.className = 'ml-2 font-semibold correct';
+                } else {
+                    blankInputs.blank2.feedback.textContent = 'Incorrecto. Intenta de nuevo.';
+                    blankInputs.blank2.feedback.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                }
+
+                // Check blank3
+                const val3 = blankInputs.blank3.input.value.trim().toLowerCase();
+                if (val3 === blankInputs.blank3.answer) {
+                    blankInputs.blank3.feedback.textContent = '¡Correcto!';
+                    blankInputs.blank3.feedback.className = 'ml-2 font-semibold correct';
+                } else {
+                    blankInputs.blank3.feedback.textContent = 'Incorrecto. Intenta de nuevo.';
+                    blankInputs.blank3.feedback.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                }
+
+                // Check blank4 and blank5 (combined feedback)
+                const val4 = blankInputs.blank4.input.value.trim().toLowerCase();
+                const val5 = blankInputs.blank5.input.value.trim().toLowerCase();
+                if (val4 === blankInputs.blank4.answer && val5 === blankInputs.blank5.answer) {
+                    feedback4_5Span.textContent = '¡Ambas Correctas!';
+                    feedback4_5Span.className = 'ml-2 font-semibold correct';
+                } else if (val4 === blankInputs.blank4.answer) {
+                    feedback4_5Span.textContent = 'Casi, revisa la segunda.';
+                    feedback4_5Span.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                } else if (val5 === blankInputs.blank5.answer) {
+                    feedback4_5Span.textContent = 'Casi, revisa la primera.';
+                    feedback4_5Span.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                }
+                else {
+                    feedback4_5Span.textContent = 'Incorrecto. Intenta de nuevo.';
+                    feedback4_5Span.className = 'ml-2 font-semibold incorrect';
+                    allCorrect = false;
+                }
+            }
+
+            function resetBlanks() {
+                for (const key in blankInputs) {
+                    blankInputs[key].input.value = '';
+                    if (blankInputs[key].feedback) { // Clear individual feedback
+                        blankInputs[key].feedback.textContent = '';
+                        blankInputs[key].feedback.className = 'ml-2 font-semibold';
+                    }
+                }
+                // Clear combined feedback
+                feedback4_5Span.textContent = '';
+                feedback4_5Span.className = 'ml-2 font-semibold';
+            }
+
+            checkBlanksButton.addEventListener('click', checkBlanks);
+            resetBlanksButton.addEventListener('click', resetBlanks);
+
+            // Desafío de Conceptos (Mini-Crucigrama)
+            const conceptInputs = {
+                concept1: { input: document.getElementById('concept1'), answer: 'lead', feedback: document.getElementById('conceptFeedback1') },
+                concept2: { input: document.getElementById('concept2'), answer: 'titular', feedback: document.getElementById('conceptFeedback2') },
+                concept3: { input: document.getElementById('concept3'), answer: 'objetividad', feedback: document.getElementById('conceptFeedback3') }
+            };
+            const checkConceptsButton = document.getElementById('check-concepts');
+            const resetConceptsButton = document.getElementById('reset-concepts');
+
+            function checkConcepts() {
+                for (const key in conceptInputs) {
+                    const inputObj = conceptInputs[key];
+                    const val = inputObj.input.value.trim().toLowerCase();
+                    if (val === inputObj.answer) {
+                        inputObj.feedback.textContent = '¡Correcto!';
+                        inputObj.feedback.className = 'ml-2 font-semibold correct';
+                    } else {
+                        inputObj.feedback.textContent = 'Incorrecto. Intenta de nuevo.';
+                        inputObj.feedback.className = 'ml-2 font-semibold incorrect';
+                    }
+                }
+            }
+
+            function resetConcepts() {
+                for (const key in conceptInputs) {
+                    const inputObj = conceptInputs[key];
+                    inputObj.input.value = '';
+                    inputObj.feedback.textContent = '';
+                    inputObj.feedback.className = 'ml-2 font-semibold';
+                }
+            }
+
+            checkConceptsButton.addEventListener('click', checkConcepts);
+            resetConceptsButton.addEventListener('click', resetConcepts);
+        });
+    </script>
+</body>
+</html>
