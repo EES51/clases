@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESI en Argentina - Guía y Respuestas para el Debate</title>
+    <!-- Carga de Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define la fuente principal para todo el cuerpo del documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un color de fondo azul-gris claro para una apariencia suave */
+        }
+        /* Estilos personalizados para el contenido oculto que se revela con el botón */
+        .hidden-tip {
+            display: none; /* Por defecto, el consejo está oculto */
+            margin-top: 1rem; /* Espacio superior */
+            padding: 0.75rem; /* Relleno interno */
+            background-color: #e0f2fe; /* Fondo azul claro para el consejo */
+            border-left: 4px solid #3b82f6; /* Borde izquierdo azul para destacar */
+            border-radius: 0.5rem; /* Bordes redondeados */
+            font-size: 0.9rem; /* Tamaño de fuente ligeramente más pequeño */
+            color: #1e40af; /* Color de texto azul oscuro */
+        }
+        /* Estilos para los elementos de lista personalizados con emojis */
+        .custom-list-item {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semi-transparente */
+            padding: 0.75rem 1rem; /* Relleno interno */
+            border-radius: 0.75rem; /* Bordes más redondeados */
+            display: flex; /* Para alinear el emoji y el texto */
+            align-items: center; /* Centrar verticalmente */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            transition: transform 0.2s ease-in-out; /* Transición suave para hover */
+            flex-wrap: wrap; /* Permite que el contenido se envuelva en pantallas pequeñas */
+        }
+        .custom-list-item:hover {
+            transform: translateY(-2px); /* Pequeño efecto de elevación al pasar el ratón */
+        }
+        .custom-list-item-emoji {
+            font-size: 1.5rem; /* Tamaño del emoji */
+            margin-right: 0.75rem; /* Espacio entre emoji y texto */
+            flex-shrink: 0; /* Evita que el emoji se encoja */
+        }
+        /* Estilos para las listas anidadas (dentro de Equipo de Proposición/Oposición, etc.) */
+        .nested-list {
+            list-style: none; /* Elimina los puntos de disco predeterminados */
+            padding-left: 0.5rem; /* Pequeño padding para alinear bien */
+        }
+        .nested-list li {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            line-height: 1.5; /* Espaciado de línea para mejor legibilidad */
+            display: flex; /* Para alinear el emoji y el texto */
+            align-items: flex-start; /* Alinea el texto con la parte superior del emoji */
+        }
+        .nested-list-emoji {
+            font-size: 0.8rem; /* Tamaño del emoji para las listas anidadas */
+            margin-right: 0.5rem; /* Espacio entre emoji y texto */
+            line-height: 1.5; /* Asegura que el emoji se alinee con la línea de texto */
+        }
+        .debate-question {
+            font-style: italic;
+            color: #d1d5db; /* Color gris claro para las preguntas */
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            width: 100%; /* Asegura que la pregunta ocupe todo el ancho disponible */
+        }
+        .debate-answer {
+            background-color: rgba(255, 255, 255, 0.3); /* Fondo ligeramente más oscuro para la respuesta */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            width: 100%; /* Ocupa todo el ancho disponible */
+            color: #f0f4f8; /* Color de texto claro para la respuesta */
+            border-left: 3px solid #fcd34d; /* Borde amarillo para destacar la respuesta */
+        }
+        .debate-answer ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .debate-answer li {
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .answer-bullet {
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+            color: #fde047; /* Color amarillo para las viñetas de respuesta */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <!-- Contenedor principal de la infografía, centrado y con sombra -->
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10">
+        <!-- Título principal de la infografía -->
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-purple-800 mb-8 leading-tight">
+            📚 ESI en Argentina: ¡Guía y Respuestas para el Debate! 🇦🇷
+        </h1>
+
+        <!-- Subtítulo introductorio -->
+        <p class="text-lg text-gray-700 text-center mb-10">
+            ¡Prepárate para debatir sobre la Educación Sexual Integral en Argentina! Esta guía te ofrece los puntos clave, las preguntas esenciales y **respuestas modelo** para construir tus argumentos.
+        </p>
+
+        <!-- Sección: ¿Qué es la ESI? -->
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar la ESI (cerebro y corazón) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.002 12.002 0 0012 21.056c3.122-1.03 5.914-2.774 8.24-4.783m-1.953-1.953A12.002 12.002 0 0012 21.056"></path></svg>
+                🎯 ¿Qué es la ESI? ¡Educación para la Vida!
+            </h2>
+            <p class="text-lg mb-6">
+                La <span class="font-bold">Educación Sexual Integral (ESI)</span> es un derecho de todos los niños, niñas y adolescentes en Argentina. Va mucho más allá de la biología, abarcando:
+            </p>
+            <ul class="list-none space-y-4">
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🧠</span> <span class="font-semibold">Conocimiento y cuidado del propio cuerpo.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Cómo puedes usar esta definición para argumentar que la ESI es fundamental para el desarrollo integral de los jóvenes?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI brinda información científica sobre anatomía y fisiología, empoderando a los jóvenes para tomar decisiones informadas sobre su salud.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la autonomía y el autocuidado, esenciales para un desarrollo pleno en todas las dimensiones de la vida.</li>
+                            <li><span class="answer-bullet">➡️</span> Es un derecho humano a la salud y a la educación, garantizado por leyes nacionales e internacionales.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">❤️</span> <span class="font-semibold">Valoración de la afectividad y las emociones.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿De qué manera la ESI, al abordar la afectividad, contribuye a la prevención de relaciones violentas?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Enseña a identificar emociones propias y ajenas, promoviendo la empatía y la comunicación asertiva.</li>
+                            <li><span class="answer-bullet">➡️</span> Aborda el consentimiento, los límites personales y el respeto mutuo, desnaturalizando conductas violentas o abusivas.</li>
+                            <li><span class="answer-bullet">➡️</span> Ayuda a construir modelos de relaciones saludables, basadas en el buen trato y la igualdad.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🌈</span> <span class="font-semibold">Respeto por la diversidad y las diferencias.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Cómo se relaciona el respeto a la diversidad en la ESI con la construcción de una sociedad más inclusiva?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Promueve la aceptación de las diferentes identidades de género y orientaciones sexuales, combatiendo la discriminación y la homofobia/transfobia.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la convivencia pacífica y el respeto por las diferencias individuales, sentando las bases para una sociedad más justa y equitativa.</li>
+                            <li><span class="answer-bullet">➡️</span> Desafía estereotipos y prejuicios, permitiendo que cada persona se desarrolle libremente.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">⚖️</span> <span class="font-semibold">Ejercicio de los derechos y responsabilidades.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Por qué es crucial que los jóvenes conozcan sus derechos sexuales y reproductivos a través de la ESI?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Empodera a los jóvenes para exigir el cumplimiento de sus derechos, como el acceso a información, servicios de salud y métodos anticonceptivos.</li>
+                            <li><span class="answer-bullet">➡️</span> Les permite tomar decisiones autónomas y responsables sobre su cuerpo y su vida sexual.</li>
+                            <li><span class="answer-bullet">➡️</span> Previene situaciones de vulneración de derechos, como el matrimonio infantil o la explotación sexual.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🚫</span> <span class="font-semibold">Prevención de la violencia y el abuso.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Qué mecanismos ofrece la ESI para que los jóvenes identifiquen y actúen frente a situaciones de abuso?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Enseña a reconocer señales de alerta de abuso y violencia (física, psicológica, sexual).</li>
+                            <li><span class="answer-bullet">➡️</span> Proporciona herramientas para decir "no", establecer límites y buscar ayuda en adultos de confianza o instituciones.</li>
+                            <li><span class="answer-bullet">➡️</span> Rompe el silencio y el tabú en torno a estos temas, creando un ambiente de confianza para la denuncia.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <p class="text-lg mt-6">
+                <span class="font-bold">Su objetivo:</span> Promover un desarrollo integral y saludable, con información adecuada y herramientas para tomar decisiones responsables.
+            </p>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-purple-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> La ESI no busca imponer una forma de pensar, sino brindar herramientas para que cada persona pueda construir su propia sexualidad de forma saludable y respetuosa.</p>
+            </div>
+        </div>
+
+        <!-- Sección: Pilares de la ESI -->
+        <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar los pilares (columnas) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 17V7a2 2 0 012-2h12a2 2 0 012 2v10m-6 0v4m-4-4v4m-4-4v4m0-12h.01M17 12h.01M12 12h.01M7 12h.01"></path></svg>
+                🏛️ Pilares de la ESI: ¡Los 5 Ejes Fundamentales para Debatir!
+            </h2>
+            <p class="text-lg mb-4">
+                La ESI se sustenta en cinco ejes conceptuales que guían su enseñanza. Cada uno es una fuente de argumentos:
+            </p>
+
+            <ul class="list-none space-y-4">
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">♀️♂️</span> <span class="font-semibold">Reconocer la perspectiva de género.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Entender los roles y expectativas sociales asociados a ser hombre o mujer.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Qué argumentos puedes construir sobre la importancia de la perspectiva de género en la ESI para combatir estereotipos y desigualdades?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Desafía roles de género tradicionales que limitan el desarrollo de hombres y mujeres.</li>
+                            <li><span class="answer-bullet">➡️</span> Promueve la igualdad de oportunidades y el respeto por las decisiones individuales, más allá de las expectativas de género.</li>
+                            <li><span class="answer-bullet">➡️</span> Es clave para la prevención de la violencia de género, al visibilizar las asimetrías de poder.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🌍</span> <span class="font-semibold">Respetar la diversidad.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Valorar las diferentes formas de ser, sentir y amar, sin discriminación.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo defenderías que el respeto a la diversidad sexual es un pilar esencial de la ESI y un derecho humano fundamental?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI reconoce y celebra la diversidad sexual (orientaciones, identidades de género), creando espacios seguros y libres de bullying.</li>
+                            <li><span class="answer-bullet">➡️</span> Contribuye a la salud mental y bienestar de jóvenes LGBTQ+, reduciendo estigma y discriminación.</li>
+                            <li><span class="answer-bullet">➡️</span> Se alinea con los principios de derechos humanos a la no discriminación y a la igualdad.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">💞</span> <span class="font-semibold">Valorar la afectividad.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Explorar las emociones, los sentimientos y las relaciones interpersonales.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Qué ejemplos usarías para mostrar cómo la ESI fomenta relaciones saludables y previene la violencia desde la afectividad?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Enseña a identificar emociones y a gestionarlas de forma constructiva en las relaciones.</li>
+                            <li><span class="answer-bullet">➡️</span> Promueve el diálogo, el respeto, la escucha activa y el establecimiento de límites claros en pareja y amistades.</li>
+                            <li><span class="answer-bullet">➡️</span> Ayuda a reconocer las primeras señales de violencia (celos excesivos, control) y a buscar ayuda.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">✊</span> <span class="font-semibold">Ejercer nuestros derechos.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Conocer y exigir el cumplimiento de los derechos sexuales y reproductivos.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo argumentarías que la ESI empodera a los jóvenes al enseñarles sus derechos sexuales y reproductivos, y por qué esto es vital?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Los jóvenes informados son menos vulnerables a la explotación, el abuso y la coerción.</li>
+                            <li><span class="answer-bullet">➡️</span> Les permite acceder a métodos anticonceptivos, servicios de salud sexual y reproductiva, y asesoramiento.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la participación ciudadana y la capacidad de defender sus propios derechos y los de otros.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">💪</span> <span class="font-semibold">Cuidar el cuerpo y la salud.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Adquirir información sobre métodos anticonceptivos, ITS y hábitos saludables.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Qué datos o ejemplos usarías para demostrar que la ESI contribuye directamente a la salud pública y la prevención de riesgos (ej. ITS, embarazos no deseados)?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Reducción de tasas de embarazo adolescente y de ITS en países con ESI implementada.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta el uso responsable de métodos anticonceptivos y el acceso a controles de salud.</li>
+                            <li><span class="answer-bullet">➡️</span> Promueve hábitos de vida saludables y la prevención de adicciones relacionadas con la sexualidad.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-green-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Estos ejes no se abordan de forma aislada, sino que se integran en todas las áreas del conocimiento y en diferentes momentos de la trayectoria escolar. ¡Piensa en cómo se conectan para formar argumentos más robustos!</p>
+            </div>
+        </div>
+
+        <!-- Sección: Beneficios de la ESI -->
+        <div class="bg-gradient-to-r from-blue-400 to-cyan-500 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar beneficios (hoja de trébol) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                🌟 Beneficios de la ESI: ¡Argumentos Poderosos!
+            </h2>
+            <p class="text-lg mb-6">
+                La implementación de la ESI trae consigo múltiples beneficios para la juventud y la sociedad. ¡Estos son tus argumentos a favor!
+            </p>
+            <ul class="list-none space-y-4">
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">👶🚫</span> <span class="font-semibold">Prevención de embarazos no deseados.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Qué estadísticas o casos podrías citar para respaldar este beneficio como un impacto positivo directo de la ESI?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI proporciona información sobre métodos anticonceptivos y planificación familiar, reduciendo la tasa de embarazos adolescentes.</li>
+                            <li><span class="answer-bullet">➡️</span> Estudios en países con ESI implementada muestran una correlación con la disminución de embarazos no intencionales.</li>
+                            <li><span class="answer-bullet">➡️</span> Permite a los jóvenes decidir sobre su futuro y proyecto de vida sin interrupciones por embarazos tempranos.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🛡️</span> <span class="font-semibold">Prevención de infecciones de transmisión sexual (ITS).</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Cómo la información brindada por la ESI reduce la incidencia de ITS y qué evidencia existe al respecto?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Enseña sobre las ITS, sus formas de transmisión y, crucialmente, cómo prevenirlas (uso de preservativo, testeo).</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la comunicación abierta con parejas y profesionales de la salud.</li>
+                            <li><span class="answer-bullet">➡️</span> Datos de salud pública en regiones con ESI robusta muestran una disminución en la prevalencia de ITS en jóvenes.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🗣️</span> <span class="font-semibold">Reducción de la violencia de género y el abuso.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Cómo conectarías la educación en ESI con la disminución de la violencia en las relaciones y el reconocimiento de situaciones de abuso?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Al enseñar sobre consentimiento y relaciones igualitarias, la ESI desnaturaliza la violencia y el control.</li>
+                            <li><span class="answer-bullet">➡️</span> Capacita a los jóvenes para identificar patrones de abuso y buscar ayuda, rompiendo círculos de violencia.</li>
+                            <li><span class="answer-bullet">➡️</span> Promueve la igualdad de género desde temprana edad, atacando las raíces de la violencia machista.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🤝</span> <span class="font-semibold">Fomento del respeto, la empatía y la diversidad.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Qué ejemplos concretos darías de cómo la ESI mejora la convivencia, promueve la tolerancia y reduce la discriminación en el ámbito escolar y social?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Crea un clima escolar más inclusivo donde se respetan todas las identidades y expresiones.</li>
+                            <li><span class="answer-bullet">➡️</span> Reduce el bullying y la discriminación por motivos de orientación sexual o identidad de género.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la empatía al comprender las experiencias y realidades diversas de los compañeros.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">✅</span> <span class="font-semibold">Desarrollo de autonomía y toma de decisiones informadas.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿Cómo la ESI empodera a los jóvenes para tomar decisiones responsables sobre su cuerpo y sexualidad, y por qué esto es un beneficio clave?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Proporciona información objetiva y científica, permitiendo decisiones basadas en el conocimiento, no en mitos o presiones.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta el pensamiento crítico y la capacidad de evaluar riesgos y consecuencias.</li>
+                            <li><span class="answer-bullet">➡️</span> Es un paso fundamental hacia la madurez y la responsabilidad personal.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">💬</span> <span class="font-semibold">Mejora de la comunicación en familias y escuelas.</span>
+                    <p class="debate-question">🤔 Pregunta para Debatir: ¿De qué manera la ESI puede abrir canales de diálogo sobre temas sensibles entre estudiantes, familias y docentes?</p>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La escuela actúa como un espacio seguro para abordar temas que a veces son difíciles de tratar en casa.</li>
+                            <li><span class="answer-bullet">➡️</span> Proporciona un vocabulario común y herramientas para hablar sobre sexualidad de forma natural y sin tabúes.</li>
+                            <li><span class="answer-bullet">➡️</span> Fomenta la confianza entre estudiantes y docentes, y entre familias y la institución educativa.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-blue-500 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Al presentar los beneficios, intenta cuantificarlos o dar ejemplos específicos para hacer tus argumentos más convincentes.</p>
+            </div>
+        </div>
+
+        <!-- Sección: Marco Legal en Argentina -->
+        <div class="bg-gradient-to-r from-red-500 to-orange-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar la ley (balanza de la justicia) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                ⚖️ Marco Legal en Argentina: ¡Tu Base de Argumentos!
+            </h2>
+            <p class="text-lg mb-6">
+                La ESI no es una opción, es un <span class="font-bold">derecho</span> respaldado por la ley en Argentina. ¡Esto es fundamental para tu postura!
+            </p>
+            <ul class="list-none space-y-4">
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">📜</span> <span class="font-semibold">Ley 26.150 de Educación Sexual Integral (2006).</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Establece el derecho a recibir ESI en todos los establecimientos educativos del país, públicos y privados, de todos los niveles.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo usarías la Ley 26.150 para refutar el argumento de que la ESI es opcional o que los padres pueden decidir si sus hijos la reciben?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ley es de orden público y obligatoria para todas las instituciones educativas, sin excepción.</li>
+                            <li><span class="answer-bullet">➡️</span> El derecho a la educación sexual es un derecho del niño/adolescente, no de los padres. Los padres tienen el derecho a educar en casa, pero no a privar de un derecho educativo en la escuela.</li>
+                            <li><span class="answer-bullet">➡️</span> La ESI complementa la educación familiar, no la reemplaza, y se basa en un enfoque científico y de derechos.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🌐</span> <span class="font-semibold">Contexto de Derechos Humanos.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Se enmarca en tratados internacionales de derechos humanos y leyes nacionales de protección integral de niños, niñas y adolescentes.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Qué conexión harías entre la ESI y los derechos humanos fundamentales (ej. derecho a la salud, a la información, a la no discriminación) para fortalecer tu argumento?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI es una herramienta para garantizar el derecho a la salud, a la educación de calidad, a la información y a vivir una vida libre de violencia y discriminación.</li>
+                            <li><span class="answer-bullet">➡️</span> Se alinea con la Convención sobre los Derechos del Niño, que establece el derecho de los niños a acceder a información y servicios de salud.</li>
+                            <li><span class="answer-bullet">➡️</span> Es un compromiso del Estado argentino con los derechos humanos universales.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🏥</span> <span class="font-semibold">Salud Pública y Educación.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Reconoce la importancia de la educación sexual para la salud integral y el bienestar de la población.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo argumentarías que la ESI es una política de salud pública esencial, y no solo una cuestión educativa?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Al prevenir embarazos adolescentes e ITS, la ESI alivia la carga sobre el sistema de salud pública.</li>
+                            <li><span class="answer-bullet">➡️</span> Promueve comportamientos saludables y reduce factores de riesgo a largo plazo.</li>
+                            <li><span class="answer-bullet">➡️</span> Contribuye a la formación de ciudadanos más sanos y responsables, lo que beneficia a toda la sociedad.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-red-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Conocer la ley te da argumentos sólidos para defender la importancia y la obligatoriedad de la ESI en cualquier debate. ¡Cítala siempre que puedas!</p>
+            </div>
+        </div>
+
+        <!-- Sección: Desafíos y Debates -->
+        <div class="bg-gradient-to-r from-gray-500 to-gray-700 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar desafíos (montaña con bandera) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l-7 7-7-7m7 7v10a1 1 0 01-1 1h-3"></path></svg>
+                🚧 Desafíos y Debates: ¡Anticipa y Refuta!
+            </h2>
+            <p class="text-lg mb-6">
+                A pesar de su importancia, la ESI enfrenta algunos desafíos y genera debates. ¡Prepárate para responder a estas objeciones!
+            </p>
+            <ul class="list-none space-y-4">
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">⛪</span> <span class="font-semibold">Resistencia de algunos sectores (religiosos/conservadores).</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Grupos que cuestionan el contenido o la obligatoriedad de la ESI por motivos morales o religiosos.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo responderías al argumento de que la ESI interfiere con los valores familiares o religiosos, y cómo enfatizarías su carácter laico y científico?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI es laica y científica, no promueve una moral específica, sino información y derechos.</li>
+                            <li><span class="answer-bullet">➡️</span> Respeta la libertad de culto y el derecho de las familias a educar en valores, pero la escuela garantiza el derecho a la información.</li>
+                            <li><span class="answer-bullet">➡️</span> La información científica es un derecho universal, independientemente de las creencias personales.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">❓</span> <span class="font-semibold">Interpretaciones sobre el alcance y contenido.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Debates sobre qué temas específicos deben incluirse y cómo abordarlos según la edad de los estudiantes.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo defenderías la necesidad de un contenido ESI estandarizado y progresivo según la edad, frente a quienes piden limitar ciertos temas o dejar la decisión a cada familia?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Los contenidos están diseñados por expertos y son graduales, adaptados a la madurez de cada etapa.</li>
+                            <li><span class="answer-bullet">➡️</span> Un contenido estandarizado garantiza que todos los estudiantes reciban la misma información esencial, sin importar su escuela o contexto.</li>
+                            <li><span class="answer-bullet">➡️</span> Dejar la decisión a cada familia generaría desigualdad y privaría a muchos jóvenes de información vital.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🗺️</span> <span class="font-semibold">Implementación desigual o deficiente.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Variaciones en la aplicación de la ley entre las diferentes provincias y escuelas, o falta de recursos.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Qué soluciones propondrías o qué argumentos usarías para destacar la urgencia de una implementación efectiva y homogénea de la ESI en todo el país, superando las barreras existentes?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> Argumentar por mayor inversión estatal en capacitación docente y recursos pedagógicos.</li>
+                            <li><span class="answer-bullet">➡️</span> Proponer mecanismos de monitoreo y evaluación para asegurar el cumplimiento de la ley en todas las jurisdicciones.</li>
+                            <li><span class="answer-bullet">➡️</span> Destacar que la implementación desigual genera inequidad en el acceso a un derecho fundamental.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">👩‍🏫</span> <span class="font-semibold">Falta de capacitación docente.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> Necesidad de formación continua y adecuada para los docentes que deben impartir la ESI.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo argumentarías que la falta de capacitación docente no es una razón para *no* implementar la ESI, sino una necesidad a resolver con inversión y políticas públicas?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La capacitación es un desafío, no un impedimento. Es una inversión necesaria para garantizar la calidad de la ESI.</li>
+                            <li><span class="answer-bullet">➡️</span> Los docentes son clave para la implementación, y su formación debe ser una prioridad política.</li>
+                            <li><span class="answer-bullet">➡️</span> Existen programas de capacitación y recursos disponibles que deben ser masificados.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🤝</span> <span class="font-semibold">Importancia del diálogo y el consenso.</span>
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> La necesidad de construir puentes entre familias, escuelas y comunidad para una implementación exitosa.</li>
+                        <li class="debate-question">🤔 Pregunta para Debatir: ¿Cómo enfatizarías que el diálogo entre familia, escuela y comunidad es un objetivo de la ESI, y no un obstáculo, para generar confianza y apoyo?</li>
+                    </ul>
+                    <div class="debate-answer">
+                        <span class="font-bold">Puntos Clave para tu Respuesta:</span>
+                        <ul>
+                            <li><span class="answer-bullet">➡️</span> La ESI busca complementar la educación familiar, no contradecirla. El diálogo permite aclarar dudas y construir confianza.</li>
+                            <li><span class="answer-bullet">➡️</span> Involucrar a las familias en el proceso educativo de la ESI fortalece el apoyo y la comprensión del programa.</li>
+                            <li><span class="answer-bullet">➡️</span> Los espacios de diálogo pueden disipar mitos y prejuicios, facilitando una implementación más fluida.</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-gray-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Para debatir sobre ESI, es fundamental conocer los argumentos de ambas partes y basarse en datos y evidencia científica. ¡No te quedes solo con tu postura!</p>
+            </div>
+        </div>
+
+        <!-- Sección: Ejercicio Práctico -->
+        <div class="bg-gray-100 p-6 rounded-xl shadow-md text-gray-800">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar el ejercicio (lápiz y papel) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                ✍️ ¡Tu Turno! Ejercicio Práctico
+            </h2>
+            <p class="text-lg mb-4">
+                Ahora que conoces más sobre la ESI, las preguntas clave y las posibles respuestas, ¡es tu momento de practicar!
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-lg mb-6">
+                <li>Elige una de las mociones de ejemplo o crea una propia:
+                    <ul class="list-disc list-inside ml-6 mt-2">
+                        <li>"Esta casa cree que la ESI debería ser obligatoria en todas las escuelas privadas."</li>
+                        <li>"Esta casa cree que el contenido de la ESI debería ser determinado por las familias."</li>
+                    </ul>
+                </li>
+                <li>Selecciona una postura (a favor o en contra).</li>
+                <li>Utiliza las preguntas y los <span class="font-bold">Puntos Clave para tu Respuesta</span> de esta infografía para empezar a **esbozar tus argumentos principales** y a **anticipar las posibles refutaciones** de la postura contraria.</li>
+            </ul>
+            <p class="text-lg">
+                ¡Cuando tengas algunas ideas, compártelas conmigo! Estoy aquí para ayudarte a pulirlas y a prepararte para el debate.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para la interactividad de los consejos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecciona todos los botones con la clase 'toggle-tip'
+            const toggleButtons = document.querySelectorAll('.toggle-tip');
+
+            // Itera sobre cada botón para añadir un 'event listener'
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Encuentra el elemento 'hidden-tip' que sigue inmediatamente al botón
+                    const hiddenTip = button.nextElementSibling;
+                    // Comprueba si el consejo está visible
+                    if (hiddenTip.style.display === 'block') {
+                        // Si está visible, lo oculta y cambia el texto del botón
+                        hiddenTip.style.display = 'none';
+                        button.textContent = '💡 Consejo Rápido';
+                    } else {
+                        // Si está oculto, lo muestra y cambia el texto del botón
+                        hiddenTip.style.display = 'block';
+                        button.textContent = 'Ocultar Consejo ⬆️';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
