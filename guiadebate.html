@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos del Debate - Infografía Interactiva</title>
+    <!-- Carga de Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define la fuente principal para todo el cuerpo del documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un color de fondo azul-gris claro para una apariencia suave */
+        }
+        /* Estilos personalizados para el contenido oculto que se revela con el botón */
+        .hidden-tip {
+            display: none; /* Por defecto, el consejo está oculto */
+            margin-top: 1rem; /* Espacio superior */
+            padding: 0.75rem; /* Relleno interno */
+            background-color: #e0f2fe; /* Fondo azul claro para el consejo */
+            border-left: 4px solid #3b82f6; /* Borde izquierdo azul para destacar */
+            border-radius: 0.5rem; /* Bordes redondeados */
+            font-size: 0.9rem; /* Tamaño de fuente ligeramente más pequeño */
+            color: #1e40af; /* Color de texto azul oscuro */
+        }
+        /* Estilos para los elementos de lista personalizados con emojis */
+        .custom-list-item {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semi-transparente */
+            padding: 0.75rem 1rem; /* Relleno interno */
+            border-radius: 0.75rem; /* Bordes más redondeados */
+            display: flex; /* Para alinear el emoji y el texto */
+            align-items: center; /* Centrar verticalmente */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            transition: transform 0.2s ease-in-out; /* Transición suave para hover */
+        }
+        .custom-list-item:hover {
+            transform: translateY(-2px); /* Pequeño efecto de elevación al pasar el ratón */
+        }
+        .custom-list-item-emoji {
+            font-size: 1.5rem; /* Tamaño del emoji */
+            margin-right: 0.75rem; /* Espacio entre emoji y texto */
+            flex-shrink: 0; /* Evita que el emoji se encoja */
+        }
+        /* Estilos para las listas anidadas (dentro de Equipo de Proposición/Oposición, etc.) */
+        .nested-list {
+            list-style: none; /* Elimina los puntos de disco predeterminados */
+            padding-left: 0.5rem; /* Pequeño padding para alinear bien */
+        }
+        .nested-list li {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            line-height: 1.5; /* Espaciado de línea para mejor legibilidad */
+            display: flex; /* Para alinear el emoji y el texto */
+            align-items: flex-start; /* Alinea el texto con la parte superior del emoji */
+        }
+        .nested-list-emoji {
+            font-size: 0.8rem; /* Tamaño del emoji para las listas anidadas */
+            margin-right: 0.5rem; /* Espacio entre emoji y texto */
+            line-height: 1.5; /* Asegura que el emoji se alinee con la línea de texto */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <!-- Contenedor principal de la infografía, centrado y con sombra -->
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10">
+        <!-- Título principal de la infografía -->
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-blue-800 mb-8 leading-tight">
+            🚀 Fundamentos del Debate: ¡Tu Guía Interactiva para Brillar! 🚀
+        </h1>
+
+        <!-- Subtítulo introductorio -->
+        <p class="text-lg text-gray-700 text-center mb-10">
+            ¡Hola, futura campeona del debate! Prepárate para desglosar el arte de la argumentación de una forma súper visual y divertida. ¡Haz clic en los consejos para aprender más!
+        </p>
+
+        <!-- Sección: ¿Qué es un Debate? -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar el debate (burbujas de diálogo) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                🎯 ¿Qué es un Debate? ¡El Campo de Juego!
+            </h2>
+            <p class="text-lg mb-6">
+                Imagina un debate como un <span class="font-bold">duelo de ideas</span> 🧠, pero con reglas y mucho respeto. No se trata de gritar más fuerte, sino de <span class="font-bold">persuadir</span> con:
+            </p>
+            <ul class="list-none space-y-4"> <!-- Usamos list-none para controlar el estilo de los puntos con emojis -->
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🧐</span> <span class="font-semibold">Lógica Impecable</span>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">📚</span> <span class="font-semibold">Evidencia Sólida</span>
+                </li>
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">🎤</span> <span class="font-semibold">¡Tu Voz Convencente!</span>
+                </li>
+            </ul>
+            <p class="text-lg mt-6">
+                <span class="font-bold">Tu Misión:</span> Convencer a todos de que tu punto de vista es el más fuerte y válido.
+            </p>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-blue-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Un buen debate no busca destruir al oponente, sino construir tu propia verdad de forma sólida. ¡La clave es la claridad y el respeto!</p>
+            </div>
+        </div>
+
+        <!-- Sección: Los Jugadores Clave -->
+        <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar a los jugadores (personas) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-5m-5 0h10m-10 0h.01M12 12l-1.414 1.414M12 12l1.414 1.414M12 12L10.586 10.586M12 12L13.414 10.586M12 12L10.586 13.414M12 12L13.414 13.414M12 12L10.586 10.586M12 12L13.414 10.586"></path></svg>
+                🤝 Los Jugadores Clave: ¿Quién es Quién?
+            </h2>
+            <p class="text-lg mb-4">
+                En cada debate, hay dos equipos principales, como en un partido:
+            </p>
+
+            <!-- Sub-sección: Equipo de la Proposición -->
+            <div class="mb-6 bg-green-600 p-4 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-semibold mb-2 flex items-center">
+                    <span class="text-yellow-300 mr-2">🌟</span> Equipo de la Proposición (¡El "Sí"!)
+                </h3>
+                <ul class="nested-list space-y-2 text-lg">
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Rol:</span> ¡Son los que dicen "SÍ" a la moción! Quieren que algo <span class="font-bold">cambie</span> o que una idea sea <span class="font-bold">aceptada</span>.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Objetivo:</span> Demostrar que la moción es <span class="font-bold">verdadera, buena o necesaria.</span></li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Piensan:</span> "¿Por qué esto es una buena idea?" 🤔</li>
+                </ul>
+            </div>
+
+            <!-- Sub-sección: Equipo de la Oposición -->
+            <div class="bg-teal-700 p-4 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-semibold mb-2 flex items-center">
+                    <span class="text-red-300 mr-2">⚔️</span> Equipo de la Oposición (¡El "No"!)
+                </h3>
+                <ul class="nested-list space-y-2 text-lg">
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Rol:</span> ¡Son los que dicen "NO" a la moción! Quieren que las cosas <span class="font-bold">sigan como están</span> o que la idea sea <span class="font-bold">rechazada</span>.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Objetivo:</span> Refutar a la Proposición y mostrar que la moción es <span class="font-bold">falsa, mala o innecesaria.</span></li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Piensan:</span> "¿Por qué esto <span class="font-bold">no</span> es una buena idea?" 🛡️</li>
+                </ul>
+            </div>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-green-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Entender el rol de tu equipo es crucial. La Proposición debe ser proactiva y constructiva, mientras que la Oposición debe ser reactiva y crítica.</p>
+            </div>
+        </div>
+
+        <!-- Sección: La Estructura del Debate -->
+        <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar la estructura (bloques de construcción) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                🏗️ La Estructura del Debate: ¡Paso a Paso!
+            </h2>
+            <p class="text-lg mb-4">
+                Un debate tiene un flujo, como una historia. Aquí están las partes clave:
+            </p>
+
+            <!-- Sub-sección: Discursos de Apertura -->
+            <div class="mb-6 bg-purple-600 p-4 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-semibold mb-2 flex items-center">
+                    <span class="text-yellow-300 mr-2">🎤</span> 1. Discursos de Apertura (¡Tu Gran Entrada!)
+                </h3>
+                <ul class="nested-list space-y-2 text-lg">
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">¿Qué haces?</span> Presentas tu postura y tus <span class="font-bold">argumentos principales</span>. ¡Es tu primera impresión!</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Orden:</span> Proposición va primero.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Contenido Clave:</span> Introducción, Definición (Proposición), Tu Postura, Tus 2-3 Argumentos Más Fuertes.</li>
+                </ul>
+            </div>
+
+            <!-- Sub-sección: Refutación y Contra-argumentación -->
+            <div class="mb-6 bg-pink-700 p-4 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-semibold mb-2 flex items-center">
+                    <span class="text-blue-300 mr-2">🤺</span> 2. Refutación y Contra-argumentación (¡La Batalla de Ideas!)
+                </h3>
+                <ul class="nested-list space-y-2 text-lg">
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">¿Qué haces?</span> ¡Aquí es donde la magia sucede! <span class="font-bold">Atacas</span> 🎯 los puntos débiles del oponente y <span class="font-bold">defiendes</span> 🛡️ tus propios argumentos.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Orden:</span> ¡Es un ida y vuelta constante!</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Contenido Clave:</span> Señalar fallos, presentar contra-argumentos, reforzar los propios.</li>
+                </ul>
+            </div>
+
+            <!-- Sub-sección: Discursos de Cierre -->
+            <div class="bg-purple-800 p-4 rounded-lg shadow-inner">
+                <h3 class="text-2xl font-semibold mb-2 flex items-center">
+                    <span class="text-green-300 mr-2">🏁</span> 3. Discursos de Cierre (¡El Golpe Final!)
+                </h3>
+                <ul class="nested-list space-y-2 text-lg">
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">¿Qué haces?</span> Resumes todo, destacas tus victorias y dejas una <span class="font-bold">impresión memorable</span>.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Orden:</span> Oposición va primero, Proposición cierra.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">¡Ojo!</span> 🚫 <span class="font-bold">NO</span> introduzcas nuevos argumentos aquí.</li>
+                    <li><span class="nested-list-emoji">•</span> <span class="font-bold">Contenido Clave:</span> Resumen de puntos clave, comparación de impacto, conclusión poderosa.</li>
+                </ul>
+            </div>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-purple-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Practica la gestión del tiempo para cada sección. ¡Es vital para asegurarte de que todos tus puntos sean escuchados!</p>
+            </div>
+        </div>
+
+        <!-- Sección: Tipos de Mociones -->
+        <div class="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar los tipos de mociones (pregunta) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                💡 Tipos de Mociones: ¡El Tema del Debate!
+            </h2>
+            <p class="text-lg mb-6">
+                Las mociones son las frases sobre las que debaten. ¡Entenderlas te da una ventaja!
+            </p>
+
+            <ul class="list-none space-y-4"> <!-- Usamos list-none para controlar el estilo de los puntos con emojis -->
+                <!-- Sub-sección: Mociones de Hecho -->
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">팩</span> <span class="font-bold">Mociones de Hecho:</span> ¿Es VERDAD o MENTIRA?
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Pregunta:</span> ¿Es algo real o no?</li>
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Ejemplo:</span> "Esta casa cree que los unicornios existen." (¡Se debate si es un hecho!)</li>
+                    </ul>
+                </li>
+
+                <!-- Sub-sección: Mociones de Valor -->
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">💖</span> <span class="font-bold">Mociones de Valor:</span> ¿Es BUENO o MALO?
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Pregunta:</span> ¿Es algo moral, deseable, justo?</li>
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Ejemplo:</span> "Esta casa cree que comer pizza con piña es un crimen culinario." (¡Es un juicio de valor!)</li>
+                    </ul>
+                </li>
+
+                <!-- Sub-sección: Mociones de Política -->
+                <li class="custom-list-item">
+                    <span class="custom-list-item-emoji">⚙️</span> <span class="font-bold">Mociones de Política (o Acción):</span> ¿DEBERÍAMOS HACERLO?
+                    <ul class="nested-list mt-2 text-base text-gray-100">
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Pregunta:</span> ¿Deberíamos implementar una ley o una acción?</li>
+                        <li><span class="nested-list-emoji">•</span> <span class="font-bold">Ejemplo:</span> "Esta casa propone que se instaure la siesta obligatoria en todas las escuelas." (¡Se debate una acción!)</li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Botón para revelar el consejo rápido de esta sección -->
+            <button class="toggle-tip mt-6 bg-white text-orange-600 font-bold py-2 px-4 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                💡 Consejo Rápido
+            </button>
+            <!-- Contenido del consejo oculto -->
+            <div class="hidden-tip">
+                <p><span class="font-bold">Tip Extra:</span> Analiza siempre el tipo de moción para entender qué tipo de argumentos son más relevantes: hechos, valores o acciones.</p>
+            </div>
+        </div>
+
+        <!-- Sección: Ejercicio Práctico -->
+        <div class="bg-gray-100 p-6 rounded-xl shadow-md text-gray-800">
+            <h2 class="text-3xl font-bold mb-4 flex items-center">
+                <!-- Icono SVG para representar el ejercicio (lápiz y papel) -->
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                ✍️ ¡Tu Turno! Ejercicio Práctico
+            </h2>
+            <p class="text-lg mb-4">
+                Elige un tema que te apasione (por ejemplo, los videojuegos, el medio ambiente, la moda). Ahora, intenta crear <span class="font-bold">una moción de cada tipo</span> sobre ese tema.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-lg mb-6">
+                <li><span class="font-bold">Hecho:</span></li>
+                <li><span class="font-bold">Valor:</span></li>
+                <li><span class="font-bold">Política:</span></li>
+            </ul>
+            <p class="text-lg">
+                ¡Cuando las tengas, compártelas conmigo! Estoy aquí para revisar y darte feedback. ¡Vamos a construir esas habilidades!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para la interactividad de los consejos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Selecciona todos los botones con la clase 'toggle-tip'
+            const toggleButtons = document.querySelectorAll('.toggle-tip');
+
+            // Itera sobre cada botón para añadir un 'event listener'
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Encuentra el elemento 'hidden-tip' que sigue inmediatamente al botón
+                    const hiddenTip = button.nextElementSibling;
+                    // Comprueba si el consejo está visible
+                    if (hiddenTip.style.display === 'block') {
+                        // Si está visible, lo oculta y cambia el texto del botón
+                        hiddenTip.style.display = 'none';
+                        button.textContent = '💡 Consejo Rápido';
+                    } else {
+                        // Si está oculto, lo muestra y cambia el texto del botón
+                        hiddenTip.style.display = 'block';
+                        button.textContent = 'Ocultar Consejo ⬆️';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
