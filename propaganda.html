@@ -127,6 +127,108 @@
         .quiz-button:hover {
             background-color: #218838;
         }
+
+        /* Acrostic Styles */
+        .acrostic-game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .acrostic-word-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem; /* Espacio entre letras */
+            margin-bottom: 2rem; /* Espacio entre la palabra y las pistas */
+        }
+
+        .acrostic-letter-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%; /* Para centrar mejor el contenido */
+        }
+
+        .acrostic-letter-fixed {
+            font-size: 3rem; /* Letra más grande */
+            font-weight: 900;
+            color: #6a11cb; /* Morado vibrante para las letras de PUBLICIDAD */
+            width: 3.5rem; /* Ancho fijo para alineación */
+            text-align: center;
+            margin: 0 0.5rem; /* Espacio alrededor de la letra */
+        }
+
+        /* New input style for full answers */
+        .acrostic-clue-input {
+            width: calc(100% - 4rem); /* Adjust width to fit */
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+            border: 2px solid #a8dadc;
+            border-radius: 0.75rem;
+            background-color: #f0f9ff;
+            color: #334155;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .acrostic-clue-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+        }
+        .acrostic-clue-input.correct {
+            border-color: #28a745; /* Verde para correcto */
+        }
+        .acrostic-clue-input.incorrect {
+            border-color: #dc3545; /* Rojo para incorrecto */
+        }
+
+        .acrostic-clues-list {
+            width: 100%;
+            max-width: 600px; /* Ancho máximo para las pistas */
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .acrostic-clue-item {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Align items vertically */
+            background-color: #f0f9ff;
+            border: 2px solid #a8dadc;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            font-size: 1.1rem;
+            color: #334155;
+        }
+        .acrostic-clue-item p {
+            flex-grow: 1; /* Allow text to take available space */
+            margin-right: 1rem; /* Space between text and input */
+        }
+        .acrostic-clue-item.revealed .acrostic-answer-full {
+            display: block;
+        }
+        .acrostic-answer-full {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e40af;
+            margin-top: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+        .acrostic-clue-reveal-button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+        .acrostic-clue-reveal-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -141,6 +243,7 @@
                     <li><a href="#propaganda" class="hover:underline-bold text-xl font-semibold">Propaganda</a></li>
                     <li><a href="#impacto" class="hover:underline-bold text-xl font-semibold">Impacto</a></li>
                     <li><a href="#juegos" class="hover:underline-bold text-xl font-semibold">Juegos</a></li>
+                    <li><a href="#referencias" class="hover:underline-bold text-xl font-semibold">Referencias</a></li>
                 </ul>
             </nav>
         </div>
@@ -311,6 +414,7 @@
                 Demuestren que son los mejores detectando y analizando mensajes.
             </p>
 
+            <!-- Quiz: Publicidad vs. Propaganda -->
             <div class="bg-blue-50 p-8 rounded-3xl shadow-xl border-2 border-blue-200 mb-10">
                 <h3 class="text-3xl font-bold text-blue-700 mb-6">Quiz: Publicidad o Propaganda?</h3>
                 <p class="text-lg text-gray-800 mb-6">Lee la frase y decide si es un ejemplo de <strong>Publicidad</strong> o <strong>Propaganda</strong>.</p>
@@ -355,17 +459,148 @@
                 </div>
             </div>
 
-            <div class="bg-green-50 p-8 rounded-3xl shadow-xl border-2 border-green-200">
-                <h3 class="text-3xl font-bold text-green-700 mb-6">Próximos Desafíos: ¡Más Juegos!</h3>
-                <p class="text-lg text-gray-800 mb-4">
-                    Pronto agregaremos más juegos para que sigan poniendo a prueba sus habilidades de detectives de mensajes.
-                    ¡Prepárense para crucigramas, ahorcados, sopas de letras y mucho más!
+            <!-- Acrostic Crossword Game -->
+            <div class="bg-purple-50 p-8 rounded-3xl shadow-xl border-2 border-purple-200 mb-10">
+                <h3 class="text-3xl font-bold text-purple-700 mb-6">Acróstico-Crucigrama: ¡Descifra PUBLICIDAD!</h3>
+                <p class="text-lg text-gray-800 mb-6">
+                    Escribe la respuesta a cada pista. La primera letra de cada respuesta, en orden, formará la palabra vertical "PUBLICIDAD".
+                    ¡Haz clic en la pista para revelar la respuesta si necesitas ayuda!
                 </p>
-                <img src="https://placehold.co/300x150/d4edda/28a745?text=Mas+Juegos+Pronto" alt="Más Juegos Pronto" class="mx-auto rounded-lg shadow-md mt-6">
+
+                <div class="acrostic-game-area max-w-xl mx-auto">
+                    <div class="acrostic-word-display">
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">P</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="P" data-correct-answer="Público" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">U</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="U" data-correct-answer="Emoción" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">B</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="B" data-correct-answer="Bandwagon" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">L</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="L" data-correct-answer="Lectura" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">I</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="I" data-correct-answer="Influencers" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">C</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="C" data-correct-answer="Crítico" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">I</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="I" data-correct-answer="Interactiva" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">D</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="D" data-correct-answer="Viral" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">A</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="A" data-correct-answer="Eslógan" placeholder="Tu respuesta aquí...">
+                        </div>
+                        <div class="acrostic-letter-row">
+                            <span class="acrostic-letter-fixed">D</span>
+                            <input type="text" class="acrostic-clue-input" data-acrostic-letter="D" data-correct-answer="Perfecta" placeholder="Tu respuesta aquí...">
+                        </div>
+                    </div>
+
+                    <button id="check-acrostic" class="quiz-button mt-6 bg-purple-600 hover:bg-purple-700">Comprobar Acróstico</button>
+                    <div id="acrostic-feedback" class="quiz-feedback text-lg mt-4"></div>
+
+                    <div class="acrostic-clues-list">
+                        <h4 class="text-2xl font-bold text-purple-700 mb-4 mt-8">Pistas:</h4>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>1. (P) Son las personas a las que va dirigido un mensaje.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Público</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>2. (U) Sentimiento que busca generar la publicidad para que compremos.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Emoción</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>3. (B) Cuando un anuncio te dice "todos lo están usando", usa la técnica de _______.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Bandwagon</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>4. (L) Acción de mirar o leer un anuncio.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Lectura</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>5. (I) Personas populares en redes sociales que promocionan productos.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Influencers</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>6. (C) Capacidad de analizar y evaluar la información de manera objetiva.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Crítico</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>7. (I) La publicidad digital es muy _______, puedes hacer clic y ver videos.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Interactiva</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>8. (D) Las publicidades de hoy buscan que el contenido se vuelva _______ (que se comparta mucho).</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Viral</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>9. (A) Una frase corta y pegadiza que se usa en publicidad.</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Eslógan</div>
+                        </div>
+                        <div class="acrostic-clue-item" onclick="toggleContent(this)">
+                            <p>10. (D) Una de las modas que se veía en la publicidad de los años 50 era la "ama de casa _______".</p>
+                            <button class="acrostic-clue-reveal-button">Revelar</button>
+                            <div class="acrostic-answer-full">Perfecta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- References Section (Moved to the end) -->
+        <section id="referencias" class="container mb-16 text-center">
+            <h2 class="text-4xl font-extrabold section-title mb-10">📚 Referencias y Fuentes de Información</h2>
+            <div class="bg-gray-100 p-10 rounded-3xl shadow-xl border-2 border-gray-300 text-left">
+                <p class="text-xl text-gray-800 mb-6 leading-relaxed font-semibold">
+                    Aquí puedes encontrar más información y ejemplos sobre los temas que exploramos en esta infografía:
+                </p>
+                <ul class="list-disc list-inside space-y-3 text-lg text-gray-700">
+                    <li>
+                        <strong>Publicidad Antigua:</strong>
+                        <a href="https://webdepublicidad.com/publicidad-antigua/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">webdepublicidad.com/publicidad-antigua/</a>
+                    </li>
+                    <li>
+                        <strong>Publicidad Interactiva:</strong>
+                        <a href="https://www.creaxid.com.mx/blog/publicidad-interactiva-una-forma-innovadora-de-cautivar-a-la-gente/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">creaxid.com.mx/blog/publicidad-interactiva-una-forma-innovadora-de-cautivar-a-la-gente/</a>
+                    </li>
+                    <li>
+                        <strong>La Propaganda Política:</strong>
+                        <a href="https://www.alfepsi.org/la-propaganda-politica/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">alfepsi.org/la-propaganda-politica/</a>
+                    </li>
+                    <li>
+                        <strong>Técnicas de Propaganda:</strong>
+                        <a href="https://www.cinconoticias.com/tecnicas-de-propaganda/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">cinconoticias.com/tecnicas-de-propaganda/</a>
+                    </li>
+                </ul>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="gradient-bg text-white p-8 mt-12 rounded-t-3xl shadow-2xl">
         <div class="container text-center text-md font-medium">
             <p>&copy; 2025 Explorando Publicidad y Propaganda. ¡Gracias por participar y ser unos genios!</p>
@@ -376,7 +611,11 @@
     <script>
         // JavaScript para la interactividad de "Click y Revela"
         function toggleContent(element) {
-            element.classList.toggle('revealed');
+            // Find the full answer element within the clicked clue item
+            const answerFull = element.querySelector('.acrostic-answer-full');
+            if (answerFull) {
+                answerFull.style.display = answerFull.style.display === 'block' ? 'none' : 'block';
+            }
         }
 
         // JavaScript para el Quiz Interactivo
@@ -440,6 +679,51 @@
             });
 
             resetButton.addEventListener('click', resetQuiz);
+        });
+
+        // JavaScript para el Acróstico-Crucigrama
+        document.addEventListener('DOMContentLoaded', () => {
+            const acrosticInputs = document.querySelectorAll('.acrostic-clue-input');
+            const checkAcrosticButton = document.getElementById('check-acrostic');
+            const acrosticFeedback = document.getElementById('acrostic-feedback');
+            const correctAcrosticWord = "PUBLICIDAD"; // La palabra acróstica completa correcta
+
+            checkAcrosticButton.addEventListener('click', () => {
+                let userAcrosticWord = '';
+                let allAcrosticLettersCorrect = true;
+
+                acrosticInputs.forEach(input => {
+                    const expectedAcrosticLetter = input.dataset.acrosticLetter.toUpperCase();
+                    const userAnswer = input.value.trim().toUpperCase();
+                    
+                    if (userAnswer.length > 0 && userAnswer[0] === expectedAcrosticLetter) {
+                        input.classList.remove('incorrect');
+                        input.classList.add('correct');
+                        userAcrosticWord += userAnswer[0];
+                    } else {
+                        input.classList.remove('correct');
+                        input.classList.add('incorrect');
+                        allAcrosticLettersCorrect = false;
+                        userAcrosticWord += '_'; // Add a placeholder for incorrect letters
+                    }
+                });
+
+                if (allAcrosticLettersCorrect && userAcrosticWord === correctAcrosticWord) {
+                    acrosticFeedback.textContent = '¡Felicidades! ¡Has descifrado la palabra "PUBLICIDAD" correctamente!';
+                    acrosticFeedback.style.color = '#28a745';
+                } else {
+                    acrosticFeedback.textContent = '¡Sigue intentando! Hay algunas letras iniciales incorrectas o faltantes.';
+                    acrosticFeedback.style.color = '#dc3545';
+                }
+            });
+
+            // Opcional: limpiar el feedback al cambiar el input
+            acrosticInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    input.classList.remove('correct', 'incorrect'); // Reset classes
+                    acrosticFeedback.textContent = '';
+                });
+            });
         });
     </script>
 </body>
