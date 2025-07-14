@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Química del Agua: ¡Una Aventura Increíble!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            /* Using a placeholder for a light-colored periodic table background */
+            background-image: url('https://placehold.co/1200x800/e0f7fa/00bcd4?text=Fondo+Tabla+Periodica+Clara');
+            background-size: cover;
+            background-attachment: fixed;
+            background-blend-mode: overlay; /* Blends the background image with the color */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for content */
+            border-radius: 1.5rem; /* Rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 90%;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .water-bubble {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            opacity: 0;
+            animation: bubble-float 10s infinite ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes bubble-float {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-200px) scale(1.2); opacity: 0; }
+        }
+        .bubble-1 { width: 30px; height: 30px; left: 10%; animation-delay: 0s; }
+        .bubble-2 { width: 20px; height: 20px; left: 30%; animation-delay: 2s; }
+        .bubble-3 { width: 40px; height: 40px; left: 60%; animation-delay: 4s; }
+        .bubble-4 { width: 25px; height: 25px; left: 80%; animation-delay: 6s; }
+        .bubble-5 { width: 35px; height: 35px; left: 45%; animation-delay: 8s; }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .grid-cols-1-md-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .grid-cols-1-lg-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Collapsible section styles */
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+        }
+        .collapsible-header h2 {
+            margin-bottom: 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .collapsible-icon.rotated {
+            transform: rotate(90deg);
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .collapsible-content.expanded {
+            max-height: 1000px; /* Adjust as needed for content length */
+        }
+
+        /* Hangman Game Styles */
+        .hangman-game-container {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            border: 4px solid #00bcd4;
+            margin: 2rem auto; /* Center the game */
+        }
+        .hangman-word-display {
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            margin-bottom: 2rem;
+            color: #0077b6;
+            font-weight: bold;
+        }
+        .hangman-guesses {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .hangman-keyboard button {
+            background-color: #00bcd4;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            margin: 0.3rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: 0 4px #0097a7;
+        }
+        .hangman-keyboard button:hover:not(:disabled) {
+            background-color: #0097a7;
+            transform: translateY(-2px);
+        }
+        .hangman-keyboard button:active:not(:disabled) {
+            background-color: #0077b6;
+            transform: translateY(2px);
+            box-shadow: 0 2px #0077b6;
+        }
+        .hangman-keyboard button:disabled {
+            background-color: #b2ebf2;
+            cursor: not-allowed;
+            box-shadow: 0 4px #80deea;
+        }
+        .hangman-message-box {
+            background-color: #e0f2f7;
+            border: 2px solid #00bcd4;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #0077b6;
+            font-weight: bold;
+            display: none; /* Hidden by default */
+        }
+        .hangman-reset-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: 0 4px #388e3c;
+        }
+        .hangman-reset-button:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+        }
+        .hangman-reset-button:active {
+            background-color: #2e7d32;
+            transform: translateY(2px);
+            box-shadow: 0 2px #2e7d32;
+        }
+        .hangman-drawing {
+            margin-bottom: 2rem;
+            height: 150px; /* Fixed height for drawing area */
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative;
+        }
+        .hangman-drawing canvas {
+            background-color: #f0f0f0;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+        }
+
+        /* Word Search Game Styles */
+        .word-search-game-container {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            border: 4px solid #00bcd4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem auto; /* Center the game */
+        }
+        .word-search-grid-container {
+            display: grid;
+            border: 2px solid #0077b6;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .word-search-grid-cell {
+            width: 35px; /* Adjust cell size for responsiveness */
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            background-color: #e0f7fa;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.1s;
+        }
+        .word-search-grid-cell.selected {
+            background-color: #80deea;
+        }
+        .word-search-grid-cell.found {
+            background-color: #a5d6a7;
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        .word-search-words-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .word-search-words-list li {
+            background-color: #b2ebf2;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #0077b6;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .word-search-words-list li.found {
+            background-color: #c8e6c9;
+            color: #388e3c;
+            text-decoration: line-through;
+        }
+        .word-search-message-box {
+            background-color: #e0f2f7;
+            border: 2px solid #00bcd4;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #0077b6;
+            font-weight: bold;
+            display: none; /* Hidden by default */
+        }
+        .word-search-reset-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: 0 4px #388e3c;
+        }
+        .word-search-reset-button:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+        }
+        .word-search-reset-button:active {
+            background-color: #2e7d32;
+            transform: translateY(2px);
+            box-shadow: 0 2px #2e7d32;
+        }
+
+        /* Responsive adjustments for grid cells */
+        @media (max-width: 640px) {
+            .word-search-grid-cell {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .word-search-grid-cell {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="water-bubble bubble-1"></div>
+    <div class="water-bubble bubble-2"></div>
+    <div class="water-bubble bubble-3"></div>
+    <div class="water-bubble bubble-4"></div>
+    <div class="water-bubble bubble-5"></div>
+
+    <div class="container relative">
+        <!-- Title Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-6xl font-extrabold text-blue-800 leading-tight mb-4">
+                💧 La Química del Agua: <br> ¡Una Aventura Increíble! 🌊
+            </h1>
+            <p class="text-xl text-gray-700">
+                ¡Hola, futuros científicos y científicas de Buenos Aires! Prepárense para explorar el fascinante mundo del agua.
+            </p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Capítulo 1: Conoce a la Molécula Estrella: H₂O -->
+            <section class="bg-blue-100 p-6 rounded-xl shadow-md flex flex-col">
+                <div class="collapsible-header" data-target="content1">
+                    <h2 class="text-3xl font-bold text-blue-700">
+                        🔬 H₂O: La Molécula Estrella
+                    </h2>
+                    <span class="collapsible-icon text-blue-700 text-3xl">▶</span>
+                </div>
+                <div id="content1" class="collapsible-content">
+                    <img src="https://placehold.co/150x150/a7d9f7/0077b6?text=H2O" alt="Molécula de Agua H2O" class="mb-4 rounded-full border-4 border-blue-400 mx-auto">
+                    <p class="text-gray-800 mb-2">
+                        El agua es **H₂O**: dos átomos de Hidrógeno (H) y uno de Oxígeno (O), unidos por enlaces covalentes. El oxígeno es más "fuerte" y atrae más los electrones, creando una carga parcial negativa en el oxígeno y parcial positiva en los hidrógenos.
+                    </p>
+                    <p class="text-gray-800 mb-2">
+                        Esta característica hace que la molécula sea **polar**, ¡como un pequeño imán! Esto permite que las moléculas de agua se atraigan entre sí formando **puentes de hidrógeno**. Estos puentes son la clave de muchas de sus propiedades únicas, como la **cohesión** (las moléculas de agua se pegan entre sí) y la **adhesión** (se pegan a otras superficies).
+                    </p>
+                    <p class="text-gray-800">
+                        Gracias a los puentes de hidrógeno, el agua tiene un **alto calor específico**, lo que significa que necesita mucha energía para calentarse o enfriarse. ¡Esto es fundamental para regular la temperatura de nuestro planeta y de nuestros cuerpos!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capítulo 2: Los Disfraces del Agua -->
+            <section class="bg-green-100 p-6 rounded-xl shadow-md flex flex-col">
+                <div class="collapsible-header" data-target="content2">
+                    <h2 class="text-3xl font-bold text-green-700">
+                        🌬️ Disfraces del Agua
+                    </h2>
+                    <span class="collapsible-icon text-green-700 text-3xl">▶</span>
+                </div>
+                <div id="content2" class="collapsible-content">
+                    <div class="flex justify-around w-full mb-4">
+                        <img src="https://placehold.co/80x80/c8e6c9/388e3c?text=Hielo" alt="Hielo" class="rounded-full border-2 border-green-400">
+                        <img src="https://placehold.co/80x80/a7d9f7/0077b6?text=Agua" alt="Agua Líquida" class="rounded-full border-2 border-green-400">
+                        <img src="https://placehold.co/80x80/e1f5fe/2196f3?text=Vapor" alt="Vapor de Agua" class="rounded-full border-2 border-green-400">
+                    </div>
+                    <ul class="text-left text-gray-800 w-full">
+                        <li class="mb-2">
+                            **Sólido (Hielo):** Por debajo de 0°C, las moléculas de agua forman una estructura cristalina muy ordenada gracias a los puentes de hidrógeno. Esta estructura es menos densa que el agua líquida, ¡por eso el hielo flota!
+                        </li>
+                        <li class="mb-2">
+                            **Líquido:** Entre 0°C y 100°C, las moléculas están más desordenadas pero aún conectadas por puentes de hidrógeno que se rompen y se forman constantemente. Esto le da al agua su fluidez.
+                        </li>
+                        <li>
+                            **Gaseoso (Vapor de Agua):** Por encima de 100°C, la energía es tan alta que los puentes de hidrógeno se rompen por completo. Las moléculas de agua se mueven libremente y muy rápido, ocupando todo el espacio disponible.
+                        </li>
+                    </ul>
+                    <p class="text-gray-800 mt-2">
+                        Los puntos de congelación (0°C) y ebullición (100°C) del agua son inusualmente altos para una molécula de su tamaño, ¡todo gracias a esos puentes de hidrógeno!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capítulo 3: El Viaje Interminable del Agua -->
+            <section class="bg-yellow-100 p-6 rounded-xl shadow-md flex flex-col">
+                <div class="collapsible-header" data-target="content3">
+                    <h2 class="text-3xl font-bold text-yellow-700">
+                        🔄 El Ciclo del Agua
+                    </h2>
+                    <span class="collapsible-icon text-yellow-700 text-3xl">▶</span>
+                </div>
+                <div id="content3" class="collapsible-content">
+                    <img src="https://placehold.co/180x120/fff9c4/fbc02d?text=Ciclo+Agua" alt="Diagrama del Ciclo del Agua" class="mb-4 rounded-lg border-4 border-yellow-400 mx-auto">
+                    <p class="text-gray-800 mb-2">
+                        El agua en nuestro planeta está en un viaje constante, impulsado por la energía del sol y la gravedad. Este ciclo es esencial para la distribución del agua dulce y para mantener la vida.
+                    </p>
+                    <ul class="text-left text-gray-800 w-full">
+                        <li class="mb-2">
+                            **Evaporación:** El sol calienta el agua de océanos, ríos (¡como el Río de la Plata!), lagos y suelos, transformándola en vapor de agua que asciende a la atmósfera.
+                        </li>
+                        <li class="mb-2">
+                            **Transpiración:** Las plantas liberan vapor de agua a la atmósfera a través de sus hojas, un proceso similar a la evaporación.
+                        </li>
+                        <li class="mb-2">
+                            **Condensación:** A medida que el vapor de agua sube, se enfría y se convierte en pequeñas gotas de agua o cristales de hielo, formando nubes.
+                        </li>
+                        <li class="mb-2">
+                            **Precipitación:** Cuando las nubes se saturan, el agua cae de nuevo a la Tierra en forma de lluvia, nieve, granizo o aguanieve.
+                        </li>
+                        <li>
+                            **Recolección y Escorrentía:** El agua precipitada se acumula en cuerpos de agua (ríos, lagos, océanos), se infiltra en el suelo para formar aguas subterráneas, o fluye por la superficie como escorrentía, regresando a los océanos y reiniciando el ciclo.
+                        </li>
+                    </ul>
+                    <p class="text-gray-800 mt-2">
+                        ¡Este ciclo purifica el agua y la distribuye por todo el planeta, haciendo posible la vida en cada rincón!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capítulo 4: El Agua: ¡La Súper Solvente! -->
+            <section class="bg-purple-100 p-6 rounded-xl shadow-md flex flex-col">
+                <div class="collapsible-header" data-target="content4">
+                    <h2 class="text-3xl font-bold text-purple-700">
+                        🧪 ¡Súper Solvente!
+                    </h2>
+                    <span class="collapsible-icon text-purple-700 text-3xl">▶</span>
+                </div>
+                <div id="content4" class="collapsible-content">
+                    <img src="https://placehold.co/150x150/e1bee7/7b1fa2?text=Disolver" alt="Vaso disolviendo azúcar" class="mb-4 rounded-full border-4 border-purple-400 mx-auto">
+                    <p class="text-gray-800 mb-2">
+                        La polaridad del agua la convierte en el "solvente universal". Su capacidad para disolver una gran variedad de sustancias es crucial para la vida y los procesos naturales.
+                    </p>
+                    <ul class="text-left text-gray-800 w-full">
+                        <li class="mb-2">
+                            **Disuelve compuestos iónicos:** Como la sal de mesa (NaCl). Las cargas parciales del agua atraen y separan los iones de la sal, disolviéndola.
+                        </li>
+                        <li class="mb-2">
+                            **Disuelve moléculas polares:** Como el azúcar. El agua forma puentes de hidrógeno con estas moléculas, rodeándolas y dispersándolas.
+                        </li>
+                        <li class="mb-2">
+                            **Transporta nutrientes:** En nuestro cuerpo, el agua disuelve vitaminas, minerales y glucosa, llevándolos a todas las células. También ayuda a eliminar desechos.
+                        </li>
+                        <li>
+                            **Formación de paisajes:** En la naturaleza, el agua disuelve lentamente minerales de las rocas, contribuyendo a la erosión y la formación de cuevas y paisajes únicos.
+                        </li>
+                    </ul>
+                    <p class="text-gray-800 mt-2">
+                        La regla es "similar disuelve a similar": el agua disuelve sustancias polares e iónicas, pero no disuelve sustancias no polares como el aceite.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capítulo 5: El Agua y la Vida -->
+            <section class="bg-red-100 p-6 rounded-xl shadow-md flex flex-col">
+                <div class="collapsible-header" data-target="content5">
+                    <h2 class="text-3xl font-bold text-red-700">
+                        💚 Agua y Vida: ¡Nuestro Tesoro!
+                    </h2>
+                    <span class="collapsible-icon text-red-700 text-3xl">▶</span>
+                </div>
+                <div id="content5" class="collapsible-content">
+                    <img src="https://placehold.co/150x150/ffcdd2/d32f2f?text=Vida" alt="Planta siendo regada" class="mb-4 rounded-full border-4 border-red-400 mx-auto">
+                    <p class="text-gray-800 mb-2">
+                        El agua es el "solvente de la vida" y su presencia es indispensable para todos los organismos vivos.
+                    </p>
+                    <ul class="text-left text-gray-800 w-full">
+                        <li class="mb-2">
+                            **Componente principal de los organismos:** El cuerpo humano es aproximadamente 60-70% agua. Es el medio donde ocurren todas las reacciones químicas vitales.
+                        </li>
+                        <li class="mb-2">
+                            **Regulación de la temperatura:** Gracias a su alto calor específico, el agua ayuda a mantener una temperatura corporal estable en animales y a moderar el clima global.
+                        </li>
+                        <li class="mb-2">
+                            **Transporte:** La sangre (compuesta mayormente por agua) transporta oxígeno, nutrientes y hormonas, y elimina desechos.
+                        </li>
+                        <li class="mb-2">
+                            **Soporte y lubricación:** El agua lubrica articulaciones, protege órganos y es un componente estructural de células y tejidos.
+                        </li>
+                        <li>
+                            **Ecosistemas acuáticos:** Ríos, lagos y océanos son el hogar de una inmensa diversidad de vida, desde microorganismos hasta grandes mamíferos marinos.
+                        </li>
+                    </ul>
+                    <p class="text-gray-800 mt-2 font-bold">
+                        ¡Cuidar el agua es cuidar nuestro futuro! La conservación del agua y la prevención de la contaminación son responsabilidades de todos para asegurar la salud de nuestro planeta y de las futuras generaciones.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Actividad para el Río de la Plata -->
+            <section class="bg-teal-100 p-6 rounded-xl shadow-md flex flex-col lg:col-span-full">
+                <div class="collapsible-header" data-target="content6">
+                    <h2 class="text-3xl font-bold text-teal-700">
+                        💡 Actividad: ¡El Río de la Plata!
+                    </h2>
+                    <span class="collapsible-icon text-teal-700 text-3xl">▶</span>
+                </div>
+                <div id="content6" class="collapsible-content">
+                    <img src="https://placehold.co/180x120/b2dfdb/00796b?text=Rio+Plata" alt="Río de la Plata" class="mb-4 rounded-lg border-4 border-teal-400 mx-auto">
+                    <p class="text-gray-800 mb-4">
+                        El Río de la Plata es un ecosistema vital y una fuente de agua importante para Buenos Aires. Su calidad es fundamental para la salud de la población y la biodiversidad.
+                    </p>
+                    <ul class="text-left text-gray-800 w-full">
+                        <li class="mb-2">
+                            **Investiguen:** ¿Qué programas o iniciativas existen en Buenos Aires para monitorear y mejorar la calidad del agua del Río de la Plata? ¿Qué desafíos enfrenta el río en términos de contaminación?
+                        </li>
+                        <li>
+                            **Reflexionen:** ¿Cómo podemos nosotros, desde casa, contribuir a mantener el agua limpia y reducir la contaminación que llega a nuestros ríos y al Río de la Plata? Piensen en el uso responsable del agua, la gestión de residuos y el descarte de productos químicos.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Hangman Game Section -->
+        <section class="hangman-game-container mt-12">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-6">
+                Ahorcado: ¡Química del Agua! 🧪
+            </h1>
+            <div class="hangman-drawing">
+                <canvas id="hangmanCanvas" width="150" height="150"></canvas>
+            </div>
+            <div id="hangmanWordDisplay" class="hangman-word-display mb-8"></div>
+            <div id="hangmanGuesses" class="hangman-guesses">Intentos restantes: <span id="hangmanRemainingAttempts">7</span></div>
+            <div id="hangmanKeyboard" class="hangman-keyboard grid grid-cols-7 gap-2">
+                <!-- Buttons will be generated here by JavaScript -->
+            </div>
+            <div id="hangmanMessageBox" class="hangman-message-box"></div>
+            <button id="hangmanResetButton" class="hangman-reset-button mt-6 hidden">Jugar de Nuevo</button>
+        </section>
+
+        <!-- Word Search Game Section -->
+        <section class="word-search-game-container mt-12">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-6">
+                Sopa de Letras: ¡Química del Agua! 🔍
+            </h1>
+            <div id="wordSearchGridContainer" class="word-search-grid-container"></div>
+            <ul id="wordSearchWordsList" class="word-search-words-list"></ul>
+            <div id="wordSearchMessageBox" class="word-search-message-box"></div>
+            <button id="wordSearchResetButton" class="word-search-reset-button mt-6 hidden">Jugar de Nuevo</button>
+        </section>
+
+        <footer class="text-center mt-12 text-gray-600 text-lg">
+            ¡Esperamos que este viaje por la química del agua les haya parecido tan emocionante como a nosotros!
+            <br>¡Recuerden, el agua es más que solo agua, es una maravilla química!
+        </footer>
+    </div>
+
+    <script>
+        // --- Collapsible Menus Logic ---
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.dataset.target;
+                const content = document.getElementById(targetId);
+                const icon = header.querySelector('.collapsible-icon');
+
+                if (content.classList.contains('expanded')) {
+                    content.classList.remove('expanded');
+                    icon.classList.remove('rotated');
+                } else {
+                    content.classList.add('expanded');
+                    icon.classList.add('rotated');
+                }
+            });
+        });
+
+        // --- Hangman Game Logic ---
+        const hangmanWords = [
+            { word: "AGUA", hint: "La sustancia más común en la Tierra." },
+            { word: "OXIGENO", hint: "Elemento clave en la molécula de agua." },
+            { word: "HIDROGENO", hint: "Los otros dos elementos en H2O." },
+            { word: "MOLECULA", hint: "La unidad más pequeña de agua." },
+            { word: "SOLVENTE", hint: "El agua tiene esta propiedad para disolver cosas." },
+            { word: "HIELO", hint: "Estado sólido del agua." },
+            { word: "VAPOR", hint: "Estado gaseoso del agua." },
+            { word: "CICLO", hint: "El viaje constante del agua en la naturaleza." },
+            { word: "EVAPORACION", hint: "Cuando el agua se convierte en vapor por el calor." },
+            { word: "CONDENSACION", hint: "Cuando el vapor se enfría y forma nubes." },
+            { word: "PRECIPITACION", hint: "El agua cae de las nubes." },
+            { word: "RIO", hint: "Cuerpo de agua dulce que fluye." },
+            { word: "OCEANO", hint: "Gran masa de agua salada." },
+            { word: "POLAR", hint: "Descripción de la molécula de agua debido a su carga." }
+        ];
+
+        let hangmanSelectedWord = '';
+        let hangmanHiddenWord = [];
+        let hangmanGuessedLetters = [];
+        let hangmanRemainingAttempts = 7;
+        let hangmanGameOver = false;
+
+        const hangmanWordDisplay = document.getElementById('hangmanWordDisplay');
+        const hangmanRemainingAttemptsSpan = document.getElementById('hangmanRemainingAttempts');
+        const hangmanKeyboardDiv = document.getElementById('hangmanKeyboard');
+        const hangmanMessageBox = document.getElementById('hangmanMessageBox');
+        const hangmanResetButton = document.getElementById('hangmanResetButton');
+        const hangmanCanvas = document.getElementById('hangmanCanvas');
+        const hangmanCtx = hangmanCanvas.getContext('2d');
+
+        // Function to draw hangman parts
+        function drawHangman(part) {
+            hangmanCtx.strokeStyle = '#333';
+            hangmanCtx.lineWidth = 2;
+
+            switch (part) {
+                case 0: // Base
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(10, 140);
+                    hangmanCtx.lineTo(140, 140);
+                    hangmanCtx.stroke();
+                    break;
+                case 1: // Vertical post
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(30, 140);
+                    hangmanCtx.lineTo(30, 10);
+                    hangmanCtx.stroke();
+                    break;
+                case 2: // Horizontal beam
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(28, 10);
+                    hangmanCtx.lineTo(100, 10);
+                    hangmanCtx.stroke();
+                    break;
+                case 3: // Rope
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 10);
+                    hangmanCtx.lineTo(100, 30);
+                    hangmanCtx.stroke();
+                    break;
+                case 4: // Head
+                    hangmanCtx.beginPath();
+                    hangmanCtx.arc(100, 50, 20, 0, Math.PI * 2, true);
+                    hangmanCtx.stroke();
+                    break;
+                case 5: // Body
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 70);
+                    hangmanCtx.lineTo(100, 110);
+                    hangmanCtx.stroke();
+                    break;
+                case 6: // Left Arm
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 80);
+                    hangmanCtx.lineTo(80, 100);
+                    hangmanCtx.stroke();
+                    break;
+                case 7: // Right Arm
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 80);
+                    hangmanCtx.lineTo(120, 100);
+                    hangmanCtx.stroke();
+                    break;
+                case 8: // Left Leg
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 110);
+                    hangmanCtx.lineTo(80, 130);
+                    hangmanCtx.stroke();
+                    break;
+                case 9: // Right Leg
+                    hangmanCtx.beginPath();
+                    hangmanCtx.moveTo(100, 110);
+                    hangmanCtx.lineTo(120, 130);
+                    hangmanCtx.stroke();
+                    break;
+            }
+        }
+
+        function clearHangman() {
+            hangmanCtx.clearRect(0, 0, hangmanCanvas.width, hangmanCanvas.height);
+        }
+
+        // Initialize the Hangman game
+        function initializeHangmanGame() {
+            clearHangman();
+            hangmanSelectedWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)].word.toUpperCase();
+            hangmanHiddenWord = Array(hangmanSelectedWord.length).fill('_');
+            hangmanGuessedLetters = [];
+            hangmanRemainingAttempts = 7;
+            hangmanGameOver = false;
+            hangmanMessageBox.style.display = 'none';
+            hangmanResetButton.style.display = 'none';
+            updateHangmanDisplay();
+            createHangmanKeyboard();
+        }
+
+        // Update the Hangman word display
+        function updateHangmanDisplay() {
+            hangmanWordDisplay.textContent = hangmanHiddenWord.join(' ');
+            hangmanRemainingAttemptsSpan.textContent = hangmanRemainingAttempts;
+        }
+
+        // Create Hangman keyboard buttons
+        function createHangmanKeyboard() {
+            hangmanKeyboardDiv.innerHTML = '';
+            for (let i = 65; i <= 90; i++) { // ASCII for A-Z
+                const char = String.fromCharCode(i);
+                const button = document.createElement('button');
+                button.textContent = char;
+                button.id = `hangman-btn-${char}`;
+                button.addEventListener('click', () => handleHangmanGuess(char));
+                hangmanKeyboardDiv.appendChild(button);
+            }
+        }
+
+        // Handle a Hangman letter guess
+        function handleHangmanGuess(letter) {
+            if (hangmanGameOver || hangmanGuessedLetters.includes(letter)) {
+                return;
+            }
+
+            hangmanGuessedLetters.push(letter);
+            document.getElementById(`hangman-btn-${letter}`).disabled = true;
+
+            if (hangmanSelectedWord.includes(letter)) {
+                for (let i = 0; i < hangmanSelectedWord.length; i++) {
+                    if (hangmanSelectedWord[i] === letter) {
+                        hangmanHiddenWord[i] = letter;
+                    }
+                }
+            } else {
+                hangmanRemainingAttempts--;
+                drawHangman(7 - hangmanRemainingAttempts); // Draw parts based on attempts left
+            }
+
+            updateHangmanDisplay();
+            checkHangmanGameStatus();
+        }
+
+        // Check if Hangman game is won or lost
+        function checkHangmanGameStatus() {
+            if (hangmanHiddenWord.join('') === hangmanSelectedWord) {
+                showHangmanMessage('¡Felicidades! ¡Has adivinado la palabra! 🎉', 'green');
+                hangmanGameOver = true;
+                disableHangmanKeyboard();
+            } else if (hangmanRemainingAttempts <= 0) {
+                showHangmanMessage(`¡Oh no! Te quedaste sin intentos. La palabra era: ${hangmanSelectedWord} 😞`, 'red');
+                hangmanGameOver = true;
+                disableHangmanKeyboard();
+            }
+        }
+
+        // Show message in Hangman message box
+        function showHangmanMessage(msg, type) {
+            hangmanMessageBox.textContent = msg;
+            hangmanMessageBox.className = `hangman-message-box block mt-6 ${type === 'green' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700'}`;
+            hangmanMessageBox.style.display = 'block';
+            hangmanResetButton.style.display = 'block';
+        }
+
+        // Disable all Hangman keyboard buttons
+        function disableHangmanKeyboard() {
+            const buttons = hangmanKeyboardDiv.querySelectorAll('button');
+            buttons.forEach(button => button.disabled = true);
+        }
+
+        // Event listener for Hangman reset button
+        hangmanResetButton.addEventListener('click', initializeHangmanGame);
+
+        // --- Word Search Game Logic ---
+        const wordSearchWords = [
+            "AGUA", "OXIGENO", "HIDROGENO", "MOLECULA", "SOLVENTE",
+            "HIELO", "VAPOR", "CICLO", "EVAPORACION", "CONDENSACION",
+            "PRECIPITACION", "RIO", "OCEANO", "POLAR"
+        ];
+        const wordSearchGridSize = 15; // 15x15 grid
+        let wordSearchGrid = [];
+        let wordSearchFoundWords = new Set();
+        let wordSearchSelectedCells = [];
+        let wordSearchIsDrawing = false;
+
+        const wordSearchGridContainer = document.getElementById('wordSearchGridContainer');
+        const wordSearchWordsList = document.getElementById('wordSearchWordsList');
+        const wordSearchMessageBox = document.getElementById('wordSearchMessageBox');
+        const wordSearchResetButton = document.getElementById('wordSearchResetButton');
+
+        // Directions for placing words (right, down, diagonal down-right, diagonal down-left)
+        const wordSearchDirections = [
+            { dr: 0, dc: 1 },  // Horizontal
+            { dr: 1, dc: 0 },  // Vertical
+            { dr: 1, dc: 1 },  // Diagonal \
+            { dr: 1, dc: -1 }  // Diagonal /
+        ];
+
+        // Function to initialize the grid with empty cells
+        function initializeWordSearchGrid() {
+            wordSearchGrid = Array(wordSearchGridSize).fill(null).map(() => Array(wordSearchGridSize).fill(''));
+        }
+
+        // Function to place words in the grid
+        function placeWordSearchWords() {
+            // Sort words by length in descending order to place longer words first
+            const sortedWords = [...wordSearchWords].sort((a, b) => b.length - a.length);
+
+            for (const word of sortedWords) {
+                let placed = false;
+                let attempts = 0;
+                const maxAttempts = 100;
+
+                while (!placed && attempts < maxAttempts) {
+                    const dir = wordSearchDirections[Math.floor(Math.random() * wordSearchDirections.length)];
+                    const row = Math.floor(Math.random() * wordSearchGridSize);
+                    const col = Math.floor(Math.random() * wordSearchGridSize);
+
+                    if (canPlaceWordSearchWord(word, row, col, dir)) {
+                        for (let i = 0; i < word.length; i++) {
+                            wordSearchGrid[row + i * dir.dr][col + i * dir.dc] = word[i];
+                        }
+                        placed = true;
+                    }
+                    attempts++;
+                }
+                if (!placed) {
+                    console.warn(`Could not place word: ${word}`);
+                }
+            }
+        }
+
+        // Check if a word can be placed at a given position and direction
+        function canPlaceWordSearchWord(word, row, col, dir) {
+            for (let i = 0; i < word.length; i++) {
+                const newRow = row + i * dir.dr;
+                const newCol = col + i * dir.dc;
+
+                if (newRow < 0 || newRow >= wordSearchGridSize || newCol < 0 || newCol >= wordSearchGridSize) {
+                    return false; // Out of bounds
+                }
+                if (wordSearchGrid[newRow][newCol] !== '' && wordSearchGrid[newRow][newCol] !== word[i]) {
+                    return false; // Conflict with existing letter
+                }
+            }
+            return true;
+        }
+
+        // Fill empty cells with random letters
+        function fillWordSearchEmptyCells() {
+            for (let r = 0; r < wordSearchGridSize; r++) {
+                for (let c = 0; c < wordSearchGridSize; c++) {
+                    if (wordSearchGrid[r][c] === '') {
+                        wordSearchGrid[r][c] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random uppercase letter
+                    }
+                }
+            }
+        }
+
+        // Render the grid to HTML
+        function renderWordSearchGrid() {
+            wordSearchGridContainer.innerHTML = '';
+            wordSearchGridContainer.style.gridTemplateColumns = `repeat(${wordSearchGridSize}, 1fr)`;
+            for (let r = 0; r < wordSearchGridSize; r++) {
+                for (let c = 0; c < wordSearchGridSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('word-search-grid-cell');
+                    cell.textContent = wordSearchGrid[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.addEventListener('mousedown', startWordSearchSelection);
+                    cell.addEventListener('mouseover', continueWordSearchSelection);
+                    cell.addEventListener('mouseup', endWordSearchSelection);
+                    wordSearchGridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        // Render the list of words
+        function renderWordSearchWordsList() {
+            wordSearchWordsList.innerHTML = '';
+            wordSearchWords.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                li.id = `word-search-word-${word}`;
+                if (wordSearchFoundWords.has(word)) {
+                    li.classList.add('found');
+                }
+                wordSearchWordsList.appendChild(li);
+            });
+        }
+
+        // Handle selection start
+        function startWordSearchSelection(e) {
+            if (e.button !== 0) return; // Only left click
+            wordSearchIsDrawing = true;
+            const cell = e.target;
+            wordSearchSelectedCells = [cell];
+            cell.classList.add('selected');
+        }
+
+        // Handle selection continuation
+        function continueWordSearchSelection(e) {
+            if (!wordSearchIsDrawing) return;
+            const cell = e.target;
+            if (!wordSearchSelectedCells.includes(cell)) {
+                wordSearchSelectedCells.push(cell);
+                cell.classList.add('selected');
+            }
+        }
+
+        // Handle selection end
+        function endWordSearchSelection() {
+            if (!wordSearchIsDrawing) return;
+            wordSearchIsDrawing = false;
+            checkWordSearchSelectedWord();
+            clearWordSearchSelection();
+        }
+
+        // Check if the selected cells form a valid word
+        function checkWordSearchSelectedWord() {
+            if (wordSearchSelectedCells.length === 0) return;
+
+            const sortedCells = [...wordSearchSelectedCells].sort((a, b) => {
+                const rowA = parseInt(a.dataset.row);
+                const colA = parseInt(a.dataset.col);
+                const rowB = parseInt(b.dataset.row);
+                const colB = parseInt(b.dataset.col);
+
+                if (rowA !== rowB) return rowA - rowB;
+                return colA - colB;
+            });
+
+            let selectedWordText = '';
+            for (const cell of sortedCells) {
+                selectedWordText += cell.textContent;
+            }
+
+            // Check if the reversed word is also a valid word
+            const reversedSelectedWordText = selectedWordText.split('').reverse().join('');
+
+            let foundMatch = false;
+            for (const word of wordSearchWords) {
+                if (word === selectedWordText || word === reversedSelectedWordText) {
+                    if (!wordSearchFoundWords.has(word)) {
+                        wordSearchFoundWords.add(word);
+                        highlightWordSearchFoundWord(word, wordSearchSelectedCells);
+                        document.getElementById(`word-search-word-${word}`).classList.add('found');
+                        showWordSearchMessage(`¡Encontraste la palabra: ${word}! 🎉`, 'green');
+                        foundMatch = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!foundMatch && wordSearchSelectedCells.length > 1) {
+                showWordSearchMessage('¡Esa no es una palabra válida o ya la encontraste! Intenta de nuevo. 🤔', 'red');
+            }
+
+            if (wordSearchFoundWords.size === wordSearchWords.length) {
+                showWordSearchMessage('¡Felicidades! ¡Has encontrado todas las palabras! 🥳', 'green');
+                wordSearchResetButton.style.display = 'block';
+            }
+        }
+
+        // Highlight cells of a found word
+        function highlightWordSearchFoundWord(word, cells) {
+            cells.forEach(cell => {
+                cell.classList.add('found');
+                cell.classList.remove('selected');
+            });
+        }
+
+        // Clear selection highlighting
+        function clearWordSearchSelection() {
+            wordSearchSelectedCells.forEach(cell => cell.classList.remove('selected'));
+            wordSearchSelectedCells = [];
+        }
+
+        // Show message in message box
+        function showWordSearchMessage(msg, type) {
+            wordSearchMessageBox.textContent = msg;
+            wordSearchMessageBox.className = `word-search-message-box block mt-6 ${type === 'green' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700'}`;
+            wordSearchMessageBox.style.display = 'block';
+        }
+
+        // Initialize the Word Search game
+        function initializeWordSearchGame() {
+            wordSearchFoundWords.clear();
+            wordSearchSelectedCells = [];
+            wordSearchIsDrawing = false;
+            wordSearchMessageBox.style.display = 'none';
+            wordSearchResetButton.style.display = 'none';
+
+            initializeWordSearchGrid();
+            placeWordSearchWords();
+            fillWordSearchEmptyCells();
+            renderWordSearchGrid();
+            renderWordSearchWordsList();
+        }
+
+        // Event listener for Word Search reset button
+        wordSearchResetButton.addEventListener('click', initializeWordSearchGame);
+
+        // Initial game setup for both games
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeHangmanGame();
+            initializeWordSearchGame();
+        });
+    </script>
+</body>
+</html>
