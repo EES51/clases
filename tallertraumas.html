@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanando el Pasado: Su Poder para Transformar el Presente</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEEBC8; /* Light orange background for the body (Tailwind orange-100) */
+            color: #2d3748; /* Darker text for better contrast */
+            line-height: 1.7; /* Improved line height for readability */
+        }
+        .container {
+            max-width: 1024px; /* Slightly wider container for more space */
+        }
+        h1 {
+            font-weight: 800; /* Extra bold for main title */
+            color: #1a202c; /* Very dark for main heading */
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Subtle shadow for h1 */
+        }
+        h2 {
+            font-weight: 700;
+            color: #dc2626; /* Deep red for section titles (Tailwind red-700) */
+            line-height: 1.3;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for h2 */
+        }
+        h3 {
+            font-weight: 600;
+            color: #2d3748; /* Darker for sub-titles */
+            line-height: 1.4;
+        }
+        .section-separator {
+            border-top: 3px solid #a0aec0; /* Thicker, slightly darker gray line */
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
+        .list-item-title {
+            font-weight: 700; /* Bold for list item titles */
+            color: #2d3748; /* Changed to dark black for list item titles */
+        }
+        .card {
+            background-color: #f0f8ff; /* Light blue background for cards */
+            border-radius: 1.25rem; /* Even more rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* More pronounced shadow */
+            padding: 2.5rem; /* Increased padding */
+        }
+        ul.list-disc li, ul.list-circle li {
+            margin-bottom: 0.75rem; /* More space between list items */
+        }
+        strong {
+            font-weight: 600; /* Ensure bold text stands out */
+        }
+        /* Custom button style for activities */
+        .activity-button {
+            background-color: #4c51bf; /* Indigo-700 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .activity-button:hover {
+            background-color: #5a61c7; /* Lighter indigo on hover */
+        }
+        .activity-feedback {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #d1fae5; /* Green-100 */
+            color: #065f46; /* Green-800 */
+            font-weight: 500;
+            display: none; /* Hidden by default */
+        }
+        .quiz-option {
+            background-color: #edf2f7; /* Gray-200 */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-option:hover {
+            background-color: #e2e8f0; /* Gray-300 */
+        }
+        .quiz-option.correct {
+            background-color: #d1fae5; /* Green-100 */
+            border: 1px solid #34d399; /* Green-400 */
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2; /* Red-100 */
+            border: 1px solid #ef4444; /* Red-500 */
+        }
+        .illustration {
+            width: 100%;
+            max-width: 300px; /* Control max size of images */
+            height: auto;
+            border-radius: 1rem;
+            margin: 1.5rem auto; /* Center the image and add vertical space */
+            display: block; /* Ensure block-level for margin auto */
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="p-6 sm:p-8 md:p-12">
+    <div class="container mx-auto py-10">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-blue-900 mb-6 rounded-2xl p-6 bg-gradient-to-r from-blue-100 to-blue-300 shadow-xl">
+                Sanando el Pasado: Su Poder para Transformar el Presente ✨
+            </h1>
+            <p class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                Hoy hablaremos de algo muy importante para entender cómo nos sentimos y actuamos: cómo las experiencias difíciles de nuestra infancia pueden dejar una marca, y lo más importante, cómo podemos cambiar esa marca para vivir mejor.
+            </p>
+        </header>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                ¿Qué es el Trauma? Una Perspectiva Profesional 💔
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-6">
+                El trauma psicológico es la <strong class="text-blue-700">respuesta de nuestra mente y cuerpo</strong> a situaciones que fueron <strong class="text-blue-700">extremadamente amenazantes, abrumadoras o que nos superaron</strong> por completo. Nuestro cerebro tiene un sistema de alarma que nos protege. Normalmente, cuando un peligro pasa, esta alarma se apaga y procesamos lo que vivimos.
+            </p>
+            <img src="https://img.freepik.com/vetores-gratis/ilustracion-do-conceito-de-trauma-infantil_114360-25588.jpg?t=st=1728278108~exp=1728281708~hmac=2473283ecbbb3a6b7e5eabcb996e6302fc2b11f835e812a5eb4f8cdc6490f1f9&w=996" alt="Ilustración del concepto de trauma infantil" class="illustration">
+            <p class="text-lg text-blue-900 leading-relaxed">
+                Pero si vivimos algo muy fuerte —como una amenaza grande, una pérdida inesperada o sentirnos muy solos por mucho tiempo— esa alarma puede <strong class="text-blue-700">quedar encendida o "trabada"</strong>. Esto hace que no podamos procesar bien esa experiencia, dejando una <strong class="text-blue-700">marca en nuestra memoria y emociones</strong>. Es clave entender que el trauma no significa que seamos débiles; es una <strong class="text-blue-700">reacción normal</strong> de nuestro cuerpo y mente a algo que no fue normal. Si la alarma sigue encendida, puede afectar cómo vemos el mundo, qué pensamos, cómo manejamos nuestras emociones y cómo nos comportamos a largo plazo.
+            </p>
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <h3 class="text-2xl list-item-title mb-4">Actividad: Mi Primera Reflexión 🤔</h3>
+                <p class="text-gray-700 mb-4">Después de leer sobre el trauma, ¿qué palabra o frase te resuena más? Escríbela aquí para empezar a conectar con lo que sientes.</p>
+                <textarea id="reflexionInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Ej: 'Comprendo mejor', 'No estoy solo', 'Es una respuesta normal'"></textarea>
+                <button onclick="guardarReflexion()" class="activity-button mt-4">Guardar Reflexión</button>
+                <div id="reflexionFeedback" class="activity-feedback"></div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                ¿De Dónde Viene Esa "Alarma Trabada"? Factores Clave 🚨
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-8">
+                Las experiencias que pueden dejar esta "alarma trabada" no son solo eventos muy obvios o dramáticos. Incluyen muchas situaciones que, por cómo fueron o por lo seguido que pasaron, nos superaron. Estas pueden ser:
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Problemas en Casa (Un Ambiente Inseguro):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Peleas constantes:</strong> Crecer en un hogar con muchos gritos o tensión nos hace sentir que el mundo es impredecible y que siempre debemos estar alerta, lo que daña nuestra seguridad emocional.</li>
+                        <li><strong class="font-semibold">Padres ausentes emocionalmente:</strong> Aunque estén presentes físicamente, si no hay afecto, escucha o apoyo de los adultos, podemos sentirnos invisibles, poco importantes o muy solos, lo que afecta cómo nos sentimos seguros y valorados.</li>
+                        <li><strong class="font-semibold">Adicciones en casa:</strong> Si alguien cercano tiene adicciones (alcohol, drogas, juego), el ambiente se vuelve caótico, impredecible y lleno de miedo. A menudo, los niños sienten que deben "salvar" o "cuidar" a los adultos, perdiendo su propia infancia.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Pérdidas Dolorosas (Un Vacío Inesperado):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">La muerte de alguien muy querido:</strong> Perder a un padre, madre, hermano, abuelo o incluso una mascota muy amada, sobre todo si es de repente, es un golpe enorme que cambia cómo vemos el mundo y puede generar un dolor muy difícil de manejar.</li>
+                        <li><strong class="font-semibold">Separaciones forzadas:</strong> No solo la muerte, sino también el abandono, separarse de un cuidador importante o tener que mudarse lejos de todo lo conocido, puede romper nuestro sentido de pertenencia y seguridad. Esto puede llevar a sentir miedo de ser padre en el futuro o a que nos cueste asumir responsabilidades por temor a que nos "falte" algo esencial.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Maltrato (Una Herida Profunda):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Abuso físico, emocional o sexual:</strong> Cualquier acto que nos dañe, nos humille, nos asuste o nos haga sentir usados. Esto no solo duele físicamente, sino que destruye la confianza en los demás y en nosotros mismos.</li>
+                        <li><strong class="font-semibold">Negligencia severa:</strong> No recibir los cuidados básicos (comida, ropa, higiene) o, igual de importante, no recibir afecto, atención o supervisión. Es como si el mundo nos dijera que no importamos, lo que puede llevarnos a sentir que no merecemos cosas buenas o a que nos cueste pedir ayuda.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Eventos Impactantes (Un Shock Repentino):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Accidentes graves o desastres naturales:</strong> Ser víctima o presenciar algo que ponga en peligro nuestra vida o la de otros.</li>
+                        <li><strong class="font-semibold">Violencia:</strong> Ver actos violentos en nuestra comunidad o ser víctima de un crimen.</li>
+                        <li><strong class="font-semibold">Bullying severo y prolongado:</strong> Si sufrimos acoso constante, nuestra autoestima y nuestro sentido de seguridad pueden quedar muy dañados. Nos enseña que el mundo es un lugar hostil y que no estamos a salvo, lo que puede generar desconfianza hacia los grupos o miedo a ser juzgados.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Enfermedades Serias (Una Lucha Interna):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Sufrir una enfermedad grave en la infancia:</strong> La experiencia de hospitalizaciones, dolor y miedo, junto con la interrupción de la vida normal, puede ser muy traumática.</li>
+                        <li><strong class="font-semibold">Tener un familiar con una enfermedad crónica:</strong> Esto genera preocupación constante, cambia la dinámica familiar y puede llevarnos a asumir roles de cuidado, generando ansiedad por la salud propia o ajena y dificultades para disfrutar el presente por miedo a que algo malo pase.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Inestabilidad Económica Extrema (Ansiedad por el Futuro):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Pobreza muy severa o mucha inestabilidad económica:</strong> Crecer en una situación de precariedad constante puede generar una ansiedad profunda por el dinero, una necesidad excesiva de acumular cosas o vergüenza social. Esto puede llevarnos a tomar decisiones impulsivas o a no disfrutar el ocio por sentir que "no lo merecemos".</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Discriminación o Exclusión Social (Una Herida en la Identidad):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Ser discriminado/a o excluido/a:</strong> Ser estigmatizado por nuestra raza, género, orientación sexual, religión, discapacidad o cualquier otra característica afecta profundamente nuestra autoestima, genera desconfianza hacia grupos diferentes y dificulta expresar nuestra verdadera identidad.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Aislamiento Social Extremo (Una Soledad Profunda):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">No tener oportunidades de socializar:</strong> Crecer en un ambiente sin contacto significativo con otros niños o jóvenes puede generar ansiedad social severa, sentimientos crónicos de soledad y dificultades para desarrollar habilidades sociales básicas y formar amistades importantes.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Presión de Rendimiento Excesiva (El Peso de la Perfección):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Exigencia constante por ser el/la mejor:</strong> Crecer bajo una presión desmedida para sobresalir en la escuela, deportes o actividades, sin espacio para el error o el disfrute, puede llevar a un perfeccionismo extremo, miedo paralizante al fracaso, agotamiento (burnout) y una autoexigencia tan grande que nunca nos sentimos "suficientes".</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Inestabilidad Residencial o Escolar (Falta de Raíces):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Cambios frecuentes de hogar o escuela:</strong> Moverse de ciudad o escuela con regularidad durante la infancia puede dificultar que echemos raíces y sintamos que pertenecemos a algún lugar, generando ansiedad ante cualquier cambio y dificultad para formar vínculos duraderos.</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="https://static.vecteezy.com/system/resources/previews/012/892/461/large_2x/psychological-trauma-a-woman-suffering-from-persecution-phobias-fear-of-the-past-paranoid-disorder-fear-of-your-shadow-cartoon-illustration-vector.jpg" alt="Ilustración de trauma psicológico: una mujer sufriendo de persecución, fobias, miedo al pasado" class="illustration">
+            <p class="text-lg text-blue-900 leading-relaxed mt-8 text-center">
+                Sin importar cómo, estas experiencias dejan una marca en nuestro sistema de regulación, manteniendo la alarma activada.
+            </p>
+        </section>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                El Eco del Pasado: ¿Cómo Influye en Ti Hoy? 📢
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-8">
+                Esa "marca" o "alarma trabada" no desaparece sola. Es como un eco que sigue sonando en diferentes partes de tu vida, y muchas veces no nos damos cuenta de que viene de ahí. Sus efectos pueden verse en:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">1. Tus Decisiones (El GPS Interno Descalibrado) 🛣️</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Miedo a lo nuevo:</strong> Evitas probar cosas diferentes, tomar riesgos o salir de tu zona de confort, prefiriendo lo conocido por sentirte "más seguro", aunque no sea lo mejor para ti.</li>
+                        <li><strong class="font-semibold">Desconfianza:</strong> Si te fallaron o lastimaron, tu "GPS interno" te advierte constantemente: "¡Cuidado con la gente!", lo que dificulta abrirte en las relaciones.</li>
+                        <li><strong class="font-semibold">Decisiones impulsivas o parálisis:</strong> A veces, tomas decisiones rápidas para "apagar" la ansiedad del momento, o te quedas paralizado y no puedes decidir nada importante, por miedo a equivocarte.</li>
+                        <li><strong class="font-semibold">Autosabotaje:</strong> Sin darte cuenta, puedes tomar caminos que te impiden ser feliz o tener éxito, como si una parte de ti creyera que no mereces cosas buenas.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">2. Tu Espacio y Ambiente (Tu Zona de Confort o Alerta) 🏡</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Necesidad de control:</strong> Si te sentiste sin poder de chico, ahora intentas controlar todo a tu alrededor: tu cuarto, tus horarios, ¡hasta a la gente! Esto genera mucha ansiedad.</li>
+                        <li><strong class="font-semibold">Aislamiento:</strong> Puedes preferir estar solo o en lugares muy tranquilos. Tu sistema de alarma se activa en ambientes con mucha gente o ruido, recordándote el estrés del pasado.</li>
+                        <li><strong class="font-semibold">Repetir patrones:</strong> A veces, sin darte cuenta, te encuentras en situaciones o lugares que, aunque no te hacen bien, te resultan "familiares" porque se parecen a lo que viviste.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md lg:col-span-2"> <!-- Changed from md:grid-cols-3 to lg:col-span-2 -->
+                    <h3 class="text-2xl list-item-title mb-4">3. Tus Amigos y Relaciones (El Espejo de tus Vínculos) 🤝</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Problemas para conectar:</strong> Te cuesta abrirte, mostrar tus emociones o dejar que otros te conozcan de verdad, porque tu cerebro te dice: "Si te abres, te pueden lastimar".</li>
+                        <li><strong class="font-semibold">Miedo al abandono:</strong> Te aferras demasiado a la gente por miedo a que se vayan, o huyes de las relaciones al primer problema para evitar que te lastimen.</li>
+                        <li><strong class="font-semibold">Patrones de apego:</strong> Cómo te relacionas con los demás, basado en tus primeras experiencias:
+                            <ul class="list-circle list-inside ml-6 mt-2 space-y-2">
+                                <li><strong class="font-medium">Apego Ansioso:</strong> Siempre preocupado por si te quieren, si se van a ir, si haces suficiente. Necesitas mucha validación.</li>
+                                <li><strong class="font-medium">Apego Evitativo:</strong> Te cuesta la intimidad, te alejas emocionalmente, prefieres ser muy independiente.</li>
+                                <li><strong class="font-medium">Apego Desorganizado:</strong> Una mezcla confusa de los dos, con mucha duda y dificultad para manejar las relaciones.</li>
+                            </ul>
+                        </li>
+                        <li><strong class="font-semibold">Elegir "mal":</strong> Inconscientemente, puedes rodearte de personas o tener relaciones que repiten dinámicas poco saludables que viviste de chico.</li>
+                        <li><strong class="font-semibold">Dificultad para comunicarte:</strong> Te cuesta decir lo que sientes, poner límites o resolver conflictos de forma sana, porque tu sistema de alarma te dice que es peligroso expresar tus necesidades.</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="https://image.freepik.com/vector-gratis/ilustracion-dilema-etico-hombre-eligiendo-bien-o-mal_23-2148723742.jpg" alt="Ilustración de dilema ético: hombre eligiendo entre bien o mal" class="illustration">
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <h3 class="text-2xl list-item-title mb-4">Actividad: Mi Eco Personal: ¿Qué Resuena en Mí? 🧐</h3>
+                <p class="text-gray-700 mb-4">Marca las afirmaciones que sientas que resuenan contigo. No hay respuestas correctas o incorrectas, es solo para reflexionar.</p>
+                <div class="space-y-3">
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Miedo a lo nuevo" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Siento miedo a probar cosas nuevas o salir de mi zona de confort.
+                    </label>
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Desconfianza" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Me cuesta confiar en la gente.
+                    </label>
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Necesidad de control" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Necesito controlar mucho mi entorno o a las personas.
+                    </label>
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Aislamiento" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Prefiero estar solo o me aíslo de los demás.
+                    </label>
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Miedo al abandono" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Tengo miedo de que las personas importantes se vayan o me dejen.
+                    </label>
+                    <label class="block text-gray-700">
+                        <input type="checkbox" name="ecoResonance" value="Dificultad para comunicar" class="mr-2 rounded text-blue-600 focus:ring-blue-500">
+                        Me cuesta decir lo que siento o poner límites.
+                    </label>
+                </div>
+                <button onclick="verResonancias()" class="activity-button mt-6">Ver Mis Resonancias</button>
+                <div id="resonanciasFeedback" class="activity-feedback"></div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                ¿Cómo se Manifiesta el Trauma Cuando Crecemos? Las Señales 🚨
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-8">
+                El eco del trauma puede aparecer de formas que no siempre conectamos con el pasado. Tu cuerpo y tu mente te están dando señales. Presta atención a estas:
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">Emociones a flor de piel:</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Ansiedad constante, ataques de pánico:</strong> Sentir preocupación todo el tiempo y episodios de miedo muy fuerte que te dejan sin aire.</li>
+                        <li><strong class="font-semibold">Tristeza profunda o depresión:</strong> Sentir una tristeza muy grande que te quita las ganas de todo.</li>
+                        <li><strong class="font-semibold">Enojo o irritabilidad explosiva:</strong> Enojo que no puedes controlar, como si una chispa encendiera un incendio.</li>
+                        <li><strong class="font-semibold">Sentir que estás "desconectado" de tus emociones:</strong> Como si vivieras en piloto automático, sin sentir nada.</li>
+                        <li><strong class="font-semibold">Cambios de humor muy rápidos:</strong> Sentir que tus emociones suben y bajan como una montaña rusa.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">En tu cuerpo (Tu Alarma Física):</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Problemas para dormir:</strong> Insomnio, dificultad para dormir o pesadillas muy vívidas. Tu cuerpo sigue en modo alerta y no puede relajarse.</li>
+                        <li><strong class="font-semibold">Tensión muscular, dolores de cabeza o estómago frecuentes:</strong> El estrés acumulado se manifiesta en el cuerpo.</li>
+                        <li><strong class="font-semibold">Sentirte cansado todo el tiempo:</strong> Aunque duermas, tu sistema nervioso está agotado.</li>
+                        <li><strong class="font-semibold">Enfermarte más seguido:</strong> El estrés constante debilita tus defensas.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">En tu comportamiento:</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Aislarte de los demás:</strong> Tu cerebro te dice que es más seguro estar solo.</li>
+                        <li><strong class="font-semibold">Comportamientos de riesgo:</strong> Consumo de sustancias, conductas autodestructivas. A veces, buscas "apagar" el dolor o sentir algo, aunque sea peligroso.</li>
+                        <li><strong class="font-semibold">Ser perfeccionista al extremo:</strong> Creer que si eres perfecto, evitarás la crítica o el fracaso.</li>
+                        <li><strong class="font-semibold">Dificultad para concentrarte o recordar cosas:</strong> Tu mente está ocupada en modo supervivencia.</li>
+                        <li><strong class="font-semibold">Evitar lugares, personas o situaciones:</strong> Que te recuerden el pasado.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">En tus pensamientos:</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Pensamientos negativos sobre ti:</strong> "No soy suficiente", "soy un error", "no merezco ser feliz". Estas son las voces del trauma.</li>
+                        <li><strong class="font-semibold">Pensar que el mundo es peligroso o que la gente no es de fiar:</strong> Tu experiencia pasada influye en cómo ves el presente.</li>
+                        <li><strong class="font-semibold">Sentir culpa o vergüenza por lo que pasó:</strong> Aunque no fuera tu culpa.</li>
+                        <li><strong class="font-semibold">Darle vueltas y vueltas a las cosas (rumiación):</strong> Tu mente intenta "resolver" algo que ya pasó.</li>
+                        <li><strong class="font-semibold">Estar siempre "en alerta" (hipervigilancia):</strong> Esperando que algo malo pase.</li>
+                    </ul>
+                </div>
+            </div>
+            <img src="https://s1.significados.com/foto/emocion-og.jpg" alt="Ilustración de emociones intensas o abrumadoras" class="illustration">
+        </section>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                Mitos y Realidades del Trauma: ¿Cuánto Sabes? 🧠
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-8">
+                El trauma es un tema con muchos mitos. ¡Vamos a desmentir algunos para entenderlo mejor! Selecciona la opción correcta para cada afirmación.
+            </p>
+
+            <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-6">
+                <h3 class="text-2xl list-item-title mb-4">Pregunta 1:</h3>
+                <p class="text-gray-700 mb-4 font-semibold">"Solo los eventos muy graves (como desastres naturales o guerras) pueden causar trauma."</p>
+                <div class="space-y-2">
+                    <div class="quiz-option" data-question="q1" data-answer="false" onclick="checkAnswer(this)">Mito (Falso)</div>
+                    <div class="quiz-option" data-question="q1" data-answer="true" onclick="checkAnswer(this)">Realidad (Verdadero)</div>
+                </div>
+                <div id="q1Feedback" class="activity-feedback mt-4"></div>
+            </div>
+
+            <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-6">
+                <h3 class="text-2xl list-item-title mb-4">Pregunta 2:</h3>
+                <p class="text-gray-700 mb-4 font-semibold">"Si eres fuerte, puedes superar un trauma solo, sin ayuda."</p>
+                <div class="space-y-2">
+                    <div class="quiz-option" data-question="q2" data-answer="false" onclick="checkAnswer(this)">Mito (Falso)</div>
+                    <div class="quiz-option" data-question="q2" data-answer="true" onclick="checkAnswer(this)">Realidad (Verdadero)</div>
+                </div>
+                <div id="q2Feedback" class="activity-feedback mt-4"></div>
+            </div>
+
+            <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-6">
+                <h3 class="text-2xl list-item-title mb-4">Pregunta 3:</h3>
+                <p class="text-gray-700 mb-4 font-semibold">"El trauma siempre se manifiesta inmediatamente después del evento."</p>
+                <div class="space-y-2">
+                    <div class="quiz-option" data-question="q3" data-answer="false" onclick="checkAnswer(this)">Mito (Falso)</div>
+                    <div class="quiz-option" data-question="q3" data-answer="true" onclick="checkAnswer(this)">Realidad (Verdadero)</div>
+                </div>
+                <div id="q3Feedback" class="activity-feedback mt-4"></div>
+            </div>
+            <img src="https://img.playbuzz.com/image/upload/ar_1.5,c_pad,f_jpg,b_auto/cdn/dfb9998a-feb1-40f4-9609-e8c03235d255/9de7c5b3-e353-4b61-a883-cf17b4c8d7da.jpg" alt="Ilustración de una persona con un cerebro dividido, representando la verdad y el mito" class="illustration">
+        </section>
+
+        <hr class="section-separator">
+
+        <section class="card mb-12">
+            <h2 class="text-4xl font-bold text-red-700 mb-8 text-center">
+                El Camino hacia la Sanación: Tu Poder para Cambiar 💪
+            </h2>
+            <p class="text-lg text-blue-900 leading-relaxed mb-8">
+                La <strong class="text-blue-700">sanación del trauma</strong> es posible. No significa que el evento desaparezca, sino que su impacto en tu vida disminuye, y aprendes a vivir de una forma más libre, feliz y con más control. <strong class="text-blue-700">¡Tienes el poder de reescribir tu historia!</strong>
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">1. Reconoce y Valida (Tu Primer Paso de Valentía)</h3>
+                    <p class="text-indigo-800 leading-relaxed">
+                        Lo primero es <strong class="font-semibold">aceptar que lo que te pasó fue difícil</strong> y que es normal sentir lo que sientes. No te juzgues por tus reacciones. Tus sentimientos son válidos y son una señal de que algo necesita ser atendido. ¡Date permiso para sentir!
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">2. Habla de Ello (Con la Persona Correcta)</h3>
+                    <p class="text-indigo-800 leading-relaxed">
+                        Compartir tu historia puede ser un gran alivio. Busca a alguien en quien confíes plenamente: un amigo, un familiar, un profesor o un consejero escolar. A veces, solo el hecho de ponerle palabras a lo que sientes ya te quita un peso. Pero para las heridas más profundas, la ayuda especializada es clave.
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">3. Busca Ayuda Profesional: Ve a un Psicólogo (Tu Aliado en la Sanación) 🧠</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Importancia:</strong> Un psicólogo o terapeuta especializado en trauma es como un guía experto. Tiene las herramientas y el conocimiento para ayudarte a procesar esas experiencias de forma segura y efectiva. No te van a juzgar. Te darán un espacio seguro y confidencial para hablar, y te guiarán paso a paso para que esas experiencias no te dañen más.</li>
+                        <li><strong class="font-semibold">Fortaleza:</strong> Ir al psicólogo no es una debilidad, ¡todo lo contrario! Es un acto de <strong class="font-semibold">gran fortaleza y valentía</strong>. Es decidir tomar el control de tu bienestar, invertir en ti mismo y trabajar para tener la vida que mereces.</li>
+                        <li><strong class="font-semibold">Tipos de Terapia:</strong> Hay terapias muy efectivas para el trauma, como la <strong class="font-semibold">Terapia Cognitivo Conductual (TCC)</strong>, que te ayuda a cambiar patrones de pensamiento; la <strong class="font-semibold">Terapia EMDR (Desensibilización y Reprocesamiento por Movimientos Oculares)</strong>, que ayuda a tu cerebro a procesar recuerdos traumáticos; la <strong class="font-semibold">Terapia de Procesamiento Cognitivo (CPT)</strong>; o la <strong class="font-semibold">Terapia Dialéctico Conductual (DBT)</strong>, para manejar emociones intensas. Un profesional te ayudará a encontrar la ideal para ti.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md">
+                    <h3 class="text-2xl list-item-title mb-4">4. Crea tus Propias Herramientas de Bienestar (Tu Kit de Supervivencia Emocional)</h3>
+                    <ul class="list-disc list-inside text-indigo-800 space-y-3">
+                        <li><strong class="font-semibold">Mindfulness y Meditación:</strong> Aprende a estar presente, a observar tus pensamientos y emociones sin juzgarlos. Es como darle un "descanso" a tu sistema de alarma.</li>
+                        <li><strong class="font-semibold">Actividad Física:</strong> Mover tu cuerpo ayuda a liberar el estrés y la tensión acumulada por el trauma. ¡Es una forma de "descargar" esa energía de alarma!</li>
+                        <li><strong class="font-semibold">Creatividad:</strong> Pintar, escribir, tocar música, bailar, cocinar... ¡cualquier forma de expresión artística es una salida increíble y segura para tus emociones!</li>
+                        <li><strong class="font-semibold">Conexión Real:</strong> Rodéate de personas que te apoyen, te hagan sentir seguro, te valoren y te den buena energía. ¡Las relaciones sanas son medicina!</li>
+                        <li><strong class="font-semibold">Pon Límites:</strong> Aprende a decir "no" cuando lo necesites para proteger tu energía, tu espacio y tu bienestar. Es un acto de amor propio.</li>
+                        <li><strong class="font-semibold">Cuida tu cuerpo:</strong> Dormir bien, comer saludable y evitar el alcohol o las drogas. Tu cuerpo es tu templo, y necesita estar fuerte para sanar.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md lg:col-span-2">
+                    <h3 class="text-2xl list-item-title mb-4">5. Cultiva la Paciencia y la Autocompasión (El Ritmo de la Sanación)</h3>
+                    <p class="text-indigo-800 leading-relaxed">
+                        La sanación no es una carrera, es un viaje. Habrá días buenos y días no tan buenos. Es normal. Sé amable y compasivo contigo mismo en este proceso. Cada pequeño paso, cada día que te esfuerzas, es un avance.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <h3 class="text-2xl list-item-title mb-4">Actividad: Mi Caja de Herramientas de Bienestar 🛠️</h3>
+                <p class="text-gray-700 mb-4">Piensa en actividades o hábitos que te ayuden a sentirte mejor, a relajarte o a manejar el estrés. Escríbelas aquí y construye tu propia caja de herramientas personal.</p>
+                <div class="flex space-x-2 mb-4">
+                    <input type="text" id="toolInput" class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: Escuchar música, salir a caminar, dibujar...">
+                    <button onclick="addTool()" class="activity-button">Añadir Herramienta</button>
+                </div>
+                <ul id="toolList" class="list-disc list-inside text-gray-700 space-y-2">
+                    <!-- Tools will be added here -->
+                </ul>
+                <div id="toolFeedback" class="activity-feedback"></div>
+            </div>
+            <img src="https://img.lagaceta.com.ar/fotos/notas/2012/10/05/513868_201210042103100000001.jpg" alt="Ilustración de un camino de sanación o crecimiento personal" class="illustration">
+        </section>
+
+        <footer class="text-center text-gray-600 text-sm mt-12">
+            <p>&copy; 2025 Psico y Program. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Activity 1: Mi Primera Reflexión
+        function guardarReflexion() {
+            const input = document.getElementById('reflexionInput');
+            const feedback = document.getElementById('reflexionFeedback');
+            if (input.value.trim() !== '') {
+                feedback.textContent = `¡Tu reflexión "${input.value}" ha sido guardada! Recordar lo que sientes es un gran paso.`;
+                feedback.style.display = 'block';
+                input.value = ''; // Clear input after saving
+            } else {
+                feedback.textContent = 'Por favor, escribe algo para guardar tu reflexión.';
+                feedback.style.backgroundColor = '#fee2e2'; /* Red-100 */
+                feedback.style.color = '#991b1b'; /* Red-800 */
+                feedback.style.display = 'block';
+            }
+            setTimeout(() => {
+                feedback.style.display = 'none';
+                feedback.style.backgroundColor = '#d1fae5'; /* Reset to green */
+                feedback.style.color = '#065f46'; /* Reset to green */
+            }, 5000);
+        }
+
+        // Activity 2: Mi Eco Personal
+        function verResonancias() {
+            const checkboxes = document.querySelectorAll('input[name="ecoResonance"]:checked');
+            const feedback = document.getElementById('resonanciasFeedback');
+            if (checkboxes.length > 0) {
+                const selected = Array.from(checkboxes).map(cb => cb.value);
+                feedback.textContent = `Has identificado que resuenas con: ${selected.join(', ')}. Reconocer estas señales es el primer paso para cambiarlas.`;
+                feedback.style.display = 'block';
+            } else {
+                feedback.textContent = 'No has seleccionado ninguna opción. Intenta marcar las que te resuenen.';
+                feedback.style.backgroundColor = '#fee2e2';
+                feedback.style.color = '#991b1b';
+                feedback.style.display = 'block';
+            }
+            setTimeout(() => {
+                feedback.style.display = 'none';
+                feedback.style.backgroundColor = '#d1fae5';
+                feedback.style.color = '#065f46';
+            }, 7000);
+        }
+
+        // Activity 3: Mitos y Realidades del Trauma
+        function checkAnswer(selectedOption) {
+            const questionId = selectedOption.dataset.question;
+            const isCorrect = selectedOption.dataset.answer === 'true';
+            const feedbackElement = document.getElementById(`${questionId}Feedback`);
+            const options = document.querySelectorAll(`[data-question="${questionId}"]`);
+
+            // Reset previous styling
+            options.forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+                option.style.pointerEvents = 'auto'; // Re-enable clicks
+            });
+
+            // Apply new styling
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+                feedbackElement.textContent = '¡Correcto! Esa es la realidad.';
+                feedbackElement.style.backgroundColor = '#d1fae5';
+                feedback.style.color = '#065f46';
+            } else {
+                selectedOption.classList.add('incorrect');
+                feedbackElement.textContent = 'Incorrecto. ¡Sigue aprendiendo!';
+                feedback.style.backgroundColor = '#fee2e2';
+                feedback.style.color = '#991b1b';
+            }
+            feedbackElement.style.display = 'block';
+
+            // Disable further clicks for this question
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+
+            setTimeout(() => {
+                feedbackElement.style.display = 'none';
+                // Reset styling after feedback disappears
+                options.forEach(option => {
+                    option.classList.remove('correct', 'incorrect');
+                    option.style.pointerEvents = 'auto'; // Re-enable clicks
+                });
+            }, 5000);
+        }
+
+        // Activity 4: Mi Caja de Herramientas de Bienestar
+        function addTool() {
+            const input = document.getElementById('toolInput');
+            const toolList = document.getElementById('toolList');
+            const feedback = document.getElementById('toolFeedback');
+
+            if (input.value.trim() !== '') {
+                const newToolItem = document.createElement('li');
+                newToolItem.textContent = input.value.trim();
+                toolList.appendChild(newToolItem);
+
+                feedback.textContent = `¡"${input.value}" ha sido añadida a tu caja de herramientas!`;
+                feedback.style.display = 'block';
+                input.value = ''; // Clear input after adding
+            } else {
+                feedback.textContent = 'Por favor, escribe una herramienta para añadir a tu caja.';
+                feedback.style.backgroundColor = '#fee2e2';
+                feedback.style.color = '#991b1b';
+                feedback.style.display = 'block';
+            }
+            setTimeout(() => {
+                feedback.style.display = 'none';
+                feedback.style.backgroundColor = '#d1fae5';
+                feedback.style.color = '#065f46';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
