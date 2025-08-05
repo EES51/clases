@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Infancia y Adolescencia - ¡Tu Pasado, Tu Presente, Tu Futuro!</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter para una estética moderna */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Un gris muy claro para el fondo general */
+            scroll-behavior: smooth; /* Para el desplazamiento suave del menú */
+        }
+        /* Estilos personalizados para los degradados de texto */
+        .gradient-text-pink-blue {
+            background-image: linear-gradient(to right, #FF69B4, #8A2BE2); /* Rosa a Violeta */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-text-blue-violet {
+            background-image: linear-gradient(to right, #8A2BE2, #4169E1); /* Violeta a Azul */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-text-violet-pink {
+            background-image: linear-gradient(to right, #4169E1, #FF69B4); /* Azul a Rosa */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Animación de borde para las secciones */
+        .animated-border {
+            position: relative;
+            padding: 1.5rem; /* Espaciado interno */
+            border-radius: 1rem; /* Bordes redondeados */
+            overflow: hidden; /* Para que el pseudo-elemento no se desborde */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1rem;
+            padding: 4px; /* Grosor del borde */
+            background: linear-gradient(45deg, #FF69B4, #8A2BE2, #4169E1, #FF69B4); /* Degradado para el borde */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 4s linear infinite; /* Animación de rotación */
+            background-size: 200% 200%; /* Para que el degradado se mueva */
+        }
+
+        @keyframes rotateBorder {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        /* Estilos para el menú móvil */
+        .mobile-menu-hidden {
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+            overflow: hidden;
+        }
+        .mobile-menu-visible {
+            max-height: 500px; /* Suficiente para mostrar el menú */
+            transition: max-height 0.3s ease-in;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 leading-relaxed">
+
+    <!-- Contenedor principal centrado y con ancho limitado para mejor lectura -->
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+        <!-- Título principal de la infografía -->
+        <header id="top" class="text-center mb-8 mt-8">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text-pink-blue rounded-xl p-4 shadow-lg">
+                Infografía: Infancia y Adolescencia
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 font-semibold">
+                ¡Tu Pasado, Tu Presente, Tu Futuro!
+            </p>
+            <p class="text-lg mt-4 max-w-2xl mx-auto">
+                ¡Qué onda, gente! ¿Alguna vez se preguntaron por qué reaccionan de cierta manera o por qué sienten lo que sienten? La posta es que gran parte de eso se cocina en la infancia. Acá te tiramos la posta de cómo tu niñez te da una base para la adolescencia y lo que viene. ¡Presta atención!
+            </p>
+        </header>
+
+        <!-- Barra de Navegación (Menú Desplegable para Móviles) - MOVIDA AQUÍ -->
+        <nav class="bg-transparent p-4 mb-10">
+            <div class="container mx-auto flex justify-center items-center flex-wrap">
+                <!-- Botón de Hamburguesa para Móviles -->
+                <div class="md:hidden w-full text-center mb-4">
+                    <button id="menu-button" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-opacity-75">
+                        <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                        Menú
+                    </button>
+                </div>
+
+                <!-- Menú de Navegación (Oculto en móvil por defecto, visible en desktop) -->
+                <ul id="nav-menu" class="hidden md:flex flex-wrap justify-center gap-4 text-lg font-semibold">
+                    <li>
+                        <a href="#infancia" class="block bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">👶 Infancia</a>
+                    </li>
+                    <li>
+                        <a href="#adolescencia" class="block bg-violet-500 hover:bg-violet-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">🚀 Adolescencia</a>
+                    </li>
+                    <li>
+                        <a href="#herramientas" class="block bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">🛠️ Herramientas</a>
+                    </li>
+                    <li>
+                        <a href="#actividades" class="block bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">🎮 Actividades</a>
+                    </li>
+                    <li>
+                        <a href="#grandes" class="block bg-violet-500 hover:bg-violet-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">👨‍🏫 Para los Grandes</a>
+                    </li>
+                    <li>
+                        <a href="#reflexion" class="block bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-xl shadow-md transition-all duration-200">✨ Reflexión Final</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Menú Móvil Desplegable (se muestra/oculta con JS) -->
+            <ul id="mobile-nav-menu" class="md:hidden mobile-menu-hidden flex flex-col items-center mt-4 space-y-3 text-lg font-semibold rounded-lg shadow-inner py-2">
+                <li><a href="#infancia" class="block w-full text-center py-3 px-6 bg-pink-500 hover:bg-pink-600 text-white rounded-xl shadow-md transition-all duration-200">👶 Infancia</a></li>
+                <li><a href="#adolescencia" class="block w-full text-center py-3 px-6 bg-violet-500 hover:bg-violet-600 text-white rounded-xl shadow-md transition-all duration-200">🚀 Adolescencia</a></li>
+                <li><a href="#herramientas" class="block w-full text-center py-3 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow-md transition-all duration-200">🛠️ Herramientas</a></li>
+                <li><a href="#actividades" class="block w-full text-center py-3 px-6 bg-pink-500 hover:bg-pink-600 text-white rounded-xl shadow-md transition-all duration-200">🎮 Actividades</a></li>
+                <li><a href="#grandes" class="block w-full text-center py-3 px-6 bg-violet-500 hover:bg-violet-600 text-white rounded-xl shadow-md transition-all duration-200">👨‍🏫 Para los Grandes</a></li>
+                <li><a href="#reflexion" class="block w-full text-center py-3 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow-md transition-all duration-200">✨ Reflexión Final</a></li>
+            </ul>
+        </nav>
+
+        <!-- Sección 1: Infancia - El Cimiento de Todo -->
+        <section id="infancia" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-blue-violet">
+                👶 Infancia: El Cimiento de Todo
+            </h2>
+            <div class="mb-6">
+                <p class="text-lg leading-relaxed">
+                    La infancia (0-12 años, más o menos) no es solo jugar y joder; es el laboratorio donde se arma tu personalidad y cómo vas a manejar las emociones.
+                </p>
+            </div>
+
+            <h3 class="text-3xl font-semibold mb-4 text-violet-700">Conceptos Clave para entenderte:</h3>
+            <ul class="list-disc list-inside text-lg space-y-2 mb-6">
+                <li><strong>INFANCIA:</strong> Tu etapa de crecimiento a mil.</li>
+                <li><strong>ADOLESCENCIA:</strong> La transición entre ser pibe y ser adulto (10-19 años). ¡Pura transformación!</li>
+                <li><strong>EMOCIONES:</strong> Reacciones rápidas e intensas (miedo, alegría, bronca).</li>
+                <li><strong>SENTIMIENTOS:</strong> Más complejos y duraderos (amor, culpa, vergüenza).</li>
+            </ul>
+
+            <h3 class="text-3xl font-semibold mb-4 text-violet-700">¿Cómo se construye ese cimiento?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-2xl font-bold mb-3 text-pink-600">🤝 Estilos de Apego:</h4>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">✅</span>
+                            <div>
+                                <strong class="text-xl">Seguro:</strong> Si te sentiste bancado, ¡confianza y autonomía al palo!
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">❌</span>
+                            <div>
+                                <strong class="text-xl">Inseguro:</strong> Si hubo quilombo, puede costar relacionarse o manejar la ansiedad.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-bold mb-3 text-pink-600">👨‍👩‍👧‍👦 Estilos de Crianza:</h4>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">🌟</span>
+                            <div>
+                                <strong class="text-xl">Democrático/Autoritativo:</strong> ¡El mejor! Te da autonomía y autoestima.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">💪</span>
+                            <div>
+                                <strong class="text-xl">Autoritario:</strong> Puede generar rebeldía o sumisión.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">🤷‍♀️</span>
+                            <div>
+                                <strong class="text-xl">Permisivo:</strong> A veces, falta de límites.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">❓</span>
+                            <div>
+                                <strong class="text-xl">Negligente:</strong> Puede dejar vacíos emocionales.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h4 class="text-2xl font-bold mb-3 text-pink-600">💔 Experiencias Adversas (EAI):</h4>
+                <p class="text-lg mb-2">
+                    Eventos como el abuso, la negligencia, la violencia doméstica, la separación de los padres o enfermedades graves pueden dejar una huella profunda. Estas experiencias afectan el desarrollo cerebral y la capacidad de regular el estrés y las emociones, manifestándose en la adolescencia como ansiedad, depresión, problemas de conducta, dificultades en las relaciones interpersonales o baja autoestima.
+                </p>
+                <h4 class="text-2xl font-bold mb-3 text-pink-600">🧠 Aprendizaje Emocional Temprano:</h4>
+                <p class="text-lg">
+                    Desde pequeños aprendemos a identificar, expresar y gestionar nuestras emociones observando a los adultos y a través de sus respuestas. Si se valida y acompaña la expresión emocional, el niño desarrollará una inteligencia emocional sólida. Si se reprime o ignora, el adolescente podría tener dificultades para reconocer y manejar sus propios estados emocionales.
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección 2: Adolescencia - ¡A Reconfigurar! -->
+        <section id="adolescencia" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-violet-pink">
+                🚀 Adolescencia: ¡A Reconfigurar!
+            </h2>
+            <div class="mb-6">
+                <p class="text-lg leading-relaxed">
+                    La adolescencia es como un *update* gigante. Todo lo que aprendiste de pibe se pone a prueba y se reacomoda.
+                </p>
+            </div>
+
+            <h3 class="text-3xl font-semibold mb-4 text-blue-700">¿Cómo se manifiesta la infancia en tu adolescencia?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-2xl font-bold mb-3 text-pink-600">🤯 Regulación Emocional:</h4>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">👍</span>
+                            <div>
+                                <strong class="text-xl">Si de pibe te bancaron las emociones,</strong> vas a manejar mejor el estrés y la frustración.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">👎</span>
+                            <div>
+                                <strong class="text-xl">Si no,</strong> ¡cuidado con la impulsividad o el aislamiento!
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-bold mb-3 text-pink-600">👤 Formación de la Identidad:</h4>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">✨</span>
+                            <div>
+                                <strong class="text-xl">Si te sentiste amado y valorado,</strong> vas a tener una identidad más segura.
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-2xl">🤔</span>
+                            <div>
+                                <strong class="text-xl">Si hubo críticas,</strong> puede que luches con la autoestima y busques validación externa.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h4 class="text-2xl font-bold mb-3 text-pink-600">👫 Relaciones Interpersonales:</h4>
+                <p class="text-lg mb-2">
+                    El modelo de relaciones aprendido en casa se replica en las amistades y las primeras relaciones románticas. La capacidad de confiar, de resolver conflictos, de ser empático, se nutre de las primeras interacciones familiares.
+                </p>
+                <h4 class="text-2xl font-bold mb-3 text-pink-600">🛡️ Mecanismos de Afrontamiento:</h4>
+                <ul class="list-none space-y-3">
+                    <li class="flex items-start">
+                        <span class="mr-2 text-2xl">✅</span>
+                        <div>
+                            <strong class="text-xl">Saludables:</strong> Buscar apoyo, expresar emociones, resolver problemas.
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-2xl">❌</span>
+                        <div>
+                            <strong class="text-xl">Disfuncionales:</strong> Evitación, negación, agresión, consumo de sustancias.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección 3: Herramientas para la Vida (¡Para Vos!) -->
+        <section id="herramientas" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-pink-blue">
+                🛠️ Herramientas para la Vida (¡Para Vos!)
+            </h2>
+            <div class="mb-6">
+                <p class="text-lg leading-relaxed">
+                    ¡No todo está escrito! Vos podés laburar para construir una adolescencia más plena.
+                </p>
+            </div>
+
+            <ul class="list-none space-y-6">
+                <li class="flex items-start">
+                    <span class="mr-3 text-3xl text-blue-600">🧐</span>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-1 text-blue-700">Autoconocimiento Emocional:</h3>
+                        <p class="text-lg">Aprendé a identificar qué sentís y por qué.</p>
+                        <p class="text-md text-gray-600 mt-1">
+                            <strong class="text-pink-600">Tip:</strong> ¡Diario emocional o "termómetro" de emociones!
+                        </p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-3xl text-blue-600">🗣️</span>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-1 text-blue-700">Expresión Asertiva:</h3>
+                        <p class="text-lg">Comunicá lo que necesitás y sentís, pero siempre con respeto.</p>
+                        <p class="text-md text-gray-600 mt-1">
+                            <strong class="text-pink-600">Tip:</strong> ¡Practicá con situaciones cotidianas!
+                        </p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-3xl text-blue-600">🫂</span>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-1 text-blue-700">Búsqueda de Apoyo:</h3>
+                        <p class="text-lg">No te guardes todo. ¡Sabé cuándo y cómo pedir ayuda a un adulto de confianza o a un profesional!</p>
+                        <p class="text-md text-gray-600 mt-1">
+                            <strong class="text-pink-600">Tip:</strong> Identificá quiénes son tus bancas en tu entorno.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Sección: Actividades Interactivas para el Taller -->
+        <section id="actividades" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-blue-violet">
+                🎮 ¡A Jugar! Actividades Interactivas
+            </h2>
+            <p class="text-lg leading-relaxed mb-6">
+                ¡Ahora que ya tenés la data, es hora de ponerla en práctica! Estas actividades te van a ayudar a conectar con tus emociones y a entenderte mejor. ¡Animate!
+            </p>
+
+            <!-- Actividad 1: Mi Línea de Vida Emocional -->
+            <div class="mb-8 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h3 class="text-3xl font-semibold mb-3 text-violet-700">Actividad 1: "Mi Línea de Vida Emocional" 🛤️</h3>
+                <p class="text-lg mb-2">
+                    (Individual y para compartir en grupos pequeños)
+                </p>
+                <p class="text-md text-gray-700 mb-3">
+                    <strong class="text-pink-600">Materiales:</strong> Hojas grandes, marcadores de colores.
+                </p>
+                <p class="text-lg mb-3">
+                    <strong class="text-blue-600">Instrucciones:</strong>
+                    Dibujá una línea de tiempo desde tu infancia hasta la adolescencia (o el presente). Marcá 3-5 momentos clave de tu infancia (¡los buenos y los no tan buenos!). Pensá cómo creés que esos momentos pudieron haber influido en alguna emoción o sentimiento que experimentás ahora. Si te sentís cómodo, compartilo en grupos pequeños.
+                </p>
+                <p class="text-md text-gray-700">
+                    <strong class="text-violet-600">Objetivo:</strong> Conectar experiencias pasadas con emociones presentes.
+                </p>
+            </div>
+
+            <!-- Actividad 2: El Semáforo Emocional -->
+            <div class="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 class="text-3xl font-semibold mb-3 text-violet-700">Actividad 2: "El Semáforo Emocional" 🚦</h3>
+                <p class="text-lg mb-2">
+                    (Grupal)
+                </p>
+                <p class="text-md text-gray-700 mb-3">
+                    <strong class="text-pink-600">Materiales:</strong> Tarjetas con situaciones cotidianas de adolescentes (ej: "sacar una mala nota", "una discusión con un amigo", "sentirse excluido").
+                </p>
+                <p class="text-lg mb-3">
+                    <strong class="text-blue-600">Instrucciones:</strong>
+                    Se van a presentar diferentes situaciones. Debatan qué emociones podrían surgir y cómo podrían reaccionar usando el "semáforo":
+                    <ul class="list-none mt-2 space-y-1">
+                        <li class="flex items-center"><span class="inline-block w-4 h-4 rounded-full bg-red-500 mr-2"></span> <strong>Rojo:</strong> ¡Pará! Identificá esa emoción intensa.</li>
+                        <li class="flex items-center"><span class="inline-block w-4 h-4 rounded-full bg-yellow-400 mr-2"></span> <strong>Amarillo:</strong> ¡Pensá! ¿Qué opciones tenés? Respirá hondo.</li>
+                        <li class="flex items-center"><span class="inline-block w-4 h-4 rounded-full bg-green-500 mr-2"></span> <strong>Verde:</strong> ¡Actuá! Hacé algo constructivo.</li>
+                    </ul>
+                </p>
+                <p class="text-md text-gray-700">
+                    <strong class="text-violet-600">Objetivo:</strong> Practicar la identificación y regulación emocional.
+                </p>
+            </div>
+
+            <!-- Nueva Actividad 3: El Mapa de Mis Emociones -->
+            <div class="mb-8 p-4 bg-pink-50 rounded-lg border border-pink-200">
+                <h3 class="text-3xl font-semibold mb-3 text-violet-700">Actividad 3: "El Mapa de Mis Emociones" 🗺️</h3>
+                <p class="text-lg mb-2">
+                    (Individual)
+                </p>
+                <p class="text-md text-gray-700 mb-3">
+                    <strong class="text-blue-600">Materiales:</strong> Hoja en blanco, lápices o marcadores de colores.
+                </p>
+                <p class="text-lg mb-3">
+                    <strong class="text-pink-600">Instrucciones:</strong>
+                    En una hoja, dibujá un "mapa" de tus emociones. Podés usar diferentes colores, formas o símbolos para representar cómo se sienten en tu cuerpo (ej: la ansiedad es un nudo en el estómago, la alegría es un sol en el pecho). Identificá al menos 3 emociones y dibujá dónde las sentís y cómo se ven para vos.
+                </p>
+                <p class="text-md text-gray-700">
+                    <strong class="text-violet-600">Objetivo:</strong> Desarrollar el autoconocimiento y la conciencia corporal de las emociones.
+                </p>
+            </div>
+
+            <!-- Nueva Actividad 4: "El Juego de Roles: ¿Qué Harías?" -->
+            <div class="mb-8 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h3 class="text-3xl font-semibold mb-3 text-violet-700">Actividad 4: "El Juego de Roles: ¿Qué Harías?" 🎭</h3>
+                <p class="text-lg mb-2">
+                    (En parejas o grupos pequeños)
+                </p>
+                <p class="text-md text-gray-700 mb-3">
+                    <strong class="text-blue-600">Materiales:</strong> Tarjetas con situaciones de conflicto o desafío adolescente (ej: "un amigo te traiciona", "te sentís presionado para hacer algo que no querés", "tus padres no te entienden").
+                </p>
+                <p class="text-lg mb-3">
+                    <strong class="text-pink-600">Instrucciones:</strong>
+                    Elijan una tarjeta y actúen la situación. Luego, piensen y representen diferentes formas de reaccionar: una forma impulsiva/negativa y una forma asertiva/constructiva. Debatan cuál creen que es la mejor opción y por qué.
+                </p>
+                <p class="text-md text-gray-700">
+                    <strong class="text-violet-600">Objetivo:</strong> Practicar la resolución de conflictos y la expresión asertiva en situaciones reales.
+                </p>
+            </div>
+
+            <!-- Nueva Actividad 5: "Mi Frasco de la Gratitud" -->
+            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 class="text-3xl font-semibold mb-3 text-violet-700">Actividad 5: "Mi Frasco de la Gratitud" 🙏</h3>
+                <p class="text-lg mb-2">
+                    (Individual)
+                </p>
+                <p class="text-md text-gray-700 mb-3">
+                    <strong class="text-pink-600">Materiales:</strong> Un frasco vacío, pequeños trozos de papel, lápiz.
+                </p>
+                <p class="text-lg mb-3">
+                    <strong class="text-blue-600">Instrucciones:</strong>
+                    Durante una semana (o más), cada día escribí en un trozo de papel al menos una cosa por la que estés agradecido/a. Doblalo y ponelo en el frasco. Cuando te sientas bajoneado/a o necesites un empujón, sacá algunos papeles y leelos.
+                </p>
+                <p class="text-md text-gray-700">
+                    <strong class="text-violet-600">Objetivo:</strong> Fomentar el pensamiento positivo y la resiliencia, reconociendo las cosas buenas de la vida.
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección 4: Para los Grandes (¡También Importa!) -->
+        <section id="grandes" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-blue-violet">
+                👨‍🏫 Para los Grandes (¡También Importa!)
+            </h2>
+            <div class="mb-6">
+                <p class="text-lg leading-relaxed">
+                    Si sos padre, madre o educador, tu rol es clave:
+                </p>
+            </div>
+
+            <ul class="list-none space-y-4">
+                <li class="flex items-start">
+                    <span class="mr-3 text-2xl text-pink-600">✅</span>
+                    <p class="text-lg"><strong>Validación Emocional:</strong> "Entiendo que te sientas frustrado/a."</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-2xl text-pink-600">✅</span>
+                    <p class="text-lg"><strong>Escucha Activa:</strong> Prestá atención sin juzgar.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-2xl text-pink-600">✅</span>
+                    <p class="text-lg"><strong>Comunicación Abierta:</strong> Creá un espacio seguro para hablar.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-2xl text-pink-600">✅</span>
+                    <p class="text-lg"><strong>Límites Claros:</strong> Dan estructura y seguridad.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3 text-2xl text-pink-600">✅</span>
+                    <p class="text-lg"><strong>Sé Modelo:</strong> Manejá tus propias emociones de forma sana.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Sección Final: Reflexión -->
+        <section id="reflexion" class="animated-border bg-white p-6 mb-10 rounded-xl shadow-lg text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text-violet-pink">
+                ✨ Reflexión Final:
+            </h2>
+            <p class="text-xl md:text-2xl font-semibold leading-relaxed mb-4">
+                <strong class="gradient-text-pink-blue">¡Cuidar tu infancia es construir una adolescencia más plena y un futuro más copado!</strong>
+            </p>
+            <p class="text-lg leading-relaxed">
+                Entender esta conexión te da el poder de manejar mejor tus emociones y relaciones. ¡A rockearla!
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12 mb-8">
+            <p>&copy; 2025 Psico y Program. Todos los derechos reservados.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // JavaScript para el menú desplegable (hamburguesa) y scroll suave
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const navLinks = document.querySelectorAll('#nav-menu a, #mobile-nav-menu a');
+
+            // Toggle del menú móvil
+            menuButton.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('mobile-menu-hidden');
+                mobileNavMenu.classList.toggle('mobile-menu-visible');
+            });
+
+            // Smooth scroll para todos los enlaces de navegación
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // Previene el comportamiento por defecto del ancla
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        // Cierra el menú móvil después de hacer clic en un enlace
+                        if (mobileNavMenu.classList.contains('mobile-menu-visible')) {
+                            mobileNavMenu.classList.remove('mobile-menu-visible');
+                            mobileNavMenu.classList.add('mobile-menu-hidden');
+                        }
+                        // Desplazamiento suave
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
