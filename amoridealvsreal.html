@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexión 2.0 | Taller Amor y Apego Adolescente</title>
+    <!-- Incluimos Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #fef08a, #fb7185); /* Un fondo degradado más colorido */
+        }
+        .module-card {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.05);
+            border: 2px solid;
+            border-image: linear-gradient(to right, #f87171, #f472b6, #d946ef) 1;
+        }
+        .nav-link:hover {
+            transform: scale(1.1);
+            color: #d946ef;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navbar fija para una navegación fácil -->
+    <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-sm z-50 shadow-lg py-4 px-8 flex justify-center space-x-6">
+        <a href="#modulo1" class="text-gray-600 font-bold hover:text-fuchsia-500 transition-all nav-link">Módulo 1</a>
+        <a href="#modulo2" class="text-gray-600 font-bold hover:text-fuchsia-500 transition-all nav-link">Módulo 2</a>
+        <a href="#modulo3" class="text-gray-600 font-bold hover:text-fuchsia-500 transition-all nav-link">Módulo 3</a>
+        <a href="#modulo4" class="text-gray-600 font-bold hover:text-fuchsia-500 transition-all nav-link">Caja de Herramientas</a>
+    </nav>
+
+    <!-- Hero Section - Portada -->
+    <header class="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white min-h-screen flex items-center justify-center p-8">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 animate-pulse">Conexión 2.0</h1>
+            <p class="text-xl md:text-3xl mb-8 font-light">¿El amor es un bug? Descubre cómo programar tus relaciones.</p>
+            <a href="#modulo1" class="inline-block bg-white text-fuchsia-600 hover:bg-gray-100 transition-all duration-300 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105">
+                ¡Empezar el Taller!
+            </a>
+        </div>
+    </header>
+
+    <!-- Módulo 1: Conectando al Servidor -->
+    <section id="modulo1" class="py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-5xl mx-auto module-card bg-white p-8 md:p-12 rounded-3xl">
+            <h2 class="text-4xl font-bold text-fuchsia-700 mb-4 text-center">Módulo 1: Conectando al Servidor 🖥️</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">Vamos a romper el hielo y a explorar cómo las redes sociales y las series nos venden una idea del amor. ¿Qué es real y qué no?</p>
+            
+            <!-- Sección de Idealización vs. Realidad (más extensa) -->
+            <div class="mt-12 bg-pink-100 p-6 rounded-2xl border-l-4 border-pink-500">
+                <h3 class="text-2xl font-bold text-pink-700 mb-3">Idealización vs. Realidad: El highlight reel del amor 🎬</h3>
+                <!-- Contenedor para las dos imágenes una al lado de la otra -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-4 mb-8">
+                    <img 
+                        src="https://s1.abcstatics.com/abc/www/multimedia/bienestar/2024/01/11/idealizar-pareja-RwiQZadQoIQQYSXaAqEpbvI-1200x840@abc.jpg"
+                        alt="Ilustración de amor romántico vs. amor racional" 
+                        class="w-full md:w-1/2 h-auto object-cover rounded-xl"
+                    >
+                    <img 
+                        src="https://www.canvis.es/wp-content/uploads/2024/12/relaciones-pareja.jpg"
+                        alt="Ilustración de pareja en relación sana" 
+                        class="w-full md:w-1/2 h-auto object-cover rounded-xl"
+                    >
+                </div>
+                <p class="text-lg text-gray-700 mb-6">
+                    Todos hemos visto esa película o serie donde el amor es perfecto desde el primer minuto. O hemos navegado por un "highlight reel" de Instagram, lleno de fotos de parejas sonrientes y viajes de ensueño. Esto es lo que llamamos <span class="font-bold">idealización</span>: creer que el amor es un guion sin errores, donde todo es fácil y sin conflictos. Pero, ¿realmente es así?
+                </p>
+
+                <div class="space-y-6">
+                    <!-- Subsección: El Mito del Flechazo Instantáneo -->
+                    <div>
+                        <h4 class="font-bold text-xl text-pink-600 mb-2">El Mito del Flechazo Instantáneo ✨</h4>
+                        <p class="text-gray-700">
+                            En las películas, las parejas se miran y ¡boom!, el amor es instantáneo, inevitable. En la vida real, el amor es un proceso que se construye día a día. No es un rayo que te cae, sino una planta que necesita <span class="font-bold">cuidados constantes, paciencia y vulnerabilidad</span> para crecer. Esperar un amor de película nos puede hacer ignorar a personas maravillosas que se toman su tiempo para conectar o, peor, idealizar a alguien solo por su apariencia.
+                        </p>
+                    </div>
+
+                    <!-- Subsección: La Curva de Aprendizaje del Amor -->
+                    <div>
+                        <h4 class="font-bold text-xl text-pink-600 mb-2">La Curva de Aprendizaje del Amor 📈</h4>
+                        <p class="text-gray-700">
+                            En las series, las peleas siempre se resuelven en 5 minutos con un beso y un "lo siento". En la vida real, las relaciones tienen <span class="font-bold">conflictos</span> y eso no es algo malo, sino una oportunidad para crecer. Lo que importa no es que no haya peleas, sino <span class="font-bold">cómo las resuelven</span>. Aprender a escuchar, a ceder y a comunicarte con respeto es lo que fortalece la conexión, no la ausencia de problemas. Una relación sana tiene sus altos y bajos, pero lo importante es que ambos estén dispuestos a aprender juntos.
+                        </p>
+                    </div>
+
+                    <!-- Subsección: El 'Highlight Reel' y las Redes Sociales -->
+                    <div>
+                        <h4 class="font-bold text-xl text-pink-600 mb-2">El 'Highlight Reel' y las Redes Sociales 📸</h4>
+                        <p class="text-gray-700">
+                            Las redes sociales son el lugar de la <span class="font-bold">versión 2.0 de la vida</span>. Detrás de esa foto perfecta con un atardecer, hay una vida real llena de momentos aburridos, discusiones, días malos y problemas. Si comparas tu "versión 1.0" (tu vida real) con el "highlight reel" de los demás, siempre vas a sentir que estás fallando. Recordá que lo que ves es una versión editada, y que tu vida real, con sus imperfecciones, es la única que importa.
+                        </p>
+                    </div>
+
+                    <!-- Actividad Interactiva: Mi Escena Real -->
+                    <div class="bg-white p-4 rounded-lg border-2 border-pink-300">
+                        <h4 class="font-bold text-xl text-pink-600 mb-2">Actividad: Mi Escena Real 🎥</h4>
+                        <p class="text-gray-700 mb-4">
+                            Piensa en un momento real en tu vida o en una relación (ya sea de pareja, amistad o familia) que no fue como en las películas. Tal vez una discusión que no se resolvió con un "lo siento", o un momento aburrido que fue muy significativo. Escribe una breve descripción de esa "escena" a continuación.
+                        </p>
+                        <textarea id="realSceneInput" rows="4" class="w-full p-3 rounded-lg border-2 border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="Ej: No fue una cena romántica, fue una noche de pizza en el piso, discutiendo por un juego de mesa. Fue imperfecto, pero me reí más que nunca."></textarea>
+                        <button onclick="saveRealScene()" class="mt-4 bg-pink-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-600 transition-all duration-300">
+                            Guardar Mi Escena
+                        </button>
+                        <div id="realSceneOutput" class="mt-4 p-4 bg-white rounded-lg shadow hidden text-gray-700"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulo 2: Descifrando el Código del Apego (Sección actualizada) -->
+    <section id="modulo2" class="py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-5xl mx-auto module-card bg-white p-8 md:p-12 rounded-3xl">
+            <h2 class="text-4xl font-bold text-fuchsia-700 mb-4 text-center">Módulo 2: Descifrando el Código del Apego 💔</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">El apego es el "código fuente" de nuestras relaciones. Aprende a identificar si tu apego es seguro, ansioso, evitativo o desorganizado y cómo influye en tu vida.</p>
+            
+            <!-- Nueva sección: Origen del Apego -->
+            <div class="mt-12 bg-purple-100 p-6 rounded-2xl border-l-4 border-purple-500">
+                <h3 class="text-2xl font-bold text-purple-700 mb-3">El Origen de tus Conexiones</h3>
+                <p class="text-gray-700 mb-4">Nuestros estilos de apego no nacen de la nada. Se forman en la infancia, con la forma en que nuestros cuidadores (padres, abuelos, etc.) nos respondían. Estas primeras experiencias crean un "modelo" interno de cómo deberían ser las relaciones.</p>
+                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                    <li>Si te sentiste <strong>protegido y valorado</strong>, es probable que desarrollaras un apego seguro.</li>
+                    <li>Si la atención era <strong>impredecible</strong>, podrías haber desarrollado un apego ansioso, buscando atención constante.</li>
+                    <li>Si te sentiste <strong>rechazado o ignorado</strong>, podrías haber desarrollado un apego evitativo, aprendiendo a no depender de los demás.</li>
+                    <li>Si la atención fue <strong>atemorizante o inconsistente</strong>, podría haber surgido un apego desorganizado.</li>
+                </ul>
+            </div>
+
+            <!-- Nueva sección visual: Los tipos de Apego (descripciones más extensas) -->
+            <div class="mt-12 bg-white rounded-2xl border-l-4 border-fuchsia-500 p-6">
+                <h3 class="text-2xl font-bold text-fuchsia-700 mb-4">Los Tipos de Apego en la Práctica</h3>
+                <div class="grid md:grid-cols-1 gap-6 text-left">
+                    <div>
+                        <h4 class="font-bold text-xl mb-1 flex items-center gap-2"><span class="text-3xl">🔒</span> Apego Seguro</h4>
+                        <p class="text-base text-gray-600">Como un <span class="font-bold">Wi-Fi fuerte y estable</span>, sabes que la conexión es segura. Sientes <span class="font-bold">confianza</span> y comodidad en la relación, sin necesitar validación constante. Te sientes bien contigo mismo, no tienes miedo a la soledad, y te resulta fácil resolver conflictos de forma honesta y tranquila. Valoras la independencia tuya y la de tu pareja, sin sentir celos excesivos. Esta es la base para construir relaciones sanas.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-1 flex items-center gap-2"><span class="text-3xl">😟</span> Apego Ansioso</h4>
+                        <p class="text-base text-gray-600">Tu conexión es como un Wi-Fi que <span class="font-bold">se cae y se vuelve a conectar</span>. Tienes un miedo profundo a que te abandonen o a que la otra persona se aleje. Esto te puede llevar a buscar validación constante, enviar mensajes de texto excesivos o sentir <span class="font-bold">celos</span> y paranoia cuando no estás con tu pareja. Te cuesta sentirte cómodo estando solo/a y a menudo necesitas la confirmación de la otra persona para sentirte seguro/a.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl mb-1 flex items-center gap-2"><span class="text-3xl">🚫</span> Apego Evitativo</h4>
+                        <p class="text-base text-gray-600">Tu conexión es como un <span class="font-bold">"modo avión"</span>. Tiendes a distanciarte y a valorar mucho tu independencia, a veces demasiado. Te cuesta mostrar tus emociones y te incomoda la intimidad o la cercanía emocional. Cuando la relación se vuelve muy seria, sientes la necesidad de tomar distancia para no sentirte vulnerable. Esto puede hacer que parezcas frío/a, pero en realidad es un mecanismo para protegerte del dolor.</p>
+                    </div>
+                    <!-- Nuevo tipo de apego: Apego Desorganizado -->
+                    <div>
+                        <h4 class="font-bold text-xl mb-1 flex items-center gap-2"><span class="text-3xl">🤯</span> Apego Desorganizado</h4>
+                        <p class="text-base text-gray-600">Tu conexión es como un Wi-Fi que <span class="font-bold">no para de encenderse y apagarse</span>. Quieres cercanía e intimidad, pero al mismo tiempo sientes miedo o desconfianza y alejas a la gente. Es una mezcla de los apegos ansioso y evitativo, lo que te hace sentir muy confundido/a en tus relaciones. Tus comportamientos pueden ser contradictorios: un día buscas a tu pareja desesperadamente, y al otro la evitas. Este estilo se forma por experiencias infantiles de cuidado inconsistente o atemorizante, lo que hace difícil confiar en los demás y en la estabilidad de una relación.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actividad Interactiva: Test de Apego Rápido (más preguntas) -->
+            <div class="bg-teal-100 p-6 rounded-2xl mt-12 border-l-4 border-teal-500">
+                <h3 class="text-2xl font-bold text-teal-700 mb-3">¿Cuál es tu tipo de apego?</h3>
+                <p class="text-gray-700 mb-4">Elige la opción que más te represente en las siguientes situaciones:</p>
+                <form id="apegoQuizForm">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">1. Tu pareja no te contesta un mensaje por 3 horas, ¿qué sientes?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="radio" name="pregunta1" value="ansioso" class="mr-2 accent-teal-500"> Ansiedad, creo que algo malo pasó o que está enojado/a.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta1" value="evitativo" class="mr-2 accent-teal-500"> Me da igual, no es para tanto. Quizás tiene cosas que hacer.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta1" value="seguro" class="mr-2 accent-teal-500"> Tranquilidad, sé que me responderá cuando pueda.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta1" value="desorganizado" class="mr-2 accent-teal-500"> Me debato entre sentirme frustrado/a por la falta de respuesta y pensar que no debería importarme.</label>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">2. Después de una discusión, ¿qué sueles hacer?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="radio" name="pregunta2" value="ansioso" class="mr-2 accent-teal-500"> Necesito hablarlo ya mismo para resolverlo y me cuesta calmarme.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta2" value="evitativo" class="mr-2 accent-teal-500"> Prefiero tomar distancia y pensar solo/a. A veces me alejo por un tiempo.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta2" value="seguro" class="mr-2 accent-teal-500"> Busco un buen momento para dialogar con calma y escuchar a la otra persona.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta2" value="desorganizado" class="mr-2 accent-teal-500"> Mi reacción es impredecible; a veces me aferro, otras veces me alejo por completo.</label>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">3. ¿Cómo te sientes al pasar tiempo a solas?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="radio" name="pregunta3" value="ansioso" class="mr-2 accent-teal-500"> Incomodo/a, prefiero estar con alguien o hacer algo para distraerme.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta3" value="evitativo" class="mr-2 accent-teal-500"> Muy cómodo/a, incluso lo prefiero. Me gusta mi espacio y autonomía.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta3" value="seguro" class="mr-2 accent-teal-500"> Cómodo/a. Disfruto mi tiempo a solas, pero también me encanta estar con mi pareja.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta3" value="desorganizado" class="mr-2 accent-teal-500"> A veces lo disfruto, pero otras veces me siento muy solo/a y con ganas de estar con alguien.</label>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">4. ¿Cómo reaccionas cuando tu pareja/amigo/a quiere más compromiso o cercanía?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="radio" name="pregunta4" value="seguro" class="mr-2 accent-teal-500"> Me siento bien y estoy dispuesto a dar el siguiente paso juntos.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta4" value="ansioso" class="mr-2 accent-teal-500"> Me emociono mucho, pero al mismo tiempo tengo miedo de que me dejen si no soy lo suficientemente bueno/a.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta4" value="evitativo" class="mr-2 accent-teal-500"> Me siento un poco agobiado/a y busco excusas para mantener mi independencia.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta4" value="desorganizado" class="mr-2 accent-teal-500"> Me siento confundido/a. Quiero más cercanía, pero a la vez me da pánico y quiero alejarme.</label>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-2">5. Cuando la relación se vuelve difícil, ¿qué pasa por tu cabeza?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center"><input type="radio" name="pregunta5" value="seguro" class="mr-2 accent-teal-500"> Pienso que es un desafío que podemos superar juntos si hablamos.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta5" value="ansioso" class="mr-2 accent-teal-500"> Siento que la culpa es mía y que debo esforzarme más para que todo funcione.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta5" value="evitativo" class="mr-2 accent-teal-500"> Pienso que lo mejor es terminar la relación para evitar el drama y el dolor.</label>
+                            <label class="flex items-center"><input type="radio" name="pregunta5" value="desorganizado" class="mr-2 accent-teal-500"> Me siento asustado/a y frustrado/a. Me debato entre querer arreglar las cosas y querer huir por completo.</label>
+                        </div>
+                    </div>
+                    <button type="button" onclick="showQuizResult()" class="bg-teal-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-600 transition-all duration-300">
+                        Ver Mi Resultado
+                    </button>
+                </form>
+                <div id="quizResult" class="mt-6 font-bold text-teal-700"></div>
+                <p class="mt-4 text-sm text-gray-500 text-center">
+                    ⚠️ Este es un test rápido e informal. Para una evaluación profesional, consulta a un psicólogo.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulo 3: Debuggeando Mis Relaciones -->
+    <section id="modulo3" class="py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-5xl mx-auto module-card bg-white p-8 md:p-12 rounded-3xl">
+            <h2 class="text-4xl font-bold text-fuchsia-700 mb-4 text-center">Módulo 3: Debuggeando Mis Relaciones 🐛</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">Identifica los "bugs" en tus relaciones. Aprende a reconocer las señales de alerta (red flags) y las de una relación saludable (green flags).</p>
+
+            <!-- Actividad Interacti.va: Diccionario de Señales (mejorado) -->
+            <div class="bg-purple-100 p-6 rounded-2xl mb-6 border-l-4 border-purple-500">
+                <h3 class="text-2xl font-bold text-purple-700 mb-3">Diccionario de Señales: Red Flags vs. Green Flags</h3>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg p-4 shadow-sm cursor-pointer" onclick="toggleAccordion('redFlags')">
+                        <h4 class="font-bold text-red-600 flex justify-between items-center">
+                            Señales de Alerta (Red Flags) 🚩 <span id="redFlagsArrow" class="text-lg transform transition-transform duration-300 -rotate-90">></span>
+                        </h4>
+                        <div id="redFlagsContent" class="mt-2 hidden text-gray-700 space-y-4">
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-red-500">1. Control Excesivo</h5>
+                                <p class="text-base">
+                                    No es protección, es falta de confianza. Si tu pareja quiere saber dónde estás y con quién a toda hora, revisa tu celular, te exige contraseñas, o te hace sentir culpable por pasar tiempo con tus amistades o familia, eso es una señal de alarma. Una relación sana te da libertad y se basa en la confianza mutua.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-red-500">2. Críticas Constantes y Desvalorización</h5>
+                                <p class="text-base">
+                                    Si tu pareja se burla de tus ideas, minimiza tus logros, critica tu forma de vestir, tus pasatiempos o incluso tus amigos, es una "red flag". El amor verdadero te inspira a ser la mejor versión de ti mismo y celebra quién eres, sin intentar cambiarte.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-red-500">3. Falta de Respeto a tus Límites</h5>
+                                <p class="text-base">
+                                    Un "no" es un "no" en cualquier situación. Si tu pareja no respeta tus decisiones, tus espacios personales o tu derecho a no querer hacer algo, está cruzando una línea importante. Respetar los límites del otro es el cimiento de cualquier relación saludable.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-red-500">4. Gaslighting y Manipulación Emocional</h5>
+                                <p class="text-base">
+                                    Esta es una de las más peligrosas. El "gaslighting" es una forma de manipulación en la que tu pareja te hace dudar de tu propia memoria y percepción de la realidad. Frases como "estás exagerando", "eso nunca pasó" o "te lo estás imaginando" son una señal de que están tratando de confundirte y controlar tu mente.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-red-500">5. Inestabilidad Emocional y Dramas Constantes</h5>
+                                <p class="text-base">
+                                    Una relación no debería ser una montaña rusa de emociones. Si tu pareja se enoja de forma desproporcionada, pasa de la euforia a la tristeza sin un motivo claro o crea dramas por cosas pequeñas, esto te mantiene en un estado de estrés y te quita la paz.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-sm cursor-pointer" onclick="toggleAccordion('greenFlags')">
+                        <h4 class="font-bold text-green-600 flex justify-between items-center">
+                            Señales de Salud (Green Flags) ✅ <span id="greenFlagsArrow" class="text-lg transform transition-transform duration-300 -rotate-90">></span>
+                        </h4>
+                        <div id="greenFlagsContent" class="mt-2 hidden text-gray-700 space-y-4">
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-green-500">1. Respeto Mutuo y Confianza</h5>
+                                <p class="text-base">
+                                    Se respetan los espacios y opiniones del otro, incluso si no están de acuerdo. Confían el uno en el otro sin necesidad de estar constantemente vigilando. Te sientes seguro/a y tranquilo/a cuando tu pareja no está a tu lado.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-green-500">2. Apoyo Incondicional a tus Metas</h5>
+                                <p class="text-base">
+                                    Una relación saludable te empodera. Tu pareja te anima a crecer, a estudiar, a perseguir tus sueños y a ser mejor persona. Se alegra sinceramente de tus logros y te acompaña en tus fracasos.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-green-500">3. Comunicación Abierta y Empática</h5>
+                                <p class="text-base">
+                                    Pueden hablar de cualquier tema, desde los más triviales hasta los más difíciles, sin miedo a ser juzgados. Tienen discusiones constructivas, donde escuchan al otro y se esfuerzan por entender su punto de vista, en lugar de solo querer tener la razón.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-green-500">4. Sana Independencia</h5>
+                                <p class="text-base">
+                                    Ambos tienen sus propias vidas, amigos y pasatiempos. Disfrutan de su tiempo juntos, pero también valoran el tiempo que pasan separados, lo cual los hace crecer individualmente y como pareja. La relación es un complemento, no una necesidad para sentirte completo/a.
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1 text-green-500">5. Vulnerabilidad y Afecto Genuino</h5>
+                                <p class="text-base">
+                                    Se sienten cómodos mostrando sus emociones, incluso las más difíciles. El cariño y el afecto no se sienten forzados o utilitarios; son una expresión sincera de lo que sienten el uno por el otro.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección: Comunicación Asertiva -->
+            <div class="mt-12 bg-rose-100 p-6 rounded-2xl border-l-4 border-rose-500">
+                <h3 class="text-2xl font-bold text-rose-700 mb-3">El Código de la Comunicación Asertiva 💬</h3>
+                <p class="text-gray-700 mb-4">La comunicación asertiva es la habilidad de expresar tus pensamientos, sentimientos y necesidades de manera honesta, respetuosa y sin agredir a la otra persona. No es ser pasivo (quedarse callado) ni agresivo (atacar al otro).</p>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-bold text-lg text-rose-600 mb-2">La Técnica del "Yo siento..."</h4>
+                        <p class="text-gray-700">Esta es tu herramienta principal. En lugar de culpar o atacar ("Tú siempre..."), te enfocas en cómo te sientes tú y lo que necesitas. Esto abre un canal de diálogo más honesto y menos defensivo.</p>
+                        <p class="italic text-gray-500 mt-2"><span class="font-bold">Fórmula:</span> "Cuando tú [describes el comportamiento], yo siento [tu emoción] porque [explicas el porqué]."</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-bold text-lg text-rose-600 mb-2">Los 3 Pilares de la Comunicación Asertiva</h4>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li><strong>Claridad:</strong> Sé directo/a y específico/a con lo que quieres decir. Evita los rodeos o los mensajes ambiguos.</li>
+                            <li><strong>Respeto:</strong> Respeta a la otra persona y sus sentimientos, incluso si no estás de acuerdo. Usa un tono de voz calmado.</li>
+                            <li><strong>Empatía:</strong> Intenta entender la perspectiva de la otra persona. No se trata de ganar una discusión, sino de encontrar una solución juntos.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-bold text-lg text-rose-600 mb-2">Ejemplo Práctico</h4>
+                        <p class="text-gray-700 mb-2">Imagina que tu pareja llega tarde a una cita y tú te sientes molesto/a.</p>
+                        <p class="font-bold text-red-600">❌ Comunicación Agresiva:</p>
+                        <p class="text-gray-700 italic">"¡Siempre llegas tarde! No te importa mi tiempo. ¡Eres un/a desconsiderado/a!"</p>
+                        <p class="font-bold text-rose-600 mt-2">✅ Comunicación Asertiva:</p>
+                        <p class="text-gray-700 italic">"Cuando llegas tarde, <span class="font-bold">yo siento</span> que mi tiempo no es valorado, <span class="font-bold">porque</span> me hiciste esperar. ¿Podríamos ser más puntuales la próxima vez?"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nueva sección sobre los efectos de malas relaciones -->
+            <div class="mt-12 bg-fuchsia-100 p-6 rounded-2xl border-l-4 border-fuchsia-500">
+                <h3 class="text-2xl font-bold text-fuchsia-700 mb-3">El Precio de los 'Bugs': Lo que genera una mala relación 💀</h3>
+                <p class="text-gray-700 mb-4">
+                    Ignorar las señales de alerta (red flags) no solo te hace sentir mal en el momento, sino que puede dejar un rastro de "bugs" emocionales que afectan tu bienestar a largo plazo. Aquí exploramos lo que sucede cuando una relación no es sana y las consecuencias que puedes experimentar.
+                </p>
+                <div class="space-y-6 text-gray-700">
+                    <div>
+                        <h4 class="font-bold text-xl text-fuchsia-600 mb-2">1. Dependencia Emocional: el 'Error 404' de la Autonomía</h4>
+                        <p class="text-base">
+                            Imagina que tu felicidad y tu autoestima dependen de la aprobación de otra persona. Esto es la <span class="font-bold">dependencia emocional</span>. Es como un programa que no puede funcionar si no está conectado a otro. Si sientes que no puedes ser feliz, tomar decisiones o incluso respirar sin tu pareja, es una señal de que has perdido tu autonomía. Este "bug" te hace creer que la soledad es tu peor enemigo y te ata a una relación insana por miedo a estar solo/a.
+                        </p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li><strong>Miedo al abandono:</strong> La idea de que tu pareja se vaya te aterroriza.</li>
+                            <li><strong>Necesidad de validación constante:</strong> Buscas que te diga que eres suficiente y que te quiere, una y otra vez.</li>
+                            <li><strong>Sacrificas tus deseos y necesidades:</strong> Dejas de hacer lo que te gusta con tal de no perder a la otra persona.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl text-fuchsia-600 mb-2">2. Ansiedad: el 'Loading...' que nunca termina</h4>
+                        <p class="text-base">
+                            Una relación tóxica es un estado constante de alerta. Sientes <span class="font-bold">ansiedad</span> porque nunca sabes cuándo va a explotar el próximo conflicto o si la persona se enojará por algo que hiciste. Es como tener un "loading..." infinito en tu mente: siempre estás esperando que algo malo pase. Esto puede manifestarse con una constante preocupación, nerviosismo, e incluso síntomas físicos como taquicardia o dificultad para dormir.
+                        </p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li><strong>Preocupación constante:</strong> ¿Por qué no me ha contestado? ¿Estará enojado/a? ¿Hice algo mal?</li>
+                            <li><strong>Dificultad para relajarte:</strong> Te cuesta disfrutar los momentos de paz sin sentirte estresado/a.</li>
+                            <li><strong>Pensamientos intrusivos:</strong> Una y otra vez, te imaginas los peores escenarios.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xl text-fuchsia-600 mb-2">3. Inseguridad: el 'Virus' que ataca tu Confianza</h4>
+                        <p class="text-base">
+                            Las malas relaciones funcionan como un virus que, poco a poco, va borrando tu confianza en ti mismo. La <span class="font-bold">inseguridad</span> crece cuando te critican, te comparan con otros o te hacen sentir que tus logros no son importantes. Con el tiempo, empiezas a creer que no eres suficiente, que no mereces a nadie mejor o que el problema eres tú. Esto no solo afecta tu relación actual, sino también tus futuras conexiones, tu autoestima y tu capacidad de tomar decisiones.
+                        </p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li><strong>Baja autoestima:</strong> Dejas de creer en tus habilidades y en tu valor.</li>
+                            <li><strong>Sentimiento de culpa:</strong> Te responsabilizas por los problemas de la relación.</li>
+                            <li><strong>Miedo a tomar riesgos:</strong> Evitas hacer cosas nuevas por miedo a fracasar y a que te critiquen.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nueva sección de Gemini API -->
+            <div class="mt-12 bg-sky-100 p-6 rounded-2xl border-l-4 border-sky-500">
+                <h3 class="text-2xl font-bold text-sky-700 mb-3">¡Analicemos esa Situación! ✨</h3>
+                <p class="text-gray-700 mb-4">Describe una situación que te genere dudas con una amistad o pareja, y el <strong>Debug-bot de Relaciones</strong> te ayudará a identificar posibles "flags" de manera neutral.</p>
+                <textarea id="debugInput" rows="4" class="w-full p-3 rounded-lg border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Ej: Mi amigo/a se enoja cada vez que salgo con otras personas y me hace sentir culpable."></textarea>
+                <button onclick="debugRelationship()" class="mt-4 bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-all duration-300">
+                    Analizar Situación
+                </button>
+                <div id="debugOutput" class="mt-6 p-4 bg-white rounded-lg shadow hidden whitespace-pre-wrap">
+                    <p id="debugResultText" class="text-gray-700"></p>
+                    <div id="debugLoading" class="hidden flex items-center justify-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-sky-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Analizando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulo 4: Actualización de Versión: Amor Propio (EXPANDIDO) -->
+    <section id="modulo4" class="py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-5xl mx-auto module-card bg-white p-8 md:p-12 rounded-3xl">
+            <h2 class="text-4xl font-bold text-fuchsia-700 mb-4 text-center">Módulo 4: Actualización de Versión: Amor Propio 💖</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">La relación más importante es la que tienes contigo mismo. Aprende a crear tu "manual de usuario" personal para valorarte y establecer límites.</p>
+            
+            <div class="space-y-12">
+                <!-- Sección 1: El Código Fuente de tu Valor -->
+                <div class="bg-purple-100 p-6 rounded-2xl border-l-4 border-purple-500">
+                    <h3 class="text-2xl font-bold text-purple-700 mb-3">Autenticidad y Autoestima: El 'Hola Mundo' del Amor Propio ✨</h3>
+                    <p class="text-gray-700 mb-4">
+                        La <span class="font-bold">autoestima</span> no es creer que eres perfecto/a, sino que eres valioso/a tal como eres, con tus virtudes y tus errores. Es el código fuente que define cómo te relacionas contigo mismo y, por ende, con los demás. Una autoestima sana no es arrogancia, es un cimiento sólido para tu bienestar.
+                    </p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-bold text-xl text-purple-600 mb-2">Autoestima, ¿Qué es y qué no es?</h4>
+                            <p class="text-gray-700">
+                                <span class="font-bold">No es:</span> Necesitar la validación de los demás para sentirte bien. Creer que eres mejor que otros. No equivocarse nunca.
+                            </p>
+                            <p class="text-gray-700 mt-2">
+                                <span class="font-bold">Es:</span> Ser tu mejor amigo. Perdonarte por los errores. Celebrar tus pequeños y grandes logros. Conocer tus límites y tus necesidades.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl text-purple-600 mb-2">El Poder de la Autocompasión 🫶</h4>
+                            <p class="text-gray-700">
+                                La <span class="font-bold">autocompasión</span> es la clave para una autoestima a prueba de "bugs". Se trata de tratarte con la misma amabilidad y comprensión que tratarías a un buen amigo cuando se equivoca. No te critiques por un error, pregúntate: "¿Qué necesito ahora para sentirme mejor y aprender de esto?". Es un cambio de mentalidad de "soy un desastre" a "esto es difícil, pero puedo superarlo".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 2: La Regla de Oro: Aprender a Decir No -->
+                <div class="bg-yellow-100 p-6 rounded-2xl border-l-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-3">Límites: El Firewall de tu Bienestar 🛡️</h3>
+                    <p class="text-gray-700 mb-4">
+                        Los límites son como un firewall: te protegen de lo que no te hace bien. Establecer límites no es ser egoísta, es cuidar tu salud mental y emocional. Es una forma de comunicación que le dice a los demás cómo esperas que te traten.
+                    </p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-bold text-xl text-yellow-600 mb-2">¿Cómo se establecen los límites?</h4>
+                            <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                <li><strong>Sé claro/a y directo/a:</strong> No uses indirectas. "No puedo ir hoy" es más efectivo que "mmm, no sé, déjame ver".</li>
+                                <li><strong>Sé consistente:</strong> Mantén tus límites. Si hoy dices que no y mañana sí, la gente se confundirá.</li>
+                                <li><strong>Prepárate para la reacción:</strong> Es posible que algunas personas se molesten. Está bien. Su reacción es su responsabilidad, no la tuya.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl text-yellow-600 mb-2">Ejemplos Prácticos de Límites</h4>
+                            <p class="font-bold text-orange-600 mt-2">En la Vida Real:</p>
+                            <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                <li>"No me gusta que me toques el pelo. Por favor, no lo hagas."</li>
+                                <li>"Necesito mi espacio personal cuando estoy en casa. Podríamos vernos más tarde."</li>
+                                <li>"No me siento cómodo/a hablando de ese tema. Prefiero cambiar de conversación."</li>
+                            </ul>
+                            <p class="font-bold text-orange-600 mt-2">En el Mundo Digital:</p>
+                            <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                                <li>"No esperes que responda inmediatamente. A veces necesito desconectarme."</li>
+                                <li>"No me revises el celular. Es mi espacio privado."</li>
+                                <li>"Si no me gusta una foto, por favor, no la subas. Agradezco que respetes mis decisiones."</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nueva Actividad Interacti.va: Mi Diario de Logros -->
+                <div class="bg-cyan-100 p-6 rounded-2xl border-l-4 border-cyan-500">
+                    <h3 class="text-2xl font-bold text-cyan-700 mb-3">Mi Diario de Logros 🏆</h3>
+                    <p class="text-gray-700 mb-4">A veces, nuestra mente se enfoca en lo que no hicimos bien. Este diario es para contrarrestar eso. Escribe 3 logros de tu día. Pueden ser pequeños, como "me levanté a la primera alarma", o grandes, como "entregué un trabajo importante".</p>
+                    <textarea id="logrosInput" rows="4" class="w-full p-3 rounded-lg border-2 border-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Ej: 1. Ayudé a mi mamá con la cena. 2. Me reí mucho con mis amigos. 3. Leí 10 páginas de un libro."></textarea>
+                    <button onclick="saveLogros()" class="mt-4 bg-cyan-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-cyan-600 transition-all duration-300">
+                        Guardar mis Logros
+                    </button>
+                    <div id="logrosOutput" class="mt-6 p-4 bg-white rounded-lg shadow hidden text-gray-700 whitespace-pre-wrap"></div>
+                </div>
+
+                <!-- Actividad 1 del Módulo 4: Mi README Personal -->
+                <div class="bg-green-100 p-6 rounded-2xl border-l-4 border-green-500">
+                    <h3 class="text-2xl font-bold text-green-700 mb-3">Mi README Personal 📖</h3>
+                    <p class="text-gray-700 mb-4">Un README es un archivo que explica un proyecto. Escribe el tuyo, ¿quién eres? ¿qué te gusta? ¿qué necesitas?</p>
+                    <textarea id="readmeInput" rows="5" class="w-full p-3 rounded-lg border-2 border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Ej: Soy una persona que valora la honestidad. Necesito mi espacio para recargar energías. Mis límites son..."></textarea>
+                    <button onclick="generateReadme()" class="mt-4 bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all duration-300">
+                        Generar Mi Manual
+                    </button>
+                    <div id="readmeOutput" class="mt-6 p-4 bg-white rounded-lg shadow hidden whitespace-pre-wrap"></div>
+                </div>
+
+                <!-- Actividad 2 del Módulo 4: El Algoritmo de la Felicidad -->
+                <div class="bg-rose-100 p-6 rounded-2xl border-l-4 border-rose-500">
+                    <h3 class="text-2xl font-bold text-rose-700 mb-3">El Algoritmo de mi Felicidad ✨</h3>
+                    <p class="text-lg text-gray-700 mb-4">¿Te sientes triste, abrumado/a o simplemente necesitas un empujón? Describe cómo te sientes y la IA te ayudará a generar un pequeño algoritmo de 3 pasos para mejorar tu día.</p>
+                    <textarea id="felicidadInput" rows="3" class="w-full p-3 rounded-lg border-2 border-rose-300 focus:outline-none focus:ring-2 focus:ring-rose-500" placeholder="Ej: Me siento triste porque mi mejor amigo no me ha hablado en todo el día."></textarea>
+                    <button onclick="generateFelicidadAlgorithm()" class="mt-4 bg-rose-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-rose-600 transition-all duration-300">
+                        Generar Algoritmo
+                    </button>
+                    <div id="felicidadOutput" class="mt-6 p-4 bg-white rounded-lg shadow hidden whitespace-pre-wrap">
+                        <p id="felicidadResultText" class="text-gray-700"></p>
+                        <div id="felicidadLoading" class="hidden flex items-center justify-center">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-rose-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span>Generando...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Recursos y "Caja de Herramientas" (Sección actualizada y detallada) -->
+    <section id="recursos" class="py-20 px-4 md:px-12 lg:px-24">
+        <div class="max-w-5xl mx-auto module-card bg-white p-8 md:p-12 rounded-3xl">
+            <h2 class="text-4xl font-bold text-fuchsia-700 mb-4 text-center">Caja de Herramientas 🛠️</h2>
+            <p class="text-lg text-gray-600 mb-8 text-center">Aquí tienes recursos adicionales para seguir construyendo tu bienestar. No te sientas solo/a en este camino.</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Apps Recomendadas -->
+                <div class="bg-yellow-100 p-6 rounded-2xl border-l-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold text-yellow-700 mb-3">Apps Recomendadas 📱</h3>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        <li>
+                            <strong>Insight Timer:</strong> Una app de meditación y mindfulness con miles de meditaciones guiadas. Ideal para calmar la ansiedad.
+                        </li>
+                        <li>
+                            <strong>Fabulous:</strong> Te ayuda a crear rutinas y hábitos saludables de forma divertida y personalizada.
+                        </li>
+                        <li>
+                            <strong>Moodfit:</strong> Una herramienta completa para rastrear tu estado de ánimo, hacer ejercicios de respiración y aprender sobre salud mental.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Podcasts y Canales -->
+                <div class="bg-rose-100 p-6 rounded-2xl border-l-4 border-rose-500">
+                    <h3 class="text-2xl font-bold text-rose-700 mb-3">Podcasts y Contenido Visual 🎙️🎬</h3>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        <li>
+                            <strong>Se Regalan Dudas (Podcast):</strong> Hablan sin tabúes sobre relaciones, amor propio, salud mental y muchos otros temas relevantes para tu edad.
+                        </li>
+                        <li>
+                            <strong>Psicología al Desnudo (YouTube):</strong> Un canal con videos cortos y claros sobre psicología, emociones y autoconocimiento.
+                        </li>
+                        <li>
+                            <strong>The Therapy Gecko (Podcast):</strong> Un gecko que escucha a la gente hablar sobre sus problemas. Es divertido, honesto y te hace sentir menos solo/a.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Libros y Blogs -->
+                <div class="bg-indigo-100 p-6 rounded-2xl border-l-4 border-indigo-500">
+                    <h3 class="2xl font-bold text-indigo-700 mb-3">Libros y Guías 📚</h3>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        <li>
+                            <strong>"El Arte de la Felicidad"</strong> de Dalai Lama y Howard C. Cutler. Un clásico que te enseña a encontrar la paz interior.
+                        </li>
+                        <li>
+                            <strong>"El Amor en los Tiempos de Tinder"</strong> de Judith Duportail. Un libro que explora las relaciones en la era digital.
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Ejercicio Interactivo: Diario de Gratitud -->
+                <div class="bg-green-100 p-6 rounded-2xl border-l-4 border-green-500 col-span-full">
+                    <h3 class="text-2xl font-bold text-green-700 mb-3">Mini Ejercicio: Diario de Gratitud ✍️</h3>
+                    <p class="text-gray-700 mb-4">A veces, enfocarse en lo positivo es la mejor medicina. Tómate un momento y escribe 3 cosas por las que te sientes agradecido/a hoy. No tienen que ser grandes cosas, pueden ser detalles pequeños.</p>
+                    <textarea id="gratitudeInput" rows="4" class="w-full p-3 rounded-lg border-2 border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 mb-4" placeholder="Ej: Estoy agradecido/a por el sol de hoy, por mi snack favorito, y por el mensaje de mi amigo/a."></textarea>
+                    <button onclick="saveGratitude()" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all duration-300">
+                        Guardar mi Nota
+                    </button>
+                    <div id="gratitudeOutput" class="mt-4 p-4 bg-white rounded-lg shadow hidden text-gray-700"></div>
+                </div>
+
+                <!-- Ayuda Profesional -->
+                <div class="bg-rose-100 p-6 rounded-2xl border-l-4 border-rose-500">
+                    <h3 class="text-2xl font-bold text-rose-700 mb-3">Ayuda Profesional</h3>
+                    <p class="text-gray-700 mb-2">Si sientes que necesitas hablar con alguien, está bien. Pide ayuda.</p>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        <li>
+                            <strong>Línea de Ayuda Adolescente:</strong> [Teléfono de ejemplo] - Busca líneas de ayuda en tu país.
+                        </li>
+                        <li>
+                            <strong>Directorio de Terapeutas:</strong> Busca en Google "psicología para adolescentes online" o "terapeuta juvenil cerca de mí".
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-fuchsia-700 text-white text-center py-6">
+        <p>Conexión 2.0 | Taller de Amor y Apego</p>
+    </footer>
+
+    <!-- Scripts JavaScript para interactividad y Gemini API -->
+    <script>
+        // Funcionalidad para el quiz del Módulo 2
+        function showQuizResult() {
+            const form = document.getElementById('apegoQuizForm');
+            const resultDiv = document.getElementById('quizResult');
+            const preguntas = [
+                form.querySelector('input[name="pregunta1"]:checked'),
+                form.querySelector('input[name="pregunta2"]:checked'),
+                form.querySelector('input[name="pregunta3"]:checked'),
+                form.querySelector('input[name="pregunta4"]:checked'),
+                form.querySelector('input[name="pregunta5"]:checked')
+            ];
+            
+            if (preguntas.every(q => q !== null)) {
+                let ansiosoCount = 0;
+                let evitativoCount = 0;
+                let seguroCount = 0;
+                let desorganizadoCount = 0;
+
+                preguntas.forEach(pregunta => {
+                    if (pregunta.value === 'ansioso') ansiosoCount++;
+                    if (pregunta.value === 'evitativo') evitativoCount++;
+                    if (pregunta.value === 'seguro') seguroCount++;
+                    if (pregunta.value === 'desorganizado') desorganizadoCount++;
+                });
+
+                const maxCount = Math.max(ansiosoCount, evitativoCount, seguroCount, desorganizadoCount);
+                const results = [];
+                if (seguroCount === maxCount) results.push('seguro');
+                if (ansiosoCount === maxCount) results.push('ansioso');
+                if (evitativoCount === maxCount) results.push('evitativo');
+                if (desorganizadoCount === maxCount) results.push('desorganizado');
+
+                let resultText = '';
+                if (results.length === 1) {
+                    if (results[0] === 'seguro') {
+                        resultText = '¡Tu estilo de apego tiende a ser seguro! Vas por buen camino, confías en tus relaciones y en ti mismo. Es la base para construir conexiones saludables. ✨';
+                    } else if (results[0] === 'ansioso') {
+                        resultText = 'Tu estilo de apego parece ser ansioso. Es normal, y la clave es trabajar en la confianza en ti mismo/a y en la seguridad de que eres suficiente para reducir el miedo al abandono. 💖';
+                    } else if (results[0] === 'evitativo') {
+                        resultText = 'Tu estilo de apego se inclina hacia el evitativo. Recordá que la vulnerabilidad es parte de las relaciones y que abrirte a los demás puede ser muy gratificante. No tienes que hacerlo solo/a. 💪';
+                    } else if (results[0] === 'desorganizado') {
+                        resultText = 'Tu estilo de apego parece ser desorganizado. Es una mezcla de miedo a la intimidad y deseo de cercanía. El primer paso es reconocer estas contradicciones y ser paciente contigo mismo/a. Es un proceso. �';
+                    }
+                } else {
+                    resultText = `Parece que tienes una combinación de estilos de apego, con un énfasis en: ${results.join(' y ')}. Es muy común, y conocer estas dinámicas te ayudará a entenderte mejor. ¡Sigue explorando! 😉`;
+                }
+                
+                resultDiv.textContent = resultText;
+            } else {
+                resultDiv.textContent = 'Por favor, responde todas las preguntas.';
+            }
+        }
+
+        // Funcionalidad para los acordeones de Red/Green Flags en el Módulo 3
+        function toggleAccordion(id) {
+            const content = document.getElementById(id + 'Content');
+            const arrow = document.getElementById(id + 'Arrow');
+            content.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-90');
+            arrow.classList.toggle('-rotate-90');
+        }
+
+        // Funcionalidad para generar el README en el Módulo 4
+        function generateReadme() {
+            const input = document.getElementById('readmeInput');
+            const output = document.getElementById('readmeOutput');
+            const text = input.value.trim();
+            if (text) {
+                output.textContent = "README Personal\n\n" + text;
+                output.classList.remove('hidden');
+            } else {
+                output.textContent = 'Por favor, escribe algo sobre ti para generar tu manual.';
+                output.classList.remove('hidden');
+            }
+        }
+
+        // Funcionalidad para guardar la nota de gratitud en el Módulo de Herramientas
+        function saveGratitude() {
+            const input = document.getElementById('gratitudeInput');
+            const output = document.getElementById('gratitudeOutput');
+            const text = input.value.trim();
+            if (text) {
+                output.textContent = `¡Tu nota de gratitud ha sido guardada! \n\n${text}`;
+                output.classList.remove('hidden');
+            } else {
+                output.textContent = 'Escribe algo para guardar la nota.';
+                output.classList.remove('hidden');
+            }
+        }
+
+        // Funcionalidad para la actividad interactiva del Módulo 1 (Mi Escena Real)
+        function saveRealScene() {
+            const input = document.getElementById('realSceneInput');
+            const output = document.getElementById('realSceneOutput');
+            const text = input.value.trim();
+            if (text) {
+                output.textContent = `¡Gracias por compartir! Recordar que la vida real es la que vale es el primer paso. 😉\n\nTu escena real:\n"${text}"`;
+                output.classList.remove('hidden');
+            } else {
+                output.textContent = 'Escribe algo para guardar tu escena real.';
+                output.classList.remove('hidden');
+            }
+        }
+        
+        // Funcionalidad para el Diario de Logros (Nuevo)
+        function saveLogros() {
+            const input = document.getElementById('logrosInput');
+            const output = document.getElementById('logrosOutput');
+            const text = input.value.trim();
+            if (text) {
+                output.textContent = `¡Logros guardados! Recordar tus avances es una excelente forma de crecer. 😎\n\n${text}`;
+                output.classList.remove('hidden');
+            } else {
+                output.textContent = 'Escribe al menos un logro para guardar.';
+                output.classList.remove('hidden');
+            }
+        }
+
+        // Funcionalidad para el Debug-bot de Relaciones (Gemini API)
+        async function debugRelationship() {
+            const input = document.getElementById('debugInput');
+            const outputDiv = document.getElementById('debugOutput');
+            const outputText = document.getElementById('debugResultText');
+            const loading = document.getElementById('debugLoading');
+            const userPrompt = input.value.trim();
+            
+            if (!userPrompt) {
+                outputText.textContent = 'Por favor, describe una situación para que la analice.';
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+            
+            outputDiv.classList.remove('hidden');
+            outputText.textContent = '';
+            loading.classList.remove('hidden');
+
+            // Prompting the LLM
+            const prompt = `Actúa como un psicólogo adolescente. Analiza la siguiente situación descrita por un adolescente e identifica si hay posibles 'señales de alerta' (red flags) o 'señales de salud' (green flags). Ofrece una perspectiva neutral y un consejo constructivo, corto y directo, en español.
+            Situación: "${userPrompt}"
+            Respuesta:`;
+            
+            try {
+                const apiKey = "";
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputText.textContent = text;
+                } else {
+                    outputText.textContent = 'Lo siento, no pude analizar la situación. Por favor, intenta con otra descripción.';
+                }
+            } catch (error) {
+                console.error('Error al llamar a la API de Gemini:', error);
+                outputText.textContent = 'Hubo un error de conexión. Por favor, inténtalo de nuevo más tarde.';
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        // Funcionalidad para el Algoritmo de la Felicidad (Gemini API)
+        async function generateFelicidadAlgorithm() {
+            const input = document.getElementById('felicidadInput');
+            const outputDiv = document.getElementById('felicidadOutput');
+            const outputText = document.getElementById('felicidadResultText');
+            const loading = document.getElementById('felicidadLoading');
+            const userPrompt = input.value.trim();
+            
+            if (!userPrompt) {
+                outputText.textContent = 'Por favor, describe cómo te sientes para generar un algoritmo.';
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+            
+            outputDiv.classList.remove('hidden');
+            outputText.textContent = '';
+            loading.classList.remove('hidden');
+
+            // Prompting the LLM
+            const prompt = `Actúa como un guía de bienestar para adolescentes. Basado en el siguiente sentimiento o situación, crea un "algoritmo de la felicidad" de 3 pasos concretos y fáciles de seguir para mejorar tu ánimo. Usa un tono positivo y cercano, en español.
+            Sentimiento/Situación: "${userPrompt}"
+            Respuesta (usa emojis):`;
+            
+            try {
+                const apiKey = "";
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputText.textContent = text;
+                } else {
+                    outputText.textContent = 'Lo siento, no pude generar un algoritmo. ¿Puedes describir tu situación de otra forma?';
+                }
+            } catch (error) {
+                console.error('Error al llamar a la API de Gemini:', error);
+                outputText.textContent = 'Hubo un error de conexión. Por favor, inténtalo de nuevo más tarde.';
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
+�
