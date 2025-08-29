@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuti Fruti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .bangers-font {
+            font-family: 'Bangers', cursive;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .input-field {
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="container w-full bg-gray-800 p-6 md:p-10 rounded-2xl shadow-xl border-4 border-gray-700">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl md:text-7xl bangers-font text-blue-400">¡TUTI FRUTI! 🥳</h1>
+            <p class="text-xl md:text-2xl mt-2 text-gray-300">¡Un juego de agilidad mental! 🧠</p>
+        </header>
+
+        <main class="flex flex-col items-center space-y-6">
+            <div id="game-info" class="text-center flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+                <div>
+                    <span class="text-3xl font-bold text-gray-400">Letra:</span>
+                    <span id="current-letter" class="text-6xl md:text-8xl bangers-font text-yellow-400 ml-4 animate-bounce">?</span>
+                </div>
+                <div>
+                    <span class="text-3xl font-bold text-gray-400">Tiempo:</span>
+                    <span id="timer" class="text-4xl md:text-6xl font-bold text-red-500 ml-4">120s</span>
+                </div>
+            </div>
+
+            <button id="startGameBtn" class="w-full md:w-auto px-10 py-4 text-2xl bg-green-600 text-white btn hover:bg-green-700 transform hover:scale-105">
+                ¡A Jugar! ▶️
+            </button>
+
+            <form id="gameForm" class="w-full space-y-4" style="display: none;">
+                <div id="categories" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Categorías se generarán aquí -->
+                </div>
+                <div class="text-center mt-6">
+                    <button type="submit" id="stopGameBtn" class="w-full md:w-auto px-10 py-4 text-2xl bg-red-600 text-white btn hover:bg-red-700 transform hover:scale-105">
+                        ¡Basta! 🛑
+                    </button>
+                </div>
+            </form>
+
+            <div id="results" class="w-full" style="display: none;">
+                <h2 class="text-3xl bangers-font text-blue-400 text-center mb-4">Resultados 🎉</h2>
+                <ul id="scoreList" class="space-y-2">
+                    <!-- Resultados se mostrarán aquí -->
+                </ul>
+                <div class="text-center mt-6">
+                    <h3 class="text-4xl font-bold text-yellow-400">Puntaje Total: 🏆 <span id="totalScore">0</span></h3>
+                    <button id="showQuizBtn" class="w-full md:w-auto mt-4 px-10 py-4 text-2xl bg-purple-600 text-white btn hover:bg-purple-700 transform hover:scale-105">
+                        ¡Responder Preguntas! 🤔
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sección de preguntas -->
+            <div id="quiz-section" class="w-full" style="display: none;">
+                <h2 class="text-3xl bangers-font text-purple-400 text-center mb-4">Preguntas Adicionales</h2>
+                <div id="quiz-question" class="bg-gray-700 p-6 rounded-lg text-center mb-4">
+                    <p id="current-question" class="text-xl font-semibold text-gray-200">¿Estás listo?</p>
+                </div>
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                    <input type="text" id="quiz-answer" placeholder="Escribe tu respuesta aquí" class="input-field bg-gray-700 text-white w-full">
+                    <button id="checkAnswerBtn" class="w-full md:w-auto px-8 py-3 text-lg bg-blue-600 text-white btn hover:bg-blue-700">
+                        Verificar ✅
+                    </button>
+                </div>
+                <div id="quiz-feedback" class="mt-4 text-center text-xl font-bold"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const categories = [
+            { name: "Nombre", emoji: "👤" },
+            { name: "Apellido", emoji: "🧑‍💼" },
+            { name: "Cosa", emoji: "📦" },
+            { name: "Color", emoji: "🌈" },
+            { name: "Animal", emoji: "🐾" },
+            { name: "Fruta o Verdura", emoji: "🍎" },
+            { name: "País o Provincia", emoji: "🌎" }
+        ];
+        const alphabet = "ABCDEFGHIJLMNÑOPRSTUVZ";
+
+        const questions = [
+            { question: "¿Qué color de fruta empieza con la letra 'V'?", answer: "VERDE" },
+            { question: "¿Qué animal es conocido por ser el 'rey de la selva'?", answer: "LEÓN" },
+            { question: "¿Cuál es el apellido de Peter Parker?", answer: "PARKER" },
+            { question: "¿Qué país es famoso por la Torre Eiffel?", answer: "FRANCIA" },
+            { question: "¿Qué cosa se usa para escribir y empieza con 'L'?", answer: "LÁPIZ" },
+            { question: "¿Cuál es el nombre de la capital de Argentina?", answer: "BUENOS AIRES" },
+            { question: "¿Una fruta que sea morada?", answer: "UVA" }
+        ];
+
+        let currentLetter = '';
+        let timerId;
+        let timeLeft = 120;
+        let isGameRunning = false;
+        let currentQuestionIndex = -1;
+
+        const letterDisplay = document.getElementById('current-letter');
+        const timerDisplay = document.getElementById('timer');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const stopGameBtn = document.getElementById('stopGameBtn');
+        const gameForm = document.getElementById('gameForm');
+        const categoriesContainer = document.getElementById('categories');
+        const resultsDiv = document.getElementById('results');
+        const scoreList = document.getElementById('scoreList');
+        const totalScoreDisplay = document.getElementById('totalScore');
+        const showQuizBtn = document.getElementById('showQuizBtn');
+        const quizSection = document.getElementById('quiz-section');
+        const currentQuestionDisplay = document.getElementById('current-question');
+        const quizAnswerInput = document.getElementById('quiz-answer');
+        const checkAnswerBtn = document.getElementById('checkAnswerBtn');
+        const quizFeedback = document.getElementById('quiz-feedback');
+
+        function setupCategories() {
+            categoriesContainer.innerHTML = '';
+            categories.forEach(cat => {
+                const div = document.createElement('div');
+                div.className = 'flex flex-col space-y-2';
+                div.innerHTML = `
+                    <label for="${cat.name}" class="text-lg font-semibold text-gray-300">${cat.name} ${cat.emoji}</label>
+                    <input type="text" id="${cat.name}" name="${cat.name}" class="input-field bg-gray-700 text-white" disabled>
+                `;
+                categoriesContainer.appendChild(div);
+            });
+        }
+
+        function startGame() {
+            if (isGameRunning) return;
+            isGameRunning = true;
+            timeLeft = 120;
+            currentLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            
+            letterDisplay.textContent = currentLetter;
+            timerDisplay.textContent = `${timeLeft}s`;
+            
+            startGameBtn.style.display = 'none';
+            gameForm.style.display = 'block';
+            resultsDiv.style.display = 'none';
+            quizSection.style.display = 'none';
+
+            const inputs = gameForm.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+            });
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            isGameRunning = false;
+            clearInterval(timerId);
+
+            const inputs = gameForm.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+
+            calculateScore();
+
+            gameForm.style.display = 'none';
+            resultsDiv.style.display = 'block';
+            startGameBtn.textContent = 'Jugar de Nuevo';
+            startGameBtn.style.display = 'block';
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            scoreList.innerHTML = '';
+            
+            const inputs = gameForm.querySelectorAll('input');
+            inputs.forEach(input => {
+                const category = input.name;
+                const answer = input.value.trim().toUpperCase();
+                const firstLetter = answer.charAt(0);
+                let score = 0;
+                let status = '❌';
+
+                if (answer !== '' && firstLetter === currentLetter) {
+                    score = 10;
+                    totalScore += score;
+                    status = '✅';
+                }
+
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center bg-gray-700 p-3 rounded-lg';
+                li.innerHTML = `
+                    <span class="font-semibold text-lg">${category}:</span>
+                    <span class="text-lg">${answer || '-'}</span>
+                    <span class="text-xl font-bold">${status} ${score} pts</span>
+                `;
+                scoreList.appendChild(li);
+            });
+            totalScoreDisplay.textContent = totalScore;
+        }
+
+        function showQuiz() {
+            resultsDiv.style.display = 'none';
+            quizSection.style.display = 'block';
+            
+            currentQuestionIndex = Math.floor(Math.random() * questions.length);
+            const randomQuestion = questions[currentQuestionIndex];
+            currentQuestionDisplay.textContent = randomQuestion.question;
+            
+            quizAnswerInput.value = '';
+            quizFeedback.textContent = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = quizAnswerInput.value.trim().toUpperCase();
+            const correctAnswer = questions[currentQuestionIndex].answer.toUpperCase();
+            
+            if (userAnswer === correctAnswer) {
+                quizFeedback.textContent = "¡Correcto! ✅ ¡Eres un genio!";
+                quizFeedback.style.color = '#34d399'; // Verde
+            } else {
+                quizFeedback.textContent = `Incorrecto. 😞 La respuesta era: ${correctAnswer}.`;
+                quizFeedback.style.color = '#ef4444'; // Rojo
+            }
+        }
+
+        startGameBtn.addEventListener('click', startGame);
+        gameForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            endGame();
+        });
+        showQuizBtn.addEventListener('click', showQuiz);
+        checkAnswerBtn.addEventListener('click', checkAnswer);
+
+        // Setup the categories on page load
+        setupCategories();
+    </script>
+</body>
+</html>
