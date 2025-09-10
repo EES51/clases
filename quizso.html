@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Quiz Masters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-red: #ff6b6b;
+            --color-blue: #6a89cc;
+            --color-yellow: #feca57;
+            --color-bg: #f5f6fa;
+            --color-dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-dark);
+        }
+
+        .team-btn {
+            @apply w-56 h-56 rounded-full text-white font-bold text-3xl uppercase transition-all duration-300 transform hover:scale-110 shadow-lg flex items-center justify-center;
+            border: 3px solid transparent;
+        }
+        
+        .team-btn-container {
+             display: flex;
+             gap: 2rem;
+             justify-content: center;
+        }
+
+        .team-btn.active {
+            animation: pulse-border 1.5s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0% {
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                border-color: transparent;
+            }
+            100% {
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        #timer {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+        .correct-answer {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .incorrect-answer {
+            background-color: #F44336; /* Red */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+        <h1 class="text-4xl font-bold text-center mb-6">Cyber Quiz Masters</h1>
+
+        <!-- Scoreboard -->
+        <div class="flex justify-around items-center mb-8 text-2xl font-bold">
+            <div id="scoreRed" class="p-2 rounded-lg" style="color: var(--color-red);">Rojo: <span id="pointsRed">0</span></div>
+            <div id="scoreBlue" class="p-2 rounded-lg" style="color: var(--color-blue);">Azul: <span id="pointsBlue">0</span></div>
+            <div id="scoreYellow" class="p-2 rounded-lg" style="color: var(--color-yellow);">Amarillo: <span id="pointsYellow">0</span></div>
+        </div>
+        
+        <!-- Start Button -->
+        <div id="startContainer" class="text-center">
+            <button id="startBtn" class="bg-blue-500 text-white font-bold text-2xl py-4 px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Empezar
+            </button>
+        </div>
+
+        <!-- Timer -->
+        <div class="text-center text-4xl font-bold mb-8 hidden" id="timerContainer">
+            Tiempo: <span id="timer">60</span>s
+        </div>
+
+        <!-- Team Buttons -->
+        <div id="teamButtons" class="team-btn-container hidden">
+            <button id="redBtn" class="team-btn bg-red-400">Equipo Rojo</button>
+            <button id="blueBtn" class="team-btn bg-blue-400">Equipo Azul</button>
+            <button id="yellowBtn" class="team-btn bg-yellow-400">Equipo Amarillo</button>
+        </div>
+
+        <!-- Question & Options -->
+        <div id="questionContainer" class="text-center mb-6 hidden">
+            <p id="question" class="text-2xl font-semibold mb-4 text-center"></p>
+            <div id="optionsContainer" class="grid grid-cols-2 gap-4"></div>
+        </div>
+        
+        <!-- Controls -->
+        <div id="controlsContainer" class="flex justify-center items-center gap-4 hidden">
+            <button id="passBtn" class="bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md">
+                Pasar Pregunta
+            </button>
+            <button id="nextBtn" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hidden">
+                Siguiente
+            </button>
+        </div>
+    </div>
+    
+    <!-- Modal for displaying messages -->
+    <div id="modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white text-center">
+            <h3 id="modalMessage" class="text-lg leading-6 font-medium text-gray-900"></h3>
+            <div class="mt-2 px-7 py-3">
+                <button id="modalCloseBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const startContainer = document.getElementById('startContainer');
+        const teamButtons = document.getElementById('teamButtons');
+        const teamBtns = document.querySelectorAll('.team-btn');
+        const questionContainer = document.getElementById('questionContainer');
+        const questionEl = document.getElementById('question');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const timerContainer = document.getElementById('timerContainer');
+        const timerEl = document.getElementById('timer');
+        const controlsContainer = document.getElementById('controlsContainer');
+        const passBtn = document.getElementById('passBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pointsRedEl = document.getElementById('pointsRed');
+        const pointsBlueEl = document.getElementById('pointsBlue');
+        const pointsYellowEl = document.getElementById('pointsYellow');
+
+        // Modal elements
+        const modal = document.getElementById('modal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+        let questions = [
+            { question: '¿Cuál es la función principal de un sistema operativo?', options: ['a) Editar documentos de texto.', 'b) Navegar por internet.', 'c) Gestionar y coordinar el hardware y software de una computadora.', 'd) Crear hojas de cálculo.', 'e) Proteger el equipo contra virus.', 'f) Reproducir videos y música.'], correct: 'c' },
+            { question: '¿Qué es una distribución de Linux?', options: ['a) Una aplicación para crear documentos.', 'b) Un tipo de virus informático.', 'c) Una versión del núcleo de Linux combinada con un conjunto de software y herramientas.', 'd) Un accesorio para el teclado.', 'e) Una forma de particionar un disco duro.', 'f) Un software para la programación.'], correct: 'c' },
+            { question: '¿Qué sistema operativo es de código abierto y gratuito?', options: ['a) macOS.', 'b) Windows.', 'c) Android.', 'd) iOS.', 'e) Ubuntu (una distribución de Linux).', 'f) ChromeOS (aunque es de Google, su base es de código abierto).'], correct: 'e' },
+            { question: '¿Cuál de los siguientes no es un sistema operativo?', options: ['a) Windows 10', 'b) macOS', 'c) Linux Mint', 'd) Microsoft Office', 'e) iOS', 'f) Fedora'], correct: 'd' },
+            { question: '¿Qué componente del sistema operativo se encarga de gestionar la memoria RAM?', options: ['a) El navegador web.', 'b) El editor de texto.', 'c) El gestor de archivos.', 'd) El núcleo (kernel).', 'e) El BIOS/UEFI.', 'f) El disco duro.'], correct: 'd' },
+            { question: '¿Qué es una interfaz gráfica de usuario (GUI)?', options: ['a) Un conjunto de comandos de texto.', 'b) Un sistema de archivos.', 'c) Un programa para escanear virus.', 'd) Una forma de interactuar con el sistema operativo usando iconos, ventanas y menús.', 'e) El código fuente del sistema.', 'f) La parte física de una computadora.'], correct: 'd' },
+            { question: '¿Qué es el núcleo (kernel) de un sistema operativo?', options: ['a) El programa para reproducir música.', 'b) El componente principal que controla todas las funciones del sistema.', 'c) Una herramienta para crear presentaciones.', 'd) El software que se usa para editar fotos.', 'e) Un archivo que almacena la configuración de la red.', 'f) La parte del sistema que se encarga de la interfaz gráfica.'], correct: 'b' },
+            { question: '¿Cuál es una de las principales diferencias entre Windows y Linux Mint?', options: ['a) Windows tiene una interfaz gráfica y Linux Mint no.', 'b) Linux Mint es de código abierto y Windows es de código cerrado.', 'c) Windows es inmune a los virus y Linux Mint no.', 'd) Linux Mint solo se usa en servidores.', 'e) Windows es completamente gratuito.', 'f) Linux Mint no puede conectarse a internet.'], correct: 'b' },
+            { question: '¿Qué sistema operativo es principalmente conocido por su uso en servidores y supercomputadoras?', options: ['a) macOS.', 'b) Windows 11.', 'c) Linux.', 'd) Android.', 'e) iOS.', 'f) Google ChromeOS.'], correct: 'c' },
+            { question: '¿Cuál de los siguientes sistemas operativos es desarrollado por Apple?', options: ['a) Windows', 'b) Linux', 'c) Android', 'd) ChromeOS', 'e) macOS', 'f) Ubuntu'], correct: 'e' },
+            { question: '¿Cuál es el primer paso antes de instalar un sistema operativo como Windows o Linux Mint?', options: ['a) Conectar un monitor.', 'b) Formatear un disco duro.', 'c) Crear un medio de instalación (como un USB booteable).', 'd) Configurar la red Wi-Fi.', 'e) Descargar un programa de edición de video.', 'f) Instalar un antivirus.'], correct: 'c' },
+            { question: '¿Qué significa "bootear" una computadora desde un USB?', options: ['a) Reiniciar la computadora.', 'b) Arrancar el sistema desde una memoria USB en lugar del disco duro.', 'c) Copiar archivos a la memoria USB.', 'd) Instalar un antivirus en la USB.', 'e) Borrar todos los archivos de la computadora.', 'f) Conectar la USB al puerto.'], correct: 'b' },
+            { question: 'Durante la instalación de Windows, ¿qué opción se utiliza para borrar completamente el disco y comenzar de cero?', options: ['a) Actualización.', 'b) Personalizada (avanzada).', 'c) Reparación del sistema.', 'd) Restaurar.', 'e) Clonar disco.', 'f) Modo seguro.'], correct: 'b' },
+            { question: '¿Qué se necesita para instalar Linux Mint en una computadora que ya tiene Windows?', options: ['a) Se necesita borrar Windows, no se pueden usar juntos.', 'b) Instalar una máquina virtual.', 'c) Crear una partición en el disco duro para Linux Mint.', 'd) No se necesita hacer nada especial.', 'e) Usar la opción de "reparar" Windows.', 'f) Es necesario comprar una licencia adicional.'], correct: 'c' },
+            { question: 'Para una instalación dual-boot de Windows y Linux, ¿qué es lo primero que se debe hacer?', options: ['a) Instalar Linux Mint.', 'b) Instalar primero Windows.', 'c) Instalar ambos al mismo tiempo.', 'd) Usar una máquina virtual.', 'e) Formatear el disco sin particionar.', 'f) Desinstalar todos los programas.'], correct: 'b' },
+            { question: 'Si la instalación de Windows falla por un problema de partición, ¿qué herramienta de la instalación podría ayudar a solucionarlo?', options: ['a) El navegador web.', 'b) La consola de comandos.', 'c) La herramienta de particiones.', 'd) El editor de texto.', 'e) El reproductor de medios.', 'f) El gestor de tareas.'], correct: 'c' },
+            { question: '¿Qué es un sistema de archivos?', options: ['a) Un programa para abrir documentos.', 'b) Un programa para escanear virus.', 'c) La estructura que un sistema operativo utiliza para organizar los archivos y datos en un disco.', 'd) Una forma de conectar dos computadoras.', 'e) El hardware que almacena los datos.', 'f) La interfaz gráfica de usuario.'], correct: 'c' },
+            { question: '¿Cuál es el sistema de archivos más común utilizado por Windows para las unidades internas?', options: ['a) EXT4.', 'b) APFS.', 'c) NTFS.', 'd) HFS+.', 'e) FAT32.', 'f) XFS.'], correct: 'c' },
+            { question: '¿Cuál de los siguientes sistemas de archivos es el más utilizado en las distribuciones de Linux, como Linux Mint?', options: ['a) NTFS.', 'b) FAT32.', 'c) EXT4.', 'd) HFS+.', 'e) APFS.', 'f) ReFS.'], correct: 'c' },
+            { question: '¿Qué es una partición de disco?', options: ['a) Un tipo de archivo.', 'b) La división lógica de un disco duro en secciones separadas.', 'c) Un programa para borrar archivos.', 'd) Un accesorio para la computadora.', 'e) El sistema de archivos.', 'f) Una forma de comprimir datos.'], correct: 'b' },
+            { question: '¿Qué es una tabla de particiones?', options: ['a) Un mapa o índice que describe cómo se dividen las particiones en un disco duro.', 'b) Un programa para crear documentos.', 'c) Un archivo de imagen.', 'd) Una tabla de datos de una base de datos.', 'e) Un programa para editar videos.', 'f) El sistema de archivos de una partición.'], correct: 'a' },
+            { question: '¿Cuál es la tabla de particiones más moderna y recomendada para discos duros grandes?', options: ['a) MBR (Master Boot Record).', 'b) GPT (GUID Partition Table).', 'c) FAT.', 'd) NTFS.', 'e) EXT4.', 'f) HFS+.'], correct: 'b' },
+            { question: '¿Qué limitación importante tiene la tabla de particiones MBR?', options: ['a) Solo puede tener una partición.', 'b) Solo es compatible con Windows.', 'c) Solo puede gestionar discos de hasta 2TB.', 'd) No es compatible con discos SSD.', 'e) Solo se usa en computadoras muy antiguas.', 'f) No es compatible con sistemas de archivos modernos.'], correct: 'c' },
+            { question: '¿Qué sistema de archivos es compatible con Windows, macOS y Linux, lo que lo hace ideal para unidades USB?', options: ['a) NTFS.', 'b) EXT4.', 'c) HFS+.', 'd) FAT32.', 'e) APFS.', 'f) BTRFS.'], correct: 'd' },
+            { question: 'En Linux, ¿qué partición es fundamental para el sistema, ya que contiene todos los archivos del sistema operativo?', options: ['a) La partición de intercambio (Swap).', 'b) La partición raíz (/)', 'c) La partición de inicio (/boot).', 'd) La partición de usuarios (/home).', 'e) La partición de recuperación.', 'f) La partición de datos.'], correct: 'b' },
+            { question: '¿Qué tipo de partición se utiliza en Linux para la memoria virtual (cuando la RAM se queda sin espacio)?', options: ['a) Partición de usuario.', 'b) Partición de inicio.', 'c) Partición de datos.', 'd) Partición de intercambio (Swap).', 'e) Partición de sistema.', 'f) Partición de recuperación.'], correct: 'd' },
+            { question: '¿Qué es la BIOS (Basic Input/Output System)?', options: ['a) Un sistema operativo moderno.', 'b) Un programa para navegar por internet.', 'c) Un firmware que inicializa el hardware de la computadora al encenderla.', 'd) El disco duro.', 'e) La memoria RAM.', 'f) El procesador.'], correct: 'c' },
+            { question: '¿Qué significa UEFI (Unified Extensible Firmware Interface)?', options: ['a) Una partición de disco.', 'b) Un sistema de archivos.', 'c) Un firmware moderno que reemplazó a la BIOS.', 'd) Un tipo de máquina virtual.', 'e) Un programa de ofimática.', 'f) Un gestor de arranque de Windows.'], correct: 'c' },
+            { question: '¿Cuál de las siguientes es una ventaja de UEFI sobre BIOS?', options: ['a) Es más lento al arrancar.', 'b) Es compatible con discos duros más pequeños.', 'c) Soporta particiones MBR únicamente.', 'd) Soporta discos duros de más de 2TB y ofrece un arranque más rápido.', 'e) Tiene una interfaz de solo texto.', 'f) Es menos seguro.'], correct: 'd' },
+            { question: '¿Qué característica de seguridad de UEFI previene que programas maliciosos se ejecuten durante el arranque?', options: ['a) Fast Boot.', 'b) Legacy Mode.', 'c) Secure Boot.', 'd) Overclocking.', 'e) USB Support.', 'f) RAID.'], correct: 'c' },
+            { question: '¿En qué modo se debe configurar la BIOS/UEFI para usar la tabla de particiones MBR?', options: ['a) Legacy Mode (o CSM).', 'b) Secure Boot.', 'c) Fast Boot.', 'd) RAID.', 'e) AHCI.', 'f) UEFI.'], correct: 'a' },
+            { question: 'Si no puedes arrancar desde un USB en una computadora moderna, ¿cuál podría ser el problema en la configuración de UEFI?', options: ['a) El disco duro está formateado en NTFS.', 'b) Secure Boot está activado y bloquea el arranque desde el USB.', 'c) La batería del CMOS está gastada.', 'd) El teclado no está conectado.', 'e) La memoria RAM es insuficiente.', 'f) La hora del sistema está mal.'], correct: 'b' },
+            { question: '¿Qué es el "menú de booteo" o "boot menu"?', options: ['a) Un menú dentro del sistema operativo.', 'b) Una pantalla que aparece al encender la computadora para seleccionar el dispositivo de arranque.', 'c) Un menú para elegir el idioma.', 'd) Un menú para instalar programas.', 'e) El menú de opciones del sistema operativo.', 'f) El menú de apagado del sistema.'], correct: 'b' },
+            { question: '¿Cuál es el propósito del modo "Legacy" en UEFI?', options: ['a) Aumentar la velocidad del procesador.', 'b) Permitir la compatibilidad con sistemas operativos y hardware antiguos basados en BIOS.', 'c) Bloquear la instalación de Linux.', 'd) Cargar el sistema operativo desde internet.', 'e) Mejorar la seguridad del sistema.', 'f) Configurar la red.'], correct: 'b' },
+            { question: '¿Cuál de los siguientes es un gestor de arranque que se usa para iniciar múltiples sistemas operativos?', options: ['a) Microsoft Edge.', 'b) Grub2.', 'c) Notepad.', 'd) Paint.', 'e) Google Chrome.', 'f) Adobe Reader.'], correct: 'b' },
+            { question: '¿Qué es una máquina virtual?', options: ['a) Una computadora real y física.', 'b) Un programa para editar videos.', 'c) Un software que emula una computadora completa dentro de un sistema operativo anfitrión.', 'd) Un disco duro virtual.', 'e) Un tipo de sistema de archivos.', 'f) Un virus.'], correct: 'c' },
+            { question: '¿Qué es un "host" (anfitrión) en el contexto de una máquina virtual?', options: ['a) La máquina virtual que se ejecuta.', 'b) El sistema operativo que se ejecuta dentro de la máquina virtual.', 'c) El sistema operativo físico sobre el que se ejecuta la máquina virtual.', 'd) El disco duro de la máquina virtual.', 'e) El procesador de la máquina virtual.', 'f) El monitor de la máquina virtual.'], correct: 'c' },
+            { question: '¿Qué es un "guest" (invitado) en el contexto de una máquina virtual?', options: ['a) El sistema operativo físico principal.', 'b) El sistema operativo que se instala y se ejecuta dentro de la máquina virtual.', 'c) El hardware físico del equipo.', 'd) Un programa de la computadora principal.', 'e) Un archivo de configuración.', 'f) El software del disco duro.'], correct: 'b' },
+            { question: '¿Cuál de los siguientes es un software de virtualización popular para uso personal?', options: ['a) Microsoft Word.', 'b) VirtualBox.', 'c) Adobe Photoshop.', 'd) Google Chrome.', 'e) Microsoft Excel.', 'f) LibreOffice.'], correct: 'b' },
+            { question: '¿Cuál es una de las principales ventajas de usar máquinas virtuales?', options: ['a) No necesitan una computadora física para funcionar.', 'b) Permiten probar sistemas operativos o software en un entorno seguro sin afectar al sistema principal.', 'c) Aumentan la velocidad de la computadora.', 'd) Ocupan menos espacio que una instalación normal.', 'e) Son más seguras que los sistemas operativos reales.', 'f) Permiten usar hardware viejo en computadoras nuevas.'], correct: 'b' },
+            { question: '¿Qué recurso físico de la computadora "host" (anfitrión) es compartido con la máquina virtual?', options: ['a) El monitor.', 'b) El teclado.', 'c) La impresora.', 'd) La memoria RAM y el espacio de disco.', 'e) El ratón.', 'f) El cable de red.'], correct: 'd' },
+            { question: '¿Qué archivo se crea al instalar un sistema operativo en una máquina virtual?', options: ['a) Un archivo de texto.', 'b) Un archivo que contiene el disco duro virtual completo de la máquina.', 'c) Un archivo de audio.', 'd) Un archivo de imagen.', 'e) Un archivo ejecutable del sistema operativo.', 'f) Un archivo comprimido.'], correct: 'b' },
+            { question: '¿Para qué se utilizan las máquinas virtuales en el desarrollo de software?', options: ['a) Para probar un programa en diferentes sistemas operativos sin necesidad de tener múltiples computadoras.', 'b) Para crear sitios web.', 'c) Para diseñar videojuegos.', 'd) Para editar videos.', 'e) Para escribir código.', 'f) Para hacer copias de seguridad.'], correct: 'a' },
+            { question: '¿Es posible que una máquina virtual se infecte con un virus sin que el sistema operativo anfitrión se infecte?', options: ['a) No, siempre se infectan ambos.', 'b) No, el antivirus del anfitrión lo protege.', 'c) Sí, porque la máquina virtual está aislada y funciona como una computadora separada.', 'd) Sí, pero solo si es un virus muy potente.', 'e) No, es imposible que se infecten.', 'f) Sí, pero solo si no tiene una conexión a internet.'], correct: 'c' },
+            { question: '¿Qué se necesita para que la virtualización funcione correctamente en la computadora?', options: ['a) Un procesador con soporte para virtualización.', 'b) Mucho espacio en el disco duro.', 'c) Una impresora.', 'd) Una conexión a internet de alta velocidad.', 'e) Un monitor 4K.', 'f) Un teclado especial.'], correct: 'a' },
+            { question: '¿Qué es un gestor de arranque (bootloader)?', options: ['a) Un programa que se ejecuta después de que el sistema operativo ha cargado.', 'b) El software que carga el sistema operativo después de que la BIOS/UEFI ha inicializado el hardware.', 'c) El disco duro.', 'd) La memoria RAM.', 'e) El programa que se usa para instalar programas.', 'f) El gestor de archivos.'], correct: 'b' },
+            { question: '¿Qué es el "dual-booting"?', options: ['a) Instalar dos sistemas operativos al mismo tiempo en el mismo disco duro, para poder elegir cuál iniciar al encender el equipo.', 'b) Tener dos discos duros en una computadora.', 'c) Usar dos monitores.', 'd) Instalar una máquina virtual.', 'e) Ejecutar dos programas a la vez.', 'f) Conectar dos teclados.'], correct: 'a' },
+            { question: '¿Qué partición es necesaria para la instalación de cualquier sistema operativo en un disco con formato GPT y arranque UEFI?', options: ['a) La partición de intercambio (Swap).', 'b) La partición de usuario.', 'c) La partición del sistema EFI (ESP).', 'd) La partición de datos.', 'e) La partición de recuperación.', 'f) La partición raíz.'], correct: 'c' },
+            { question: '¿Cuál es el propósito de la "pantalla de la muerte azul" (BSOD) en Windows?', options: ['a) Es un juego de computadora.', 'b) Indica un error crítico del sistema que requiere que la computadora se reinicie.', 'c) Es un fondo de pantalla especial.', 'd) Es una pantalla de bienvenida.', 'e) Indica que se ha completado la instalación.', 'f) Es una herramienta de diagnóstico.'], correct: 'b' },
+            { question: '¿Qué significa "formatear" un disco duro?', options: ['a) Copiar archivos a un disco.', 'b) Crear una partición en el disco.', 'c) Preparar el disco para que un sistema de archivos pueda ser escrito, borrando todos los datos.', 'd) Borrar solo algunos archivos.', 'e) Unir dos particiones.', 'f) Desfragmentar el disco.'], correct: 'c' },
+            { question: '¿Qué herramienta de Linux es similar al "Administrador de Tareas" de Windows para gestionar los procesos?', options: ['a) Microsoft Word.', 'b) Nautilus.', 'c) Visor del sistema (System Monitor).', 'd) GIMP.', 'e) LibreOffice.', 'f) VLC.'], correct: 'c' },
+            { question: '¿Qué es un "punto de montaje" en el contexto de un sistema de archivos en Linux?', options: ['a) Una partición de disco.', 'b) Una carpeta a través de la cual se accede a un dispositivo de almacenamiento.', 'c) Un programa para montar una imagen ISO.', 'd) Un comando para instalar software.', 'e) Una herramienta para particionar discos.', 'f) Un tipo de sistema de archivos.'], correct: 'b' },
+            { question: '¿Qué diferencia hay entre la partición "raíz" (/) y la partición "home" (/home) en Linux?', options: ['a) La partición raíz contiene solo los archivos de los usuarios.', 'b) La partición home contiene el sistema operativo y la raíz los archivos de los usuarios.', 'c) La partición raíz contiene los archivos del sistema operativo, y la partición home contiene los archivos personales de los usuarios.', 'd) La partición home solo se usa para copias de seguridad.', 'e) La partición raíz se usa para fotos y videos.', 'f) La partición home no existe en Linux.'], correct: 'c' },
+            { question: '¿Qué es un driver (controlador)?', options: ['a) Un tipo de cable para conectar dispositivos.', 'b) Un programa que permite al sistema operativo comunicarse con un hardware específico.', 'c) Un programa para editar videos.', 'd) Un accesorio para el procesador.', 'e) Un tipo de archivo de texto.', 'f) Un disco duro externo.'], correct: 'b' },
+        ];
+
+        let scores = { red: 0, blue: 0, yellow: 0 };
+        let currentQuestions = [...questions];
+        let currentQuestion = null;
+        let timerInterval = null;
+        let timeLeft = 60;
+        let activeTeam = null;
+        let questionAnswered = false;
+        let gameStarted = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function showMessage(message, color = 'blue') {
+            modalMessage.textContent = message;
+            modal.style.display = 'block';
+            modalCloseBtn.style.backgroundColor = color;
+        }
+
+        modalCloseBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        function updateScores() {
+            pointsRedEl.textContent = scores.red;
+            pointsBlueEl.textContent = scores.blue;
+            pointsYellowEl.textContent = scores.yellow;
+        }
+
+        function resetState() {
+            clearInterval(timerInterval);
+            timeLeft = 60;
+            timerEl.textContent = timeLeft;
+            activeTeam = null;
+            questionAnswered = false;
+            
+            questionEl.textContent = '';
+            optionsContainer.innerHTML = '';
+            
+            teamBtns.forEach(btn => btn.disabled = false);
+            passBtn.disabled = true;
+            nextBtn.classList.add('hidden');
+        }
+
+        function startGame() {
+            if (gameStarted) return;
+            gameStarted = true;
+            startContainer.classList.add('hidden');
+            teamButtons.classList.remove('hidden');
+            questionContainer.classList.remove('hidden');
+            controlsContainer.classList.remove('hidden');
+            timerContainer.classList.remove('hidden');
+            shuffleArray(currentQuestions);
+            nextQuestion();
+        }
+        
+        function nextQuestion() {
+            if (currentQuestions.length === 0) {
+                endGame();
+                return;
+            }
+
+            resetState();
+            currentQuestion = currentQuestions.pop();
+            questionEl.textContent = currentQuestion.question;
+            
+            teamBtns.forEach(btn => btn.classList.remove('active'));
+            teamBtns.forEach(btn => btn.disabled = false);
+            passBtn.disabled = false;
+            optionsContainer.innerHTML = '';
+            
+            // Start the timer as soon as the question appears.
+            startTimer();
+
+            // This ensures options are shown immediately with the question
+            currentQuestion.options.forEach((option, index) => {
+                const optionEl = document.createElement('button');
+                optionEl.textContent = option;
+                optionEl.className = 'option-btn bg-white border-2 border-gray-300 rounded-lg p-4 text-left transition-all duration-200 transform hover:scale-105 hover:bg-gray-100 shadow-md';
+                optionEl.onclick = (e) => handleAnswer(option.charAt(0), e);
+                optionsContainer.appendChild(optionEl);
+            });
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+        
+        function handleTimeOut() {
+            if (!currentQuestion) return;
+            if (!questionAnswered) {
+                showMessage(`¡Tiempo agotado! La respuesta correcta era: ${currentQuestion.options.find(o => o.startsWith(currentQuestion.correct))}`, 'red');
+            }
+            passBtn.disabled = true;
+            nextBtn.classList.remove('hidden');
+        }
+
+        function handleTeamTurn(team) {
+            if (activeTeam) return;
+            
+            activeTeam = team;
+            
+            teamBtns.forEach(btn => {
+                btn.disabled = true;
+                if(btn.id.includes(team)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            passBtn.disabled = false;
+        }
+
+        function handleAnswer(selectedOption, event) {
+            if (!currentQuestion) return;
+            clearInterval(timerInterval);
+            questionAnswered = true;
+            
+            const selectedBtn = event.target;
+            const correctBtn = Array.from(optionsContainer.children).find(btn => btn.textContent.charAt(0) === currentQuestion.correct);
+
+            if (selectedOption === currentQuestion.correct) {
+                scores[activeTeam]++;
+                updateScores();
+                showMessage(`¡Correcto! El equipo ${activeTeam} gana un punto.`, 'green');
+                
+                selectedBtn.classList.add('correct-answer');
+                optionsContainer.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                
+                nextBtn.classList.remove('hidden');
+
+            } else {
+                scores[activeTeam]--;
+                updateScores();
+                showMessage(`¡Incorrecto! El equipo ${activeTeam} pierde un punto. La respuesta correcta era: ${currentQuestion.options.find(o => o.startsWith(currentQuestion.correct))}`, 'red');
+                
+                selectedBtn.classList.add('incorrect-answer');
+                if (correctBtn) {
+                  correctBtn.classList.add('correct-answer');
+                }
+                
+                optionsContainer.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+                
+                activeTeam = null;
+                teamBtns.forEach(btn => btn.classList.remove('active'));
+                teamBtns.forEach(btn => btn.disabled = false);
+                passBtn.disabled = false;
+                
+                if (timeLeft > 0) {
+                    startTimer();
+                } else {
+                    nextBtn.classList.remove('hidden');
+                }
+            }
+        }
+        
+        function endGame() {
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const winnerPoints = scores[winner];
+            showMessage(`¡Fin del juego! El ganador es el equipo ${winner} con ${winnerPoints} puntos. ¡Felicidades!`);
+            resetGame();
+        }
+
+        function resetGame() {
+            scores = { red: 0, blue: 0, yellow: 0 };
+            updateScores();
+            currentQuestions = [...questions];
+            shuffleArray(currentQuestions);
+            resetState();
+            gameStarted = false;
+            startContainer.classList.remove('hidden');
+            teamButtons.classList.add('hidden');
+            questionContainer.classList.add('hidden');
+            controlsContainer.classList.add('hidden');
+            timerContainer.classList.add('hidden');
+        }
+        
+        passBtn.onclick = () => {
+            if (!currentQuestion) {
+              showMessage('No hay una pregunta activa para pasar.');
+              return;
+            }
+            clearInterval(timerInterval);
+            showMessage(`Se ha pasado la pregunta. La respuesta correcta era: ${currentQuestion.options.find(o => o.startsWith(currentQuestion.correct))}`, 'orange');
+            nextBtn.classList.remove('hidden');
+            passBtn.disabled = true;
+        }
+
+        nextBtn.onclick = () => {
+            nextQuestion();
+        }
+
+        teamBtns.forEach(btn => {
+            btn.onclick = () => {
+                const team = btn.id.replace('Btn', '').toLowerCase();
+                handleTeamTurn(team);
+            }
+        });
+        
+        startBtn.onclick = startGame;
+
+        // Initial setup
+        resetGame();
+
+    </script>
+</body>
+</html>
