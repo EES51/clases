@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Impostor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 640px;
+            width: 100%;
+            background-color: #2d3748;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: #4a5568;
+            border-radius: 1rem;
+            padding: 2rem;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-3xl font-bold mb-6">El Juego del Impostor</h1>
+
+    <!-- Pantalla de inicio - Cantidad de jugadores -->
+    <div id="start-screen">
+        <div class="card space-y-4">
+            <p class="text-lg">¿Cuántos jugadores hay en la partida?</p>
+            <input id="player-count" type="number" min="3" value="4" class="w-24 text-center bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="setPlayerCount()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
+                Siguiente
+            </button>
+        </div>
+    </div>
+    
+    <!-- Pantalla intermedia 1 - Cantidad de impostores -->
+    <div id="impostor-count-screen" class="hidden">
+        <div class="card space-y-4">
+            <p class="text-lg">¿Cuántos impostores habrá en la partida?</p>
+            <p id="impostor-min-max" class="text-sm text-gray-400"></p>
+            <input id="impostor-count" type="number" min="1" value="1" class="w-24 text-center bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="selectThemeScreen()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
+                Siguiente
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla intermedia 2 - Selección de temática -->
+    <div id="theme-selection-screen" class="hidden">
+        <div class="card space-y-4">
+            <p class="text-lg">Selecciona una temática para la partida:</p>
+            <select id="theme-selector" class="w-48 bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </select>
+            <button onclick="startGame()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
+                Empezar Partida
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla de revelación -->
+    <div id="reveal-screen" class="hidden">
+        <div class="card space-y-6">
+            <p id="current-player" class="text-xl font-semibold text-gray-300">Jugador #</p>
+            <button onclick="showSecret()" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white text-lg font-bold rounded-full transition-colors duration-200">
+                Toca aquí para ver tu rol
+            </button>
+            <div id="secret-info" class="hidden">
+                <p id="player-role" class="text-2xl font-bold mb-2"></p>
+                <p id="secret-word" class="text-4xl font-extrabold text-yellow-300"></p>
+                <p id="confirmation-message" class="mt-4 text-sm text-gray-400">
+                    Recuerda tu rol y pasa el dispositivo al siguiente jugador.
+                </p>
+            </div>
+            <button id="next-player-btn" onclick="nextPlayer()" class="hidden mt-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors duration-200">
+                Siguiente Jugador
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla final -->
+    <div id="end-screen" class="hidden">
+        <div class="card space-y-4">
+            <h2 class="text-2xl font-bold">¡Fin de la Revelación!</h2>
+            <p class="text-lg">Ya todos los jugadores han visto su palabra.</p>
+            <p class="text-lg">Ahora pueden comenzar la discusión.</p>
+            <button onclick="window.location.reload()" class="mt-4 px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition-colors duration-200">
+                Reiniciar Partida
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let players = [];
+    let currentPlayerIndex = 0;
+    let playerCount = 0;
+    let impostorCount = 0;
+    let selectedTheme = '';
+
+    const themes = {
+        "Abstracto": [
+            { normal: "Nostalgia", impostor: "Recuerdo" },
+            { normal: "Justicia", impostor: "Equidad" },
+            { normal: "Libertad", impostor: "Independencia" },
+            { normal: "Abstracción", impostor: "Concepto" },
+            { normal: "Melancolía", impostor: "Tristeza" },
+            { normal: "Humildad", impostor: "Sencillez" }
+        ],
+        "Cotidiano": [
+            { normal: "Teléfono", impostor: "Celular" },
+            { normal: "Reloj", impostor: "Hora" },
+            { normal: "Coche", impostor: "Automóvil" },
+            { normal: "Gafas", impostor: "Lentes" },
+            { normal: "Plátano", impostor: "Banana" },
+            { normal: "Zapatos", impostor: "Calzado" }
+        ],
+        "Naturaleza": [
+            { normal: "Montaña", impostor: "Volcán" },
+            { normal: "Planta", impostor: "Vegetal" },
+            { normal: "Océano", impostor: "Mar" },
+            { normal: "Tierra", impostor: "Suelo" },
+            { normal: "Estrella", impostor: "Cuerpo celeste" },
+            { normal: "Río", impostor: "Arroyo" }
+        ],
+        "Animales": [
+            { normal: "León", impostor: "Tigre" },
+            { normal: "Perro", impostor: "Cachorro" },
+            { normal: "Elefante", impostor: "Paquidermo" },
+            { normal: "Serpiente", impostor: "Reptil" },
+            { normal: "Pez", impostor: "Salmón" }
+        ],
+        "Comida": [
+            { normal: "Pizza", impostor: "Tarta" },
+            { normal: "Pasta", impostor: "Spaguetti" },
+            { normal: "Chocolate", impostor: "Cacao" },
+            { normal: "Manzana", impostor: "Fruta" },
+            { normal: "Pan", impostor: "Harina" }
+        ],
+        "Países o Ciudades": [
+            { normal: "París", impostor: "Roma" },
+            { normal: "Japón", impostor: "China" },
+            { normal: "Nueva York", impostor: "Londres" },
+            { normal: "Egipto", impostor: "Grecia" },
+            { normal: "Canadá", impostor: "Estados Unidos" },
+            { normal: "Australia", impostor: "Nueva Zelanda" }
+        ],
+        "Películas y Personajes": [
+            { normal: "Buzz Lightyear", impostor: "Woody" },
+            { normal: "Sully", impostor: "Mike Wazowski" },
+            { normal: "Buscando a Nemo", impostor: "Buscando a Dory" },
+            { normal: "El Rey León", impostor: "Simba" },
+            { normal: "Frozen", impostor: "Anna" },
+            { normal: "Shrek", impostor: "Asno" },
+            { normal: "Cómo entrenar a tu dragón", impostor: "Chimuelo" },
+            { normal: "Coco", impostor: "Miguel" },
+            { normal: "Intensa-Mente", impostor: "Alegría" }
+        ]
+    };
+
+    let remainingWordPairs = [];
+
+    // Función para mezclar un array de forma aleatoria.
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function setPlayerCount() {
+        playerCount = parseInt(document.getElementById('player-count').value);
+        if (playerCount < 3) {
+            const startScreen = document.getElementById('start-screen');
+            let errorMessage = startScreen.querySelector('.error-message');
+            if (!errorMessage) {
+                errorMessage = document.createElement('p');
+                errorMessage.className = 'text-red-400 mt-2 error-message';
+                startScreen.querySelector('.card').appendChild(errorMessage);
+            }
+            errorMessage.textContent = 'Debe haber al menos 3 jugadores.';
+            return;
+        }
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('impostor-count-screen').classList.remove('hidden');
+        document.getElementById('impostor-min-max').textContent = `(Mínimo 1, Máximo ${playerCount - 1})`;
+        document.getElementById('impostor-count').setAttribute('max', playerCount - 1);
+    }
+
+    function selectThemeScreen() {
+        impostorCount = parseInt(document.getElementById('impostor-count').value);
+        if (impostorCount <= 0 || impostorCount >= playerCount) {
+            const impostorScreen = document.getElementById('impostor-count-screen');
+            let errorMessage = impostorScreen.querySelector('.error-message');
+            if (!errorMessage) {
+                errorMessage = document.createElement('p');
+                errorMessage.className = 'text-red-400 mt-2 error-message';
+                impostorScreen.querySelector('.card').appendChild(errorMessage);
+            }
+            errorMessage.textContent = 'La cantidad de impostores no es válida.';
+            return;
+        }
+        
+        document.getElementById('impostor-count-screen').classList.add('hidden');
+        document.getElementById('theme-selection-screen').classList.remove('hidden');
+
+        // Llenar el selector de temas
+        const themeSelector = document.getElementById('theme-selector');
+        themeSelector.innerHTML = '';
+        for (const themeName in themes) {
+            const option = document.createElement('option');
+            option.value = themeName;
+            option.textContent = themeName;
+            themeSelector.appendChild(option);
+        }
+    }
+
+    function startGame() {
+        selectedTheme = document.getElementById('theme-selector').value;
+
+        // Si se han usado todas las palabras de esta temática, se barajan de nuevo
+        if (remainingWordPairs.length === 0) {
+            remainingWordPairs = shuffleArray([...themes[selectedTheme]]);
+        }
+
+        players = Array.from({ length: playerCount }, (_, i) => ({ id: `Jugador ${i + 1}`, role: 'Jugador', word: '' }));
+
+        const playerIndices = [...Array(playerCount).keys()];
+        const shuffledIndices = playerIndices.sort(() => 0.5 - Math.random());
+        const impostorIndices = shuffledIndices.slice(0, impostorCount);
+
+        impostorIndices.forEach(index => {
+            players[index].role = 'Impostor';
+        });
+
+        const randomWords = remainingWordPairs.shift();
+        
+        players.forEach(player => {
+            player.word = player.role === 'Impostor' ? "" : randomWords.normal;
+        });
+
+        document.getElementById('theme-selection-screen').classList.add('hidden');
+        document.getElementById('reveal-screen').classList.remove('hidden');
+        updateScreen();
+    }
+
+    function updateScreen() {
+        if (currentPlayerIndex < players.length) {
+            document.getElementById('current-player').textContent = `Jugador ${currentPlayerIndex + 1}`;
+            document.getElementById('secret-info').classList.add('hidden');
+            document.getElementById('next-player-btn').classList.add('hidden');
+            document.querySelector('#reveal-screen button').classList.remove('hidden');
+        } else {
+            document.getElementById('reveal-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+        }
+    }
+
+    function showSecret() {
+        const currentPlayer = players[currentPlayerIndex];
+        const roleElement = document.getElementById('player-role');
+        const wordElement = document.getElementById('secret-word');
+        const confirmationMessage = document.getElementById('confirmation-message');
+
+        roleElement.textContent = currentPlayer.role;
+
+        // Estilos para el rol
+        roleElement.className = 'text-2xl font-bold mb-2';
+        if (currentPlayer.role === 'Impostor') {
+            roleElement.classList.add('text-red-400');
+            wordElement.classList.add('hidden');
+            confirmationMessage.classList.add('hidden');
+        } else {
+            roleElement.classList.add('text-green-400');
+            wordElement.textContent = currentPlayer.word;
+            wordElement.classList.remove('hidden');
+            confirmationMessage.classList.remove('hidden');
+        }
+
+        document.getElementById('secret-info').classList.remove('hidden');
+        document.querySelector('#reveal-screen button').classList.add('hidden');
+        document.getElementById('next-player-btn').classList.remove('hidden');
+    }
+
+    function nextPlayer() {
+        currentPlayerIndex++;
+        updateScreen();
+    }
+</script>
+</body>
+</html>
