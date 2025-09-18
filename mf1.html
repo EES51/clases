@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apuntes de Literatura: El Martín Fierro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #1e293b;
+        }
+        .container {
+            max-width: 900px;
+            padding: 2rem;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70%;
+            height: 4px;
+            background-color: #3b82f6;
+            border-radius: 9999px;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="container mx-auto bg-white rounded-xl shadow-2xl overflow-hidden p-8 md:p-12">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Apuntes de Literatura: El Martín Fierro</h1>
+            <p class="text-lg text-gray-600">Cantos I - XVI</p>
+        </header>
+
+        <section class="space-y-8">
+
+            <!-- Introducción -->
+            <div class="bg-blue-50 p-6 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-bold text-blue-700 section-title">Canto de la Desgracia</h2>
+                <div class="mt-4 text-gray-700 space-y-4">
+                    <p>El Martín Fierro, de José Hernández, es la voz de un gaucho que narra su propia historia, marcada por las injusticias que sufre y su lucha por sobrevivir. Dividido en dos partes (la ida y la vuelta), es un canto de protesta y un símbolo de la identidad nacional argentina.</p>
+                    <p>En los primeros 16 cantos, conocemos a Martín Fierro en su momento más bajo. Su vida pacífica se desmorona por la intervención del Estado, que lo recluta a la fuerza para servir en la frontera. Este es el punto de partida de un viaje de dolor y resistencia.</p>
+                </div>
+            </div>
+
+            <!-- Menú Desplegable -->
+            <div class="space-y-4">
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-lg">
+                    <button class="accordion-header w-full flex justify-between items-center text-left font-semibold text-blue-600 focus:outline-none" onclick="toggleAccordion(this)">
+                        <span><span class="text-2xl mr-2">🌾</span>La Vida del Gaucho antes de la Tragedia</span>
+                        <span class="transform transition-transform duration-300 rotate-0">▼</span>
+                    </button>
+                    <div class="accordion-content mt-4 border-l-4 border-blue-400 pl-4">
+                        <p class="mb-2 text-gray-700">Para entender el dolor de Fierro, primero debemos conocer su vida feliz. El gaucho de esta época no era el vagabundo que se pintaba en los libros, sino un hombre de campo, libre, que vivía en armonía con la naturaleza y su familia. Su existencia giraba en torno a la pulpería y el trabajo en el campo.</p>
+                        <ul class="list-none space-y-2 mt-4 text-gray-800">
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">✅</span><span class="font-bold">Paz y armonía:</span> Tenía su rancho, su mujer, sus hijos y su ganado. Vivía del fruto de su trabajo.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">✅</span><span class="font-bold">Comunidad y tradiciones:</span> Se reunía en las pulperías para beber, bailar y, sobre todo, para el canto improvisado.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">✅</span><span class="font-bold">Independencia:</span> Valoraba su libertad por encima de todo, la cual le arrebatan.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-lg">
+                    <button class="accordion-header w-full flex justify-between items-center text-left font-semibold text-blue-600 focus:outline-none" onclick="toggleAccordion(this)">
+                        <span><span class="text-2xl mr-2">⚔️</span>El Destino en la Frontera</span>
+                        <span class="transform transition-transform duration-300 rotate-0">▼</span>
+                    </button>
+                    <div class="accordion-content mt-4 border-l-4 border-blue-400 pl-4">
+                        <p class="mb-2 text-gray-700">La felicidad de Fierro se interrumpe abruptamente cuando lo reclutan para servir en la frontera. El gobierno, supuestamente para defender el territorio de los indios, envía a los gauchos a vivir en condiciones inhumanas, sin paga, sin comida y sin esperanza.</p>
+                        <ul class="list-none space-y-2 mt-4 text-gray-800">
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">La injusticia del servicio:</span> Fierro y sus compañeros son explotados. Los superiores se quedan con sus salarios.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">El peligro constante:</span> Sufren maltrato y el miedo constante de los ataques de los indios.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">La pérdida de la identidad:</span> Se aleja de todo lo que conoce, perdiendo su identidad como hombre libre.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-lg">
+                    <button class="accordion-header w-full flex justify-between items-center text-left font-semibold text-blue-600 focus:outline-none" onclick="toggleAccordion(this)">
+                        <span><span class="text-2xl mr-2">🏃‍♂️</span>La Rebeldía y el Trágico Camino de un Fugitivo</span>
+                        <span class="transform transition-transform duration-300 rotate-0">▼</span>
+                    </button>
+                    <div class="accordion-content mt-4 border-l-4 border-blue-400 pl-4">
+                        <p class="mb-2 text-gray-700">Después de años de sufrimiento, Fierro decide desertar y se convierte en un prófugo. Su vida es una lucha constante por la supervivencia. Se convierte en un gaucho matrero (un forajido), lo que lo lleva a enfrentamientos, como el duelo donde mata a un hombre en una pulpería.</p>
+                        <ul class="list-none space-y-2 mt-4 text-gray-800">
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">La soledad:</span> Se convierte en un ser solitario que vive a la intemperie.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">La desesperanza:</span> La pérdida de su familia lo sume en una profunda tristeza.</li>
+                            <li class="flex items-start"><span class="text-blue-500 text-xl mr-2">⚫</span><span class="font-bold">El encuentro con Cruz:</span> En el canto X, se encuentra con un gaucho de la policía que, al ver su valentía, se identifica con él y lo ayuda.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuadros comparativos -->
+            <div class="space-y-8">
+                <div class="p-6 bg-yellow-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold text-yellow-700 mb-4 section-title">Cuadro Comparativo: La vida de antes vs. la de después</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 rounded-lg overflow-hidden border border-gray-200">
+                            <thead class="text-xs text-white uppercase bg-blue-600">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3"></th>
+                                    <th scope="col" class="px-6 py-3">Antes de la frontera</th>
+                                    <th scope="col" class="px-6 py-3">Después de la frontera</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Hogar</th>
+                                    <td class="px-6 py-4">Rancho con la familia</td>
+                                    <td class="px-6 py-4">A la intemperie</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Trabajo</th>
+                                    <td class="px-6 py-4">Labores del campo</td>
+                                    <td class="px-6 py-4">Servicio militar forzado</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Compañía</th>
+                                    <td class="px-6 py-4">Su familia y amigos</td>
+                                    <td class="px-6 py-4">Soldados y el peligro</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Comida</th>
+                                    <td class="px-6 py-4">Carne y productos de la tierra</td>
+                                    <td class="px-6 py-4">Escasa y de mala calidad</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Libertad</th>
+                                    <td class="px-6 py-4">Plena y valorada</td>
+                                    <td class="px-6 py-4">Totalmente perdida</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-pink-50 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-bold text-pink-700 mb-4 section-title">Cuadro Comparativo: Duelo con el Moreno</h3>
+                    <p class="text-gray-700 mb-4">El duelo de cantores es una confrontación ideológica entre dos hombres que han sufrido la misma injusticia.</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 rounded-lg overflow-hidden border border-gray-200">
+                            <thead class="text-xs text-white uppercase bg-pink-600">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3"></th>
+                                    <th scope="col" class="px-6 py-3">Martín Fierro</th>
+                                    <th scope="col" class="px-6 py-3">El Moreno</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Tema Central</th>
+                                    <td class="px-6 py-4">La injusticia y la persecución</td>
+                                    <td class="px-6 py-4">El destino trágico y la moral</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Postura</th>
+                                    <td class="px-6 py-4">Justifica su vida por el dolor que ha sufrido</td>
+                                    <td class="px-6 py-4">Lo condena por sus acciones</td>
+                                </tr>
+                                <tr class="bg-white hover:bg-gray-50">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Visión</th>
+                                    <td class="px-6 py-4">Es víctima de la sociedad y del gobierno</td>
+                                    <td class="px-6 py-4">Ve a Fierro como un criminal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Resumen de Cantos -->
+            <div class="p-6 bg-yellow-50 rounded-lg shadow-sm">
+                <h3 class="text-xl font-bold text-yellow-700 mb-4 section-title">Tabla de Resumen de Cantos</h3>
+                <p class="text-gray-700 mb-4">Aquí puedes encontrar los puntos clave de cada canto de la primera parte del poema.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500 rounded-lg overflow-hidden border border-gray-200">
+                        <thead class="text-xs text-white uppercase bg-blue-600">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Canto(s)</th>
+                                <th scope="col" class="px-6 py-3">Resumen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Cantos I - III</th>
+                                <td class="px-6 py-4">Se presenta a Martín Fierro y su vida feliz en el campo. Es reclutado a la fuerza para servir en la frontera, separándose de su familia y su hogar.</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Cantos IV - VI</th>
+                                <td class="px-6 py-4">Fierro describe la vida miserable en el fortín: falta de paga, hambre, castigos y explotación. Estas injusticias lo llevan a la desesperación.</td>
+                            </tr>
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Canto VII</th>
+                                <td class="px-6 py-4">Harto de la situación, Fierro deserta y, en un duelo en la pulpería, mata a un gaucho. Este acto lo convierte en un prófugo o "matrero".</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-now-wrap">Cantos VIII - IX</th>
+                                <td class="px-6 py-4">Solo y perseguido por la policía, Fierro se esconde en la Pampa. Su vida se vuelve una lucha constante por la supervivencia.</td>
+                            </tr>
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-now-wrap">Canto X</th>
+                                <td class="px-6 py-4">En un enfrentamiento con un grupo de policías, el sargento Cruz se identifica con su sufrimiento y, en un acto de solidaridad, se une a Fierro.</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-now-wrap">Cantos XI - XV</th>
+                                <td class="px-6 py-4">Cruz narra su propia historia de vida, también marcada por la injusticia. Finalmente, Fierro se enfrenta en un duelo de cantores con el Moreno, el hermano del gaucho que mató.</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-gray-50">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-now-wrap">Canto XVI</th>
+                                <td class="px-6 py-4">Cansados de ser perseguidos, Fierro y Cruz toman la decisión de abandonar la sociedad "civilizada" y buscar refugio con los indios, escapando de su destino.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Conclusión -->
+            <div class="p-6 bg-blue-50 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-bold text-blue-700 section-title">El Vuelo del Gaucho</h2>
+                <div class="mt-4 text-gray-700 space-y-4">
+                    <p>En el canto XVI, Fierro y Cruz, cansados de la vida de prófugos, deciden abandonar la sociedad de los blancos y buscar refugio entre los indios. Esta decisión es un acto de rebeldía final y una renuncia a una civilización que los ha traicionado.</p>
+                    <p>El poema, hasta este punto, es una dura crítica a la sociedad de la época que, en nombre del progreso, oprimía y destruía la vida del gaucho. La historia de Fierro no es solo la de un hombre, sino la de todo un pueblo.</p>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- Scripts -->
+        <script>
+            // Función para alternar el menú desplegable (acordeón)
+            function toggleAccordion(button) {
+                const item = button.closest('.accordion-item');
+                const content = item.querySelector('.accordion-content');
+                const icon = button.querySelector('span:last-child');
+                
+                // Cierra todos los demás acordeones
+                document.querySelectorAll('.accordion-item.active').forEach(activeItem => {
+                    if (activeItem !== item) {
+                        activeItem.classList.remove('active');
+                        activeItem.querySelector('.accordion-content').style.maxHeight = '0';
+                        activeItem.querySelector('.accordion-header span:last-child').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Alterna el acordeón actual
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
