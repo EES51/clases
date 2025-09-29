@@ -74,7 +74,7 @@
     <div id="theme-selection-screen" class="hidden">
         <div class="card space-y-4">
             <p class="text-lg">Selecciona una temática para la partida:</p>
-            <select id="theme-selector" class="w-48 bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="theme-selector" class="w-auto max-w-full bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </select>
             <button onclick="startGame()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
                 Empezar Partida
@@ -124,65 +124,144 @@
 
     const themes = {
         "Abstracto": [
-            { normal: "Nostalgia", impostor: "Recuerdo" },
-            { normal: "Justicia", impostor: "Equidad" },
-            { normal: "Libertad", impostor: "Independencia" },
-            { normal: "Abstracción", impostor: "Concepto" },
-            { normal: "Melancolía", impostor: "Tristeza" },
-            { normal: "Humildad", impostor: "Sencillez" }
+            { normal: "Nostalgia", impostor: "Recuerdo" }, { normal: "Justicia", impostor: "Equidad" },
+            { normal: "Libertad", impostor: "Independencia" }, { normal: "Abstracción", impostor: "Concepto" },
+            { normal: "Melancolía", impostor: "Tristeza" }, { normal: "Humildad", impostor: "Sencillez" },
+            { normal: "Felicidad", impostor: "Gozo" }, { normal: "Miedo", impostor: "Terror" },
+            { normal: "Respeto", impostor: "Tolerancia" }, { normal: "Verdad", impostor: "Sinceridad" },
+            { normal: "Paz", impostor: "Calma" }, { normal: "Odio", impostor: "Rencor" },
+            { normal: "Coraje", impostor: "Valentía" }, { normal: "Éxito", impostor: "Triunfo" },
+            { normal: "Fracaso", impostor: "Derrota" }, { normal: "Amor", impostor: "Afecto" },
+            { normal: "Duda", impostor: "Incertidumbre" }, { normal: "Creatividad", impostor: "Imaginación" },
+            { normal: "Belleza", impostor: "Hermosura" }, { normal: "Fuerza", impostor: "Poder" },
+            { normal: "Tiempo", impostor: "Eternidad" }, { normal: "Alma", impostor: "Espíritu" },
+            { normal: "Silencio", impostor: "Quietud" }, { normal: "Destino", impostor: "Fortuna" },
+            { normal: "Virtud", impostor: "Moral" }, { normal: "Venganza", impostor: "Desquite" },
+            { normal: "Sabiduría", impostor: "Conocimiento" }, { normal: "Paciencia", impostor: "Espera" },
+            { normal: "Dolor", impostor: "Sufrimiento" }, { normal: "Sueño", impostor: "Deseo" }
         ],
         "Cotidiano": [
-            { normal: "Teléfono", impostor: "Celular" },
-            { normal: "Reloj", impostor: "Hora" },
-            { normal: "Coche", impostor: "Automóvil" },
-            { normal: "Gafas", impostor: "Lentes" },
-            { normal: "Plátano", impostor: "Banana" },
-            { normal: "Zapatos", impostor: "Calzado" }
+            { normal: "Teléfono", impostor: "Celular" }, { normal: "Reloj", impostor: "Hora" },
+            { normal: "Coche", impostor: "Automóvil" }, { normal: "Gafas", impostor: "Lentes" },
+            { normal: "Plátano", impostor: "Banana" }, { normal: "Zapatos", impostor: "Calzado" },
+            { normal: "Mochila", impostor: "Bulto" }, { normal: "Llave", impostor: "Cerradura" },
+            { normal: "Computadora", impostor: "Laptop" }, { normal: "Silla", impostor: "Asiento" },
+            { normal: "Taza", impostor: "Vaso" }, { normal: "Cama", impostor: "Lecho" },
+            { normal: "Mesa", impostor: "Escritorio" }, { normal: "Ventana", impostor: "Cristal" },
+            { normal: "Puerta", impostor: "Entrada" }, { normal: "Espejo", impostor: "Reflejo" },
+            { normal: "Cepillo", impostor: "Peine" }, { normal: "Libro", impostor: "Novela" },
+            { normal: "Dinero", impostor: "Billetes" }, { normal: "Sombrero", impostor: "Gorro" },
+            { normal: "Jabón", impostor: "Detergente" }, { normal: "Pintura", impostor: "Brocha" },
+            { normal: "Periódico", impostor: "Noticias" }, { normal: "Teclado", impostor: "Ratón" },
+            { normal: "Cuaderno", impostor: "Libreta" }, { normal: "Bolígrafo", impostor: "Pluma" },
+            { normal: "Alfombra", impostor: "Tapete" }, { normal: "Almohada", impostor: "Cojín" },
+            { normal: "Paraguas", impostor: "Sombrilla" }, { normal: "Vela", impostor: "Cirio" }
         ],
         "Naturaleza": [
-            { normal: "Montaña", impostor: "Volcán" },
-            { normal: "Planta", impostor: "Vegetal" },
-            { normal: "Océano", impostor: "Mar" },
-            { normal: "Tierra", impostor: "Suelo" },
-            { normal: "Estrella", impostor: "Cuerpo celeste" },
-            { normal: "Río", impostor: "Arroyo" }
+            { normal: "Montaña", impostor: "Volcán" }, { normal: "Planta", impostor: "Vegetal" },
+            { normal: "Océano", impostor: "Mar" }, { normal: "Tierra", impostor: "Suelo" },
+            { normal: "Estrella", impostor: "Cuerpo celeste" }, { normal: "Río", impostor: "Arroyo" },
+            { normal: "Deslave", impostor: "Avalancha" }, { normal: "Selva", impostor: "Jungla" },
+            { normal: "Nieve", impostor: "Hielo" }, { normal: "Bosque", impostor: "Arboleda" },
+            { normal: "Luna", impostor: "Satélite" }, { normal: "Sol", impostor: "Astro" },
+            { normal: "Flor", impostor: "Pétalo" }, { normal: "Roca", impostor: "Piedra" },
+            { normal: "Arena", impostor: "Playa" }, { normal: "Viento", impostor: "Brisa" },
+            { normal: "Lluvia", impostor: "Chubasco" }, { normal: "Nube", impostor: "Neblina" },
+            { normal: "Cielo", impostor: "Atmósfera" }, { normal: "Desierto", impostor: "Duna" },
+            { normal: "Cascada", impostor: "Catarata" }, { normal: "Arcoíris", impostor: "Espectro" },
+            { normal: "Volcán", impostor: "Lava" }, { normal: "Caverna", impostor: "Cueva" },
+            { normal: "Hojas", impostor: "Ramaje" }, { normal: "Trueno", impostor: "Relámpago" },
+            { normal: "Lago", impostor: "Laguna" }, { normal: "Hongo", impostor: "Seta" },
+            { normal: "Grano", impostor: "Semilla" }, { normal: "Coral", impostor: "Arrecife" }
         ],
         "Animales": [
-            { normal: "León", impostor: "Tigre" },
-            { normal: "Perro", impostor: "Cachorro" },
-            { normal: "Elefante", impostor: "Paquidermo" },
-            { normal: "Serpiente", impostor: "Reptil" },
-            { normal: "Pez", impostor: "Salmón" }
+            { normal: "León", impostor: "Tigre" }, { normal: "Perro", impostor: "Cachorro" },
+            { normal: "Elefante", impostor: "Paquidermo" }, { normal: "Serpiente", impostor: "Reptil" },
+            { normal: "Pez", impostor: "Salmón" }, { normal: "Llama", impostor: "Alpaca" },
+            { normal: "Tiburón", impostor: "Orca" }, { normal: "Gato", impostor: "Minino" },
+            { normal: "Ballena", impostor: "Delfín" }, { normal: "Caballo", impostor: "Yegua" },
+            { normal: "Pato", impostor: "Ganso" }, { normal: "Mono", impostor: "Chimpancé" },
+            { normal: "Oso", impostor: "Pardo" }, { normal: "Águila", impostor: "Halcón" },
+            { normal: "Zorro", impostor: "Lobo" }, { normal: "Rana", impostor: "Sapo" },
+            { normal: "Abeja", impostor: "Mosca" }, { normal: "Araña", impostor: "Insecto" },
+            { normal: "Jirafa", impostor: "Cebra" }, { normal: "Murciélago", impostor: "Vampiro" },
+            { normal: "Pingüino", impostor: "Ave" }, { normal: "Hipopótamo", impostor: "Rinoceronte" },
+            { normal: "Canguro", impostor: "Koala" }, { normal: "Vaca", impostor: "Toro" },
+            { normal: "Oveja", impostor: "Cordero" }, { normal: "Gallina", impostor: "Pollo" },
+            { normal: "Tucán", impostor: "Loro" }, { normal: "Conejo", impostor: "Liebre" },
+            { normal: "Cangrejo", impostor: "Langosta" }, { normal: "Puma", impostor: "Leopardo" }
         ],
         "Comida": [
-            { normal: "Pizza", impostor: "Tarta" },
-            { normal: "Pasta", impostor: "Spaguetti" },
-            { normal: "Chocolate", impostor: "Cacao" },
-            { normal: "Manzana", impostor: "Fruta" },
-            { normal: "Pan", impostor: "Harina" }
+            { normal: "Pizza", impostor: "Tarta" }, { normal: "Pasta", impostor: "Spaguetti" },
+            { normal: "Chocolate", impostor: "Cacao" }, { normal: "Manzana", impostor: "Fruta" },
+            { normal: "Pan", impostor: "Harina" }, { normal: "Huevo", impostor: "Yema" },
+            { normal: "Patatas", impostor: "Papas" }, { normal: "Vino", impostor: "Cerveza" },
+            { normal: "Queso", impostor: "Lácteo" }, { normal: "Café", impostor: "Té" },
+            { normal: "Azúcar", impostor: "Sal" }, { normal: "Miel", impostor: "Jarabe" },
+            { normal: "Arroz", impostor: "Cereal" }, { normal: "Leche", impostor: "Crema" },
+            { normal: "Naranja", impostor: "Limón" }, { normal: "Tomate", impostor: "Verdura" },
+            { normal: "Cebolla", impostor: "Ajo" }, { normal: "Pimienta", impostor: "Especias" },
+            { normal: "Galleta", impostor: "Bizcocho" }, { normal: "Helado", impostor: "Postre" },
+            { normal: "Sopa", impostor: "Caldo" }, { normal: "Hamburguesa", impostor: "Sandwich" },
+            { normal: "Tostada", impostor: "Crostini" }, { normal: "Salchicha", impostor: "Chorizo" },
+            { normal: "Fresa", impostor: "Baya" }, { normal: "Zumo", impostor: "Jugo" },
+            { normal: "Mantequilla", impostor: "Margarina" }, { normal: "Aguacate", impostor: "Palta" },
+            { normal: "Pescado", impostor: "Marisco" }, { normal: "Yogur", impostor: "Kéfir" }
         ],
         "Países o Ciudades": [
-            { normal: "París", impostor: "Roma" },
-            { normal: "Japón", impostor: "China" },
-            { normal: "Nueva York", impostor: "Londres" },
-            { normal: "Egipto", impostor: "Grecia" },
-            { normal: "Canadá", impostor: "Estados Unidos" },
-            { normal: "Australia", impostor: "Nueva Zelanda" }
+            { normal: "París", impostor: "Roma" }, { normal: "Japón", impostor: "China" },
+            { normal: "Nueva York", impostor: "Londres" }, { normal: "Egipto", impostor: "Grecia" },
+            { normal: "Canadá", impostor: "Estados Unidos" }, { normal: "Australia", impostor: "Nueva Zelanda" },
+            { normal: "Berlín", impostor: "Múnich" }, { normal: "Shanghai", impostor: "Pekín" },
+            { normal: "Río de Janeiro", impostor: "Sao Paulo" }, { normal: "Madrid", impostor: "Lisboa" },
+            { normal: "México", impostor: "Colombia" }, { normal: "Buenos Aires", impostor: "Santiago" },
+            { normal: "Tokio", impostor: "Kioto" }, { normal: "India", impostor: "Pakistán" },
+            { normal: "Moscú", impostor: "San Petersburgo" }, { normal: "Dubái", impostor: "Abu Dabi" },
+            { normal: "Sudáfrica", impostor: "Kenia" }, { normal: "Italia", impostor: "España" },
+            { normal: "Francia", impostor: "Alemania" }, { normal: "Seúl", impostor: "Busan" },
+            { normal: "Sídney", impostor: "Melbourne" }, { normal: "Viena", impostor: "Praga" },
+            { normal: "Perú", impostor: "Ecuador" }, { normal: "Ámsterdam", impostor: "Bruselas" },
+            { normal: "Chicago", impostor: "Miami" }, { normal: "Estambul", impostor: "Ankara" },
+            { normal: "Malasia", impostor: "Indonesia" }, { normal: "Bangkok", impostor: "Hanói" },
+            { normal: "Suecia", impostor: "Noruega" }, { normal: "El Cairo", impostor: "Giza" }
+        ],
+        "Equipos y Leyendas del Fútbol": [
+            { normal: "Messi", impostor: "Ronaldo" }, { normal: "Barcelona", impostor: "Real Madrid" },
+            { normal: "Pelé", impostor: "Maradona" }, { normal: "Bayern M.", impostor: "Dortmund" },
+            { normal: "Boca J.", impostor: "River P." }, { normal: "Chivas", impostor: "América" },
+            { normal: "Zidane", impostor: "Platini" }, { normal: "Liverpool", impostor: "Manchester Utd." },
+            { normal: "Cruyff", impostor: "Di Stéfano" }, { normal: "PSG", impostor: "Manchester City" },
+            { normal: "Buffon", impostor: "Casillas" }, { normal: "Juventus", impostor: "Inter de Milán" },
+            { normal: "Beckenbauer", impostor: "Kaiser" }, { normal: "Milan", impostor: "Napoli" },
+            { normal: "Ronaldinho", impostor: "Kaká" }, { normal: "Arsenal", impostor: "Chelsea" },
+            { normal: "Van Basten", impostor: "Gullit" }, { normal: "Atlético M.", impostor: "Valencia" },
+            { normal: "Mbappé", impostor: "Haaland" }, { normal: "Ajax", impostor: "Feyenoord" },
+            { normal: "Neuer", impostor: "Kahn" }, { normal: "Oporto", impostor: "Benfica" },
+            { normal: "R. Carlos", impostor: "Maldini" }, { normal: "Flamengo", impostor: "Corinthians" },
+            { normal: "Garrincha", impostor: "Vavá" }, { normal: "Independiente", impostor: "Racing" },
+            { normal: "Lewandowski", impostor: "Benzema" }, { normal: "Celtic", impostor: "Rangers" },
+            { normal: "Puskás", impostor: "Kocsis" }, { normal: "Tottenham", impostor: "Leicester" }
         ],
         "Películas y Personajes": [
-            { normal: "Buzz Lightyear", impostor: "Woody" },
-            { normal: "Sully", impostor: "Mike Wazowski" },
-            { normal: "Buscando a Nemo", impostor: "Buscando a Dory" },
-            { normal: "El Rey León", impostor: "Simba" },
-            { normal: "Frozen", impostor: "Anna" },
-            { normal: "Shrek", impostor: "Asno" },
-            { normal: "Cómo entrenar a tu dragón", impostor: "Chimuelo" },
-            { normal: "Coco", impostor: "Miguel" },
-            { normal: "Intensa-Mente", impostor: "Alegría" }
+            { normal: "Buzz Lightyear", impostor: "Woody" }, { normal: "Sully", impostor: "Mike Wazowski" },
+            { normal: "Buscando a Nemo", impostor: "Buscando a Dory" }, { normal: "El Rey León", impostor: "Simba" },
+            { normal: "Frozen", impostor: "Anna" }, { normal: "Shrek", impostor: "Asno" },
+            { normal: "Cómo entrenar a tu dragón", impostor: "Chimuelo" }, { normal: "Coco", impostor: "Miguel" },
+            { normal: "Intensa-Mente", impostor: "Alegría" }, { normal: "Toy Story", impostor: "Pixar" },
+            { normal: "La Sirenita", impostor: "Ariel" }, { normal: "Ratatouille", impostor: "Remy" },
+            { normal: "Monsters Inc.", impostor: "Boo" }, { normal: "Aladdín", impostor: "Genio" },
+            { normal: "Mulán", impostor: "Mushu" }, { normal: "Moana", impostor: "Maui" },
+            { normal: "Enredados", impostor: "Rapunzel" }, { normal: "Zootopia", impostor: "Judy Hopps" },
+            { normal: "Up", impostor: "Carl Fredricksen" }, { normal: "Wall-E", impostor: "Eva" },
+            { normal: "Los Increíbles", impostor: "Elastigirl" }, { normal: "Pinocho", impostor: "Pepito Grillo" },
+            { normal: "La Bella y la Bestia", impostor: "Bestia" }, { normal: "Kung Fu Panda", impostor: "Po" },
+            { normal: "Madagascar", impostor: "Alex" }, { normal: "Valiente", impostor: "Mérida" },
+            { normal: "Lilo & Stitch", impostor: "Stitch" }, { normal: "Hércules", impostor: "Hades" },
+            { normal: "Pocahontas", impostor: "Meeko" }, { normal: "Tiana y el Sapo", impostor: "Louis" }
         ]
     };
 
-    let remainingWordPairs = [];
+    let remainingWordPairs = {};
 
     // Función para mezclar un array de forma aleatoria.
     function shuffleArray(array) {
@@ -238,6 +317,10 @@
             option.value = themeName;
             option.textContent = themeName;
             themeSelector.appendChild(option);
+            // Inicializar las palabras restantes para cada tema
+            if (!remainingWordPairs[themeName]) {
+                 remainingWordPairs[themeName] = shuffleArray([...themes[themeName]]);
+            }
         }
     }
 
@@ -245,8 +328,8 @@
         selectedTheme = document.getElementById('theme-selector').value;
 
         // Si se han usado todas las palabras de esta temática, se barajan de nuevo
-        if (remainingWordPairs.length === 0) {
-            remainingWordPairs = shuffleArray([...themes[selectedTheme]]);
+        if (remainingWordPairs[selectedTheme].length === 0) {
+            remainingWordPairs[selectedTheme] = shuffleArray([...themes[selectedTheme]]);
         }
 
         players = Array.from({ length: playerCount }, (_, i) => ({ id: `Jugador ${i + 1}`, role: 'Jugador', word: '' }));
@@ -259,7 +342,7 @@
             players[index].role = 'Impostor';
         });
 
-        const randomWords = remainingWordPairs.shift();
+        const randomWords = remainingWordPairs[selectedTheme].shift();
         
         players.forEach(player => {
             player.word = player.role === 'Impostor' ? "" : randomWords.normal;
