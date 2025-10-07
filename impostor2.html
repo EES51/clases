@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Impostor</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Fondo oscuro tipo espacio */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+        }
+        .card {
+            background-color: #161b22; /* Color de tarjeta oscuro */
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #30363d;
+        }
+        .btn-primary {
+            background-color: #38a169; /* Verde (color del crewmate) */
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            box-shadow: 0 4px #2f855a;
+        }
+        .btn-primary:hover {
+            background-color: #48bb78;
+        }
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px #2f855a;
+        }
+        .btn-secondary {
+            background-color: #e53e3e; /* Rojo (color del impostor) */
+            box-shadow: 0 4px #c53030;
+        }
+        .btn-secondary:hover {
+            background-color: #f56565;
+        }
+        .btn-secondary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px #c53030;
+        }
+        .input-style {
+            background-color: #2d3748;
+            border: 1px solid #4a5568;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .shake {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Pantalla 1: Inicio y Conteo de Jugadores -->
+    <div id="start-screen" class="screen">
+        <div class="card">
+            <h1 class="text-4xl font-black mb-6 text-green-400">EL IMPOSTOR</h1>
+            <p class="text-lg mb-8 text-gray-300">¿Cuántos tripulantes y cuántos impostores habrá en esta misión?</p>
+            
+            <label for="player-count" class="block text-sm font-bold mb-2">Número de Jugadores:</label>
+            <input type="number" id="player-count" min="3" value="5" class="input-style w-full mb-6 text-center text-xl">
+            
+            <button onclick="setPlayerCount()" class="btn-primary w-full py-3 rounded-xl text-xl font-bold">
+                Siguiente
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla 2: Conteo de Impostores -->
+    <div id="impostor-count-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Definir Impostores</h2>
+            <p class="text-lg mb-8 text-gray-300">¿Cuántos Impostores habrá?</p>
+            
+            <label for="impostor-count" class="block text-sm font-bold mb-2">Cantidad de Impostores:</label>
+            <input type="number" id="impostor-count" min="1" max="4" value="1" class="input-style w-full mb-2 text-center text-xl">
+            <p id="impostor-min-max" class="text-xs text-gray-400 mb-6">(Mínimo 1, Máximo X)</p>
+
+            <button onclick="selectThemeScreen()" class="btn-primary w-full py-3 rounded-xl text-xl font-bold">
+                Seleccionar Temática
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla 3: Selección de Temática -->
+    <div id="theme-selection-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Escoge un Tema</h2>
+            <p class="text-lg mb-8 text-gray-300">Elige la categoría de palabras para esta ronda:</p>
+
+            <select id="theme-selector" class="input-style w-full mb-8 text-xl">
+                <!-- Opciones se llenarán con JS -->
+            </select>
+
+            <button onclick="startGame()" class="btn-primary w-full py-3 rounded-xl text-xl font-bold">
+                ¡Empezar Misión!
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla 4: Revelación de Rol -->
+    <div id="reveal-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 text-yellow-300">¡Tu turno!</h2>
+            <p id="current-player" class="text-5xl font-extrabold mb-8"></p>
+
+            <button onclick="showSecret()" class="btn-primary w-full py-3 rounded-xl text-xl font-bold mb-6">
+                Toca aquí para ver tu rol
+            </button>
+
+            <div id="secret-info" class="hidden border border-gray-700 p-6 rounded-xl bg-gray-800">
+                <p class="text-sm text-gray-400 mb-2">Tu Rol es:</p>
+                <p id="player-role" class="text-2xl font-bold mb-4 text-green-400">--</p>
+                
+                <!-- ID añadido a la etiqueta de label de palabra. Solo visible para tripulantes. -->
+                <p id="secret-word-label" class="text-sm text-gray-400 mb-2">Tu Palabra Secreta es:</p>
+                <p id="secret-word" class="text-3xl font-black text-yellow-300">--</p>
+            </div>
+            
+            <p id="confirmation-message" class="text-sm text-gray-400 mt-4 hidden">Memoriza tu palabra y tu rol. Presiona Siguiente para pasarle el dispositivo al próximo jugador.</p>
+
+            <button id="next-player-btn" onclick="nextPlayer()" class="btn-secondary w-full py-3 rounded-xl text-xl font-bold mt-6 hidden">
+                Siguiente Jugador
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla 5: Fin de la Revelación / Inicio del Debate -->
+    <div id="end-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-4xl font-black mb-4 text-red-400">¡MISIÓN INICIADA!</h2>
+            <p class="text-xl mb-6 text-gray-300">Todos los jugadores han visto su rol y palabra.</p>
+            <p class="text-lg font-bold mb-8">Comienza el debate. ¡Cuidado con el Impostor!</p>
+            
+            <button onclick="location.reload()" class="btn-primary w-full py-3 rounded-xl text-xl font-bold">
+                Jugar de Nuevo
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let players = [];
+    let currentPlayerIndex = 0;
+    let playerCount = 0;
+    let impostorCount = 0;
+    let selectedTheme = '';
+
+    const themes = {
+        // --- TEMÁTICAS EXISTENTES (EXTENDIDAS) ---
+        "Abstracto": [
+            { normal: "Nostalgia", impostor: "Recuerdo" }, { normal: "Justicia", impostor: "Equidad" },
+            { normal: "Libertad", impostor: "Independencia" }, { normal: "Abstracción", impostor: "Concepto" },
+            { normal: "Melancolía", impostor: "Tristeza" }, { normal: "Humildad", impostor: "Sencillez" },
+            { normal: "Felicidad", impostor: "Gozo" }, { normal: "Miedo", impostor: "Terror" },
+            { normal: "Respeto", impostor: "Tolerancia" }, { normal: "Verdad", impostor: "Sinceridad" },
+            { normal: "Paz", impostor: "Calma" }, { normal: "Odio", impostor: "Rencor" },
+            { normal: "Coraje", impostor: "Valentía" }, { normal: "Éxito", impostor: "Triunfo" },
+            { normal: "Fracaso", impostor: "Derrota" }, { normal: "Amor", impostor: "Afecto" },
+            { normal: "Duda", impostor: "Incertidumbre" }, { normal: "Creatividad", impostor: "Imaginación" },
+            { normal: "Belleza", impostor: "Hermosura" }, { normal: "Fuerza", impostor: "Poder" },
+            { normal: "Tiempo", impostor: "Eternidad" }, { normal: "Alma", impostor: "Espíritu" },
+            { normal: "Silencio", impostor: "Quietud" }, { normal: "Destino", impostor: "Fortuna" },
+            { normal: "Virtud", impostor: "Moral" }, { normal: "Venganza", impostor: "Desquite" },
+            { normal: "Sabiduría", impostor: "Conocimiento" }, { normal: "Paciencia", impostor: "Espera" },
+            { normal: "Dolor", impostor: "Sufrimiento" }, { normal: "Sueño", impostor: "Deseo" },
+            { normal: "Risa", impostor: "Alegría" }, { normal: "Generosidad", impostor: "Bondad" },
+            { normal: "Esperanza", impostor: "Fe" }, { normal: "Ira", impostor: "Rabia" }
+        ],
+        "Cotidiano": [
+            { normal: "Teléfono", impostor: "Celular" }, { normal: "Reloj", impostor: "Hora" },
+            { normal: "Coche", impostor: "Automóvil" }, { normal: "Gafas", impostor: "Lentes" },
+            { normal: "Plátano", impostor: "Banana" }, { normal: "Zapatos", impostor: "Calzado" },
+            { normal: "Mochila", impostor: "Bulto" }, { normal: "Llave", impostor: "Cerradura" },
+            { normal: "Computadora", impostor: "Laptop" }, { normal: "Silla", impostor: "Asiento" },
+            { normal: "Taza", impostor: "Vaso" }, { normal: "Cama", impostor: "Lecho" },
+            { normal: "Mesa", impostor: "Escritorio" }, { normal: "Ventana", impostor: "Cristal" },
+            { normal: "Puerta", impostor: "Entrada" }, { normal: "Espejo", impostor: "Reflejo" },
+            { normal: "Cepillo", impostor: "Peine" }, { normal: "Libro", impostor: "Novela" },
+            { normal: "Dinero", impostor: "Billetes" }, { normal: "Sombrero", impostor: "Gorro" },
+            { normal: "Jabón", impostor: "Detergente" }, { normal: "Pintura", impostor: "Brocha" },
+            { normal: "Periódico", impostor: "Noticias" }, { normal: "Teclado", impostor: "Ratón" },
+            { normal: "Cuaderno", impostor: "Libreta" }, { normal: "Bolígrafo", impostor: "Pluma" },
+            { normal: "Alfombra", impostor: "Tapete" }, { normal: "Almohada", impostor: "Cojín" },
+            { normal: "Paraguas", impostor: "Sombrilla" }, { normal: "Vela", impostor: "Cirio" },
+            { normal: "Toalla", impostor: "Secador" }, { normal: "Nevera", impostor: "Refrigerador" },
+            { normal: "Bombilla", impostor: "Foco" }, { normal: "Piso", impostor: "Suelo" }
+        ],
+        "Naturaleza": [
+            { normal: "Montaña", impostor: "Volcán" }, { normal: "Planta", impostor: "Vegetal" },
+            { normal: "Océano", impostor: "Mar" }, { normal: "Tierra", impostor: "Suelo" },
+            { normal: "Estrella", impostor: "Cuerpo celeste" }, { normal: "Río", impostor: "Arroyo" },
+            { normal: "Deslave", impostor: "Avalancha" }, { normal: "Selva", impostor: "Jungla" },
+            { normal: "Nieve", impostor: "Hielo" }, { normal: "Bosque", impostor: "Arboleda" },
+            { normal: "Luna", impostor: "Satélite" }, { normal: "Sol", impostor: "Astro" },
+            { normal: "Flor", impostor: "Pétalo" }, { normal: "Roca", impostor: "Piedra" },
+            { normal: "Arena", impostor: "Playa" }, { normal: "Viento", impostor: "Brisa" },
+            { normal: "Lluvia", impostor: "Chubasco" }, { normal: "Nube", impostor: "Neblina" },
+            { normal: "Cielo", impostor: "Atmósfera" }, { normal: "Desierto", impostor: "Duna" },
+            { normal: "Cascada", impostor: "Catarata" }, { normal: "Arcoíris", impostor: "Espectro" },
+            { normal: "Volcán", impostor: "Lava" }, { normal: "Caverna", impostor: "Cueva" },
+            { normal: "Hojas", impostor: "Ramaje" }, { normal: "Trueno", impostor: "Relámpago" },
+            { normal: "Lago", impostor: "Laguna" }, { normal: "Hongo", impostor: "Seta" },
+            { normal: "Grano", impostor: "Semilla" }, { normal: "Coral", impostor: "Arrecife" },
+            { normal: "Valle", impostor: "Cañón" }, { normal: "Cráter", impostor: "Hoyo" },
+            { normal: "Glaciar", impostor: "Iceberg" }, { normal: "Amanecer", impostor: "Aurora" }
+        ],
+        "Animales": [
+            { normal: "León", impostor: "Tigre" }, { normal: "Perro", impostor: "Cachorro" },
+            { normal: "Elefante", impostor: "Paquidermo" }, { normal: "Serpiente", impostor: "Reptil" },
+            { normal: "Pez", impostor: "Salmón" }, { normal: "Llama", impostor: "Alpaca" },
+            { normal: "Tiburón", impostor: "Orca" }, { normal: "Gato", impostor: "Minino" },
+            { normal: "Ballena", impostor: "Delfín" }, { normal: "Caballo", impostor: "Yegua" },
+            { normal: "Pato", impostor: "Ganso" }, { normal: "Mono", impostor: "Chimpancé" },
+            { normal: "Oso", impostor: "Pardo" }, { normal: "Águila", impostor: "Halcón" },
+            { normal: "Zorro", impostor: "Lobo" }, { normal: "Rana", impostor: "Sapo" },
+            { normal: "Abeja", impostor: "Mosca" }, { normal: "Araña", impostor: "Insecto" },
+            { normal: "Jirafa", impostor: "Cebra" }, { normal: "Murciélago", impostor: "Vampiro" },
+            { normal: "Pingüino", impostor: "Ave" }, { normal: "Hipopótamo", impostor: "Rinoceronte" },
+            { normal: "Canguro", impostor: "Koala" }, { normal: "Vaca", impostor: "Toro" },
+            { normal: "Oveja", impostor: "Cordero" }, { normal: "Gallina", impostor: "Pollo" },
+            { normal: "Tucán", impostor: "Loro" }, { normal: "Conejo", impostor: "Liebre" },
+            { normal: "Cangrejo", impostor: "Langosta" }, { normal: "Puma", impostor: "Leopardo" },
+            { normal: "Dinosaurio", impostor: "T-Rex" }, { normal: "Camello", impostor: "Dromedario" },
+            { normal: "Búho", impostor: "Lechuza" }, { normal: "Tortuga", impostor: "Galápago" }
+        ],
+        "Comida": [
+            { normal: "Pizza", impostor: "Tarta" }, { normal: "Pasta", impostor: "Spaguetti" },
+            { normal: "Chocolate", impostor: "Cacao" }, { normal: "Manzana", impostor: "Fruta" },
+            { normal: "Pan", impostor: "Harina" }, { normal: "Huevo", impostor: "Yema" },
+            { normal: "Patatas", impostor: "Papas" }, { normal: "Vino", impostor: "Cerveza" },
+            { normal: "Queso", impostor: "Lácteo" }, { normal: "Café", impostor: "Té" },
+            { normal: "Azúcar", impostor: "Sal" }, { normal: "Miel", impostor: "Jarabe" },
+            { normal: "Arroz", impostor: "Cereal" }, { normal: "Leche", impostor: "Crema" },
+            { normal: "Naranja", impostor: "Limón" }, { normal: "Tomate", impostor: "Verdura" },
+            { normal: "Cebolla", impostor: "Ajo" }, { normal: "Pimienta", impostor: "Especias" },
+            { normal: "Galleta", impostor: "Bizcocho" }, { normal: "Helado", impostor: "Postre" },
+            { normal: "Sopa", impostor: "Caldo" }, { normal: "Hamburguesa", impostor: "Sandwich" },
+            { normal: "Tostada", impostor: "Crostini" }, { normal: "Salchicha", impostor: "Chorizo" },
+            { normal: "Fresa", impostor: "Baya" }, { normal: "Zumo", impostor: "Jugo" },
+            { normal: "Mantequilla", impostor: "Margarina" }, { normal: "Aguacate", impostor: "Palta" },
+            { normal: "Pescado", impostor: "Marisco" }, { normal: "Yogur", impostor: "Kéfir" },
+            { normal: "Taco", impostor: "Burrito" }, { normal: "Palomitas", impostor: "Maíz" },
+            { normal: "Muffin", impostor: "Cupcake" }, { normal: "Sushi", impostor: "Sashimi" }
+        ],
+        "Países o Ciudades": [
+            { normal: "París", impostor: "Roma" }, { normal: "Japón", impostor: "China" },
+            { normal: "Nueva York", impostor: "Londres" }, { normal: "Egipto", impostor: "Grecia" },
+            { normal: "Canadá", impostor: "Estados Unidos" }, { normal: "Australia", impostor: "Nueva Zelanda" },
+            { normal: "Berlín", impostor: "Múnich" }, { normal: "Shanghai", impostor: "Pekín" },
+            { normal: "Río de Janeiro", impostor: "Sao Paulo" }, { normal: "Madrid", impostor: "Lisboa" },
+            { normal: "México", impostor: "Colombia" }, { normal: "Buenos Aires", impostor: "Santiago" },
+            { normal: "Tokio", impostor: "Kioto" }, { normal: "India", impostor: "Pakistán" },
+            { normal: "Moscú", impostor: "San Petersburgo" }, { normal: "Dubái", impostor: "Abu Dabi" },
+            { normal: "Sudáfrica", impostor: "Kenia" }, { normal: "Italia", impostor: "España" },
+            { normal: "Francia", impostor: "Alemania" }, { normal: "Seúl", impostor: "Busan" },
+            { normal: "Sídney", impostor: "Melbourne" }, { normal: "Viena", impostor: "Praga" },
+            { normal: "Perú", impostor: "Ecuador" }, { normal: "Ámsterdam", impostor: "Bruselas" },
+            { normal: "Chicago", impostor: "Miami" }, { normal: "Estambul", impostor: "Ankara" },
+            { normal: "Malasia", impostor: "Indonesia" }, { normal: "Bangkok", impostor: "Hanói" },
+            { normal: "Suecia", impostor: "Noruega" }, { normal: "El Cairo", impostor: "Giza" },
+            { normal: "Rusia", impostor: "Ucrania" }, { normal: "Brasil", impostor: "Argentina" },
+            { normal: "California", impostor: "Texas" }, { normal: "Venecia", impostor: "Florencia" }
+        ],
+        "Equipos y Leyendas del Fútbol": [
+            { normal: "Messi", impostor: "Ronaldo" }, { normal: "Barcelona", impostor: "Real Madrid" },
+            { normal: "Pelé", impostor: "Maradona" }, { normal: "Bayern M.", impostor: "Dortmund" },
+            { normal: "Boca J.", impostor: "River P." }, { normal: "Chivas", impostor: "América" },
+            { normal: "Zidane", impostor: "Platini" }, { normal: "Liverpool", impostor: "Manchester Utd." },
+            { normal: "Cruyff", impostor: "Di Stéfano" }, { normal: "PSG", impostor: "Manchester City" },
+            { normal: "Buffon", impostor: "Casillas" }, { normal: "Juventus", impostor: "Inter de Milán" },
+            { normal: "Beckenbauer", impostor: "Kaiser" }, { normal: "Milan", impostor: "Napoli" },
+            { normal: "Ronaldinho", impostor: "Kaká" }, { normal: "Arsenal", impostor: "Chelsea" },
+            { normal: "Van Basten", impostor: "Gullit" }, { normal: "Atlético M.", impostor: "Valencia" },
+            { normal: "Mbappé", impostor: "Haaland" }, { normal: "Ajax", impostor: "Feyenoord" },
+            { normal: "Neuer", impostor: "Kahn" }, { normal: "Oporto", impostor: "Benfica" },
+            { normal: "R. Carlos", impostor: "Maldini" }, { normal: "Flamengo", impostor: "Corinthians" },
+            { normal: "Garrincha", impostor: "Vavá" }, { normal: "Independiente", impostor: "Racing" },
+            { normal: "Lewandowski", impostor: "Benzema" }, { normal: "Celtic", impostor: "Rangers" },
+            { normal: "Puskás", impostor: "Kocsis" }, { normal: "Tottenham", impostor: "Leicester" },
+            { normal: "Cannavaro", impostor: "Nesta" }, { normal: "D. Drogba", impostor: "Eto'o" },
+            { normal: "AS Roma", impostor: "Lazio" }, { normal: "Keylor Navas", impostor: "Ochoa" }
+        ],
+        "Películas y Personajes": [
+            { normal: "Buzz Lightyear", impostor: "Woody" }, { normal: "Sully", impostor: "Mike Wazowski" },
+            { normal: "Buscando a Nemo", impostor: "Buscando a Dory" }, { normal: "El Rey León", impostor: "Simba" },
+            { normal: "Frozen", impostor: "Anna" }, { normal: "Shrek", impostor: "Asno" },
+            { normal: "Cómo entrenar a tu dragón", impostor: "Chimuelo" }, { normal: "Coco", impostor: "Miguel" },
+            { normal: "Intensa-Mente", impostor: "Alegría" }, { normal: "Toy Story", impostor: "Pixar" },
+            { normal: "La Sirenita", impostor: "Ariel" }, { normal: "Ratatouille", impostor: "Remy" },
+            { normal: "Monsters Inc.", impostor: "Boo" }, { normal: "Aladdín", impostor: "Genio" },
+            { normal: "Mulán", impostor: "Mushu" }, { normal: "Moana", impostor: "Maui" },
+            { normal: "Enredados", impostor: "Rapunzel" }, { normal: "Zootopia", impostor: "Judy Hopps" },
+            { normal: "Up", impostor: "Carl Fredricksen" }, { normal: "Wall-E", impostor: "Eva" },
+            { normal: "Los Increíbles", impostor: "Elastigirl" }, { normal: "Pinocho", impostor: "Pepito Grillo" },
+            { normal: "La Bella y la Bestia", impostor: "Bestia" }, { normal: "Kung Fu Panda", impostor: "Po" },
+            { normal: "Madagascar", impostor: "Alex" }, { normal: "Valiente", impostor: "Mérida" },
+            { normal: "Lilo & Stitch", impostor: "Stitch" }, { normal: "Hércules", impostor: "Hades" },
+            { normal: "Pocahontas", impostor: "Meeko" }, { normal: "Tiana y el Sapo", impostor: "Louis" },
+            { normal: "Harry Potter", impostor: "Hogwarts" }, { normal: "Gandalf", impostor: "Frodo" },
+            { normal: "Darth Vader", impostor: "Skywalker" }, { normal: "Titanic", impostor: "Jack" }
+        ],
+
+        // --- TEMÁTICA VIDEOJUEGOS (ACTUALIZADA) ---
+        "Videojuegos": [
+            { normal: "Mario", impostor: "Luigi" }, { normal: "Zelda", impostor: "Link" },
+            { normal: "Minecraft", impostor: "Bloques" }, { normal: "Fortnite", impostor: "Battle Royale" },
+            { normal: "PlayStation", impostor: "Xbox" }, { normal: "Pikachu", impostor: "Charmander" },
+            { normal: "Pac-Man", impostor: "Fantasmas" }, { normal: "Halo", impostor: "Master Chief" },
+            { normal: "League of Legends", impostor: "Dota" }, { normal: "Portal", impostor: "GLaDOS" },
+            { normal: "Resident Evil", impostor: "Zombi" }, { normal: "Assassin's Creed", impostor: "Ezio" },
+            { normal: "The Sims", impostor: "Simoleon" }, { normal: "Tetris", impostor: "Bloque" },
+            { normal: "Sonic", impostor: "Tails" }, { normal: "Crash Bandicoot", impostor: "Aku Aku" },
+            { normal: "God of War", impostor: "Kratos" }, { normal: "Overwatch", impostor: "Héroe" },
+            { normal: "Call of Duty", impostor: "Battlefield" }, { normal: "Grand Theft Auto", impostor: "Vice City" },
+            { normal: "Final Fantasy", impostor: "J-RPG" }, { normal: "World of Warcraft", impostor: "Azeroth" },
+            { normal: "The Witcher", impostor: "Geralt" }, { normal: "Red Dead Redemption", impostor: "Cowboy" },
+            { normal: "Cyberpunk", impostor: "Night City" }, { normal: "Metroid", impostor: "Samus" },
+            { normal: "Uncharted", impostor: "Nathan Drake" }, { normal: "Street Fighter", impostor: "Hadoken" },
+            { normal: "Mortal Kombat", impostor: "Fatality" }, { normal: "Super Smash Bros.", impostor: "Lucha" }
+        ],
+        "Colores": [
+            { normal: "Rojo", impostor: "Bermellón" }, { normal: "Azul", impostor: "Celeste" },
+            { normal: "Amarillo", impostor: "Dorado" }, { normal: "Verde", impostor: "Esmeralda" },
+            { normal: "Negro", impostor: "Ébano" }, { normal: "Blanco", impostor: "Nieve" },
+            { normal: "Gris", impostor: "Plata" }, { normal: "Naranja", impostor: "Salmón" },
+            { normal: "Violeta", impostor: "Morado" }, { normal: "Marrón", impostor: "Café" },
+            { normal: "Rosa", impostor: "Fucsia" }, { normal: "Cian", impostor: "Turquesa" },
+            { normal: "Magenta", impostor: "Púrpura" }, { normal: "Beige", impostor: "Crema" }
+        ],
+
+        // --- TEMÁTICA MÚSICA (ACTUALIZADA) ---
+        "Música": [
+            { normal: "Guitarra", impostor: "Ukelele" }, { normal: "Piano", impostor: "Teclado" },
+            { normal: "Batería", impostor: "Percusión" }, { normal: "Pop", impostor: "Rock" },
+            { normal: "Jazz", impostor: "Blues" }, { normal: "Flauta", impostor: "Clarinete" },
+            { normal: "Violín", impostor: "Viola" }, { normal: "Concierto", impostor: "Recital" },
+            { normal: "Cantante", impostor: "Vocalista" }, { normal: "Orquesta", impostor: "Banda" },
+            { normal: "Bohemian Rhapsody", impostor: "Somebody to Love" }, // Queen
+            { normal: "Thriller", impostor: "Billie Jean" }, // Michael Jackson
+            { normal: "Stairway to Heaven", impostor: "Led Zeppelin" }, // Led Zeppelin
+            { normal: "Imagine", impostor: "Give Peace a Chance" }, // John Lennon
+            { normal: "Smells Like Teen Spirit", impostor: "Nirvana" }, // Nirvana
+            { normal: "Despacito", impostor: "Fonsi" }, // Luis Fonsi
+            { normal: "Reggaeton", impostor: "Dembow" }, // Género
+            { normal: "Salsa", impostor: "Bachata" }, // Género
+            { normal: "Ópera", impostor: "Aria" }, // Género/Forma
+            { normal: "Taylor Swift", impostor: "Cardigan" }, // Artista/Canción
+            { normal: "Bad Bunny", impostor: "Un Verano Sin Ti" }, // Artista/Álbum
+            { normal: "The Beatles", impostor: "Yesterday" } // Banda/Canción
+        ],
+
+        // --- TEMÁTICAS ADICIONALES (ELEGIDAS) ---
+        "Deportes": [
+            { normal: "Baloncesto", impostor: "Fútbol" }, { normal: "Natación", impostor: "Buceo" },
+            { normal: "Tenis", impostor: "Pádel" }, { normal: "Voleibol", impostor: "Balón" },
+            { normal: "Béisbol", impostor: "Softbol" }, { normal: "Boxeo", impostor: "Lucha" },
+            { normal: "Atletismo", impostor: "Maratón" }, { normal: "Golf", impostor: "Hoyo" },
+            { normal: "Hockey", impostor: "Puck" }, { normal: "Gimnasia", impostor: "Acrobacia" },
+            { normal: "Ciclismo", impostor: "Bicicleta" }, { normal: "Rugby", impostor: "Oval" },
+            { normal: "Esgrima", impostor: "Espada" }, { normal: "Judo", impostor: "Karate" }
+        ],
+        "Ficción Científica": [
+            { normal: "Alien", impostor: "Extraterrestre" }, { normal: "Robots", impostor: "Androides" },
+            { normal: "Viaje en el tiempo", impostor: "Crononauta" }, { normal: "Nave espacial", impostor: "Cohete" },
+            { normal: "Mutante", impostor: "X-Men" }, { normal: "Inteligencia Artificial", impostor: "Cerebro" },
+            { normal: "Láser", impostor: "Rayo" }, { normal: "Ciborg", impostor: "Biónico" },
+            { normal: "Teletransporte", impostor: "Desplazamiento" }, { normal: "Galaxia", impostor: "Universo" }
+        ]
+    };
+
+    let remainingWordPairs = {};
+
+    // Función para mezclar un array de forma aleatoria (Fisher-Yates)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function setPlayerCount() {
+        playerCount = parseInt(document.getElementById('player-count').value);
+        const startScreen = document.getElementById('start-screen');
+        let errorMessage = startScreen.querySelector('.error-message');
+
+        if (playerCount < 3) {
+            if (!errorMessage) {
+                errorMessage = document.createElement('p');
+                errorMessage.className = 'text-red-400 mt-4 error-message shake';
+                startScreen.querySelector('.card').appendChild(errorMessage);
+            }
+            errorMessage.textContent = 'Debe haber al menos 3 jugadores.';
+            return;
+        }
+
+        if (errorMessage) {
+            errorMessage.remove();
+        }
+
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('impostor-count-screen').classList.remove('hidden');
+        document.getElementById('impostor-min-max').textContent = `(Mínimo 1, Máximo ${playerCount - 1})`;
+        document.getElementById('impostor-count').setAttribute('max', playerCount - 1);
+        document.getElementById('impostor-count').value = Math.min(1, playerCount - 1); // Default a 1
+    }
+
+    function selectThemeScreen() {
+        impostorCount = parseInt(document.getElementById('impostor-count').value);
+        const impostorScreen = document.getElementById('impostor-count-screen');
+        let errorMessage = impostorScreen.querySelector('.error-message');
+
+        if (impostorCount <= 0 || impostorCount >= playerCount) {
+            if (!errorMessage) {
+                errorMessage = document.createElement('p');
+                errorMessage.className = 'text-red-400 mt-4 error-message shake';
+                impostorScreen.querySelector('.card').appendChild(errorMessage);
+            }
+            errorMessage.textContent = 'La cantidad de impostores no es válida.';
+            return;
+        }
+
+        if (errorMessage) {
+            errorMessage.remove();
+        }
+        
+        document.getElementById('impostor-count-screen').classList.add('hidden');
+        document.getElementById('theme-selection-screen').classList.remove('hidden');
+
+        // Llenar el selector de temas
+        const themeSelector = document.getElementById('theme-selector');
+        themeSelector.innerHTML = '';
+        for (const themeName in themes) {
+            const option = document.createElement('option');
+            option.value = themeName;
+            option.textContent = themeName;
+            themeSelector.appendChild(option);
+            // Inicializar las palabras restantes para cada tema
+            if (!remainingWordPairs[themeName]) {
+                 remainingWordPairs[themeName] = shuffleArray([...themes[themeName]]);
+            }
+        }
+    }
+
+    function startGame() {
+        selectedTheme = document.getElementById('theme-selector').value;
+
+        // Si se han usado todas las palabras de esta temática, se barajan de nuevo
+        if (remainingWordPairs[selectedTheme].length === 0) {
+            remainingWordPairs[selectedTheme] = shuffleArray([...themes[selectedTheme]]);
+        }
+        
+        // Toma la siguiente pareja de palabras y la remueve de las disponibles
+        const randomWords = remainingWordPairs[selectedTheme].shift();
+
+        // Inicializar a todos como Jugador con la palabra normal
+        players = Array.from({ length: playerCount }, (_, i) => ({ 
+            id: `Jugador ${i + 1}`, 
+            role: 'Tripulante', 
+            word: randomWords.normal 
+        }));
+
+        // Seleccionar impostores y asignar su rol y palabra (La palabra impostor sigue siendo necesaria para el juego, aunque no se muestre)
+        const playerIndices = [...Array(playerCount).keys()];
+        const shuffledIndices = shuffleArray(playerIndices);
+        const impostorIndices = shuffledIndices.slice(0, impostorCount);
+
+        impostorIndices.forEach(index => {
+            players[index].role = 'Impostor';
+            players[index].word = randomWords.impostor; 
+        });
+
+        document.getElementById('theme-selection-screen').classList.add('hidden');
+        document.getElementById('reveal-screen').classList.remove('hidden');
+        currentPlayerIndex = 0; 
+        updateScreen();
+    }
+
+    function updateScreen() {
+        if (currentPlayerIndex < players.length) {
+            document.getElementById('current-player').textContent = `Jugador ${currentPlayerIndex + 1}`;
+            document.getElementById('secret-info').classList.add('hidden');
+            document.querySelector('#reveal-screen button:not(#next-player-btn)').classList.remove('hidden'); // Botón 'Toca aquí para ver tu rol'
+            document.getElementById('next-player-btn').classList.add('hidden');
+            document.getElementById('confirmation-message').classList.add('hidden'); // Ocultar mensaje de confirmación para el siguiente jugador
+        } else {
+            // Todos han visto su rol
+            document.getElementById('reveal-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+        }
+    }
+
+    function showSecret() {
+        const currentPlayer = players[currentPlayerIndex];
+        const roleElement = document.getElementById('player-role');
+        const wordElement = document.getElementById('secret-word');
+        const wordLabel = document.getElementById('secret-word-label');
+        const confirmationMessage = document.getElementById('confirmation-message');
+
+        roleElement.textContent = currentPlayer.role;
+        
+        // Resetear clases y visibilidad
+        roleElement.className = 'text-2xl font-bold mb-4';
+        wordElement.className = '';
+        wordLabel.classList.remove('hidden');
+        wordElement.classList.remove('hidden');
+        
+        // Ocultar mensaje de confirmación por defecto y mostrarlo solo si es tripulante
+        confirmationMessage.classList.add('hidden');
+
+
+        if (currentPlayer.role === 'Impostor') {
+            // Estilo y ocultar elementos para el Impostor
+            roleElement.classList.add('text-red-400');
+            wordLabel.classList.add('hidden'); // Ocultar label de la palabra
+            wordElement.classList.add('hidden'); // Ocultar palabra
+            // El mensaje de confirmación se queda oculto.
+        } else {
+            // Estilo y mostrar palabra para el Tripulante
+            roleElement.classList.add('text-green-400');
+            wordElement.textContent = currentPlayer.word;
+            wordElement.classList.add('text-yellow-300', 'text-3xl', 'font-black'); // Estilo para la palabra del tripulante
+            confirmationMessage.classList.remove('hidden'); // Mostrar mensaje para tripulantes
+        }
+
+        document.getElementById('secret-info').classList.remove('hidden');
+        document.querySelector('#reveal-screen button:not(#next-player-btn)').classList.add('hidden'); // Ocultar el botón 'Toca aquí'
+        document.getElementById('next-player-btn').classList.remove('hidden');
+    }
+
+    function nextPlayer() {
+        currentPlayerIndex++;
+        updateScreen();
+    }
+</script>
+</body>
+</html>
