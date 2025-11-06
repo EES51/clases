@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdad o Reto EXTREMO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {font-family:'Inter',sans-serif;background:linear-gradient(135deg,#4F46E5,#A855F7);min-height:100vh;}
+        .card {background:#fff;box-shadow:0 15px 30px -5px rgba(0,0,0,.2);transition:.3s;}
+        .card:hover {transform:translateY(-4px);}
+        .btn-primary {transition:all .2s;box-shadow:0 4px 6px rgba(0,0,0,.1);}
+        .btn-primary:hover {transform:scale(1.03);box-shadow:0 6px 10px rgba(0,0,0,.2);}
+        #truth-btn {background:#059669;}
+        #truth-btn:hover {background:#047857;}
+        #dare-btn {background:#EF4444;}
+        #dare-btn:hover {background:#DC2626;}
+        #current-player-section {background:#DBEAFE;border:3px solid #3B82F6;}
+        #current-player-display {color:#1E40AF;}
+        #next-player-btn {background:#3B82F6;}
+        #next-player-btn:hover {background:#2563EB;}
+        #action-box {background:#1F2937;border:4px dashed #3B82F6;}
+        #action-display {min-height:12rem;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.5rem;font-weight:800;line-height:1.6;}
+        .neon-truth {color:#34D399;text-shadow:0 0 7px #10B981,0 0 10px #10B981,0 0 21px #059669,0 0 42px #047857;}
+        .neon-dare {color:#F87171;text-shadow:0 0 7px #EF4444,0 0 10px #EF4444,0 0 21px #DC2626,0 0 42px #B91C1C;}
+        @keyframes fadeInScale {0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
+        .animate-in {animation:fadeInScale .5s ease-out;}
+        .player-tag {padding:4px 12px;border-radius:9999px;font-weight:600;margin:4px;transition:all .3s;}
+        .tag-girl {background:#F9A8D4;color:#86198F;border:2px solid #D946EF;box-shadow:0 0 6px rgba(244,114,182,.7);}
+        .tag-girl:hover {background:#D946EF;color:#fff;transform:scale(1.05);}
+        .tag-boy {background:#22D3EE;color:#083344;border:2px solid #06B6D4;box-shadow:0 0 10px #67E8F9;}
+        .tag-boy:hover {background:#06B6D4;color:#fff;transform:scale(1.05);}
+        .current-player {background:#10B981!important;color:#fff!important;animation:pulse 1.5s infinite;}
+        @keyframes pulse {0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
+    </style>
+</head>
+<body class="p-4 flex items-center justify-center">
+
+<div id="start-screen" class="w-full max-w-xl rounded-xl p-8 card">
+    <h1 class="text-5xl font-extrabold text-center mb-6">¡A JUGAR! 🎉</h1>
+    <label class="block text-xl font-bold mb-2">Chicas:</label>
+    <textarea id="girls-input" rows="2" class="w-full p-4 border-2 border-purple-500 rounded-lg mb-4" placeholder="Ana, Sofía, Lucía"></textarea>
+    <label class="block text-xl font-bold mb-2">Chicos:</label>
+    <textarea id="boys-input" rows="2" class="w-full p-4 border-2 border-purple-500 rounded-lg mb-6" placeholder="Juan, Pedro, Marcos"></textarea>
+    <button onclick="startGame()" class="w-full py-4 rounded-xl text-2xl font-bold bg-purple-600 hover:bg-purple-700 text-white">¡EMPEZAR! 🚀</button>
+    <p id="error-message" class="text-red-500 text-center mt-4 hidden">Mínimo 2 jugadores</p>
+</div>
+
+<div id="game-screen" class="w-full max-w-3xl rounded-xl p-8 card hidden">
+    <h1 class="text-5xl font-extrabold text-center mb-6">Verdad o Reto 🔥</h1>
+
+    <div id="current-player-section" class="p-6 rounded-xl text-center mb-6">
+        <p class="text-lg font-bold text-blue-700">TURNO DE:</p>
+        <div id="current-player-display" class="text-4xl font-black my-4">—</div>
+        <button onclick="nextPlayer()" id="next-player-btn" class="py-3 px-6 rounded-full text-white font-bold">Girar Ruleta 🎰</button>
+    </div>
+
+    <div class="text-center mb-6">
+        <p class="font-bold">Jugadores:</p>
+        <div id="player-list-tags" class="flex flex-wrap justify-center"></div>
+    </div>
+
+    <div class="bg-gray-100 p-4 rounded-xl mb-8">
+        <select id="category" class="w-full p-4 rounded-lg text-xl font-bold">
+            <option value="friends">AMIGOS 😈</option>
+            <option value="family">FAMILIA 👨‍👩‍👧</option>
+        </select>
+    </div>
+
+    <div id="action-box" class="p-8 rounded-xl mb-8">
+        <p id="action-display" class="text-white">¡Elige categoría y gira!</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+        <button id="truth-btn" onclick="askAction('truth')" class="py-6 rounded-xl text-2xl font-bold">VERDAD 🤔</button>
+        <button id="dare-btn" onclick="askAction('dare')" class="py-6 rounded-xl text-2xl font-bold">RETO 😈</button>
+    </div>
+</div>
+
+<script>
+    let players = [], currentPlayerIndex = -1, isSpinning = false;
+
+    const gameData = {
+        friends: { truth: [], dare: [] },
+        family:  { truth: [], dare: [] }
+    };
+
+    // === TUS 100 VERDADES AMIGOS ===
+    gameData.friends.truth = `¿Con quién de aquí te acostarías YA y en qué posición, [PLAYER_NAME]?
+¿Cuál es el vídeo porno que más veces has visto? ¡Título y escena!
+¿Te han pillado masturbándote? ¡Hora, lugar y con qué!
+¿Cuál es tu fetiche más sucio que nadie sabe?
+¿Quién tiene el mejor culo/tetas de la sala, [PLAYER_NAME]?
+¿Cuántas personas has besado con lengua este mes? ¡Nombres!
+¿Sexo en baño de discoteca? ¿Con quién y cuántas veces?
+Imita tu orgasmo más escandaloso gritando el nombre de [OTHER_PLAYER]
+¿Qué famoso te follarías en el acto? ¡Describe la escena!
+¿Anal: das o recibes? ¿Primera vez cómo fue?
+¡Enséñanos la foto más hot de tu galería! (o descríbelo)
+¿Has fingido un orgasmo? ¿Con quién y cuántas veces?
+¿Qué juguete sexual usas más? ¡Marca y color!
+¿A quién le mandarías un nude AHORA mismo?
+¿Récord de corridas en 24h? ¡Sin mentir!
+¿Has probado el squirt? ¿Tú o tu pareja?
+¿Cuál es tu palabra sucia favorita en la cama?
+¿Has tenido un trío? ¡Quiénes y dónde!
+¿Sexo con ex mientras estabas con otra persona?
+¿Has grabado un vídeo sexual? ¿Lo conservas?
+¿Qué parte del cuerpo lames primero?
+¿Has usado comida en la cama? ¿Qué y cómo?
+¿Quién te ha dado el mejor oral? ¡Detalles!
+¿Has pagado o te han pagado por sexo?
+¿Has hecho un glory hole? ¿O lo harías?
+¿Cuál es tu gemido más fuerte? ¡Grábalo!
+¿Has tenido sexo en casa de tus padres con ellos dentro?
+¿Has usado esposas o ataduras? ¿Quién ató a quién?
+¿Has hecho roleplay? ¿Qué personajes?
+¿Cuál es tu límite? ¿Algo que NUNCA harías?
+¿Has tenido sexo en el coche mientras conducía alguien?
+¿Has probado el edging? ¿Cuánto aguantas?
+¿Has enviado un nude por error a un familiar?
+¿Cuál es tu fantasía más prohibida?
+¿Has usado poppers o algo para potenciar?
+¿Has hecho un gangbang o lo sueñas?
+¿Has lamido pies? ¿O te lo han lamido?
+¿Cuál es el lugar más loco donde has eyaculado?
+¿Has hecho sexting con alguien de esta sala?
+¿Has usado hielo o cera caliente?
+¿Has tenido sexo en la playa de noche?
+¿Has probado el BDSM light? ¿Látigo o palmadas?
+¿Has hecho un 69 en un ascensor?
+¿Has tenido un sugar daddy/mommy?
+¿Has usado un dildo más grande que tu brazo?
+¿Has hecho un strip-poker y perdido todo?
+¿Has tenido sexo telefónico? ¿Con quién?
+¿Has usado vibrador en público?
+¿Has hecho un train? ¿Tú o tu pareja?
+¿Has lamido ano? ¿O te lo han lamido?
+¿Has tenido sexo en una piscina?
+¿Has usado un plug anal todo el día?
+¿Has hecho un casting porno (aunque sea amateur)?
+¿Has tenido sexo con alguien 20 años mayor?
+¿Has usado aceite de masaje que calienta?
+¿Has hecho un bukakke (tú o tu pareja)?
+¿Has tenido sexo en un avión?
+¿Has usado un strapon? ¿Quién lo llevó?
+¿Has hecho un glory hole casero?
+¿Has tenido sexo en un cementerio?
+¿Has usado un consolador doble?
+¿Has hecho un orgía de más de 4 personas?
+¿Has probado el fisting?
+¿Has tenido sexo en un balcón con vecinos mirando?
+¿Has usado un vibrador con app? ¿Quién controlaba?
+¿Has hecho un squirt en la cara de alguien?
+¿Has tenido sexo en un probador?
+¿Has usado un cockring? ¿Cuánto duraste?
+¿Has hecho un roleplay profesor-alumno?
+¿Has tenido sexo en una sauna?
+¿Has usado un masturbador Fleshlight en pareja?
+¿Has hecho un challenge de no correrse 30 min?
+¿Has tenido sexo en un parque a plena luz?
+¿Has usado un butt plug con cola?
+¿Has hecho un vídeo para OnlyFans?
+¿Has tenido sexo con alguien del mismo sexo por curiosidad?
+¿Has usado un dildo que brilla en la oscuridad?
+¿Has hecho un 24h solo sexo?
+¿Has tenido sexo en una iglesia?
+¿Has usado un vibrador anal mientras penetrabas?
+¿Has hecho un trío con dos chicos del grupo?
+¿Has usado un látigo de verdad?
+¿Has tenido sexo en un concierto?
+¿Has usado un huevo vibrador en una cena?
+¿Has hecho un gangbang de 5+?
+¿Has tenido sexo en un tejado?
+¿Has usado un sybian?
+¿Has hecho un challenge de 10 orgasmos en una noche?
+¿Has tenido sexo en un tren?
+¿Has usado un cinturón como esposas? Belt-bondage!
+¿Has hecho un porno casero con música?
+¿Has tenido sexo en un McDonald’s?
+¿Has usado un plug anal con joya?
+¿Has hecho un roleplay de violación consentida?
+¿Has tenido sexo en el mar con medusas cerca?
+¿Has usado un masturbador que succiona?
+¿Has hecho un 69 en una hamaca?
+¿Has tenido sexo en un parking subterráneo?
+¿Has usado un dildo gigante en público disfrazado?
+¿Cuál es tu récord de orgasmos seguidos? ¡Números!`.trim().split('\n');
+
+    // === TUS 100 RETOS AMIGOS ===
+    gameData.friends.dare = `Manda un audio gimiendo a tu ex ahora mismo
+Besa con lengua a [OTHER_PLAYER] 15 segundos
+Quítate 2 prendas y lánzalas al centro
+Chupa el dedo de [OTHER_PLAYER] como si fuera otra cosa
+Envía un nude borroso al grupo del juego
+Simula un orgasmo gritando el nombre de [OTHER_PLAYER]
+Twerk intenso sobre [OTHER_PLAYER] 30 seg
+Lee en voz alta tu último mensaje subido de tono
+Strip-tease de 30 seg quitando solo calcetines
+Abre Tinder y lee tu bio más hot
+Deja que el grupo elija una parte de tu cuerpo para lamer
+Graba “Estoy cachondo/a” y envíaselo a un contacto random
+3 rondas: termina cada frase con un gemido
+10 sentadillas encima de [OTHER_PLAYER] mirándole a los ojos
+Lame el cuello de [OTHER_PLAYER] 10 seg
+Quítate la ropa interior y dásela a [OTHER_PLAYER]
+Baila reggaetón frotándote a [OTHER_PLAYER] 20 seg
+Manda un nude de pies al grupo
+Simula sexo oral en una botella 15 seg
+Deja que [OTHER_PLAYER] te dé 5 nalgadas fuertes
+Envía “Quiero follarte” a un contacto random
+Besa el ombligo de [OTHER_PLAYER]
+Haz 20 flexiones con [OTHER_PLAYER] encima
+Lame la oreja de [OTHER_PLAYER] susurrando guarradas
+Quítate la camiseta y úsala de antifaz 2 rondas
+Simula un orgasmo femenino (chicos) o masculino (chicas)
+Deja que te dibujen un pene en la cara con pintalabios
+Baila un striptease completo hasta quedar en ropa interior
+Manda un audio masturbándote 5 seg al grupo
+Besa los pies de [OTHER_PLAYER]
+Haz un twerk mirando al móvil grabando 20 seg
+Deja que [OTHER_PLAYER] te dé un azote con cinturón
+Envía un nude de tu culo al chat
+Lame el suelo y di “delicioso”
+Simula sexo contra la pared con [OTHER_PLAYER] 15 seg
+Quítate todo menos una prenda y baila 1 min
+Deja que el grupo elija dónde te lamen
+Manda “Me corro” a tu crush
+Besa con lengua a la persona a tu izquierda
+Haz 10 abdominales mientras [OTHER_PLAYER] te toca el culo
+Lame el brazo de [OTHER_PLAYER] desde muñeca a hombro
+Envía un nude completo (sin cara) al grupo
+Simula un gangbang con cojines 20 seg
+Deja que [OTHER_PLAYER] te dé 10 nalgadas con la mano
+Baila desnudo/a solo con calcetines 30 seg
+Manda un audio gimiendo el nombre de [OTHER_PLAYER]
+Lame el cuello de todos los jugadores
+Quítate toda la ropa y haz 10 sentadillas
+Simula sexo oral en un plátano 20 seg
+Deja que te aten las manos 2 rondas
+Envía un vídeo bailando desnudo a un ex
+Besa el culo de [OTHER_PLAYER] (sobre la ropa)
+Haz un streaptease con música del móvil
+Lame los dedos de los pies de [OTHER_PLAYER]
+Queda en ropa interior hasta el final del juego
+Simula un orgasmo múltiple gritando nombres del grupo
+Deja que [OTHER_PLAYER] te dé un masaje hot 1 min
+Envía un nude al último contacto que te escribió
+Baila reggaetón desnudo/a 1 min
+Lame la oreja de [OTHER_PLAYER] 15 seg
+Haz 20 flexiones con alguien encima
+Quítate una prenda cada vez que pierdas una ronda
+Simula sexo en misionero con una almohada 20 seg
+Deja que el grupo te dibuje tatuajes hot con rotulador
+Manda un audio diciendo “Quiero tu leche” al grupo
+Besa con lengua a la persona que elijas
+Lame el ombligo de [OTHER_PLAYER]
+Envía un vídeo masturbándote 5 seg (sin mostrar)
+Queda desnudo/a 3 rondas completas
+Haz un perreo intenso con todos los jugadores
+Simula un squirt con agua
+Deja que [OTHER_PLAYER] te dé 15 nalgadas
+Baila desnudo/a con luces apagadas y linterna
+Lame el cuello de [OTHER_PLAYER] 20 seg
+Envía un nude completo al chat
+Haz 10 sentadillas con [OTHER_PLAYER] en brazos
+Simula sexo anal con un cojín 15 seg
+Quítate todo y baila 2 minutos
+Deja que el grupo elija tu castigo hot
+Besa los labios de todos los jugadores
+Lame los dedos de todos
+Envía un audio gimiendo 10 seg al grupo
+Haz un streaptease profesional 1 min
+Simula un orgasmo anal gritando
+Deja que [OTHER_PLAYER] te dé un masaje con aceite
+Queda en tanga/ropa interior hasta el final
+Baila twerk mirando a la cámara 30 seg
+Lame el pecho de [OTHER_PLAYER]
+Envía un nude de tu zona íntima al chat
+Haz 30 abdominales con alguien encima
+Simula sexo oral en una botella 30 seg
+Deja que te aten y te hagan cosquillas hot
+Manda un vídeo bailando desnudo a tu crush
+Besa el culo de [OTHER_PLAYER] (sin ropa si pierde)
+Quítate todo y haz 20 sentadillas
+Simula un trío con dos cojines
+Lame los pies de [OTHER_PLAYER] 20 seg
+Envía un audio masturbándote 10 seg al grupo
+Baila desnudo/a hasta que todos aplaudan
+Queda completamente desnudo/a el resto del juego`.trim().split('\n');
+
+    // === TUS 100 VERDADES FAMILIA ===
+    gameData.family.truth = `¿Qué travesura de niño nunca confesaste, [PLAYER_NAME]?
+¿Quién es el familiar más gracioso? ¿Por qué?
+¿Qué comida familiar odias en secreto?
+¿Cuál es tu recuerdo favorito con abuelos?
+¿Qué primo/a te cae mejor? ¿Por qué?
+¿Has roto algo caro y lo escondiste? ¡Confiesa!
+¿Quién te da los mejores regalos?
+¿Qué tradición familiar cambiarías?
+¿Quién es el más dormilón de la familia?
+¿Qué apodo familiar odias?
+¿Has copiado en un examen familiar?
+¿Quién cocina mejor? ¡Nombres!
+¿Qué familiar te ha salvado de un lío?
+¿Cuál es tu foto familiar más vergonzosa?
+¿Quién es el rey/reina del karaoke?
+¿Has mentido sobre tu edad en familia?
+¿Qué familiar admiras en secreto?
+¿Quién es el más tacaño?
+¿Qué viaje familiar fue el mejor?
+¿Has robado dulces de la despensa?
+¿Quién te enseñó a andar en bici?
+¿Qué primo/a te hacía bullying de pequeño?
+¿Quién es el más deportista?
+¿Has fingido estar enfermo para no ir a un evento?
+¿Qué familiar te hace reír con solo mirarlo?
+¿Quién tiene el coche más loco?
+¿Qué tradición navideña es tu favorita?
+¿Has perdido algo importante de un familiar?
+¿Quién es el más fiestero?
+¿Qué familiar te da los mejores consejos amorosos?
+¿Has roto un récord familiar (carrera, juego…)?
+¿Quién es el más organizado?
+¿Qué familiar huele mejor?
+¿Has imitado a un familiar a sus espaldas?
+¿Quién es el más tecnológico?
+¿Qué familiar te ha prestado más dinero?
+¿Has ganado alguna apuesta familiar?
+¿Quién es el más madrugador?
+¿Qué familiar baila peor?
+¿Has escondido un novio/a de la familia?
+¿Quién es el más generoso?
+¿Qué familiar te ha llevado al médico más veces?
+¿Has hecho una broma pesada a un primo?
+¿Quién es el más cinéfilo?
+¿Qué familiar tiene la risa más contagiosa?
+¿Has ganado un juego de mesa familiar haciendo trampas?
+¿Quién es el más viajero?
+¿Qué familiar te ha enseñado un hobby?
+¿Has perdido el móvil en una reunión familiar?
+¿Quién es el más fashion?
+¿Qué familiar te ha defendido en una pelea?
+¿Has cantado en una boda familiar?
+¿Quién es el más ecológico?
+¿Qué familiar te ha regalado calcetines 3 Navidades seguidas?
+¿Has hecho un castillo de arena épico con primos?
+¿Quién es el más fan de un equipo?
+¿Qué familiar te ha pillado en una mentira?
+¿Has ganado un concurso familiar?
+¿Quién es el más dormilón en viajes?
+¿Qué familiar hace los mejores postres?
+¿Has hecho una fogata familiar épica?
+¿Quién es el más bromista?
+¿Qué familiar te ha enseñado a cocinar?
+¿Has roto un juguete de un primo y lo culpado?
+¿Quién es el más lector?
+¿Qué familiar te ha llevado a tu primer concierto?
+¿Has ganado un juego de cartas familiar?
+¿Quién es el más fotogénico?
+¿Qué familiar te ha prestado ropa?
+¿Has hecho una guerra de agua legendaria?
+¿Quién es el más melómano?
+¿Qué familiar te ha ayudado con los deberes?
+¿Has perdido una apuesta y pagado cena?
+¿Quién es el más cinéfilo de terror?
+¿Qué familiar te ha enseñado a nadar?
+¿Has hecho un disfraz familiar casero?
+¿Quién es el más deportista extremo?
+¿Qué familiar te ha regalado el mejor libro?
+¿Has ganado un torneo de videojuegos familiar?
+¿Quién es el más fan de Disney?
+¿Qué familiar te ha llevado a un parque de atracciones?
+¿Has hecho una acampada familiar?
+¿Quién es el más cocinillas sano?
+¿Qué familiar te ha enseñado a conducir?
+¿Has ganado un trivial familiar?
+¿Quién es el más fan de los animales?
+¿Qué familiar te ha regalado tu mascota?
+¿Has hecho un pícnic familiar épico?
+¿Quién es el más fan de los musicales?
+¿Qué familiar te ha ayudado a mudarte?
+¿Has ganado un concurso de baile familiar?
+¿Quién es el más fan de los podcasts?
+¿Qué familiar te ha enseñado un idioma?
+¿Has hecho una barbacoa legendaria?
+¿Quién es el más fan de los memes?
+¿Qué familiar te ha llevado a un museo?
+¿Has ganado un karaoke familiar?
+¿Quién es el más fan de los videojuegos retro?
+¿Qué familiar te ha enseñado a ahorrar?
+¿Cuál es la anécdota familiar que más repites?`.trim().split('\n');
+
+    // === TUS 100 RETOS FAMILIA ===
+    gameData.family.dare = `Abrazo de oso a todos 10 seg
+Canta el himno familiar inventado
+Imita a tu abuela cocinando 20 seg
+Haz 10 sentadillas con un primo encima
+Cuenta un chiste de papá al grupo
+Baila la macarena con tu tío imaginario
+Llama a un familiar y di “te quiero” cantando
+Haz una torre de 5 personas (o cojines)
+Imita el ronquido de tu padre
+Envía un meme familiar al chat
+Haz 20 saltos de estrella
+Cuenta una historia familiar exagerada 30 seg
+Baila zumba con tu primo/a 20 seg
+Haz un sandwich humano con 3 personas
+Imita a tu madre regañando
+Envía una foto tuya haciendo morritos al grupo
+Haz 10 flexiones con aplausos
+Canta “Cumpleaños feliz” a un primo
+Imita a tu abuelo contando un chiste
+Haz un castillo de cartas (o móviles)
+Baila el flossing 15 seg
+Llama a tu tía y dile un cumplido exagerado
+Haz 15 abdominales cantando
+Imita a tu primo pequeño llorando
+Envía un audio imitando a tu madre al grupo
+Haz un pino (o intento) 10 seg
+Cuenta los primos que tienes en voz alta
+Baila vals con una escoba 20 seg
+Imita a tu tío bailando salsa
+Haz 10 burpees gritando “¡Familia!”
+Envía un sticker de amor a un familiar
+Canta una canción infantil a todo pulmón
+Imita a tu perro ladrando
+Haz una pirámide humana de 3
+Baila el robot 20 seg
+Llama a tu padre y hazle reír en 10 seg
+Haz 20 saltos de tijera
+Imita a tu abuela regañando por la tele
+Envía un audio de gallina al grupo
+Haz un baile de los 80s 30 seg
+Imita a tu primo contando un chiste
+Haz 15 sentadillas con aplausos
+Canta el abecedario al revés
+Baila con una silla como pareja 20 seg
+Envía un selfie con lengua al chat
+Imita a tu tía chismeando
+Haz 10 planchas cantando
+Llama a un familiar y di “eres el mejor”
+Haz un rap familiar improvisado
+Baila breakdance (o intento) 15 seg
+Imita a tu madre cocinando paella
+Haz 20 saltos con una pierna sola
+Envía un audio de león al grupo
+Canta “Las mañanitas” a todo volumen
+Imita a tu abuelo leyendo el periódico
+Haz un castillo de cojines épico
+Baila con un sombrero invisible 20 seg
+Llama a tu primo y hazle un cumplido
+Haz 15 flexiones con palmadas
+Imita a tu tía bailando flamenco
+Envía un vídeo bailando al grupo
+Haz un pino puente 10 seg
+Canta una ópera familiar inventada
+Baila el moonwalk 15 seg
+Imita a tu perro pidiendo comida
+Haz 10 burpees con gritos
+Envía un audio de vaca al grupo
+Canta el himno de tu equipo favorito
+Imita a tu madre regañando por WhatsApp
+Haz 20 abdominales cantando una nana
+Baila con una escoba como pareja de baile
+Llama a tu abuela y dile que la quieres
+Haz un rap de los nombres familiares
+Imita a tu tío contando anécdotas
+Envía un sticker de beso al chat
+Haz 15 sentadillas con saltos
+Canta “La cucaracha” con mariachi
+Baila el twist 20 seg
+Imita a tu primo haciendo muecas
+Haz 10 planchas con palmadas
+Envía un audio de loro al grupo
+Canta “Feliz Navidad” en julio
+Imita a tu tía maquillándose
+Haz un castillo de arena imaginario
+Baila con un cojín como pareja 20 seg
+Llama a un familiar y hazle reír
+Haz 20 saltos de estrella
+Imita a tu abuelo durmiendo la siesta
+Envía un vídeo de baile loco al grupo
+Haz un pino intento épico
+Canta una canción infantil en inglés
+Baila el hula-hoop imaginario 15 seg
+Imita a tu madre llamando a comer
+Haz 15 burpees cantando
+Envía un audio de elefante al grupo
+Canta “Cumpleaños feliz” a ti mismo
+Imita a tu primo contando chistes malos
+Haz 10 flexiones con una mano
+Baila con una escoba como guitarra
+Llama a tu tía y dile un piropo`.trim().split('\n');
+
+    const actionDisplay = document.getElementById('action-display');
+    const categorySelect = document.getElementById('category');
+    const currentPlayerDisplay = document.getElementById('current-player-display');
+    const playerListTags = document.getElementById('player-list-tags');
+    const nextPlayerBtn = document.getElementById('next-player-btn');
+    const errorMessage = document.getElementById('error-message');
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+
+    let usedTruths = {friends:[], family:[]};
+    let usedDares = {friends:[], family:[]};
+
+    function startGame(){
+        const girls = document.getElementById('girls-input').value.split(',').map(n=>n.trim()).filter(n=>n).map(n=>({name:n,gender:'girl'}));
+        const boys = document.getElementById('boys-input').value.split(',').map(n=>n.trim()).filter(n=>n).map(n=>({name:n,gender:'boy'}));
+        players = [...girls,...boys];
+        if(players.length<2){errorMessage.classList.remove('hidden');return;}
+        errorMessage.classList.add('hidden');
+        startScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        renderPlayers(); nextPlayer();
+    }
+
+    function renderPlayers(){
+        playerListTags.innerHTML = players.map((p,i)=>`<span class="player-tag ${p.gender==='girl'?'tag-girl':'tag-boy'}" data-index="${i}">${p.name}</span>`).join('');
+    }
+
+    function nextPlayer(){
+        if(isSpinning) return;
+        isSpinning=true; nextPlayerBtn.disabled=true; nextPlayerBtn.textContent='Girando...';
+        let spins=0;
+        const int=setInterval(()=>{
+            currentPlayerDisplay.textContent=players[Math.floor(Math.random()*players.length)].name;
+            spins++;
+            if(spins>20){clearInterval(int);revealPlayer();}
+        },70);
+    }
+
+    function revealPlayer(){
+        currentPlayerIndex=Math.floor(Math.random()*players.length);
+        const p=players[currentPlayerIndex];
+        currentPlayerDisplay.textContent=p.name;
+        document.querySelectorAll('.player-tag').forEach((t,i)=>{
+            t.classList.remove('current-player','tag-girl','tag-boy');
+            t.classList.add(players[i].gender==='girl'?'tag-girl':'tag-boy');
+            if(i===currentPlayerIndex) t.classList.add('current-player');
+        });
+        actionDisplay.innerHTML=`¡Turno de <span class="text-blue-500">${p.name}</span>! Elige Verdad o Reto.`;
+        actionDisplay.classList.remove('animate-in','neon-truth','neon-dare');
+        isSpinning=false; nextPlayerBtn.disabled=false; nextPlayerBtn.textContent='Girar la Ruleta 🎰';
+    }
+
+    function selectOtherPlayerName(){
+        if(players.length<=1) return "alguien";
+        const others=players.filter((_,i)=>i!==currentPlayerIndex);
+        return others[Math.floor(Math.random()*others.length)].name;
+    }
+
+    function askAction(type){
+        actionDisplay.classList.remove('animate-in','neon-truth','neon-dare');
+        if(currentPlayerIndex===-1){actionDisplay.innerHTML='Primero gira la ruleta.';return;}
+        const cat=categorySelect.value;
+        const data=gameData[cat][type];
+        let used=type==='truth'?usedTruths[cat]:usedDares[cat];
+        if(used.length===data.length){
+            used.length=0;
+            actionDisplay.innerHTML=`¡Todas las <b>${type==='truth'?'verdades':'retos'}</b> usadas! Reiniciando…`;
+            actionDisplay.classList.add('animate-in',type==='truth'?'neon-truth':'neon-dare');
+            setTimeout(()=>selectNewAction(type,cat,data,used),2000);
+            return;
+        }
+        selectNewAction(type,cat,data,used);
+    }
+
+    function selectNewAction(type,cat,data,used){
+        const avail=data.filter((_,i)=>!used.includes(i));
+        const pick=avail[Math.floor(Math.random()*avail.length)];
+        const idx=data.indexOf(pick);
+        used.push(idx);
+        let txt=pick.replace(/\[PLAYER_NAME\]/g,players[currentPlayerIndex].name).replace(/\[OTHER_PLAYER\]/g,selectOtherPlayerName());
+        const neon=type==='truth'?'neon-truth':'neon-dare';
+        const title=type==='truth'?'VERDAD':'RETO';
+        actionDisplay.innerHTML=`<span class="block text-3xl font-black mb-3">${title} (${cat.toUpperCase()})</span>${txt}`;
+        actionDisplay.classList.add('animate-in',neon);
+    }
+
+    document.head.insertAdjacentHTML('beforeend','<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">');
+</script>
+</body>
+</html>
