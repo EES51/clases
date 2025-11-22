@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Desafío Trivia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: { 900: '#0f172a', 800: '#1e293b', 700: '#334155' },
+                        primary: { 500: '#6366f1', 600: '#4f46e5' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-touch { transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-touch:active { transform: scale(0.96); }
+        .score-animate { transition: all 0.3s ease-out; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div id="app" class="flex-grow w-full max-w-md mx-auto p-4 pb-20">
+        <header class="mb-6 text-center">
+            <h1 class="font-display text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">
+                TRIVIA CHALLENGE
+            </h1>
+            <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest">Edición Buenos Aires</p>
+        </header>
+
+        <div id="main-content" class="flex flex-col gap-4">
+            <div id="loading" class="glass-card p-8 rounded-2xl text-center text-slate-400 animate-pulse">
+                Cargando sistema...
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId = null, isFirebaseInitialized = false;
+
+        // --- LISTA DE TEMAS COMPLETA ORGANIZADA POR NIVEL ---
+        const triviaTopics = {
+            1: [ // FÁCIL (Vida cotidiana, Escuela, Básico)
+                "Marcas de alfajores conocidos (Nombrar 4)",
+                "Cosas que se compran en un kiosco (Nombrar 5)",
+                "Materias de la escuela secundaria (Nombrar 5)",
+                "Apps de delivery de comida (Nombrar 3)",
+                "Gustos de empanadas clásicos (Nombrar 3)",
+                "Útiles que van en la cartuchera (Nombrar 5)",
+                "Medios de transporte público (Nombrar 3)",
+                "Sabores de jugo en sobre (Tang/Clight) (Nombrar 3)",
+                "Redes sociales de video (Nombrar 3)",
+                "Deportes que se juegan en equipo (Nombrar 4)",
+                "Marcas de yerba mate (Nombrar 4)",
+                "Frutas de color rojo (Nombrar 4)",
+                "Marcas de gaseosas populares (Nombrar 3)",
+                "Animales de granja (Nombrar 5)",
+                "Colores primarios y secundarios (Nombrar 6)",
+                "Animales de 4 patas (Nombrar 5)",
+                "Comidas típicas argentinas (Nombrar 3)",
+                "Nombres de superhéroes de Marvel (Nombrar 3)",
+                "Cantantes de Trap/Rock Argentino (Nombrar 4)",
+                "Instrumentos musicales comunes (Nombrar 3)"
+            ],
+            2: [ // MEDIO (Tendencias, CABA, Salidas)
+                "Marcas de celulares (Nombrar 4)",
+                "Streamers o Youtubers argentinos famosos (Nombrar 4)",
+                "Líneas de Subte de Buenos Aires (Nombrar 4 letras)",
+                "Tipos de facturas de panadería (Nombrar 4)",
+                "Canciones de Trap o Urbano argentino (Nombrar 3)",
+                "Shoppings o centros comerciales conocidos (Nombrar 3)",
+                "Videojuegos online populares actualmente (Nombrar 4)",
+                "Marcas de ropa deportiva o urbana (Nombrar 4)",
+                "Series de Netflix/streaming populares (Nombrar 3)",
+                "Estaciones de tren (Nombrar 3)",
+                "Avenidas famosas de Capital Federal (Nombrar 5)",
+                "Equipos de fútbol Argentinos de Primera (Nombrar 4)",
+                "Capitales de países sudamericanos (Nombrar 5)",
+                "Deportistas argentinos reconocidos (Nombrar 5)",
+                "Postres típicos (Nombrar 3)",
+                "Actores argentinos (Nombrar 4)",
+                "Sabores de helado (Nombrar 5)",
+                "Bebidas alcohólicas (Nombrar 4)",
+                "Comidas típicas navideñas (Nombrar 3)",
+                "Presidentes argentinos (Nombrar 4)",
+                "Barrios de CABA (Nombrar 5)",
+                "Barrios del Conurbano (Nombrar 4)"
+            ],
+            3: [ // DIFÍCIL (Cultura Específica, Calle, Marcas)
+                "Estaciones de tren cabecera en CABA (Nombrar 3)",
+                "Ganadores históricos de Gran Hermano Argentina (Nombrar 3)",
+                "Provincias de la Patagonia argentina (Nombrar 4)",
+                "Equipos de fútbol (excluyendo los 5 grandes) (Nombrar 4)",
+                "Marcas de autos que ves en la calle (Nombrar 5)",
+                "Películas del Universo Marvel (Nombrar 5)",
+                "Marcas de lácteos o quesos (Nombrar 4)",
+                "Periodistas o conductores de noticiero (Nombrar 3)",
+                "Líneas de colectivo que pasen por tu zona (Nombrar 3)",
+                "Marcas de golosinas (Nombrar 5)",
+                "Marcas de zapatillas deportivas (Nombrar 4)",
+                "Signos del zodiaco (Nombrar 6)",
+                "Elementos de la tabla periódica (Nombrar 5)",
+                "Huesos del cuerpo (Nombrar 5)",
+                "Personajes de Los Simpsons (Nombrar 5)",
+                "Nombres de Pokémones (Nombrar 5)",
+                "Astros del sistema solar (Nombrar 5)",
+                "Partes de una computadora (Nombrar 5)",
+                "Películas de acción (Nombrar 3)"
+            ]
+        };
+
+        let gameState = {
+            numPlayers: 3,
+            currentMultiplier: 1, 
+            currentReference: '', 
+            players: [],
+            gameId: 'flexible_score_tracker',
+            started: false
+        };
+
+        const difficultyOptions = [
+            { value: 1, label: 'FÁCIL (+1)', color: 'emerald-500', gradient: 'from-emerald-400 to-emerald-600' },
+            { value: 2, label: 'MEDIO (+2)', color: 'amber-500', gradient: 'from-amber-400 to-amber-600' },
+            { value: 3, label: 'DIFÍCIL (+3)', color: 'rose-500', gradient: 'from-rose-400 to-rose-600' },
+        ];
+
+        async function initializeFirebase() {
+            if (!firebaseConfig) { isFirebaseInitialized = false; renderSetup(); return; }
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                isFirebaseInitialized = true;
+                onAuthStateChanged(auth, (user) => {
+                    if (user) { userId = user.uid; loadGameData(); }
+                    else { initialAuthToken ? signInWithCustomToken(auth, initialAuthToken) : signInAnonymously(auth); }
+                });
+            } catch (error) { renderSetup(); }
+        }
+
+        function getGameDocRef() {
+            if (!db || !userId) return null;
+            return doc(collection(db, `/artifacts/${appId}/users/${userId}/flexible_game_state`), gameState.gameId);
+        }
+
+        async function saveGameData() {
+            if (!isFirebaseInitialized || !userId) { if (gameState.started) renderGame(); return; }
+            try {
+                await setDoc(getGameDocRef(), {
+                    ...gameState,
+                    players: gameState.players.map(p => ({ id: p.id, name: p.name, score: p.score })),
+                    lastUpdated: new Date().toISOString()
+                }, { merge: true });
+            } catch (e) { console.error(e); }
+        }
+
+        function loadGameData() {
+            onSnapshot(getGameDocRef(), (docSnap) => {
+                if (docSnap.exists()) {
+                    gameState = { ...gameState, ...docSnap.data() };
+                    gameState.started ? renderGame() : renderSetup();
+                } else renderSetup();
+            });
+        }
+
+        function handleStartGame() {
+            const numPlayersSelect = document.getElementById('num-players');
+            gameState.numPlayers = parseInt(numPlayersSelect.value);
+            const newPlayers = [];
+            for (let i = 0; i < gameState.numPlayers; i++) {
+                const nameInput = document.getElementById(`player-name-${i}`);
+                const name = nameInput.value.trim() || `Jugador ${i + 1}`;
+                const existingPlayer = gameState.players.find(p => p.id === i);
+                newPlayers.push({ id: i, name: name, score: existingPlayer ? existingPlayer.score : 0 });
+            }
+            gameState.players = newPlayers;
+            gameState.currentMultiplier = 1; 
+            gameState.currentReference = '';
+            gameState.started = true;
+            saveGameData();
+        }
+
+        function generateNewReference() {
+            // Buscar referencias del nivel actual
+            const currentPool = triviaTopics[gameState.currentMultiplier] || triviaTopics[1];
+            const randomIndex = Math.floor(Math.random() * currentPool.length);
+            gameState.currentReference = currentPool[randomIndex];
+            saveGameData();
+        }
+
+        function modifyPoint(playerId, modifier) {
+            const playerIndex = gameState.players.findIndex(p => p.id === playerId);
+            if (playerIndex !== -1 && gameState.currentReference !== '') {
+                gameState.players[playerIndex].score += modifier;
+                if (gameState.players[playerIndex].score < 0) gameState.players[playerIndex].score = 0;
+                gameState.currentReference = ''; 
+                gameState.currentMultiplier = 1; 
+                saveGameData(); 
+            }
+        }
+        
+        function setDifficulty(multiplier) {
+            gameState.currentMultiplier = multiplier;
+            // Si ya había una referencia mostrada pero cambiamos dificultad, la borramos para obligar a generar una nueva acorde al nivel
+            gameState.currentReference = '';
+            saveGameData(); 
+        }
+
+        function resetGame() {
+            if(confirm("¿Borrar todo y empezar de cero?")) {
+                gameState.numPlayers = 3;
+                gameState.currentMultiplier = 1;
+                gameState.currentReference = '';
+                gameState.players = [];
+                gameState.started = false;
+                saveGameData();
+            }
+        }
+
+        function renderSetup() {
+            const mainContent = document.getElementById('main-content');
+            const maxPlayers = 10;
+            const currentPlayers = gameState.players.length > 0 ? gameState.players : 
+                Array.from({ length: gameState.numPlayers }, (_, i) => ({ id: i, name: `Jugador ${i + 1}` }));
+
+            mainContent.innerHTML = `
+                <div class="glass-card p-6 rounded-3xl shadow-2xl border-t border-slate-700">
+                    <h2 class="font-display text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="bg-indigo-500 w-2 h-8 rounded-full"></span>
+                        Configuración
+                    </h2>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-300 mb-2 ml-1">CANTIDAD DE JUGADORES</label>
+                        <div class="relative">
+                            <select id="num-players" class="w-full bg-slate-900/50 border border-slate-600 text-white text-lg rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent p-4 appearance-none">
+                                ${Array.from({ length: maxPlayers - 1 }, (_, i) => i + 2).map(n => `<option value="${n}" ${n === gameState.numPlayers ? 'selected' : ''}>${n} Jugadores</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-slate-300 mb-3 ml-1">NOMBRES</label>
+                        <div id="player-names-container" class="space-y-3"></div>
+                    </div>
+                    <button id="start-game" class="btn-touch w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-display font-bold text-xl py-4 rounded-2xl shadow-lg shadow-indigo-500/20 border border-indigo-400/20">
+                        ¡EMPEZAR A JUGAR!
+                    </button>
+                </div>
+            `;
+            const numPlayersSelect = document.getElementById('num-players');
+            const namesContainer = document.getElementById('player-names-container');
+            const renderNameInputs = () => {
+                const count = parseInt(numPlayersSelect.value);
+                let inputsHtml = '';
+                for (let i = 0; i < count; i++) {
+                    const name = currentPlayers.find(p => p.id === i)?.name || `Jugador ${i + 1}`;
+                    inputsHtml += `
+                        <div class="flex items-center gap-3 bg-slate-800/50 p-2 rounded-xl border border-slate-700/50">
+                            <div class="w-8 h-8 rounded-lg bg-slate-700 flex items-center justify-center font-bold text-slate-400 text-sm">${i + 1}</div>
+                            <input type="text" id="player-name-${i}" value="${name}" placeholder="Nombre..." class="bg-transparent w-full text-white placeholder-slate-500 focus:outline-none font-medium">
+                        </div>`;
+                }
+                namesContainer.innerHTML = inputsHtml;
+            };
+            numPlayersSelect.addEventListener('change', renderNameInputs);
+            document.getElementById('start-game').addEventListener('click', handleStartGame);
+            renderNameInputs();
+        }
+
+        function renderGame() {
+            const mainContent = document.getElementById('main-content');
+            const sortedPlayers = [...gameState.players].sort((a, b) => b.score - a.score);
+            const currentDiff = difficultyOptions.find(opt => opt.value === gameState.currentMultiplier);
+            const isReferenceSet = gameState.currentReference !== '';
+            
+            mainContent.innerHTML = `
+                <div class="glass-card p-2 rounded-2xl flex justify-between gap-2 mb-2">
+                    ${difficultyOptions.map(opt => `
+                        <button data-multiplier="${opt.value}"
+                                class="btn-difficulty btn-touch flex-1 py-3 px-2 rounded-xl font-display font-bold text-sm sm:text-base tracking-wide transition-all
+                                ${gameState.currentMultiplier === opt.value 
+                                    ? `bg-gradient-to-br ${opt.gradient} text-white shadow-lg shadow-${opt.color}/20 ring-1 ring-white/30` 
+                                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                                }">
+                            ${opt.label}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="glass-card p-5 rounded-3xl text-center border border-slate-600/50 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+                    <p class="text-xs font-bold text-indigo-400 tracking-widest uppercase mb-2">
+                        ${isReferenceSet ? 'DESAFÍO ACTIVO' : 'ESPERANDO TEMA...'}
+                    </p>
+                    <div class="min-h-[80px] flex items-center justify-center mb-4">
+                         ${isReferenceSet 
+                            ? `<p class="text-xl sm:text-2xl font-display font-bold text-white leading-tight animate-in fade-in zoom-in duration-300 px-2">${gameState.currentReference}</p>`
+                            : `<p class="text-slate-500 text-sm italic">Tocá el botón para recibir una consigna</p>`
+                        }
+                    </div>
+                    <button id="generate-reference" 
+                            class="btn-touch w-full bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        GENERAR TEMA
+                    </button>
+                </div>
+                <div class="space-y-3">
+                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest ml-2 mt-2">Tabla de Posiciones</p>
+                    ${sortedPlayers.map((player, index) => `
+                        <div class="glass-card p-4 rounded-2xl flex flex-col gap-3 border-l-4 ${index === 0 ? 'border-l-yellow-500 bg-gradient-to-r from-yellow-500/10 to-transparent' : 'border-l-slate-600'}">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3 overflow-hidden">
+                                    <span class="font-display font-bold text-lg ${index === 0 ? 'text-yellow-400' : 'text-white'} truncate">
+                                        ${player.name}
+                                    </span>
+                                    ${index === 0 ? '<span class="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded-full font-bold">LÍDER</span>' : ''}
+                                </div>
+                                <div class="text-4xl font-display font-black text-white tracking-tighter score-animate">${player.score}</div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button data-player-id="${player.id}" data-action="subtract"
+                                        class="btn-touch py-2 px-4 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-xl font-bold text-sm transition-colors ${!isReferenceSet ? 'opacity-50 cursor-not-allowed' : ''}"
+                                        ${!isReferenceSet ? 'disabled' : ''}>FALLÓ (-1)</button>
+                                <button data-player-id="${player.id}" data-action="add"
+                                        class="btn-touch flex-1 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-emerald-900/20 border-t border-emerald-400/20 transition-all ${!isReferenceSet ? 'opacity-50 cursor-not-allowed grayscale' : ''}"
+                                        ${!isReferenceSet ? 'disabled' : ''}>GANÓ (+${gameState.currentMultiplier})</button>
+                            </div>
+                        </div>`).join('')}
+                </div>
+                <button id="reset-game" class="mt-8 w-full text-slate-500 hover:text-slate-300 text-xs uppercase tracking-widest font-bold py-4">Reiniciar Partida</button>
+            `;
+            document.getElementById('generate-reference').addEventListener('click', generateNewReference);
+            document.getElementById('reset-game').addEventListener('click', resetGame);
+            document.querySelectorAll('.btn-difficulty').forEach(btn => {
+                btn.addEventListener('click', () => setDifficulty(parseInt(btn.dataset.multiplier)));
+            });
+            document.querySelectorAll('button[data-player-id]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const pid = parseInt(btn.dataset.playerId);
+                    const action = btn.dataset.action;
+                    if (action === 'add') modifyPoint(pid, gameState.currentMultiplier);
+                    else modifyPoint(pid, -1);
+                });
+            });
+        }
+        initializeFirebase();
+    </script>
+</body>
+</html>
