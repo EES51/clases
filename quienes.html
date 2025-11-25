@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>¿Quién Sos Hoy? - Multiplayer</title>
+    <!-- Fuentes: Orbitron (Futurista) y Poppins (Legible) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff0055;
+            --neon-violet: #bc13fe;
+            --card-bg: #111;
+            --glass-bg: rgba(20, 20, 25, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 85, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            color: white;
+            padding: 20px;
+        }
+
+        /* TÍTULO GENERAL */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            z-index: 100;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-blue);
+            background: linear-gradient(to right, var(--neon-blue), white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- PANTALLAS --- */
+        .screen {
+            display: none; /* Se ocultan por defecto */
+            width: 100%;
+            max-width: 400px;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PANTALLA 1: SETUP --- */
+        .setup-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        label {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        input[type="number"], input[type="text"] {
+            background: #222;
+            border: 2px solid #444;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+        }
+
+        .player-inputs-container {
+            max-height: 40vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            width: 100%;
+            padding-right: 5px;
+        }
+
+        /* --- PANTALLA 2: JUEGO (CARD) --- */
+        .turn-indicator {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .turn-indicator span {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            height: 60vh; 
+            max-height: 500px;
+            border-radius: 25px;
+            z-index: 5;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        .card-border {
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-violet), var(--neon-blue));
+            background-size: 400%;
+            border-radius: 28px;
+            z-index: -1;
+            animation: borderGlow 20s linear infinite;
+            filter: blur(8px);
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-area {
+            width: 100%;
+            height: 80%; 
+            position: relative;
+            background: #000;
+        }
+
+        .character-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: none; 
+        }
+
+        .placeholder {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            color: #333;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+        }
+
+        .info-area {
+            height: 20%; 
+            background: rgba(20, 20, 25, 0.95);
+            border-top: 2px solid var(--neon-pink);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5px 15px;
+            text-align: center;
+        }
+
+        .char-id {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 2px;
+        }
+
+        .char-name {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            font-size: 1.2rem; 
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* --- PANTALLA 3: RESULTADOS --- */
+        .results-list {
+            width: 100%;
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .player-row {
+            background: #1a1a1a;
+            border-left: 4px solid var(--neon-blue);
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 5px;
+        }
+        
+        .player-row.loser-highlight {
+            border-left-color: var(--neon-pink);
+            background: rgba(255, 0, 85, 0.1);
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        .p-name {
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .p-char {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .p-score-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .score-badge {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .btn-add-point {
+            background: transparent;
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .btn-add-point:active {
+            background: var(--neon-pink);
+            color: white;
+        }
+
+        /* BOTONES GLOBALES */
+        .btn-container {
+            margin-top: 25px;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-main {
+            background: transparent;
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            padding: 15px 40px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-main.secondary {
+            border-color: var(--neon-violet);
+            color: var(--neon-violet);
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
+        }
+        
+        .btn-main.secondary::after {
+             background: var(--neon-violet);
+        }
+
+        .btn-main::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--neon-blue);
+            z-index: -1;
+            transition: 0.3s;
+            transform: skewX(-20deg);
+        }
+
+        .btn-main:active::after {
+            left: 0;
+            transform: skewX(0);
+        }
+
+        .btn-main:active {
+            color: #000;
+            box-shadow: 0 0 40px var(--neon-blue);
+            transform: scale(0.95);
+        }
+
+        .btn-main:disabled {
+            border-color: #444;
+            color: #666;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-main:disabled::after { display: none; }
+
+        .glitch-text {
+            animation: glitch 0.3s infinite;
+            color: var(--neon-pink);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>¿QUIEN ES QUIEN?</h1>
+    </div>
+
+    <!-- PANTALLA 1: CONFIGURACIÓN -->
+    <div id="setupScreen" class="screen active">
+        <div class="setup-container">
+            <div class="input-group">
+                <label>Jugadores:</label>
+                <input type="number" id="numPlayers" min="1" max="20" value="2" onchange="generateNameInputs()">
+            </div>
+            
+            <label>Nombres:</label>
+            <div id="nameInputs" class="player-inputs-container">
+                <!-- Se generan dinámicamente -->
+            </div>
+
+            <button class="btn-main" onclick="initGame()">COMENZAR</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: JUEGO -->
+    <div id="gameScreen" class="screen">
+        <div class="turn-indicator" id="turnIndicator">
+            Turno de: <span>PLAYER</span>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card-border"></div>
+            <div class="card">
+                <div class="image-area">
+                    <div id="placeholder" class="placeholder">?</div>
+                    <img id="charImg" class="character-img" alt="">
+                </div>
+                <div class="info-area">
+                    <div id="charId" class="char-id">#000</div>
+                    <div id="charName" class="char-name">READY?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button id="spinBtn" class="btn-main" onclick="startSpin()">GIRAR</button>
+            <button id="nextBtn" class="btn-main secondary" onclick="nextPlayer()" style="display: none;">SIGUIENTE</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3: RESULTADOS -->
+    <div id="summaryScreen" class="screen">
+        <h2 style="font-family:'Orbitron'; color:var(--neon-blue); margin-top:0;">RESULTADOS</h2>
+        <div id="resultsList" class="results-list">
+            <!-- Lista de jugadores y sus personajes -->
+        </div>
+        <div class="btn-container">
+            <button class="btn-main secondary" onclick="newRound()">NUEVA RONDA</button>
+        </div>
+    </div>
+
+    <script>
+        // --- BASE DE DATOS ---
+        const characters = [
+            { id: 1, name: "Lionel Messi", img: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel-Messi-Argentina-2022-FIFA-World-Cup_%28cropped%29.jpg" },
+            { id: 2, name: "Bizarrap (BZRP)", img: "https://telefe-static.akamaized.net/media/18248910/bizarrap-telefe.jpg" },
+            { id: 3, name: "Tini Stoessel", img: "https://i0.wp.com/elplanetaurbano.com/wp-content/uploads/2023/09/Tini-Stoessel.webp?w=1200&ssl=1" },
+            { id: 4, name: "Duki", img: "https://www.lanacion.com.ar/resizer/v2/duki-se-emociono-en-plena-conferencia-de-prensa-W5D7SUNCVFADPEIFXFQVKEE4EM.jpg?auth=390d2f90a3dedb3a1a1d7af1e834f0101e468a2890d12f903cee2ddb49ab0cc5&width=880&height=586&quality=70&smart=true" },
+            { id: 5, name: "María Becerra", img: "https://image.europafm.com/clipping/cmsimages02/2024/07/18/1F8FD69C-2469-4E66-8465-ADEBF66ACD45/maria-becerra-posa-latin-grammy-2023_97.jpg?crop=2662,1497,x0,y353&width=1600&height=900&optimize=low&format=webply" },
+            { id: 6, name: "Nicki Nicole", img: "https://static.wikia.nocookie.net/youtubepedia/images/b/bb/Nicki_nicole.jpg/revision/latest?cb=20220722001729&path-prefix=es" },
+            { id: 7, name: "Paulo Londra", img: "https://viapais.com.ar/resizer/v2/27F3DANPKBGXNO6RIYMZGKGATE.jpg?quality=75&smart=true&auth=8ff7fd2a0bd295d77210ea941458a0492e87c25605f50a9671f467f289cd0ea2&width=980&height=640" },
+            { id: 8, name: "Lali Espósito", img: "https://worldmusicba.com/wp-content/uploads/2022/08/Capa-5Lali.png" },
+            { id: 9, name: "Ricardo Darín", img: "https://www.lanacion.com.ar/resizer/v2/el-actor-ricardo-darin-participo-de-otro-dia-QJF6EKGTFFCNPLAAZ4XLXH7PCE.PNG?auth=beab973083c7978bb967976186775a48c1df4f2903003f9255932b14dd31e3b0&width=880&height=586&quality=70&smart=true" },
+            { id: 10, name: "Coscu", img: "https://resizer.iproimg.com/unsafe/1280x/filters:format(webp):quality(75):max_bytes(102400)/https://assets.iproup.com/assets/jpg/2022/06/29006.jpg" },
+            { id: 11, name: "Momo", img: "https://www.infocielo.com/wp-content/uploads/2024/11/350231540_1001648704327235_7385458648306462051_njpg.jpg" },
+            { id: 12, name: "Wos", img: "https://www.lanacion.com.ar/resizer/v2/wos-el-jueves-16-de-diciembre-en-el-estadio-de-DJK7OLMVX5ARFJU7SMR7A3Z24U.jpg?auth=2da7dc3f4818f5c3cabb8207ce65aa69d75379e07bda8d5de431300b1b802ba9&width=880&height=586&quality=70&smart=true" },
+            { id: 13, name: "Ángel Di María", img: "https://www.elgrafico.com.ar/media/cache/pub_news_details_large/media/i/11/b9/11b9852c03b580b842151c17ddbdb3c80b516384.jpg" },
+            { id: 14, name: "Dibu Martínez", img: "https://media.ambito.com/p/09556c6821e93ae4be0028e9c0d1ef5c/adjuntos/239/imagenes/041/782/0041782072/dibu-martinez-reutersjpg.jpg" },
+            { id: 15, name: "Julián Álvarez", img: "https://www.lanacion.com.ar/resizer/v2/julian-alvarez-delantero-de-river-con-la-camiseta-OK2ZP43MVBBZZOA33NK2TSCF4A.JPG?auth=bc3ff832495269cde59bcae86a71bf4c9e4ba2f08d60c2c9e0344d6f941da8c9&width=880&height=586&quality=70&smart=true" },
+            { id: 16, name: "Manu Ginóbili", img: "https://media.lacapital.com.ar/p/862b66c8f1ed212013a8bf28ace05288/adjuntos/203/imagenes/101/816/0101816303/ginobilijpg.jpg" },
+            { id: 17, name: "Gustavo Cerati", img: "https://www.argentina.gob.ar/sites/default/files/gustavo-cerati-1.jpg" },
+            { id: 18, name: "Charly García", img: "https://latinamericanpost.com/wp-content/uploads/2024/09/20240916_Charly-Garcia-Argentinas-Legendary-Rock-Star-Returns-with-a-Masterpiece.jpg" },
+            { id: 19, name: "Peter Lanzani", img: "https://www.infobae.com/resizer/v2/UOJJZSOYBKDSI2KXBZIGZA72EY.jpg?auth=94e6057909bb2e38a02a9591517f5b8acfc6093e8008b6f4c3ed7a12a71591c4&smart=true&width=992&height=693&quality=85" },
+            { id: 20, name: "Trueno", img: "https://www.lanacion.com.ar/resizer/v2/truen-EFMO3L3WQFDX3LIBNDQX6GL74Q.jpg?auth=5d5e1f21de24c2b7b05e67f6f70a1cac28b66b00e5fb2fd486d4c93f7e11b58d&width=880&height=586&quality=70&smart=true" },
+            { id: 21, name: "China Suárez", img: "https://www.lanacion.com.ar/resizer/v2/la-china-suarez-se-muestra-muy-feliz-con-su-nueva-B2T3W6GWFJGANGCDXY46E24H7E.png?auth=3c65bebf5ad647232586ba1840c0a48f43611377b7d5d5bfc89310cca819d542&width=880&height=586&quality=70&smart=true" },
+            { id: 22, name: "Guillermo Francella", img: "https://www.lanacion.com.ar/resizer/v2/el-actor-conto-como-vive-el-exito-de-sus-hijos-SKHNJUTCLFGH7OVUGVIEC3HOHA.jpg?auth=49630c9654778760b83045457f30bb5042e8b736b4951a3b748b2b8c24260089&width=880&height=586&quality=70&smart=true" },
+            { id: 23, name: "Emilia Mernes", img: "https://telefe-static.akamaized.net/media/18275570/emilia-futbol.png?width=888&height=500&mode=crop" },
+            { id: 24, name: "Susana Giménez", img: "https://telefe-static.akamaized.net/media/18204561/programa-19-susana-gimenez.png?width=888&height=500&mode=crop" },
+            { id: 25, name: "Mirtha Legrand", img: "https://resources.diariolibre.com/images/2024/02/23/argentina-mirtha-legrand-la-diva-de-los-almuerzos-cumple-97-anos-focus-min0.1-0.46-896-504.jpg" },
+            { id: 26, name: "Taylor Swift", img: "https://imagenes.elpais.com/resizer/v2/AWNTN6VH5NFBPJYRX7DS6QAAMM.jpg?auth=1426161ce83c0dc66a4185ca80b7f19eeff59f2e1ea63dd2a803a2e8a4417824&width=1200" },
+            { id: 27, name: "Bad Bunny", img: "https://www.lanacion.com.ar/resizer/v2/bad-bunny-anuncia-nueva-fecha-de-show-en-puerto-BBPMBDYDVFGXXCN4DVLWW77LIA.jpg?auth=8cec949aaef66dbe6c5535513659476e436bbe77e94dc97320c1b36011204993&width=880&height=586&quality=70&smart=true" },
+            { id: 28, name: "Billie Eilish", img: "https://numero.com/wp-content/uploads/2024/06/billie-eilish-HIT-ME-HARD-AND-SOFT-album.jpg" },
+            { id: 29, name: "Ariana Grande", img: "https://cdn.britannica.com/92/211792-050-E764F875/American-singer-Ariana-Grande-2018.jpg" },
+            { id: 30, name: "Dua Lipa", img: "https://www.lanacion.com.ar/resizer/v2/dua-lipa-se-presenta-manana-y-el-miercoles-en-NP24YQRNRBGIZEJWJ7GNSCYXRU.jpg?auth=4e96cf2113e23bf86ddafbe547f48ac7ac91dbd30dd58101e1466f87435e83fc&width=880&height=586&quality=70&smart=true" },
+            { id: 31, name: "Harry Styles", img: "https://www.lanacion.com.ar/resizer/v2/alejado-de-las-canchas-harry-QY4ZED4PGZDNRKD5ADUYKLIS7Q.jpg?auth=3e1f3130929a93b236ac026e729ea97714ce8adea2ee263004a86d2bf1c2c49e&width=880&height=586&quality=70&smart=true" },
+            { id: 32, name: "Shakira", img: "https://cdn-images.dzcdn.net/images/artist/69c569506a8ff6ab0edfecbd1adf94b0/500x500-000000-80-0-0.jpg" },
+            { id: 33, name: "Chaqueño Palavecino", img: "https://comunicarnoticias.ar/wp-content/uploads/2024/06/unnamed-42.jpg" },
+            { id: 34, name: "Adele", img: "https://media.vogue.mx/photos/62752654e77a9f1126753b96/2:3/w_1280,c_limit/adele-GettyImages-1369535083.jpg" },
+            { id: 35, name: "Justin Bieber", img: "https://media.revistaqg.com/photos/5ca5fe33bda594a08333e76a/16:9/w_1280,c_limit/justin_bieber_8605.jpg" },
+            { id: 36, name: "Leonardo DiCaprio", img: "https://www.hola.com/horizon/landscape/9f8c5881e0c8-leonardo-dicaprio.jpg?im=Resize=(960),type=downsize" },
+            { id: 37, name: "Zendaya", img: "https://forbes.es/wp-content/uploads/2025/03/U551856_001-1.jpg" },
+            { id: 38, name: "Tom Holland", img: "https://indiehoy.com/wp-content/uploads/2020/03/Tom-Holland-spiderman.jpg" },
+            { id: 39, name: "Margot Robbie", img: "https://www.hola.com/horizon/square/a04f724d3d33-margot-robbie-actriz-estilo-t.jpg" },
+            { id: 40, name: "Ryan Gosling", img: "https://d24ar.com/wp-content/uploads/2025/03/ryan-gosling-103-905x613.jpeg" },
+            { id: 41, name: "Millie Bobby Brown", img: "https://cdn.britannica.com/85/239185-050-FCAE29BD/British-actress-Millie-Bobby-Brown-2022.jpg" },
+            { id: 42, name: "El Joker", img: "https://elcomercio-depor-prod.web.arc-cdn.net/resizer/v2/6XPOW2LYFFE5JAW4L7HZRN4ZQU.jpg?auth=127c57bf9c57a1cc2c4815b18894dba469ba5757dd7b3be002f603205a43255d&width=1200&height=800&smart=true&quality=90" },
+            { id: 43, name: "Dwayne 'La Roca' Johnson", img: "https://cdn.britannica.com/60/222660-050-064DBA89/Dwayne-Johnson-AKA-The-Rock-2019.jpg" },
+            { id: 44, name: "Tom Cruise", img: "https://images.mubicdn.net/images/cast_member/2184/cache-2992-1547409411/image-w856.jpg" },
+            { id: 45, name: "Robert Downey Jr.", img: "https://depor.com/resizer/v2/OBCDYBNF3RDXHILN35XR2UVBRQ.jpg?auth=2c9fb5da624200f36abfbe0c0da65c17b0945b7d0682c4272afeda0e20f586e7&width=1200&height=900&quality=90&smart=true" },
+            { id: 46, name: "Will Smith", img: "https://media.revistaqg.com/photos/6242f8e6bf5cf0b27854811d/16:9/w_1280,c_limit/will-smith.jpg" },
+            { id: 47, name: "Emma Watson", img: "https://gcdn.emol.cl/moda/files/2025/10/EmmaWatsonMiu4.jpg" },
+            { id: 48, name: "MrBeast", img: "https://ecommercefastlane.com/wp-content/uploads/2022/11/69746-youve-met-mrbeast-the-youtuber-now-meet-jimmy-the-business-mogul-800x420.jpg" },
+            { id: 49, name: "Jorge Bergoglio 'Papa Francisco'", img: "https://media.cnn.com/api/v1/images/stellar/prod/portada-papa.jpg?q=w_2000,c_fill/f_webp" },
+            { id: 50, name: "Diego Maradona", img: "https://cdn.conmebol.com/wp-content/uploads/2021/10/maradona_1.jpg" },
+            { id: 51, name: "Charli D'Amelio", img: "https://shycreation.com/cdn/shop/files/Charli_D_1000x.progressive_6dc4fe5e-6b03-4bd5-af48-abe30fc5b1ca_600x.progressive.webp.jpg?v=1711645139" },
+            { id: 52, name: "Kylie Jenner", img: "https://cdn.britannica.com/41/251041-050-C9BB1597/Kylie-Jenner-Met-Gala-2023.jpg" },
+            { id: 53, name: "Kim Kardashian", img: "https://media.ambito.com/p/2b3ab0f37d5901f6e1c366dd12e71596/adjuntos/239/imagenes/042/522/0042522045/655x368/smart/kim-kardashianjpg.jpg" },
+            { id: 54, name: "Elon Musk", img: "https://www.infobae.com/resizer/v2/U2YK3C6NHZGBPHEVK33RSEDG3M.jpg?auth=b3969dc18191f06dff23d021b1923e360bc547687f0a6720c6a2282f8e7de1fb&smart=true&width=992&height=1488&quality=85" },
+            { id: 55, name: "Mark Zuckerberg", img: "https://www.rionegro.com.ar/wp-content/uploads/2025/11/Mark-Zuckerberg.jpg?w=920&h=520&crop=1" },
+            { id: 56, name: "Marcelo Tinelli", img: "https://media.losandes.com.ar/p/fb59bd494be6fc9f7ba7dcb8c37018fa/adjuntos/368/imagenes/100/633/0100633725/1000x0/smart/marcelo-tinelli.png" },
+            { id: 57, name: "Tiago PZK", img: "https://i0.wp.com/elplanetaurbano.com/wp-content/uploads/2022/05/tiago-pzk-amazon-epu.jpg?w=1040&ssl=1" },
+            { id: 58, name: "Javier Milei", img: "https://www.rionegro.com.ar/wp-content/uploads/2025/11/image-10.jpg?w=920&h=520&crop=1" },
+            { id: 59, name: "Michael Jackson", img: "https://www.hola.com/horizon/landscape/1990f17f0318-tc-michael-jackson2-z.jpg?im=Resize=(960),type=downsize" },
+            { id: 60, name: "Elvis Presley", img: "https://indiehoy.com/wp-content/uploads/2023/08/elvis-presley.jpg" },
+            { id: 61, name: "Freddie Mercury", img: "https://akns-images.eonline.com/eol_images/Entire_Site/2018101/rs_634x1024-181101083041-634-Freddie-Mercury-J1R-110118.jpg" },
+            { id: 62, name: "Cristina Fernandez de Kirchner", img: "https://media.losandes.com.ar/p/0f5c84737979d68b0e595304a20c4977/adjuntos/368/imagenes/100/665/0100665435/1000x0/smart/comienza-el-juicio-contra-cristina-kirchner-la-causa-cuadernos-que-la-acusan.jpg" },
+            { id: 63, name: "Beyoncé", img: "https://cdn.britannica.com/59/204159-050-5055F2A9/Beyonce-2013.jpg" },
+            { id: 64, name: "Eminem", img: "https://indiehoy.com/wp-content/uploads/2021/03/Eminem.jpg" },
+            { id: 65, name: "Miguel Rivera 'COCO'", img: "https://disneynews.us/wp-content/uploads/2019/11/Miguel-Rivera-coco-pixar.jpg" },
+            { id: 66, name: "Lautaro del Campo 'La Cobra'", img: "https://imagenes.20minutos.es/files/image_1280_720/uploads/imagenes/2024/02/01/el-streamer-argentino-lautaro-del-campo-conocido-como-la-cobra.png" },
+            { id: 67, name: "Jungkook (BTS)", img: "https://22minutoscon.com/wp-content/uploads/2021/09/jeon_jung_kook30.jpg" },
+            { id: 68, name: "Rauw Alejandro", img: "https://media.gq.com.mx/photos/63a310423105d93f46dc2bf6/16:9/w_1600,c_limit/Rauw%20Alejandro%20durante%20Grammys.jpg" },
+            { id: 69, name: "Karol G", img: "https://latinamericanpost.com/wp-content/uploads/2025/01/IG@KarolG.jpg" },
+            { id: 70, name: "Brad Pitt", img: "https://www.hola.com/horizon/landscape/b48ac200e4c7-85939-pitt12.jpg?im=Resize=(960),type=downsize" },
+            { id: 71, name: "Scarlett Johansson", img: "https://media.gq.com.mx/photos/5e220ec2ffa8c7000803441e/16:9/w_1600,c_limit/40-datos-curiosos-para-descubrir-a-scarlett-johansson.jpg" },
+            { id: 72, name: "Jennifer Lawrence", img: "https://www.hola.com/horizon/landscape/6825b0c75b63-gettyimages-2215617810.jpg?im=Resize=(1280),type=downsize" },
+            { id: 73, name: "Deadpool", img: "https://marcainteligente.com/wp-content/uploads/2024/05/Quien-es-Deadpool.png" },
+            { id: 74, name: "Steven Spielberg", img: "https://indiehoy.com/wp-content/uploads/2023/01/steven-spielberg.jpg" },
+            { id: 75, name: "Denzel Washington", img: "https://www.hola.com/horizon/landscape/bc1f48697989-denzel-gtres1-t.jpg?im=Resize=(960),type=downsize" },
+            { id: 76, name: "Cristiano Ronaldo", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2018%2F06%2F20093127%2Fcristiano-ronaldo-barba-1920-2.jpg?auth=4ec3d06311aede0600e1fa3d9e5f507fcee7c17bca0ff1f845ef9f6eb02fd438&smart=true&width=992&height=558&quality=85" },
+            { id: 77, name: "Kylian Mbappé", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2017%2F03%2F22115541%2FKylian-Mbappe-1920-3.jpg?auth=93eb649818451565c0fe698e356b2f42f0bed9bbb99bdada91a62169dd286a39&smart=true&width=992&height=557&quality=85" },
+            { id: 78, name: "Erling Haaland", img: "https://media.losandes.com.ar/p/36dbfd066ee3c8723f0584a0072364cb/adjuntos/368/imagenes/100/632/0100632922/1000x0/smart/haaland2jpg.jpg" },
+            { id: 79, name: "Neymar Jr.", img: "https://cdn.diariocastellanos.com.ar/wp-content/uploads/2025/01/20054938/Neymar.jpeg" },
+            { id: 80, name: "Ronaldo Nazario", img: "https://cdn.conmebol.com/wp-content/uploads/2022/09/R9.jpeg" },
+            { id: 81, name: "Ronaldinho", img: "https://cdn.conmebol.com/wp-content/uploads/2018/01/roe.jpg" },
+            { id: 82, name: "Michael Jordan", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2017%2F07%2F15125639%2Fmichael-jordan-1920.jpg?auth=f986f05a41f0b258469ce406f517cec170c365a9a7b06543b86c21b3a684600d&smart=true&width=992&height=557&quality=85" },
+            { id: 83, name: "LeBron James", img: "https://media.tycsports.com/files/2020/01/26/84983/lebron-james_862x485.jpg" },
+            { id: 84, name: "Javier Mascherano", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2018%2F06%2F30142825%2FJavier-Mascherano-ultimo-partido-con-la-seleccion-rusia-2018-1920.jpg?auth=f6b400bbfa4e104f800bb361affb992a52e859934ccdc1103556201d3c6c1b90&smart=true&width=992&height=557&quality=85" },
+            { id: 85, name: "Juan Manuel Fangio", img: "https://media.ambito.com/p/bf83817dd428e4fedc1693eeb8001688/adjuntos/239/imagenes/042/563/0042563229/730x0/smart/fangio-2jpg.jpg" },
+            { id: 86, name: "Franco Colapinto", img: "https://hips.hearstapps.com/hmg-prod/images/franco-colapinto-of-argentina-and-williams-looks-on-in-the-news-photo-1724936301.jpg?crop=1xw:0.78131xh;center,top&resize=1400:*" },
+            { id: 87, name: "Lamine Yamal", img: "https://www.infobae.com/resizer/v2/B5ABTQHDIRCOHK4IBHRKR4QFYI.jpg?auth=e05acc821f2680628bcd6d0170d69ebeb51df34f07ad503c930f928faa46a94d&smart=true&width=992&height=661&quality=85" },
+            { id: 88, name: "Maravilla Martinez", img: "https://www.revistacabal.coop/sites/www.revistacabal.coop/files/styles/nota_detalle/public/sergio-maravilla-martinez_1.jpg?itok=9YkUj5Nx" },
+            { id: 89, name: "Rafael Nadal", img: "https://hips.hearstapps.com/hmg-prod/images/second-seeded-rafael-nadal-of-spain-reacts-in-frustration-news-photo-1662109752.jpg?crop=1.00xw:0.756xh;0.0&resize=1400:*" },
+            { id: 90, name: "Serena Williams", img: "https://www.infobae.com/resizer/v2/63XVMYIMMHRIKCPTWXZHUZDOHE.jpg?auth=7c170d141d73978628d37594d8af477aab0e8aefb67a81e9ff1f1e235f0b6c22&smart=true&width=992&height=704&quality=85" },
+            { id: 91, name: "Usain Bolt", img: "https://bsmedia.business-standard.com/_media/bs/img/article/2017-06/21/full/1498017914-8813.jpg" },
+            { id: 92, name: "Simone Biles", img: "https://media.ambito.com/p/02fb26ea77100e938512d03efb859b82/adjuntos/239/imagenes/041/726/0041726537/simone-biles-k7wf-u6029185305434ue-1200x840diario_abcjpg.jpg" },
+            { id: 93, name: "Luciana Aymar", img: "http://admin.digitalsport.com.ar/files/uploads/SPORT%202024/H1ecwMbRmx_1200x0.jpg" },
+            { id: 94, name: "Mike Tyson", img: "https://cdn1.roundbyroundboxing.com/uploads/content/1734601546550926222/mike-tyson-in-prime.jpg" },
+            { id: 95, name: "Muhammad Ali", img: "https://www.latercera.com/resizer/v2/YJ5TVPZFOZHLVKBHLKMLILXXPU.jpg?auth=0e80d96f7b319b56b990854d29155d8b880ca98515ea126134d71ad1cc9a8aa2&smart=true&width=800&height=450&quality=70" },
+            { id: 96, name: "Chucky", img: "https://sm.ign.com/t/ign_latam/news/c/childs-pla/childs-play-first-teaser-for-chucky-tv-series-released_n98b.1280.jpg" },
+            { id: 97, name: "Pennywise", img: "https://resizer.iproimg.com/unsafe/1920x/filters:format(webp):quality(75):max_bytes(102400)/https://assets.iprofesional.com/assets/jpg/2020/09/503626.jpg" },
+            { id: 98, name: "Jason", img: "https://cuatrobastardosdotcom.wordpress.com/wp-content/uploads/2016/05/6137990b60940e20.jpg" },
+            { id: 99, name: "Godzilla", img: "https://imagenes.elpais.com/resizer/v2/RZNWLUSDGFEOJOTT3K3MWGXE3E.jpg?auth=77210e82d3fdd0b5f1cfd11c74be050ae9694e1eb6d18dce3cd8bc68504ab95b&width=1200" },
+            { id: 100, name: "King Kong", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2017%2F06%2F23005515%2Fkingkong11.jpg?auth=a5e4902cfd4499abcf3d90dc38cf243fcf00c52a2f2fdd89dfa4f0fa04dc715f&smart=true&width=992&height=415&quality=85" },
+            { id: 101, name: "Manuel Belgrano", img: "https://superior-infd.mendoza.edu.ar/sitio/wp-content/uploads/2018/08/bandera_argentina_belgrano.jpg" },
+            { id: 102, name: "Barack Obama", img: "https://cdn.britannica.com/89/164789-050-D6B5E2C7/Barack-Obama-2012.jpg" },
+            { id: 103, name: "Nelson Mandela", img: "https://cdn.britannica.com/67/75567-050-4EBBE84D/Nelson-Mandela.jpg" },
+            { id: 104, name: "Mahatma Gandhi", img: "https://agenciasanluis.com/wp-content/uploads/2016/01/Mahatma_Gandhi.jpg" },
+            { id: 105, name: "Albert Einstein", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2018%2F01%2F18172811%2Feinstein.jpg?auth=38018dbb8bc975626e392decb89b76d5b2c186b6dd454dd23fc3e9e6831a6adc&smart=true&width=992&height=558&quality=85" },
+            { id: 106, name: "Marie Curie", img: "https://www.laizquierdadiario.com/local/cache-vignettes/L720xH481/arton142325-b8ab6.jpg?1763710865" },
+            { id: 107, name: "José de San Martín", img: "https://www.pachami.com/sm12.jpg" },
+            { id: 108, name: "Eva Perón (Evita)", img: "https://www.cultura.gob.ar/media/uploads/evita-_aniversario.jpg" },
+            { id: 109, name: "Che Guevara", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2017%2F10%2F06194217%2FErnesto-Guevara-en-Punta-del-Este.jpg?auth=52494921b7a7ad158376b002ef15f1dcd00b4a42c68fb4005857f94d2350a468&smart=true&width=992&height=558&quality=85" },
+            { id: 110, name: "Domingo Faustino Sarmiento", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2017%2F09%2F09124230%2Fsarmiento-1.jpg?auth=a621079cccaf919a6c4f82b2be1aeec8a508957d289d25756389dd64939d9189&smart=true&width=992&height=559&quality=85" },
+            { id: 111, name: "Spider-Man", img: "https://media.revistaqg.com/photos/61c9832dec2157b47d0637e7/16:9/w_1600,c_limit/marvel-spiderman.jpeg" },
+            { id: 112, name: "Iron Man (Tony Stark)", img: "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ab/Iron_Man_Mark_LXXXV.png/revision/latest?cb=20190405192851&path-prefix=es" },
+            { id: 113, name: "Batman (Bruce Wayne)", img: "https://bandai.com.mx/blog/wp-content/uploads/2019/09/Historia-de-Batman-el-superhe%CC%81roe-ma%CC%81s-popular-en-la-era-digital-copia-1.jpg" },
+            { id: 114, name: "Davo Xeneize", img: "https://www.lanacion.com.ar/resizer/v2/el-influencer-que-supero-una-situacion-familiar-6PY5UAYDWFBLNEF6JZETGALZEE.jpg?auth=b2eec25e243cd5fd501495ce706900a17a6ef5ae9eb1373bc272da894571cc66&width=880&height=586&quality=70&smart=true" },
+            { id: 115, name: "Harry Potter", img: "https://media.vandal.net/i/1280x720/10-2023/18/202310181641400_1.jpg" },
+            { id: 116, name: "Hermione Granger", img: "https://s2.elespanol.com/2022/07/28/actualidad/691191464_226120079_1706x960.jpg" },
+            { id: 117, name: "Jack Sparrow", img: "https://alfabetajuega.com/hero/2025/08/johnny-depp-pirates-of-caribbean-at-worlds-end-081125-34b81a9ebf064f9fb96ff63b34b554bd.jpg?width=1200&aspect_ratio=16:9" },
+            { id: 118, name: "Darth Vader", img: "https://cdn.eldestapeweb.com/eldestape/072023/1689626161484/darth-vader-1-jpg..webp?cw=800&ch=450&extw=jpg" },
+            { id: 119, name: "Super Mario", img: "https://cultura.riocuarto.gov.ar/wp-content/uploads/supermario-1536x864.jpg" },
+            { id: 120, name: "Capitán América", img: "https://media.revistaqg.com/photos/5ca5fa04d71dd992f79581bc/16:9/w_1600,c_limit/chris_evans_capitan_america_4514.jpg" },
+            { id: 121, name: "Bart Simpson", img: "https://static.wikia.nocookie.net/deathbattlefanon/images/f/f7/6355543_preview.png/revision/latest?cb=20200731072947" },
+            { id: 122, name: "Blancanieves", img: "https://resizer.glanacion.com/resizer/v2/que-hay-detras-del-origen-macabro-de-4JWTJILDKFB7PKRQQL2RI4YXMQ.png?auth=02356f2f9136b021d8fb3c8c51ae5b4d375174b58efed2df44c36aeb6f5f0dc2&width=1280&height=854&quality=70&smart=true" },
+            { id: 123, name: "Pikachu", img: "https://static.wikia.nocookie.net/thepokemonshow/images/8/80/20101007155439%21Ash_Pikachu.png/revision/latest?cb=20140425213328" },
+            { id: 124, name: "Ariel", img: "https://s3.abcstatics.com/media/play/2019/07/04/sirenita-kBkB--1248x698@abc.jpg" },
+            { id: 125, name: "Sonic", img: "https://static.wikia.nocookie.net/sonic/images/4/4c/SXSG_Classic_Sonic.png/revision/latest?cb=20241220232905&path-prefix=es" },
+            { id: 126, name: "Eleven (Ce)", img: "https://media.vogue.es/photos/5d4078c88bb68f0008d541b4/2:3/w_1600,c_limit/Eleven-16jul17-vogueint-Netflix.jpg" },
+            { id: 127, name: "Merlina Addams", img: "https://i0.wp.com/elplanetaurbano.com/wp-content/uploads/2022/11/Merlina-Planeta-Urbano-2022-portada.jpg?resize=1250%2C781&ssl=1" },
+            { id: 128, name: "El Profesor", img: "https://www.hola.com/horizon/original_aspect_ratio/e34561993ce1-la-casa-de-papel-alvaro-morte-z.jpg?im=Resize=(640),type=downsize" },
+            { id: 129, name: "Goku", img: "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/12/dragon-ball-ilustracion-goku-viejito.jpg" },
+            { id: 130, name: "Luffy", img: "https://alfabetajuega.com/hero/2022/03/one-piece-monkey-d-luffy.jpg?width=1200&aspect_ratio=16:9" },
+            { id: 131, name: "Homero Simpson", img: "https://imagenes.hobbyconsolas.com/files/image_1280_720/uploads/imagenes/2023/04/25/6902a90c90096.jpeg" },
+            { id: 132, name: "Bob Esponja", img: "https://static.wikia.nocookie.net/clan/images/4/4b/Bob-Esponja.jpg/revision/latest?cb=20120617091247&path-prefix=es" },
+            { id: 133, name: "Simba", img: "https://www.laprensa.com.ar/Multimedios/Imgs/38437_620.jpg" },
+            { id: 134, name: "Barbie", img: "https://akamai.sscdn.co/tb/letras-blog/wp-content/uploads/2023/07/49a9c1c-barbie-pelicula-2023.jpg" },
+            { id: 135, name: "Ken", img: "https://akamai.sscdn.co/tb/letras-blog/wp-content/uploads/2023/07/49a9c1c-barbie-pelicula-2023.jpg" },
+            { id: 136, name: "Geralt de Rivia", img: "https://es.web.img2.acsta.net/r_654_368/newsv7/20/11/12/11/13/0287746.jpg" },
+            { id: 137, name: "Lara Croft", img: "https://socioespectacular.com.uy/wp-content/uploads/2025/09/Lara-Croft-TombRaider-45909-1-846x476.jpg" },
+            { id: 138, name: "Bugs Bunny", img: "https://ucarecdn.com/ad5128ce-8d87-46b0-97b6-e6df02adfbbf/-/crop/1023x860/889,117/-/preview/" },
+            { id: 139, name: "Kratos", img: "https://alfabetajuega.com/hero/2025/05/captura.1747380423.8242.png?width=1200&aspect_ratio=16:9" },
+            { id: 140, name: "Pato Lucas", img: "https://www.elimparcial.com/resizer/v2/GNJLZKCLP5HMTCU4W7YH25C5CE.png?auth=2dab51950ded68873a3c5f8615020aec90a2d35062f0476c191e27e1c5d498ff&smart=true&width=1200&height=800&quality=70" },
+            { id: 141, name: "Superman", img: "https://i.blogs.es/10d884/captura-de-pantalla-2025-07-09-a-las-14.34.52/1200_800.jpeg" },
+            { id: 142, name: "James Bond", img: "https://media.ambito.com/p/c3659e6ecbe98ff8a05719b737a5ca00/adjuntos/239/imagenes/038/076/0038076589/daniel-craig-jamesbondjpg.jpg" },
+            { id: 143, name: "Indiana Jones", img: "https://media.revistaqg.com/photos/5f521fbe2692b780329d4859/16:9/w_1600,c_limit/indiana-jones.jpg" },
+            { id: 144, name: "Naruto Uzumaki", img: "https://alfabetajuega.com/hero/2025/05/el-anime-original-de-naruto-necesita-un-remake.jpg?width=1200&aspect_ratio=16:9" },
+            { id: 145, name: "Katniss Everdeen", img: "https://alfabetajuega.com/hero/2020/04/los-juegos-del-hambre.jpg?width=1200&aspect_ratio=16:9" },
+            { id: 146, name: "Sherlock Holmes", img: "https://images.justwatch.com/poster/177867069/s718/sherlock.jpg" },
+            { id: 147, name: "Mickey Mouse", img: "https://www.infobae.com/resizer/v2/https%3A%2F%2Fs3.amazonaws.com%2Farc-wordpress-client-uploads%2Finfobae-wp%2Fwp-content%2Fuploads%2F2018%2F11%2F16144851%2FMickey-Mouse-Portada-Ok.jpg?auth=500524ddab1447a67f15ff67084a9fdca385427408de8749b20d28edbed7c38b&smart=true&width=992&height=558&quality=85" },
+            { id: 148, name: "Hulk", img: "https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2018/06/hulk-nuevo-aspecto.jpg?resize=768%2C432&ssl=1" },
+            { id: 149, name: "Chewbacca", img: "https://images.bigbadtoystore.com/images/p/full/2024/08/fd616ae4-b70a-43be-878f-be35b8b85ce2.jpg" },
+            { id: 150, name: "Thor", img: "https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0b/Thor.png/revision/latest?cb=20240725142800&path-prefix=es" }
+        ];
+
+        // --- ESTADO DEL JUEGO ---
+        let players = []; // { name: "Juan", score: 0, currentCharacter: null }
+        let currentPlayerIndex = 0;
+        let usedCharacterIds = [];
+        let isSpinning = false;
+
+        // Referencias DOM
+        const setupScreen = document.getElementById('setupScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const summaryScreen = document.getElementById('summaryScreen');
+        
+        const numPlayersInput = document.getElementById('numPlayers');
+        const nameInputsContainer = document.getElementById('nameInputs');
+        
+        const charImg = document.getElementById('charImg');
+        const placeholder = document.getElementById('placeholder');
+        const charName = document.getElementById('charName');
+        const charId = document.getElementById('charId');
+        const spinBtn = document.getElementById('spinBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const turnIndicator = document.getElementById('turnIndicator');
+        const resultsList = document.getElementById('resultsList');
+
+        // --- PANTALLA DE CONFIGURACIÓN ---
+        
+        function generateNameInputs() {
+            let count = parseInt(numPlayersInput.value);
+            if(count < 1) count = 1;
+            if(count > 20) count = 20;
+
+            nameInputsContainer.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = `Jugador ${i + 1}`;
+                input.className = 'player-name-input';
+                // Preservar nombres si ya existían en el array (opcional, simplificado aquí)
+                if(players[i]) input.value = players[i].name;
+                nameInputsContainer.appendChild(input);
+            }
+        }
+
+        // Inicializar inputs al cargar
+        generateNameInputs();
+
+        function initGame() {
+            const inputs = document.querySelectorAll('.player-name-input');
+            players = [];
+            usedCharacterIds = [];
+            
+            inputs.forEach((input, index) => {
+                const name = input.value.trim() || `Jugador ${index + 1}`;
+                players.push({ name: name, score: 0, currentCharacter: null });
+            });
+
+            currentPlayerIndex = 0;
+            switchScreen('game');
+            updateTurnDisplay();
+            resetCard();
+        }
+
+        // --- LÓGICA DEL JUEGO ---
+
+        function switchScreen(screenName) {
+            setupScreen.classList.remove('active');
+            gameScreen.classList.remove('active');
+            summaryScreen.classList.remove('active');
+
+            if(screenName === 'setup') setupScreen.classList.add('active');
+            if(screenName === 'game') gameScreen.classList.add('active');
+            if(screenName === 'summary') summaryScreen.classList.add('active');
+        }
+
+        function updateTurnDisplay() {
+            const player = players[currentPlayerIndex];
+            turnIndicator.innerHTML = `Turno de: <span>${player.name}</span>`;
+            spinBtn.style.display = 'block';
+            nextBtn.style.display = 'none';
+            spinBtn.disabled = false;
+        }
+
+        function handleError() {
+            charImg.style.display = 'none';
+            placeholder.style.display = 'flex';
+            placeholder.textContent = charName.textContent.charAt(0);
+        }
+        charImg.onerror = handleError;
+
+        function updateCard(character) {
+            charId.textContent = `#${String(character.id).padStart(3, '0')}`;
+            charName.textContent = character.name;
+            
+            charImg.style.display = 'none';
+            placeholder.style.display = 'flex';
+            placeholder.textContent = "?"; 
+
+            if (character.img) {
+                const img = new Image();
+                img.onload = () => {
+                   if(charName.textContent === character.name) {
+                       charImg.src = character.img;
+                       charImg.style.display = 'block';
+                       placeholder.style.display = 'none';
+                   }
+                };
+                img.onerror = () => {
+                    if(charName.textContent === character.name) {
+                        handleError();
+                    }
+                };
+                img.src = character.img;
+            } else {
+                handleError();
+            }
+        }
+
+        function resetCard() {
+            charId.textContent = "#000";
+            charName.textContent = "READY?";
+            charImg.style.display = 'none';
+            placeholder.style.display = 'flex';
+            placeholder.textContent = "?";
+        }
+
+        function startSpin() {
+            if (isSpinning) return;
+            isSpinning = true;
+            spinBtn.disabled = true;
+            charName.classList.add('glitch-text');
+
+            let counter = 0;
+            const totalShuffles = 20; 
+            const speed = 80; 
+
+            // Filtramos personajes ya usados para no mostrarlos en el shuffle final
+            const availableChars = characters.filter(c => !usedCharacterIds.includes(c.id));
+            
+            // Si nos quedamos sin personajes (caso extremo), reseteamos usados
+            let poolToUse = availableChars.length > 0 ? availableChars : characters;
+
+            const interval = setInterval(() => {
+                // Durante la animación mostramos cualquiera
+                const randomTemp = characters[Math.floor(Math.random() * characters.length)];
+                updateCard(randomTemp);
+                counter++;
+
+                if (counter > totalShuffles) {
+                    clearInterval(interval);
+                    finalizeSpin(poolToUse);
+                }
+            }, speed);
+        }
+
+        function finalizeSpin(pool) {
+            // Selección final SIN REPETIR
+            let winner;
+            if(pool.length > 0) {
+                 winner = pool[Math.floor(Math.random() * pool.length)];
+            } else {
+                // Fallback si no hay mas (no debería pasar con >100 chars y <20 players)
+                winner = characters[Math.floor(Math.random() * characters.length)];
+            }
+
+            // Registrar ID usado
+            usedCharacterIds.push(winner.id);
+            // Asignar al jugador
+            players[currentPlayerIndex].currentCharacter = winner;
+
+            setTimeout(() => {
+                updateCard(winner);
+                charName.classList.remove('glitch-text');
+                
+                if (navigator.vibrate) navigator.vibrate(200);
+
+                // Preparar botón siguiente
+                spinBtn.style.display = 'none';
+                nextBtn.style.display = 'block';
+                
+                // Si es el último, cambiamos texto
+                if(currentPlayerIndex === players.length - 1) {
+                    nextBtn.textContent = "VER RESULTADOS";
+                } else {
+                    nextBtn.textContent = "SIGUIENTE JUGADOR";
+                }
+
+                isSpinning = false;
+            }, 200);
+        }
+
+        function nextPlayer() {
+            if (currentPlayerIndex < players.length - 1) {
+                currentPlayerIndex++;
+                resetCard();
+                updateTurnDisplay();
+            } else {
+                showSummary();
+            }
+        }
+
+        // --- PANTALLA DE RESULTADOS ---
+
+        function showSummary() {
+            switchScreen('summary');
+            renderResults();
+        }
+
+        function renderResults() {
+            resultsList.innerHTML = '';
+            players.forEach((player, index) => {
+                const row = document.createElement('div');
+                row.className = 'player-row';
+                if(player.score > 0) row.classList.add('loser-highlight');
+
+                // Info del jugador
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'player-info';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'p-name';
+                nameDiv.textContent = player.name;
+
+                const charDiv = document.createElement('div');
+                charDiv.className = 'p-char';
+                charDiv.textContent = player.currentCharacter ? player.currentCharacter.name : "Sin personaje";
+
+                infoDiv.appendChild(nameDiv);
+                infoDiv.appendChild(charDiv);
+
+                // Área de puntaje
+                const scoreArea = document.createElement('div');
+                scoreArea.className = 'p-score-area';
+
+                const badge = document.createElement('div');
+                badge.className = 'score-badge';
+                badge.textContent = `${player.score} 💀`;
+                badge.id = `score-${index}`;
+
+                const addBtn = document.createElement('button');
+                addBtn.className = 'btn-add-point';
+                addBtn.textContent = "+1 💀";
+                addBtn.onclick = () => addPoint(index);
+
+                scoreArea.appendChild(badge);
+                scoreArea.appendChild(addBtn);
+
+                row.appendChild(infoDiv);
+                row.appendChild(scoreArea);
+
+                resultsList.appendChild(row);
+            });
+        }
+
+        function addPoint(playerIndex) {
+            players[playerIndex].score++;
+            const badge = document.getElementById(`score-${playerIndex}`);
+            if(badge) badge.textContent = `${players[playerIndex].score} 💀`;
+            
+            // Highlight visual inmediato
+            const rows = document.querySelectorAll('.player-row');
+            rows[playerIndex].classList.add('loser-highlight');
+        }
+
+        function newRound() {
+            usedCharacterIds = []; // Reseteamos personajes usados para la nueva ronda
+            currentPlayerIndex = 0;
+            // Mantenemos puntajes y nombres, reseteamos personaje actual
+            players.forEach(p => p.currentCharacter = null);
+            
+            switchScreen('game');
+            resetCard();
+            updateTurnDisplay();
+            
+            // Restaurar texto botón
+            nextBtn.textContent = "SIGUIENTE JUGADOR"; 
+        }
+
+    </script>
+</body>
+</html>
