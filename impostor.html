@@ -3,16 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego del Impostor</title>
+    <title>Juego del Impostor - Neon Edition</title>
+    <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Fuentes Futuristas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- ESTETICA NEON --- */
+        :root {
+            --neon-green: #39ff14;
+            --neon-blue: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bc13fe;
+            --bg-dark: #050505;
+            --card-bg: #111111;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a202c;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(188, 19, 254, 0.1) 0%, transparent 50%),
+                linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 100%);
             color: white;
             display: flex;
             justify-content: center;
@@ -20,99 +35,260 @@
             min-height: 100vh;
             margin: 0;
             padding: 1rem;
+            overflow-x: hidden;
         }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
         .container {
-            max-width: 640px;
+            max-width: 500px;
             width: 100%;
-            background-color: #2d3748;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            text-align: center;
+            position: relative;
+            z-index: 10;
         }
+
+        /* Tarjeta con efecto Neón */
         .card {
-            background-color: #4a5568;
+            background-color: rgba(17, 17, 17, 0.95);
+            border: 2px solid var(--neon-blue);
             border-radius: 1rem;
-            padding: 2rem;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 30px rgba(0, 255, 255, 0.1);
+            border-color: #55ffff;
+        }
+
+        /* Títulos brillantes */
+        .title-glow {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+        
+        .subtitle-glow {
+            color: #ddd;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Botón Primario (Verde Neón) */
+        .btn-primary {
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-primary:hover {
+            background: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.8);
+            transform: scale(1.02);
+            font-weight: 900;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Botón Secundario (Rosa Neón - Impostor/Peligro) */
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+            transform: scale(1.02);
+        }
+
+        /* Inputs estilizados */
+        .input-style {
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            border-bottom: 2px solid var(--neon-purple);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .input-style:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+            background-color: #111;
+        }
+
+        /* Textos de roles */
+        .role-impostor {
+            color: var(--neon-pink);
+            text-shadow: 0 0 15px var(--neon-pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .role-crewmate {
+            color: var(--neon-green);
+            text-shadow: 0 0 15px var(--neon-green);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .secret-word-style {
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* Animación Shake para errores */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Ocultar scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-purple); 
+        }
+
+        select option {
+            background-color: #111;
+            color: white;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 class="text-3xl font-bold mb-6">El Juego del Impostor</h1>
 
-    <!-- Pantalla de inicio - Cantidad de jugadores -->
-    <div id="start-screen">
-        <div class="card space-y-4">
-            <p class="text-lg">¿Cuántos jugadores hay en la partida?</p>
-            <input id="player-count" type="number" min="3" value="4" class="w-24 text-center bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="setPlayerCount()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
-                Siguiente
-            </button>
-        </div>
-    </div>
-    
-    <!-- Pantalla intermedia 1 - Cantidad de impostores -->
-    <div id="impostor-count-screen" class="hidden">
-        <div class="card space-y-4">
-            <p class="text-lg">¿Cuántos impostores habrá en la partida?</p>
-            <p id="impostor-min-max" class="text-sm text-gray-400"></p>
-            <input id="impostor-count" type="number" min="1" value="1" class="w-24 text-center bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="selectThemeScreen()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
-                Siguiente
+    <!-- Pantalla 1: Inicio y Conteo de Jugadores -->
+    <div id="start-screen" class="screen">
+        <div class="card">
+            <h1 class="text-5xl font-black mb-2 title-glow">IMPOSTOR</h1>
+            <p class="text-xl mb-10 subtitle-glow font-bold tracking-widest">NEON PROTOCOL</p>
+            
+            <label for="player-count" class="block text-lg font-bold mb-3 text-cyan-300">NÚMERO DE JUGADORES</label>
+            <input type="number" id="player-count" min="3" value="5" class="input-style w-full mb-8 text-center text-4xl">
+            
+            <button onclick="setPlayerCount()" class="btn-primary w-full py-4 rounded-xl text-xl font-bold">
+                SIGUIENTE FASE
             </button>
         </div>
     </div>
 
-    <!-- Pantalla intermedia 2 - Selección de temática -->
-    <div id="theme-selection-screen" class="hidden">
-        <div class="card space-y-4">
-            <p class="text-lg">Selecciona una temática para la partida:</p>
-            <select id="theme-selector" class="w-auto max-w-full bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <!-- Pantalla 2: Conteo de Impostores -->
+    <div id="impostor-count-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-4xl font-bold mb-4 title-glow">CONFIGURAR AMENAZA</h2>
+            <p class="text-lg mb-8 text-gray-400">¿Cuántos infiltrados habrá?</p>
+            
+            <label for="impostor-count" class="block text-lg font-bold mb-3 text-pink-400">CANTIDAD DE IMPOSTORES</label>
+            <input type="number" id="impostor-count" min="1" max="4" value="1" class="input-style w-full mb-2 text-center text-4xl">
+            <p id="impostor-min-max" class="text-sm text-cyan-500 mb-8 font-mono">(Mínimo 1, Máximo X)</p>
+
+            <button onclick="selectThemeScreen()" class="btn-primary w-full py-4 rounded-xl text-xl font-bold">
+                CONFIRMAR DATOS
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla 3: Selección de Temática -->
+    <div id="theme-selection-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-4xl font-bold mb-6 title-glow">BASE DE DATOS</h2>
+            <p class="text-lg mb-8 text-gray-300">Selecciona el protocolo de palabras:</p>
+
+            <select id="theme-selector" class="input-style w-full mb-10 text-xl cursor-pointer">
+                <!-- Opciones se llenarán con JS -->
             </select>
-            <button onclick="startGame()" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200">
-                Empezar Partida
+
+            <button onclick="startGame()" class="btn-primary w-full py-4 rounded-xl text-xl font-bold">
+                INICIAR MISIÓN
             </button>
         </div>
     </div>
 
-    <!-- Pantalla de revelación -->
-    <div id="reveal-screen" class="hidden">
-        <div class="card space-y-6">
-            <p id="current-player" class="text-xl font-semibold text-gray-300">Jugador #</p>
-            <button onclick="showSecret()" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white text-lg font-bold rounded-full transition-colors duration-200">
-                Toca aquí para ver tu rol
+    <!-- Pantalla 4: Revelación de Rol -->
+    <div id="reveal-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-3xl font-bold mb-4 text-cyan-300 tracking-widest">IDENTIFICACIÓN</h2>
+            <p id="current-player" class="text-5xl font-black mb-10 text-white drop-shadow-lg" style="font-family: 'Orbitron';"></p>
+
+            <button onclick="showSecret()" class="btn-primary w-full py-5 rounded-xl text-xl font-bold mb-6">
+                ESCANEAR IDENTIDAD
             </button>
-            <div id="secret-info" class="hidden">
-                <p id="player-role" class="text-2xl font-bold mb-2"></p>
-                <p id="secret-word" class="text-4xl font-extrabold text-yellow-300"></p>
-                <p id="confirmation-message" class="mt-4 text-sm text-gray-400">
-                    Recuerda tu rol y pasa el dispositivo al siguiente jugador.
-                </p>
+
+            <div id="secret-info" class="hidden border-2 border-dashed border-gray-700 p-6 rounded-xl bg-black bg-opacity-50 mt-4 relative overflow-hidden">
+                <!-- Efecto de scan line -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/10 to-transparent pointer-events-none animate-pulse"></div>
+                
+                <p class="text-sm text-gray-400 mb-2 font-mono uppercase">ROL:</p>
+                <p id="player-role" class="text-4xl font-bold mb-6">--</p>
+                
+                <div id="secret-word-container">
+                    <p id="secret-word-label" class="text-sm text-gray-400 mb-2 font-mono uppercase">PALABRA SECRETA:</p>
+                    <p id="secret-word" class="text-4xl font-black">--</p>
+                </div>
             </div>
-            <button id="next-player-btn" onclick="nextPlayer()" class="hidden mt-6 px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-colors duration-200">
-                Siguiente Jugador
+            
+            <p id="confirmation-message" class="text-sm text-cyan-500 mt-6 hidden font-mono">MEMORIZA TU PALABRA Y TU ROL. PRESIONA SIGUIENTE.</p>
+
+            <button id="next-player-btn" onclick="nextPlayer()" class="btn-secondary w-full py-4 rounded-xl text-xl font-bold mt-8 hidden">
+                SIGUIENTE AGENTE
             </button>
         </div>
     </div>
 
-    <!-- Pantalla final -->
-    <div id="end-screen" class="hidden">
-        <div class="card space-y-4">
-            <h2 class="text-2xl font-bold">¡Fin de la Revelación!</h2>
-            <p class="text-lg">Ya todos los jugadores han visto su palabra.</p>
-            <p class="text-lg">Ahora pueden comenzar la discusión.</p>
-            <button onclick="window.location.reload()" class="mt-4 px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-lg transition-colors duration-200">
-                Reiniciar Partida
+    <!-- Pantalla 5: Fin de la Revelación / Inicio del Debate -->
+    <div id="end-screen" class="screen hidden">
+        <div class="card">
+            <h2 class="text-5xl font-black mb-6 text-red-500" style="text-shadow: 0 0 20px red;">¡ALARMA!</h2>
+            <p class="text-2xl mb-6 text-white">IDENTIDADES ASIGNADAS</p>
+            <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent mb-6"></div>
+            <p class="text-lg font-medium mb-10 text-gray-300">El debate comienza ahora.<br>Encuentren al infiltrado antes de que sea tarde.</p>
+            
+            <button onclick="location.reload()" class="btn-primary w-full py-4 rounded-xl text-xl font-bold">
+                REINICIAR SISTEMA
             </button>
         </div>
     </div>
+
 </div>
 
 <script>
@@ -138,7 +314,76 @@
             { normal: "Silencio", impostor: "Quietud" }, { normal: "Destino", impostor: "Fortuna" },
             { normal: "Virtud", impostor: "Moral" }, { normal: "Venganza", impostor: "Desquite" },
             { normal: "Sabiduría", impostor: "Conocimiento" }, { normal: "Paciencia", impostor: "Espera" },
-            { normal: "Dolor", impostor: "Sufrimiento" }, { normal: "Sueño", impostor: "Deseo" }
+            { normal: "Dolor", impostor: "Sufrimiento" }, { normal: "Sueño", impostor: "Deseo" },
+            { normal: "Risa", impostor: "Alegría" }, { normal: "Generosidad", impostor: "Bondad" },
+            { normal: "Esperanza", impostor: "Fe" }, { normal: "Ira", impostor: "Rabia" },
+            { normal: "Egoísmo", impostor: "Individualismo" }, { normal: "Soledad", impostor: "Aislamiento" },
+            { normal: "Confianza", impostor: "Seguridad" }, { normal: "Traición", impostor: "Deslealtad" },
+            { normal: "Inocencia", impostor: "Candor" }, { normal: "Culpa", impostor: "Cargo de conciencia" },
+            { normal: "Ambición", impostor: "Deseo" }, { normal: "Inspiración", impostor: "Musa" },
+            { normal: "Perdón", impostor: "Absolución" }, { normal: "Juicio", impostor: "Sentencia" },
+            { normal: "Lealtad", impostor: "Fidelidad" }, { normal: "Prejuicio", impostor: "Sesgo" },
+            { normal: "Compasión", impostor: "Piedad" }, { normal: "Alegoría", impostor: "Parábola" },
+            { normal: "Ideal", impostor: "Sueño" }, { normal: "Realidad", impostor: "Existencia" },
+            { normal: "Memoria", impostor: "Amnesia" }, { normal: "Progreso", impostor: "Avance" },
+            { normal: "Decisión", impostor: "Voluntad" }, { normal: "Certeza", impostor: "Convencimiento" },
+            { normal: "Cáos", impostor: "Desorden" }, { normal: "Armonía", impostor: "Sinfonía" },
+            { normal: "Vínculo", impostor: "Conexión" }, { normal: "Sacrificio", impostor: "Ofrenda" },
+            { normal: "Misterio", impostor: "Enigma" }, { normal: "Ilusión", impostor: "Fantasía" },
+            { normal: "Conciencia", impostor: "Moralidad" }, { normal: "Dignidad", impostor: "Honra" },
+            { normal: "Época", impostor: "Era" }, { normal: "Cultura", impostor: "Tradición" },
+            { normal: "Innovación", impostor: "Novedad" }, { normal: "Consuelo", impostor: "Alivio" },
+            { normal: "Desafío", impostor: "Reto" }, { normal: "Placer", impostor: "Deleite" },
+            { normal: "Necesidad", impostor: "Carencia" }, { normal: "Codicia", impostor: "Avaricia" },
+            { normal: "Serenidad", impostor: "Tranquilidad" }, { normal: "Compromiso", impostor: "Acuerdo" },
+            { normal: "Identidad", impostor: "Personalidad" }, { normal: "Razón", impostor: "Lógica" },
+            { normal: "Instinto", impostor: "Impulso" }, { normal: "Filosofía", impostor: "Pensamiento" },
+            { normal: "Estética", impostor: "Apariencia" }, { normal: "Crítica", impostor: "Análisis" },
+            { normal: "Revelación", impostor: "Descubrimiento" }, { normal: "Transparencia", impostor: "Claridad" },
+            { normal: "Asombro", impostor: "Maravilla" }, { normal: "Curiosidad", impostor: "Interés" },
+            { normal: "Disciplina", impostor: "Rigidez" }, { normal: "Motivación", impostor: "Estímulo" },
+            { normal: "Perfección", impostor: "Excelencia" }, { normal: "Mediocridad", impostor: "Común" },
+            { normal: "Sentimiento", impostor: "Emoción" }, { normal: "Indiferencia", impostor: "Apatía" },
+            { normal: "Unidad", impostor: "Cohesión" }, { normal: "Diversidad", impostor: "Variedad" },
+            { normal: "Esencia", impostor: "Naturaleza" }, { normal: "Forma", impostor: "Estructura" },
+            { normal: "Existencial", impostor: "Ontológico" }, { normal: "Temporal", impostor: "Perenne" },
+            { normal: "Infinito", impostor: "Eterno" }, { normal: "Frontera", impostor: "Límite" },
+            { normal: "Atracción", impostor: "Fascino" }, { normal: "Repulsión", impostor: "Aversión" },
+            { normal: "Escepticismo", impostor: "Duda" }, { normal: "Dogma", impostor: "Creencia" },
+            { normal: "Sublime", impostor: "Majestuoso" }, { normal: "Sutileza", impostor: "Delicadeza" },
+            { normal: "Intención", impostor: "Propósito" }, { normal: "Consecuencia", impostor: "Resultado" },
+            { normal: "Pertenencia", impostor: "Adscripción" }, { normal: "Alienación", impostor: "Extrañamiento" },
+            { normal: "Autenticidad", impostor: "Genuino" }, { normal: "Simulación", impostor: "Imitación" },
+            { normal: "Visión", impostor: "Percepción" }, { normal: "Perspectiva", impostor: "Enfoque" },
+            { normal: "Memorable", impostor: "Inolvidable" }, { normal: "Efímero", impostor: "Fugaz" },
+            { normal: "Legado", impostor: "Herencia" }, { normal: "Influencia", impostor: "Poder" },
+            { normal: "Paradigma", impostor: "Modelo" }, { normal: "Nexo", impostor: "Unión" },
+            { normal: "Metáfora", impostor: "Símil" }, { normal: "Hipótesis", impostor: "Teoría" },
+            { normal: "Preámbulo", impostor: "Inicio" }, { normal: "Clímax", impostor: "Cima" },
+            { normal: "Zenit", impostor: "Apogeo" }, { normal: "Abismo", impostor: "Simar" },
+            { normal: "Intuición", impostor: "Corazonada" }, { normal: "Conclusión", impostor: "Desenlace" },
+            { normal: "Destreza", impostor: "Habilidad" }, { normal: "Dilema", impostor: "Encrucijada" },
+            { normal: "Éxtasis", impostor: "Arrobamiento" }, { normal: "Frenesí", impostor: "Arrebato" },
+            { normal: "Resiliencia", impostor: "Elasticidad" }, { normal: "Ascetismo", impostor: "Abstinencia" },
+            { normal: "Dogmatismo", impostor: "Rigidez" }, { normal: "Empatía", impostor: "Comprensión" },
+            { normal: "Antítesis", impostor: "Contrario" }, { normal: "Sinergia", impostor: "Cooperación" },
+            { normal: "Aura", impostor: "Atmósfera" }, { normal: "Crepúsculo", impostor: "Anochecer" },
+            { normal: "Alborada", impostor: "Amanecer" }, { normal: "Elocuencia", impostor: "Retórica" },
+            { normal: "Misticismo", impostor: "Espiritualidad" }, { normal: "Axioma", impostor: "Postulado" },
+            { normal: "Utopía", impostor: "Ideal" }, { normal: "Distopía", impostor: "Pesadilla" },
+            { normal: "Hegemonía", impostor: "Supremacía" }, { normal: "Armisticio", impostor: "Tregua" },
+            { normal: "Inmolación", impostor: "Suicidio" }, { normal: "Nihilismo", impostor: "Vacío" },
+            { normal: "Fatalismo", impostor: "Destino" }, { normal: "Sarcasmo", impostor: "Ironía" },
+            { normal: "Añoranza", impostor: "Echamiento" }, { normal: "Vanguardia", impostor: "Pionero" },
+            { normal: "Retaguardia", impostor: "Atrás" }, { normal: "Quimera", impostor: "Ficción" },
+            { normal: "Cisma", impostor: "División" }, { normal: "Consenso", impostor: "Acuerdo" },
+            { normal: "Aflicción", impostor: "Pena" }, { normal: "Júbilo", impostor: "Alegría" },
+            { normal: "Evasión", impostor: "Huida" }, { normal: "Subconsciente", impostor: "Inconsciente" },
+            { normal: "Conjetura", impostor: "Suposición" }, { normal: "Postura", impostor: "Posición" },
+            { normal: "Exuberancia", impostor: "Opulencia" }, { normal: "Sobriedad", impostor: "Moderación" },
+            { normal: "Epifanía", impostor: "Visión" }, { normal: "Devenir", impostor: "Suceso" },
+            { normal: "Perplejidad", impostor: "Desconcierto" }, { normal: "Asertividad", impostor: "Firmeza" },
+            { normal: "Inopia", impostor: "Ignorancia" }, { normal: "Ludismo", impostor: "Juego" }
         ],
         "Cotidiano": [
             { normal: "Teléfono", impostor: "Celular" }, { normal: "Reloj", impostor: "Hora" },
@@ -155,7 +400,74 @@
             { normal: "Periódico", impostor: "Noticias" }, { normal: "Teclado", impostor: "Ratón" },
             { normal: "Cuaderno", impostor: "Libreta" }, { normal: "Bolígrafo", impostor: "Pluma" },
             { normal: "Alfombra", impostor: "Tapete" }, { normal: "Almohada", impostor: "Cojín" },
-            { normal: "Paraguas", impostor: "Sombrilla" }, { normal: "Vela", impostor: "Cirio" }
+            { normal: "Paraguas", impostor: "Sombrilla" }, { normal: "Vela", impostor: "Cirio" },
+            { normal: "Toalla", impostor: "Secador" }, { normal: "Nevera", impostor: "Refrigerador" },
+            { normal: "Bombilla", impostor: "Foco" }, { normal: "Piso", impostor: "Suelo" },
+            { normal: "Cuchara", impostor: "Tenedor" }, { normal: "Manta", impostor: "Cobija" },
+            { normal: "Calcetines", impostor: "Medias" }, { normal: "Camisa", impostor: "Blusa" },
+            { normal: "Sartén", impostor: "Olla" }, { normal: "Cepillo de dientes", impostor: "Pasta dental" },
+            { normal: "Ducha", impostor: "Bañera" }, { normal: "Papelera", impostor: "Bote de basura" },
+            { normal: "Cable", impostor: "Cordón" }, { normal: "Bolsa", impostor: "Saco" },
+            { normal: "Moneda", impostor: "Céntimo" }, { normal: "Cartera", impostor: "Billetera" },
+            { normal: "Radio", impostor: "Altavoz" }, { normal: "Tijeras", impostor: "Navaja" },
+            { normal: "Lápiz", impostor: "Borrador" }, { normal: "Pizarra", impostor: "Tablero" },
+            { normal: "Calendario", impostor: "Fecha" }, { normal: "Bufanda", impostor: "Pañuelo" },
+            { normal: "Guantes", impostor: "Manopla" }, { normal: "Cortina", impostor: "Persiana" },
+            { normal: "Vajilla", impostor: "Plato" }, { normal: "Candado", impostor: "Pestillo" },
+            { normal: "Martillo", impostor: "Clavo" }, { normal: "Pegamento", impostor: "Cinta adhesiva" },
+            { normal: "Tarjeta de crédito", impostor: "Débito" }, { normal: "Pijama", impostor: "Bata" },
+            { normal: "Zapatilla", impostor: "Tenis" }, { normal: "Cinturón", impostor: "Tirantes" },
+            { normal: "Estantería", impostor: "Librero" }, { normal: "Tostadora", impostor: "Horno" },
+            { normal: "Microondas", impostor: "Calentador" }, { normal: "Escoba", impostor: "Fregona" },
+            { normal: "Aspiradora", impostor: "Robot" }, { normal: "Jarrón", impostor: "Florero" },
+            { normal: "Botella", impostor: "Cantimplora" }, { normal: "Biberón", impostor: "Chupete" },
+            { normal: "Cuna", impostor: "Corral" }, { normal: "Pañal", impostor: "Toallita" },
+            { normal: "Medicamento", impostor: "Píldora" }, { normal: "Venda", impostor: "Gasa" },
+            { normal: "Manguera", impostor: "Tubería" }, { normal: "Regadera", impostor: "Ducha" },
+            { normal: "Juguete", impostor: "Muñeco" }, { normal: "Pelota", impostor: "Balón" },
+            { normal: "Caja", impostor: "Contenedor" }, { normal: "Sobre", impostor: "Carta" },
+            { normal: "Sello", impostor: "Estampilla" }, { normal: "Buzón", impostor: "Correo" },
+            { normal: "Candela", impostor: "Vela" }, { normal: "Encendedor", impostor: "Fósforo" },
+            { normal: "Cenicero", impostor: "Cigarrillo" }, { normal: "Termómetro", impostor: "Fiebre" },
+            { normal: "Linterna", impostor: "Luz" }, { normal: "Destornillador", impostor: "Tornillo" },
+            { normal: "Candil", impostor: "Lámpara" }, { normal: "Barandilla", impostor: "Pasamanos" },
+            { normal: "Escalera", impostor: "Peldaño" }, { normal: "Terraza", impostor: "Balcón" },
+            { normal: "Grifo", impostor: "Canilla" }, { normal: "Esponja", impostor: "Estropajo" },
+            { normal: "Champú", impostor: "Acondicionador" }, { normal: "Secador de pelo", impostor: "Ventilador" },
+            { normal: "Albornoz", impostor: "Toalla de baño" }, { normal: "Báscula", impostor: "Peso" },
+            { normal: "Monedero", impostor: "Bolsillo" }, { normal: "Mesa de noche", impostor: "Buró" },
+            { normal: "Colcha", impostor: "Edredón" }, { normal: "Horquilla", impostor: "Pinza de pelo" },
+            { normal: "Pistola de agua", impostor: "Globo de agua" }, { normal: "Cometa", impostor: "Papalote" },
+            { normal: "Ajedrez", impostor: "Damas" }, { normal: "Dados", impostor: "Cubo" },
+            { normal: "Ficha", impostor: "Peón" }, { normal: "Puzle", impostor: "Rompecabezas" },
+            { normal: "Tira cómica", impostor: "Historieta" }, { normal: "Revista", impostor: "Fanzine" },
+            { normal: "Mapa", impostor: "Plano" }, { normal: "Brújula", impostor: "Orientación" },
+            { normal: "Binoculares", impostor: "Prismáticos" }, { normal: "Esquí", impostor: "Nieve" },
+            { normal: "Patineta", impostor: "Monopatín" }, { normal: "Casco", impostor: "Protector" },
+            { normal: "Codo", impostor: "Rodilla" }, { normal: "Muleta", impostor: "Bastón" },
+            { normal: "Mascota", impostor: "Animal doméstico" }, { normal: "Jardín", impostor: "Patio" },
+            { normal: "Regadera", impostor: "Manguera" }, { normal: "Pala", impostor: "Rastrillo" },
+            { normal: "Maceta", impostor: "Tiesto" }, { normal: "Cerca", impostor: "Valla" },
+            { normal: "Asador", impostor: "Parrilla" }, { normal: "Chimenea", impostor: "Hogar" },
+            { normal: "Sofá", impostor: "Canapé" }, { normal: "Reposacabezas", impostor: "Almohadón" },
+            { normal: "Luz", impostor: "Sombra" }, { normal: "Candil", impostor: "Candelabro" },
+            { normal: "Estufa", impostor: "Calefactor" }, { normal: "Televisor", impostor: "Pantalla" },
+            { normal: "Control remoto", impostor: "Mando" }, { normal: "Altavoz", impostor: "Bocina" },
+            { normal: "Auriculares", impostor: "Cascos" }, { normal: "Micrófono", impostor: "Voz" },
+            { normal: "Impresora", impostor: "Tinta" }, { normal: "Archivo", impostor: "Documento" },
+            { normal: "Carpeta", impostor: "Directorio" }, { normal: "Disco duro", impostor: "Memoria" },
+            { normal: "Calculadora", impostor: "Suma" }, { normal: "Lupa", impostor: "Aumento" },
+            { normal: "Sacapuntas", impostor: "Afilador" }, { normal: "Grapadora", impostor: "Clips" },
+            { normal: "Tinta", impostor: "Cartucho" }, { normal: "Etiqueta", impostor: "Adhesivo" },
+            { normal: "Clima", impostor: "Tiempo" }, { normal: "Chaqueta", impostor: "Abrigo" },
+            { normal: "Sandalia", impostor: "Chancla" }, { normal: "Bañador", impostor: "Traje de baño" },
+            { normal: "Collar", impostor: "Cadena" }, { normal: "Anillo", impostor: "Sortija" },
+            { normal: "Pulsera", impostor: "Brazalete" }, { normal: "Pendiente", impostor: "Arete" },
+            { normal: "Pañuelo", impostor: "Servilleta" }, { normal: "Cubo de hielo", impostor: "Cubito" },
+            { normal: "Pajita", impostor: "Popote" }, { normal: "Mesa ratona", impostor: "Mesa de café" },
+            { normal: "Gimnasio", impostor: "Deporte" }, { normal: "Máquina", impostor: "Aparato" },
+            { normal: "Manzana", impostor: "Pera" }, { normal: "Cucharón", impostor: "Espátula" },
+            { normal: "Fiambrera", impostor: "Tartera" }
         ],
         "Naturaleza": [
             { normal: "Montaña", impostor: "Volcán" }, { normal: "Planta", impostor: "Vegetal" },
@@ -172,7 +484,74 @@
             { normal: "Volcán", impostor: "Lava" }, { normal: "Caverna", impostor: "Cueva" },
             { normal: "Hojas", impostor: "Ramaje" }, { normal: "Trueno", impostor: "Relámpago" },
             { normal: "Lago", impostor: "Laguna" }, { normal: "Hongo", impostor: "Seta" },
-            { normal: "Grano", impostor: "Semilla" }, { normal: "Coral", impostor: "Arrecife" }
+            { normal: "Grano", impostor: "Semilla" }, { normal: "Coral", impostor: "Arrecife" },
+            { normal: "Valle", impostor: "Cañón" }, { normal: "Cráter", impostor: "Hoyo" },
+            { normal: "Glaciar", impostor: "Iceberg" }, { normal: "Amanecer", impostor: "Aurora" },
+            { normal: "Mariposa", impostor: "Oruga" }, { normal: "Rayo", impostor: "Centella" },
+            { normal: "Niebla", impostor: "Bruma" }, { normal: "Arbusto", impostor: "Matorral" },
+            { normal: "Cáctus", impostor: "Suculenta" }, { normal: "Polo", impostor: "Círculo polar" },
+            { normal: "Aurora Boreal", impostor: "Luz polar" }, { normal: "Pantano", impostor: "Ciénaga" },
+            { normal: "Humedal", impostor: "Marisma" }, { normal: "Cima", impostor: "Pico" },
+            { normal: "Acantilado", impostor: "Barranco" }, { normal: "Catarata", impostor: "Salto de agua" },
+            { normal: "Manantial", impostor: "Fuente" }, { normal: "Tornado", impostor: "Ciclón" },
+            { normal: "Huracán", impostor: "Tifón" }, { normal: "Terremoto", impostor: "Sismo" },
+            { normal: "Tsunami", impostor: "Maremoto" }, { normal: "Cometa", impostor: "Meteorito" },
+            { normal: "Planeta", impostor: "Mundo" }, { normal: "Atardecer", impostor: "Ocaso" },
+            { normal: "Oasis", impostor: "Fuente" }, { normal: "Glaciar", impostor: "Ventisquero" },
+            { normal: "Duna", impostor: "Médano" }, { normal: "Liana", impostor: "Bejuco" },
+            { normal: "Ébano", impostor: "Madera" }, { normal: "Pino", impostor: "Conífera" },
+            { normal: "Palmera", impostor: "Cocotero" }, { normal: "Hiedra", impostor: "Enredadera" },
+            { normal: "Musgo", impostor: "Líquenes" }, { normal: "Savia", impostor: "Jugo" },
+            { normal: "Polen", impostor: "Antera" }, { normal: "Fósil", impostor: "Resto" },
+            { normal: "Mineral", impostor: "Cuarzo" }, { normal: "Diamante", impostor: "Joya" },
+            { normal: "Oro", impostor: "Metal" }, { normal: "Sedimento", impostor: "Depósito" },
+            { normal: "Estalactita", impostor: "Estalagmita" }, { normal: "Marea", impostor: "Pleamar" },
+            { normal: "Corriente", impostor: "Flujo" }, { normal: "Sargazo", impostor: "Alga" },
+            { normal: "Piedra pómez", impostor: "Lava" }, { normal: "Geiser", impostor: "Surtidor" },
+            { normal: "Chimenea volcánica", impostor: "Respiradero" }, { normal: "Erupción", impostor: "Explosión" },
+            { normal: "Copa", impostor: "Dosel" }, { normal: "Raíz", impostor: "Tallo" },
+            { normal: "Corteza", impostor: "Tronco" }, { normal: "Capullo", impostor: "Yema" },
+            { normal: "Suelo fértil", impostor: "Humus" }, { normal: "Erosión", impostor: "Desgaste" },
+            { normal: "Cieno", impostor: "Lodo" }, { normal: "Marisma", impostor: "Pantano" },
+            { normal: "Acuífero", impostor: "Subterráneo" }, { normal: "Géiser", impostor: "Fuente termal" },
+            { normal: "Placa tectónica", impostor: "Litosfera" }, { normal: "Estratos", impostor: "Capas" },
+            { normal: "Veta", impostor: "Filón" }, { normal: "Esmeralda", impostor: "Berilo" },
+            { normal: "Rubí", impostor: "Zafiro" }, { normal: "Ámbar", impostor: "Resina" },
+            { normal: "Mangle", impostor: "Arbusto" }, { normal: "Sotobosque", impostor: "Bajo monte" },
+            { normal: "Tundra", impostor: "Taiga" }, { normal: "Savana", impostor: "Pradera" },
+            { normal: "Estepa", impostor: "Pampa" }, { normal: "Macizo", impostor: "Cordillera" },
+            { normal: "Archipiélago", impostor: "Isla" }, { normal: "Península", impostor: "Istmo" },
+            { normal: "Dique", impostor: "Malecón" }, { normal: "Rompeolas", impostor: "Escollera" },
+            { normal: "Ceniza", impostor: "Polvo" }, { normal: "Pedregal", impostor: "Cantera" },
+            { normal: "Barro", impostor: "Arcilla" }, { normal: "Mármol", impostor: "Granito" },
+            { normal: "Basalto", impostor: "Obsidiana" }, { normal: "Piedra caliza", impostor: "Carbonato" },
+            { normal: "Cuarzo", impostor: "Sílice" }, { normal: "Yeso", impostor: "Escayola" },
+            { normal: "Salitre", impostor: "Nitrogenado" }, { normal: "Hélice", impostor: "Espiral" },
+            { normal: "Ciclón", impostor: "Tormenta" }, { normal: "Gota", impostor: "Rocío" },
+            { normal: "Escarcha", impostor: "Helada" }, { normal: "Aglomeración", impostor: "Cúmulo" },
+            { normal: "Penumbra", impostor: "Sombras" }, { normal: "Fase lunar", impostor: "Cuarto" },
+            { normal: "Acuario", impostor: "Terrario" }, { normal: "Invernadero", impostor: "Cultivo" },
+            { normal: "Ecosistema", impostor: "Hábitat" }, { normal: "Biotopo", impostor: "Zona" },
+            { normal: "Especie", impostor: "Variedad" }, { normal: "Pasto", impostor: "Hierba" },
+            { normal: "Helecho", impostor: "Cala" }, { normal: "Saco", impostor: "Capuchón" },
+            { normal: "Corteza", impostor: "Peridermo" }, { normal: "Raigón", impostor: "Rizoma" },
+            { normal: "Tupé", impostor: "Penacho" }, { normal: "Alerce", impostor: "Lárix" },
+            { normal: "Alga marina", impostor: "Kelp" }, { normal: "Limo", impostor: "Fangal" },
+            { normal: "Capa freática", impostor: "Nivel" }, { normal: "Escarcha", impostor: "Cencellada" },
+            { normal: "Ráfaga", impostor: "Ventolera" }, { normal: "Soplido", impostor: "Hálito" },
+            { normal: "Copo", impostor: "Escama" }, { normal: "Vendaval", impostor: "Borrasca" },
+            { normal: "Claro", impostor: "Despejado" }, { normal: "Cenit", impostor: "Apogeo" },
+            { normal: "Nadir", impostor: "Opuesto" }, { normal: "Solsticio", impostor: "Equinoccio" },
+            { normal: "Hemisferio", impostor: "Globo" }, { normal: "Trópico", impostor: "Ecuador" },
+            { normal: "Latitud", impostor: "Longitud" }, { normal: "Península", impostor: "Golfo" },
+            { normal: "Cabo", impostor: "Punta" }, { normal: "Estrecho", impostor: "Canal" },
+            { normal: "Fiordo", impostor: "Ría" }, { normal: "Ensenada", impostor: "Bahía" },
+            { normal: "Ciénaga", impostor: "Lodazal" }, { normal: "Salina", impostor: "Saladar" },
+            { normal: "Cañada", impostor: "Garganta" }, { normal: "Sima", impostor: "Abismo" },
+            { normal: "Falla", impostor: "Fractura" }, { normal: "Geoda", impostor: "Drusa" },
+            { normal: "Turmalina", impostor: "Topacio" }, { normal: "Ametista", impostor: "Cuarzo violeta" },
+            { normal: "Perla", impostor: "Nácar" }, { normal: "Concha", impostor: "Valva" },
+            { normal: "Placton", impostor: "Diatomea" }
         ],
         "Animales": [
             { normal: "León", impostor: "Tigre" }, { normal: "Perro", impostor: "Cachorro" },
@@ -189,10 +568,71 @@
             { normal: "Canguro", impostor: "Koala" }, { normal: "Vaca", impostor: "Toro" },
             { normal: "Oveja", impostor: "Cordero" }, { normal: "Gallina", impostor: "Pollo" },
             { normal: "Tucán", impostor: "Loro" }, { normal: "Conejo", impostor: "Liebre" },
-            { normal: "Cangrejo", impostor: "Langosta" }, { normal: "Puma", impostor: "Leopardo" }
+            { normal: "Cangrejo", impostor: "Langosta" }, { normal: "Puma", impostor: "Leopardo" },
+            { normal: "Dinosaurio", impostor: "T-Rex" }, { normal: "Camello", impostor: "Dromedario" },
+            { normal: "Búho", impostor: "Lechuza" }, { normal: "Tortuga", impostor: "Galápago" },
+            { normal: "Gallo", impostor: "Capón" }, { normal: "Cerdo", impostor: "Jabalí" },
+            { normal: "Dálmata", impostor: "Labrador" }, { normal: "Panda", impostor: "Oso negro" },
+            { normal: "Flamenco", impostor: "Cisne" }, { normal: "Bisonte", impostor: "Búfalo" },
+            { normal: "Cocodrilo", impostor: "Caimán" }, { normal: "Castor", impostor: "Nutria" },
+            { normal: "Hurón", impostor: "Comadreja" }, { normal: "Hámster", impostor: "Jerbo" },
+            { normal: "Chinchilla", impostor: "Roedor" }, { normal: "Ratón", impostor: "Liron" },
+            { normal: "Erizo", impostor: "Puercoespín" }, { normal: "Topo", impostor: "Musaraña" },
+            { normal: "Escorpión", impostor: "Tarántula" }, { normal: "Grillo", impostor: "Saltamontes" },
+            { normal: "Libélula", impostor: "Caballito del diablo" }, { normal: "Mariposa", impostor: "Polilla" },
+            { normal: "Lombriz", impostor: "Gusano" }, { normal: "Caracol", impostor: "Babosa" },
+            { normal: "Almeja", impostor: "Mejillón" }, { normal: "Pulpo", impostor: "Calamar" },
+            { normal: "Foca", impostor: "Lobo marino" }, { normal: "Morsa", impostor: "Manatí" },
+            { normal: "Pelícano", impostor: "Gaviota" }, { normal: "Avutarda", impostor: "Avestruz" },
+            { normal: "Buitre", impostor: "Cóndor" }, { normal: "Cuervo", impostor: "Corneja" },
+            { normal: "Colibrí", impostor: "Picaflor" }, { normal: "Pájaro carpintero", impostor: "Pito" },
+            { normal: "Hiena", impostor: "Chacal" }, { normal: "Perezoso", impostor: "Oso hormiguero" },
+            { normal: "Camaleón", impostor: "Iguana" }, { normal: "Guepardo", impostor: "Jaguar" },
+            { normal: "Coyote", impostor: "Dingo" }, { normal: "Búho", impostor: "Mochuelo" },
+            { normal: "Pez payaso", impostor: "Anémona" }, { normal: "Caballito de mar", impostor: "Sifonóforo" },
+            { normal: "Medusa", impostor: "Pólipo" }, { normal: "Estrella de mar", impostor: "Ofiura" },
+            { normal: "Erizo de mar", impostor: "Holoturia" }, { normal: "Tortuga de mar", impostor: "Quelonio" },
+            { normal: "Búho nival", impostor: "Lechuza blanca" }, { normal: "Oso polar", impostor: "Oso blanco" },
+            { normal: "Reno", impostor: "Caribú" }, { normal: "Urogallo", impostor: "Gallo silvestre" },
+            { normal: "Lince", impostor: "Gato montés" }, { normal: "Alce", impostor: "Uapití" },
+            { normal: "Jabalí", impostor: "Puerco" }, { normal: "Mapache", impostor: "Coatí" },
+            { normal: "Zorrillo", impostor: "Mofeta" }, { normal: "Tejón", impostor: "Tasa" },
+            { normal: "Lémur", impostor: "Indri" }, { normal: "Tarsio", impostor: "Mono fantasma" },
+            { normal: "Gorila", impostor: "Orangután" }, { normal: "Gibón", impostor: "Siamang" },
+            { normal: "Pez sierra", impostor: "Manta raya" }, { normal: "Anguila", impostor: "Morena" },
+            { normal: "Piraña", impostor: "Pacu" }, { normal: "Siluro", impostor: "Bagre" },
+            { normal: "Colmena", impostor: "Avispero" }, { normal: "Termita", impostor: "Hormiga" },
+            { normal: "Escarabajo", impostor: "Cucaracha" }, { normal: "Ciempiés", impostor: "Milpiés" },
+            { normal: "Laucha", impostor: "Musgaño" }, { normal: "Comadreja", impostor: "Marta" },
+            { normal: "Armadillo", impostor: "Tatú" }, { normal: "Pangolín", impostor: "Manis" },
+            { normal: "Kiwi", impostor: "Kakapo" }, { normal: "Búfalo cafre", impostor: "Bovino" },
+            { normal: "Antílope", impostor: "Gacela" }, { normal: "Ñu", impostor: "Taurotragus" },
+            { normal: "Pavo real", impostor: "Faisán" }, { normal: "Gaviota", impostor: "Albatros" },
+            { normal: "Petrel", impostor: "Fulmar" }, { normal: "Frailecillo", impostor: "Alca" },
+            { normal: "Cebra", impostor: "Equino" }, { normal: "Dromedario", impostor: "Camélido" },
+            { normal: "Rinoceronte", impostor: "Ceratotherium" }, { normal: "Ornitorrinco", impostor: "Mamífero" },
+            { normal: "Ajolote", impostor: "Ambystoma" }, { normal: "Tritón", impostor: "Salamandra" },
+            { normal: "Ibis", impostor: "Espátula" }, { normal: "Grulla", impostor: "Cigüeña" },
+            { normal: "Cisne", impostor: "Oca" }, { normal: "Canario", impostor: "Jilguero" },
+            { normal: "Mirlo", impostor: "Zorzal" }, { normal: "Ruiseñor", impostor: "Tordo" },
+            { normal: "Avispa", impostor: "Vespa" }, { normal: "Tábano", impostor: "Moscardón" },
+            { normal: "Pulga", impostor: "Garrapata" }, { normal: "Piojo", impostor: "Liendre" },
+            { normal: "Calamar", impostor: "Sepia" }, { normal: "Nautilus", impostor: "Ammonoideo" },
+            { normal: "Beluga", impostor: "Narval" }, { normal: "Cachalote", impostor: "Physeter" },
+            { normal: "Lagartija", impostor: "Gecko" }, { normal: "Víbora", impostor: "Áspid" },
+            { normal: "Boa", impostor: "Pitón" }, { normal: "Anacondas", impostor: "Eunectes" },
+            { normal: "Cangrejo ermitaño", impostor: "Paguroidea" }, { normal: "Alacrán", impostor: "Arácnido" },
+            { normal: "Sardina", impostor: "Boquerón" }, { normal: "Bacalao", impostor: "Merluza" },
+            { normal: "Rodaballo", impostor: "Lenguado" }, { normal: "Pargo", impostor: "Besugo" },
+            { normal: "Atún", impostor: "Bonito" }, { normal: "Pez espada", impostor: "Marlín" },
+            { normal: "Barracuda", impostor: "Esfirena" }, { normal: "Morena", impostor: "Muréna" },
+            { normal: "Corvina", impostor: "Pescadilla" }, { normal: "Lobo marino", impostor: "Otaria" },
+            { normal: "Puma", impostor: "Cuguaro" }, { normal: "Serval", impostor: "Caracal" },
+            { normal: "Civeta", impostor: "Viverra" }, { normal: "Gato salvaje", impostor: "Felino" },
+            { normal: "Husky", impostor: "Malamute" }, { normal: "Chihuahua", impostor: "Canis" }
         ],
         "Comida": [
-            { normal: "Pizza", impostor: "Tarta" }, { normal: "Pasta", impostor: "Spaguetti" },
+            { normal: "Pizza", impostor: "Tarta" }, { normal: "Pasta", impostor: "Espagueti" },
             { normal: "Chocolate", impostor: "Cacao" }, { normal: "Manzana", impostor: "Fruta" },
             { normal: "Pan", impostor: "Harina" }, { normal: "Huevo", impostor: "Yema" },
             { normal: "Patatas", impostor: "Papas" }, { normal: "Vino", impostor: "Cerveza" },
@@ -202,11 +642,73 @@
             { normal: "Naranja", impostor: "Limón" }, { normal: "Tomate", impostor: "Verdura" },
             { normal: "Cebolla", impostor: "Ajo" }, { normal: "Pimienta", impostor: "Especias" },
             { normal: "Galleta", impostor: "Bizcocho" }, { normal: "Helado", impostor: "Postre" },
-            { normal: "Sopa", impostor: "Caldo" }, { normal: "Hamburguesa", impostor: "Sandwich" },
+            { normal: "Sopa", impostor: "Caldo" }, { normal: "Hamburguesa", impostor: "Sándwich" },
             { normal: "Tostada", impostor: "Crostini" }, { normal: "Salchicha", impostor: "Chorizo" },
             { normal: "Fresa", impostor: "Baya" }, { normal: "Zumo", impostor: "Jugo" },
             { normal: "Mantequilla", impostor: "Margarina" }, { normal: "Aguacate", impostor: "Palta" },
-            { normal: "Pescado", impostor: "Marisco" }, { normal: "Yogur", impostor: "Kéfir" }
+            { normal: "Pescado", impostor: "Marisco" }, { normal: "Yogur", impostor: "Kéfir" },
+            { normal: "Taco", impostor: "Burrito" }, { normal: "Palomitas", impostor: "Maíz" },
+            { normal: "Muffin", impostor: "Cupcake" }, { normal: "Sushi", impostor: "Sashimi" },
+            { normal: "Fideos", impostor: "Macarrones" }, { normal: "Lentejas", impostor: "Garbanzos" },
+            { normal: "Pollo", impostor: "Pavo" }, { normal: "Cerdo", impostor: "Tocino" },
+            { normal: "Ternera", impostor: "Vaca" }, { normal: "Champiñón", impostor: "Seta" },
+            { normal: "Zanahoria", impostor: "Rábano" }, { normal: "Pimiento", impostor: "Chile" },
+            { normal: "Lechuga", impostor: "Escarola" }, { normal: "Aceite", impostor: "Vinagre" },
+            { normal: "Mostaza", impostor: "Ketchup" }, { normal: "Mayonesa", impostor: "Salsa" },
+            { normal: "Pipas", impostor: "Semillas" }, { normal: "Cacahuetes", impostor: "Maní" },
+            { normal: "Nuez", impostor: "Almendra" }, { normal: "Pistacho", impostor: "Anacardo" },
+            { normal: "Cerezas", impostor: "Guindas" }, { normal: "Uva", impostor: "Pasas" },
+            { normal: "Melón", impostor: "Sandía" }, { normal: "Pera", impostor: "Membrillo" },
+            { normal: "Kiwi", impostor: "Grosella" }, { normal: "Higo", impostor: "Dátil" },
+            { normal: "Crepe", impostor: "Waffle" }, { normal: "Donut", impostor: "Berlina" },
+            { normal: "Brownie", impostor: "Blondie" }, { normal: "Pudín", impostor: "Flan" },
+            { normal: "Gelatina", impostor: "Mermelada" }, { normal: "Cacao", impostor: "Colacao" },
+            { normal: "Refresco", impostor: "Gaseosa" }, { normal: "Agua", impostor: "Sodio" },
+            { normal: "Bocadillo", impostor: "Emparedado" }, { normal: "Croqueta", impostor: "Buñuelo" },
+            { normal: "Empanada", impostor: "Pastel" }, { normal: "Kebab", impostor: "Gyros" },
+            { normal: "Falafel", impostor: "Hummus" }, { normal: "Tabulé", impostor: "Cuscús" },
+            { normal: "Curry", impostor: "Masala" }, { normal: "Tofu", impostor: "Tempeh" },
+            { normal: "Miso", impostor: "Soja" }, { normal: "Wasabi", impostor: "Rábano" },
+            { normal: "Puerro", impostor: "Cebolleta" }, { normal: "Espinaca", impostor: "Acelga" },
+            { normal: "Brócoli", impostor: "Coliflor" }, { normal: "Alcachofa", impostor: "Cardo" },
+            { normal: "Puerro", impostor: "Hinojo" }, { normal: "Azafrán", impostor: "Cúrcuma" },
+            { normal: "Canela", impostor: "Vainilla" }, { normal: "Jengibre", impostor: "Gengibre" },
+            { normal: "Tomillo", impostor: "Romero" }, { normal: "Albahaca", impostor: "Orégano" },
+            { normal: "Menta", impostor: "Hierbabuena" }, { normal: "Perejil", impostor: "Cilantro" },
+            { normal: "Cebollino", impostor: "Puerro" }, { normal: "Anís", impostor: "Comino" },
+            { normal: "Semolina", impostor: "Sémola" }, { normal: "Trigo", impostor: "Centeno" },
+            { normal: "Avena", impostor: "Mijo" }, { normal: "Quinoa", impostor: "Amaranto" },
+            { normal: "Almidón", impostor: "Fécula" }, { normal: "Gluten", impostor: "Proteína" },
+            { normal: "Masa", impostor: "Levadura" }, { normal: "Ralladura", impostor: "Raspadura" },
+            { normal: "Escama", impostor: "Viruta" }, { normal: "Almíbar", impostor: "Melaza" },
+            { normal: "Caramelo", impostor: "Toffee" }, { normal: "Malvavisco", impostor: "Nube" },
+            { normal: "Turrón", impostor: "Mazapán" }, { normal: "Mazapán", impostor: "Frangipane" },
+            { normal: "Gominola", impostor: "Jelly bean" }, { normal: "Nata", impostor: "Chantilly" },
+            { normal: "Crema pastelera", impostor: "Ganache" }, { normal: "Fondue", impostor: "Raclette" },
+            { normal: "Churro", impostor: "Porra" }, { normal: "Tostada francesa", impostor: "Torrija" },
+            { normal: "Tortilla", impostor: "Omelette" }, { normal: "Frittata", impostor: "Quiche" },
+            { normal: "Croissant", impostor: "Media luna" }, { normal: "Baguette", impostor: "Barra" },
+            { normal: "Chapatí", impostor: "Naan" }, { normal: "Pretzel", impostor: "Brezel" },
+            { normal: "Gofre", impostor: "Barquillo" }, { normal: "Rosquilla", impostor: "Dona" },
+            { normal: "Panetela", impostor: "Bizcocho" }, { normal: "Cheesecake", impostor: "Tarta de queso" },
+            { normal: "Tiramisú", impostor: "Zuppa inglese" }, { normal: "Panna cotta", impostor: "Crema" },
+            { normal: "Strudel", impostor: "Apfelstrudel" }, { normal: "Goulash", impostor: "Estofado" },
+            { normal: "Chili con carne", impostor: "Frijoles" }, { normal: "Paella", impostor: "Arroz a banda" },
+            { normal: "Ceviche", impostor: "Tiradito" }, { normal: "Lomo saltado", impostor: "Ají de gallina" },
+            { normal: "Feijoada", impostor: "Moqueca" }, { normal: "Pinchos", impostor: "Brocheta" },
+            { normal: "Albóndiga", impostor: "Pelota" }, { normal: "Guiso", impostor: "Potaje" },
+            { normal: "Ensalada", impostor: "Mixta" }, { normal: "Vinagreta", impostor: "Aliño" },
+            { normal: "Escabeche", impostor: "Adobo" }, { normal: "Sardinas", impostor: "Anchoas" },
+            { normal: "Caviar", impostor: "Huevas" }, { normal: "Ostra", impostor: "Vieira" },
+            { normal: "Langostino", impostor: "Gamba" }, { normal: "Mejillón", impostor: "Berberecho" },
+            { normal: "Pulpo", impostor: "Rejo" }, { normal: "Sepia", impostor: "Jibia" },
+            { normal: "Calamares", impostor: "Chipirones" }, { normal: "Huevos revueltos", impostor: "Perico" },
+            { normal: "Tortilla francesa", impostor: "Omelet" }, { normal: "Panceta", impostor: "Bacon" },
+            { normal: "Jamón", impostor: "Prosciutto" }, { normal: "Salchichón", impostor: "Salami" },
+            { normal: "Morcilla", impostor: "Botifarra" }, { normal: "Chorizo", impostor: "Longaniza" },
+            { normal: "Roast beef", impostor: "Tenderloin" }, { normal: "Solomillo", impostor: "Entrecot" },
+            { normal: "Codillo", impostor: "Jarrete" }, { normal: "Costillas", impostor: "Chuletón" },
+            { normal: "Escalope", impostor: "Filete" }
         ],
         "Países o Ciudades": [
             { normal: "París", impostor: "Roma" }, { normal: "Japón", impostor: "China" },
@@ -223,7 +725,68 @@
             { normal: "Perú", impostor: "Ecuador" }, { normal: "Ámsterdam", impostor: "Bruselas" },
             { normal: "Chicago", impostor: "Miami" }, { normal: "Estambul", impostor: "Ankara" },
             { normal: "Malasia", impostor: "Indonesia" }, { normal: "Bangkok", impostor: "Hanói" },
-            { normal: "Suecia", impostor: "Noruega" }, { normal: "El Cairo", impostor: "Giza" }
+            { normal: "Suecia", impostor: "Noruega" }, { normal: "El Cairo", impostor: "Giza" },
+            { normal: "Rusia", impostor: "Ucrania" }, { normal: "Brasil", impostor: "Argentina" },
+            { normal: "California", impostor: "Texas" }, { normal: "Venecia", impostor: "Florencia" },
+            { normal: "Helsinki", impostor: "Oslo" }, { normal: "Copenhague", impostor: "Estocolmo" },
+            { normal: "Atenas", impostor: "Esparta" }, { normal: "Jerusalén", impostor: "Tel Aviv" },
+            { normal: "Beirut", impostor: "Amán" }, { normal: "Bagdad", impostor: "Teherán" },
+            { normal: "Karachi", impostor: "Lahore" }, { normal: "Manila", impostor: "Cebú" },
+            { normal: "Yakarta", impostor: "Bali" }, { normal: "Auckland", impostor: "Wellington" },
+            { normal: "Caracas", impostor: "Maracaibo" }, { normal: "La Habana", impostor: "Varadero" },
+            { normal: "Kingston", impostor: "Montego Bay" }, { normal: "Dublín", impostor: "Cork" },
+            { normal: "Edimburgo", impostor: "Glasgow" }, { normal: "Cardiff", impostor: "Belfast" },
+            { normal: "Zúrich", impostor: "Ginebra" }, { normal: "Mónaco", impostor: "Luxemburgo" },
+            { normal: "Varsovia", impostor: "Cracovia" }, { normal: "Budapest", impostor: "Praga" },
+            { normal: "Bucarest", impostor: "Sofía" }, { normal: "Belgrado", impostor: "Zagreb" },
+            { normal: "Sarajevo", impostor: "Tirana" }, { normal: "Reikiavik", impostor: "Groenlandia" },
+            { normal: "Ottawa", impostor: "Montreal" }, { normal: "Toronto", impostor: "Vancouver" },
+            { normal: "Boston", impostor: "Filadelfia" }, { normal: "Washington", impostor: "Seattle" },
+            { normal: "San Francisco", impostor: "Los Ángeles" }, { normal: "San Diego", impostor: "Phoenix" },
+            { normal: "Nueva Orleans", impostor: "Atlanta" }, { normal: "Houston", impostor: "Dallas" },
+            { normal: "Nashville", impostor: "Memphis" }, { normal: "Detroit", impostor: "Cleveland" },
+            { normal: "Denver", impostor: "Salt Lake City" }, { normal: "Portland", impostor: "Boise" },
+            { normal: "Hawái", impostor: "Alaska" }, { normal: "Puerto Rico", impostor: "Cuba" },
+            { normal: "Rep. Dominicana", impostor: "Haití" }, { normal: "Jamaica", impostor: "Bahamas" },
+            { normal: "Puerto España", impostor: "Bridgetown" }, { normal: "Ciudad de Panamá", impostor: "San José" },
+            { normal: "Guatemala", impostor: "Honduras" }, { normal: "El Salvador", impostor: "Nicaragua" },
+            { normal: "Belice", impostor: "Costa Rica" }, { normal: "Venezuela", impostor: "Chile" },
+            { normal: "Uruguay", impostor: "Paraguay" }, { normal: "La Paz", impostor: "Sucre" },
+            { normal: "Quito", impostor: "Guayaquil" }, { normal: "Bogotá", impostor: "Medellín" },
+            { normal: "Cali", impostor: "Barranquilla" }, { normal: "Lima", impostor: "Cuzco" },
+            { normal: "Arequipa", impostor: "Trujillo" }, { normal: "Dakar", impostor: "Accra" },
+            { normal: "Lagos", impostor: "Abuya" }, { normal: "Johannesburgo", impostor: "Ciudad del Cabo" },
+            { normal: "Nairobi", impostor: "Mombasa" }, { normal: "El Cabo", impostor: "Pretoria" },
+            { normal: "Túnez", impostor: "Argel" }, { normal: "Rabat", impostor: "Casablanca" },
+            { normal: "Trípoli", impostor: "Alejandría" }, { normal: "Riad", impostor: "Yeda" },
+            { normal: "Doha", impostor: "Kuwait" }, { normal: "Mascate", impostor: "Saná" },
+            { normal: "Hong Kong", impostor: "Macao" }, { normal: "Singapur", impostor: "Kuala Lumpur" },
+            { normal: "Manila", impostor: "Cebú" }, { normal: "Saigón", impostor: "Hanoi" },
+            { normal: "Pnom Penh", impostor: "Vientián" }, { normal: "Rangún", impostor: "Naipyidó" },
+            { normal: "Timbuctú", impostor: "Bamako" }, { normal: "Adís Abeba", impostor: "Asmara" },
+            { normal: "Sídney", impostor: "Canberra" }, { normal: "Perth", impostor: "Brisbane" },
+            { normal: "Adelaida", impostor: "Hobart" }, { normal: "Fiyi", impostor: "Samoa" },
+            { normal: "Tonga", impostor: "Tuvalu" }, { normal: "Acapulco", impostor: "Cancún" },
+            { normal: "Guadalajara", impostor: "Monterrey" }, { normal: "Puebla", impostor: "Tijuana" },
+            { normal: "Oaxaca", impostor: "Chiapas" }, { normal: "Mérida", impostor: "Campeche" },
+            { normal: "Veracruz", impostor: "Tabasco" }, { normal: "Jalisco", impostor: "Michoacán" },
+            { normal: "Guanajuato", impostor: "Querétaro" }, { normal: "Hidalgo", impostor: "Tlaxcala" },
+            { normal: "Chihuahua", impostor: "Coahuila" }, { normal: "Sonora", impostor: "Baja California" },
+            { normal: "Zacatecas", impostor: "Aguascalientes" }, { normal: "Colima", impostor: "Nayarit" },
+            { normal: "Morelos", impostor: "Guerrero" }, { normal: "CDMX", impostor: "Edo Mex" },
+            { normal: "California", impostor: "Nevada" }, { normal: "Arizona", impostor: "Nuevo México" },
+            { normal: "Florida", impostor: "Georgia" }, { normal: "Carolina del N.", impostor: "Virginia" },
+            { normal: "Massachusetts", impostor: "Nueva Jersey" }, { normal: "Pensilvania", impostor: "Ohio" },
+            { normal: "Illinois", impostor: "Indiana" }, { normal: "Michigan", impostor: "Wisconsin" },
+            { normal: "Minesota", impostor: "Dakota del Sur" }, { normal: "Nebraska", impostor: "Kansas" },
+            { normal: "Montana", impostor: "Idaho" }, { normal: "Wyoming", impostor: "Colorado" },
+            { normal: "Oregón", impostor: "Washington (estado)" }, { normal: "Portugal", impostor: "Bélgica" },
+            { normal: "Holanda", impostor: "Suiza" }, { normal: "Polonia", impostor: "Hungría" },
+            { normal: "Croacia", impostor: "Serbia" }, { normal: "Albania", impostor: "Macedonia" },
+            { normal: "Finlandia", impostor: "Islandia" }, { normal: "Irlanda", impostor: "Escocia" },
+            { normal: "Gales", impostor: "Inglaterra" }, { normal: "Chipre", impostor: "Malta" },
+            { normal: "Rep. Checa", impostor: "Eslovaquia" }, { normal: "Austria", impostor: "Liechtenstein" },
+            { normal: "Vaticano", impostor: "San Marino" }
         ],
         "Equipos y Leyendas del Fútbol": [
             { normal: "Messi", impostor: "Ronaldo" }, { normal: "Barcelona", impostor: "Real Madrid" },
@@ -240,7 +803,71 @@
             { normal: "R. Carlos", impostor: "Maldini" }, { normal: "Flamengo", impostor: "Corinthians" },
             { normal: "Garrincha", impostor: "Vavá" }, { normal: "Independiente", impostor: "Racing" },
             { normal: "Lewandowski", impostor: "Benzema" }, { normal: "Celtic", impostor: "Rangers" },
-            { normal: "Puskás", impostor: "Kocsis" }, { normal: "Tottenham", impostor: "Leicester" }
+            { normal: "Puskás", impostor: "Kocsis" }, { normal: "Tottenham", impostor: "Leicester" },
+            { normal: "Cannavaro", impostor: "Nesta" }, { normal: "D. Drogba", impostor: "Eto'o" },
+            { normal: "AS Roma", impostor: "Lazio" }, { normal: "Keylor Navas", impostor: "Ochoa" },
+            { normal: "Griezmann", impostor: "Dembélé" }, { normal: "Modrić", impostor: "Rakitić" },
+            { normal: "Kylian Mbappé", impostor: "Neymar" }, { normal: "De Bruyne", impostor: "Hazard" },
+            { normal: "V. van Dijk", impostor: "De Ligt" }, { normal: "Oblak", impostor: "Ter Stegen" },
+            { normal: "Luis Suárez", impostor: "Edinson Cavani" }, { normal: "S. Ramos", impostor: "Piqué" },
+            { normal: "Lewandowski", impostor: "Kane" }, { normal: "Salah", impostor: "Mané" },
+            { normal: "Pogba", impostor: "Kanté" }, { normal: "Busquets", impostor: "Casemiro" },
+            { normal: "Marcelo", impostor: "Jordi Alba" }, { normal: "Xavi", impostor: "Iniesta" },
+            { normal: "Giggs", impostor: "Scholes" }, { normal: "Pirlo", impostor: "Gattuso" },
+            { normal: "Del Piero", impostor: "Totti" }, { normal: "Baggio", impostor: "Mancini" },
+            { normal: "Klose", impostor: "Müller" }, { normal: "Schweinsteiger", impostor: "Lahm" },
+            { normal: "Puyol", impostor: "Hierro" }, { normal: "Raúl", impostor: "Villa" },
+            { normal: "Beckham", impostor: "Rooney" }, { normal: "Gerrard", impostor: "Lampard" },
+            { normal: "Shevchenko", impostor: "Rebrov" }, { normal: "Figo", impostor: "Rui Costa" },
+            { normal: "Eusebio", impostor: "Futre" }, { normal: "Gica Hagi", impostor: "Popescu" },
+            { normal: "Socrates", impostor: "Zico" }, { normal: "Riquelme", impostor: "Ortega" },
+            { normal: "Verón", impostor: "Batistuta" }, { normal: "Chilavert", impostor: "Cardozo" },
+            { normal: "Valderrama", impostor: "Asprilla" }, { normal: "Sánchez", impostor: "Zamora" },
+            { normal: "Guardiola", impostor: "Mourinho" }, { normal: "Klopp", impostor: "Ancelotti" },
+            { normal: "Ferguson", impostor: "Wenger" }, { normal: "Cruyff", impostor: "Sacchi" },
+            { normal: "Van Gaal", impostor: "Hiddink" }, { normal: "Capello", impostor: "Lippi" },
+            { normal: "Löw", impostor: "Deschamps" }, { normal: "Simeone", impostor: "Pochettino" },
+            { normal: "Bielsa", impostor: "Gallardo" }, { normal: "Simeone", impostor: "Zidane" },
+            { normal: "FIFA", impostor: "UEFA" }, { normal: "Copa Mundial", impostor: "Eurocopa" },
+            { normal: "Copa América", impostor: "Copa Libertadores" }, { normal: "Champions League", impostor: "Europa League" },
+            { normal: "Premier League", impostor: "La Liga" }, { normal: "Serie A", impostor: "Bundesliga" },
+            { normal: "Liga MX", impostor: "Brasileirão" }, { normal: "Balón de Oro", impostor: "Bota de Oro" },
+            { normal: "Gol", impostor: "Penalti" }, { normal: "Fuera de Juego", impostor: "Saque de Banda" },
+            { normal: "Córner", impostor: "Tiro Libre" }, { normal: "Portero", impostor: "Defensa" },
+            { normal: "Mediocampista", impostor: "Delantero" }, { normal: "Árbitro", impostor: "Línea" },
+            { normal: "Estadio", impostor: "Cancha" }, { normal: "Hinchada", impostor: "Afición" },
+            { normal: "Clásico", impostor: "Derbi" }, { normal: "Tarjeta Roja", impostor: "Tarjeta Amarilla" },
+            { normal: "Tiempo Extra", impostor: "Prórroga" }, { normal: "Tanda de Penaltis", impostor: "Definición" },
+            { normal: "Volante", impostor: "Enganche" }, { normal: "Lateral", impostor: "Carrilero" },
+            { normal: "Central", impostor: "Libero" }, { normal: "Goleador", impostor: "Pichichi" },
+            { normal: "Hat-trick", impostor: "Triplete" }, { normal: "Doblete", impostor: "Par" },
+            { normal: "Finta", impostor: "Regate" }, { normal: "Vaselina", impostor: "Sombrero" },
+            { normal: "Chilena", impostor: "Bicicleta" }, { normal: "Taconazo", impostor: "Espuela" },
+            { normal: "Palomita", impostor: "Estirada" }, { normal: "Mano de Dios", impostor: "Gol fantasma" },
+            { normal: "Tiki-Taka", impostor: "Catenaccio" }, { normal: "Fútbol Total", impostor: "Juego de Posición" },
+            { normal: "Selección", impostor: "Combinado" }, { normal: "Máximo Goleador", impostor: "Artillero" },
+            { normal: "Capitán", impostor: "Líder" }, { normal: "Mascherano", impostor: "Redondo" },
+            { normal: "Zanetti", impostor: "Ayala" }, { normal: "Henry", impostor: "Trezeguet" },
+            { normal: "Shearer", impostor: "Owen" }, { normal: "Dempsey", impostor: "Donovan" },
+            { normal: "Oblak", impostor: "Courtois" }, { normal: "Allison", impostor: "Ederson" },
+            { normal: "Oblak", impostor: "Handanović" }, { normal: "Maignan", impostor: "Donnarumma" },
+            { normal: "Alaba", impostor: "Kimmich" }, { normal: "Upamecano", impostor: "Süle" },
+            { normal: "Marquinhos", impostor: "Thiago Silva" }, { normal: "Verratti", impostor: "Thiago Motta" },
+            { normal: "Cavani", impostor: "Ibrahimović" }, { normal: "Agüero", impostor: "Gabriel Jesus" },
+            { normal: "Tevez", impostor: "Higuaín" }, { normal: "Dybala", impostor: "Lautaro Martínez" },
+            { normal: "Copa África", impostor: "Copa Asia" }, { normal: "Mundial de Clubes", impostor: "Intercontinental" },
+            { normal: "Copa Confederaciones", impostor: "Copa Oro" }, { normal: "Estrella Roja", impostor: "Partizán" },
+            { normal: "Galatasaray", impostor: "Fenerbahçe" }, { normal: "Benfica", impostor: "Sporting Lisboa" },
+            { normal: "PSV", impostor: "Ajax" }, { normal: "Saint-Étienne", impostor: "Marsella" },
+            { normal: "Colo-Colo", impostor: "Universidad de Chile" }, { normal: "Peñarol", impostor: "Nacional" },
+            { normal: "Alianza Lima", impostor: "Universitario" }, { normal: "Millonarios", impostor: "Santa Fe" },
+            { normal: "Emelec", impostor: "Barcelona SC" }, { normal: "Santos", impostor: "Palmeiras" },
+            { normal: "Cruzeiro", impostor: "Atlético Mineiro" }, { normal: "Vasco da Gama", impostor: "Fluminense" },
+            { normal: "América de Cali", impostor: "Deportivo Cali" }, { normal: "Junior", impostor: "Unión Magdalena" },
+            { normal: "Rosario Central", impostor: "Newell's Old Boys" }, { normal: "San Lorenzo", impostor: "Huracán" },
+            { normal: "Estudiantes", impostor: "Gimnasia" }, { normal: "Deportivo La Coruña", impostor: "Celta de Vigo" },
+            { normal: "Betis", impostor: "Sevilla" }, { normal: "Espanyol", impostor: "Osasuna" },
+            { normal: "Deportivo La Coruña", impostor: "Real Sociedad" }, { normal: "Zaragoza", impostor: "Sporting de Gijón" }
         ],
         "Películas y Personajes": [
             { normal: "Buzz Lightyear", impostor: "Woody" }, { normal: "Sully", impostor: "Mike Wazowski" },
@@ -257,13 +884,417 @@
             { normal: "La Bella y la Bestia", impostor: "Bestia" }, { normal: "Kung Fu Panda", impostor: "Po" },
             { normal: "Madagascar", impostor: "Alex" }, { normal: "Valiente", impostor: "Mérida" },
             { normal: "Lilo & Stitch", impostor: "Stitch" }, { normal: "Hércules", impostor: "Hades" },
-            { normal: "Pocahontas", impostor: "Meeko" }, { normal: "Tiana y el Sapo", impostor: "Louis" }
+            { normal: "Pocahontas", impostor: "Meeko" }, { normal: "Tiana y el Sapo", impostor: "Louis" },
+            { normal: "Harry Potter", impostor: "Hogwarts" }, { normal: "Gandalf", impostor: "Frodo" },
+            { normal: "Darth Vader", impostor: "Skywalker" }, { normal: "Titanic", impostor: "Jack" },
+            { normal: "Avatar", impostor: "Pocahontas" }, { normal: "Matrix", impostor: "Neo" },
+            { normal: "El Padrino", impostor: "Corleone" }, { normal: "Pulp Fiction", impostor: "Travolta" },
+            { normal: "Forrest Gump", impostor: "Bubba" }, { normal: "Gladiador", impostor: "Máximo" },
+            { normal: "El Señor de los Anillos", impostor: "Hobbit" }, { normal: "Jurassic Park", impostor: "T-Rex" },
+            { normal: "E.T.", impostor: "Extraterrestre" }, { normal: "Indiana Jones", impostor: "Látigo" },
+            { normal: "Volver al Futuro", impostor: "DeLorean" }, { normal: "Terminator", impostor: "Skynet" },
+            { normal: "Alien", impostor: "Depredador" }, { normal: "Blade Runner", impostor: "Nexus" },
+            { normal: "Psicosis", impostor: "Bates" }, { normal: "El Resplandor", impostor: "Hacha" },
+            { normal: "El Exorcista", impostor: "Pazuzu" }, { normal: "Scream", impostor: "Ghostface" },
+            { normal: "Halloween", impostor: "Michael Myers" }, { normal: "Viernes 13", impostor: "Jason" },
+            { normal: "Pesadilla en Elm Street", impostor: "Freddy Krueger" }, { normal: "James Bond", impostor: "007" },
+            { normal: "Misión Imposible", impostor: "Ethan Hunt" }, { normal: "Bourne", impostor: "Identidad" },
+            { normal: "John Wick", impostor: "Perro" }, { normal: "Rápidos y Furiosos", impostor: "Vin Diesel" },
+            { normal: "Transformers", impostor: "Optimus Prime" }, { normal: "Marvel", impostor: "DC Comics" },
+            { normal: "Spider-Man", impostor: "Peter Parker" }, { normal: "Iron Man", impostor: "Tony Stark" },
+            { normal: "Capitán América", impostor: "Steve Rogers" }, { normal: "Thor", impostor: "Asgard" },
+            { normal: "Hulk", impostor: "Bruce Banner" }, { normal: "Viuda Negra", impostor: "Natasha" },
+            { normal: "Doctor Strange", impostor: "Hechicero Supremo" }, { normal: "Pantera Negra", impostor: "Wakanda" },
+            { normal: "Guardianes de la Galaxia", impostor: "Star-Lord" }, { normal: "Joker", impostor: "Guasón" },
+            { normal: "Batman", impostor: "Bruce Wayne" }, { normal: "Superman", impostor: "Clark Kent" },
+            { normal: "Mujer Maravilla", impostor: "Diana Prince" }, { normal: "Flash", impostor: "Barry Allen" },
+            { normal: "Aquaman", impostor: "Mera" }, { normal: "Linterna Verde", impostor: "Hal Jordan" },
+            { normal: "Vengadores", impostor: "Liga de la Justicia" }, { normal: "Los Simpsons", impostor: "Springfield" },
+            { normal: "Family Guy", impostor: "Peter Griffin" }, { normal: "South Park", impostor: "Cartman" },
+            { normal: "Padre de Familia", impostor: "Stewie" }, { normal: "Rick y Morty", impostor: "Científico" },
+            { normal: "Bob Esponja", impostor: "Patricio" }, { normal: "Doraemon", impostor: "Nobita" },
+            { normal: "Dragon Ball", impostor: "Goku" }, { normal: "Pokémon", impostor: "Pikachu" },
+            { normal: "Naruto", impostor: "Sasuke" }, { normal: "One Piece", impostor: "Luffy" },
+            { normal: "Death Note", impostor: "Light Yagami" }, { normal: "Ataque a los Titanes", impostor: "Eren" },
+            { normal: "Sailor Moon", impostor: "Usagi" }, { normal: "Evangelion", impostor: "Shinji" },
+            { normal: "Akira", impostor: "Kaneda" }, { normal: "Ghibli", impostor: "Totoro" },
+            { normal: "El Viaje de Chihiro", impostor: "Haku" }, { normal: "La Princesa Mononoke", impostor: "Ashitaka" },
+            { normal: "Mi Vecino Totoro", impostor: "Gatobús" }, { normal: "El Castillo Ambulante", impostor: "Howl" },
+            { normal: "Dune", impostor: "Arrakis" }, { normal: "Star Trek", impostor: "Enterprise" },
+            { normal: "Doctor Who", impostor: "TARDIS" }, { normal: "Fuego y Sangre", impostor: "Targaryen" },
+            { normal: "Juego de Tronos", impostor: "Invernalia" }, { normal: "House of the Dragon", impostor: "Rhaenyra" },
+            { normal: "The Witcher", impostor: "Geralt" }, { normal: "Stranger Things", impostor: "Once" },
+            { normal: "Breaking Bad", impostor: "Heisenberg" }, { normal: "The Office", impostor: "Dunder Mifflin" },
+            { normal: "Friends", impostor: "Central Perk" }, { normal: "Seinfeld", impostor: "Jerry" },
+            { normal: "How I Met Your Mother", impostor: "Barney Stinson" }, { normal: "The Big Bang Theory", impostor: "Sheldon" },
+            { normal: "Peaky Blinders", impostor: "Tommy Shelby" }, { normal: "The Crown", impostor: "Reina Isabel" },
+            { normal: "Euphoria", impostor: "Zendaya" }, { normal: "Succession", impostor: "Logan Roy" },
+            { normal: "Squid Game", impostor: "Juego del Calamar" }, { normal: "Black Mirror", impostor: "Tecnología" },
+            { normal: "La Casa de Papel", impostor: "El Profesor" }, { normal: "Élite", impostor: "Las Encinas" },
+            { normal: "Narcos", impostor: "Pablo Escobar" }, { normal: "El Chapo", impostor: "Guzmán" },
+            { normal: "Casablanca", impostor: "Humphrey Bogart" }, { normal: "Ciudadano Kane", impostor: "Orson Welles" },
+            { normal: "Cantando bajo la lluvia", impostor: "Gene Kelly" }, { normal: "Lo que el viento se llevó", impostor: "Scarlett O'Hara" },
+            { normal: "Lawrence de Arabia", impostor: "Desierto" }, { normal: "2001: Odisea del Espacio", impostor: "HAL 9000" },
+            { normal: "Tiburón", impostor: "Spielberg" }, { normal: "Encuentros cercanos", impostor: "OVNI" },
+            { normal: "V de Vendetta", impostor: "Guy Fawkes" }, { normal: "Watchmen", impostor: "Rorschach" },
+            { normal: "Kick-Ass", impostor: "Hit-Girl" }, { normal: "Kingsman", impostor: "Agente Secreto" },
+            { normal: "Sherlock Holmes", impostor: "Watson" }, { normal: "Agatha Christie", impostor: "Hércules Poirot" },
+            { normal: "Stephen King", impostor: "Carrie" }, { normal: "H.P. Lovecraft", impostor: "Cthulhu" },
+            { normal: "Drácula", impostor: "Vampiro" }, { normal: "Frankenstein", impostor: "Monstruo" },
+            { normal: "El Hombre Lobo", impostor: "Licántropo" }, { normal: "La Momia", impostor: "Imhotep" },
+            { normal: "Piratas del Caribe", impostor: "Jack Sparrow" }, { normal: "Indiana Jones", impostor: "Arqueólogo" },
+            { normal: "El Zorro", impostor: "Espadachín" }, { normal: "Robin Hood", impostor: "Sherwood" },
+            { normal: "Alicia en el País de las Maravillas", impostor: "Sombrerero Loco" }, { normal: "Peter Pan", impostor: "Capitán Garfio" },
+            { normal: "Winnie the Pooh", impostor: "Christopher Robin" }, { normal: "Cenicienta", impostor: "Zapatilla" },
+            { normal: "Blancanieves", impostor: "Enanos" }, { normal: "La Bella Durmiente", impostor: "Maléfica" },
+            { normal: "Pato Donald", impostor: "Mickey Mouse" }, { normal: "Goofy", impostor: "Pluto" },
+            { normal: "Heidi", impostor: "Abuelo" }, { normal: "Marco", impostor: "Amedio" }
+        ],
+        "Videojuegos": [
+            { normal: "Mario", impostor: "Luigi" }, { normal: "Zelda", impostor: "Link" },
+            { normal: "Minecraft", impostor: "Bloques" }, { normal: "Fortnite", impostor: "Battle Royale" },
+            { normal: "PlayStation", impostor: "Xbox" }, { normal: "Pikachu", impostor: "Charmander" },
+            { normal: "Pac-Man", impostor: "Fantasmas" }, { normal: "Halo", impostor: "Master Chief" },
+            { normal: "League of Legends", impostor: "Dota" }, { normal: "Portal", impostor: "GLaDOS" },
+            { normal: "Resident Evil", impostor: "Zombi" }, { normal: "Assassin's Creed", impostor: "Ezio" },
+            { normal: "The Sims", impostor: "Simoleon" }, { normal: "Tetris", impostor: "Bloque" },
+            { normal: "Sonic", impostor: "Tails" }, { normal: "Crash Bandicoot", impostor: "Aku Aku" },
+            { normal: "God of War", impostor: "Kratos" }, { normal: "Overwatch", impostor: "Héroe" },
+            { normal: "Call of Duty", impostor: "Battlefield" }, { normal: "Grand Theft Auto", impostor: "Vice City" },
+            { normal: "Final Fantasy", impostor: "J-RPG" }, { normal: "World of Warcraft", impostor: "Azeroth" },
+            { normal: "The Witcher", impostor: "Geralt" }, { normal: "Red Dead Redemption", impostor: "Cowboy" },
+            { normal: "Cyberpunk", impostor: "Night City" }, { normal: "Metroid", impostor: "Samus" },
+            { normal: "Uncharted", impostor: "Nathan Drake" }, { normal: "Street Fighter", impostor: "Hadoken" },
+            { normal: "Mortal Kombat", impostor: "Fatality" }, { normal: "Super Smash Bros.", impostor: "Lucha" },
+            { normal: "FIFA", impostor: "PES" }, { normal: "NBA 2K", impostor: "Baloncesto" },
+            { normal: "Rocket League", impostor: "Coche" }, { normal: "Among Us", impostor: "Impostor" },
+            { normal: "Fall Guys", impostor: "Gominola" }, { normal: "Genshin Impact", impostor: "Teyvat" },
+            { normal: "Roblox", impostor: "Bloxburg" }, { normal: "Animal Crossing", impostor: "Nook" },
+            { normal: "Doom", impostor: "Marine" }, { normal: "Quake", impostor: "Strogg" },
+            { normal: "Half-Life", impostor: "Gordon Freeman" }, { normal: "Counter-Strike", impostor: "Terrorista" },
+            { normal: "Team Fortress 2", impostor: "Clase" }, { normal: "Darksiders", impostor: "Guerra" },
+            { normal: "Diablo", impostor: "Santuario" }, { normal: "StarCraft", impostor: "Zerg" },
+            { normal: "Warcraft", impostor: "Orco" }, { normal: "Overlord", impostor: "Minions" },
+            { normal: "Fable", impostor: "Héroe" }, { normal: "Mass Effect", impostor: "Comandante Shepard" },
+            { normal: "Dragon Age", impostor: "Thedas" }, { normal: "Skyrim", impostor: "Dovahkiin" },
+            { normal: "Fallout", impostor: "Yermo" }, { normal: "Borderlands", impostor: "Pandora" },
+            { normal: "Destiny", impostor: "Guardián" }, { normal: "The Division", impostor: "Agente" },
+            { normal: "Rainbow Six Siege", impostor: "Operador" }, { normal: "Forza Horizon", impostor: "Coche de Carreras" },
+            { normal: "Gran Turismo", impostor: "Simulador" }, { normal: "Need for Speed", impostor: "Persecución" },
+            { normal: "F-Zero", impostor: "Máquina" }, { normal: "Mario Kart", impostor: "Caparazón" },
+            { normal: "Donkey Kong", impostor: "Barril" }, { normal: "Kirby", impostor: "Poder" },
+            { normal: "Pokémon Go", impostor: "Realidad Aumentada" }, { normal: "Clash of Clans", impostor: "Aldea" },
+            { normal: "Candy Crush", impostor: "Dulce" }, { normal: "Angry Birds", impostor: "Pájaro" },
+            { normal: "Limbo", impostor: "Niño" }, { normal: "Inside", impostor: "Sombra" },
+            { normal: "Cuphead", impostor: "Jefe" }, { normal: "Hollow Knight", impostor: "Bicho" },
+            { normal: "Shovel Knight", impostor: "Pala" }, { normal: "Celeste", impostor: "Montaña" },
+            { normal: "Stardew Valley", impostor: "Granja" }, { normal: "Terraria", impostor: "Mundo" },
+            { normal: "Factorio", impostor: "Fábrica" }, { normal: "Satisfactory", impostor: "Máquina" },
+            { normal: "No Man's Sky", impostor: "Exploración" }, { normal: "Elite Dangerous", impostor: "Piloto" },
+            { normal: "Kerbal Space Program", impostor: "Cohete" }, { normal: "Subnautica", impostor: "Océano" },
+            { normal: "Sea of Thieves", impostor: "Pirata" }, { normal: "World of Tanks", impostor: "Blindaje" },
+            { normal: "War Thunder", impostor: "Avión" }, { normal: "EVE Online", impostor: "Nave Espacial" },
+            { normal: "Runescape", impostor: "Gielinor" }, { normal: "Old School RuneScape", impostor: "OSRS" },
+            { normal: "Guild Wars 2", impostor: "Tyria" }, { normal: "Blade & Soul", impostor: "Artes Marciales" },
+            { normal: "Tera", impostor: "Elara" }, { normal: "Black Desert Online", impostor: "Calpheon" },
+            { normal: "Elder Scrolls Online", impostor: "Tamriel" }, { normal: "Neverwinter", impostor: "Faerûn" },
+            { normal: "Dungeons & Dragons", impostor: "Rol" }, { normal: "Magic: The Gathering", impostor: "Cartas" },
+            { normal: "Hearthstone", impostor: "Taberna" }, { normal: "Legends of Runeterra", impostor: "Régimen" },
+            { normal: "Slay the Spire", impostor: "Mazmorra" }, { normal: "Dark Souls", impostor: "Fogata" },
+            { normal: "Bloodborne", impostor: "Yharnam" }, { normal: "Sekiro", impostor: "Shinobi" },
+            { normal: "Nioh", impostor: "Yokai" }, { normal: "Ghost of Tsushima", impostor: "Samurái" },
+            { normal: "Yakuza", impostor: "Dragón de Dojima" }, { normal: "Persona 5", impostor: "Phantom Thieves" },
+            { normal: "Final Fantasy VII", impostor: "Cloud Strife" }, { normal: "Chrono Trigger", impostor: "Viaje en el Tiempo" },
+            { normal: "Pokémon Red", impostor: "Blue" }, { normal: "Super Mario Bros.", impostor: "Princesa Peach" },
+            { normal: "Metroid Prime", impostor: "Morph Ball" }, { normal: "GoldenEye 007", impostor: "Multiplayer" },
+            { normal: "Star Fox", impostor: "Arwing" }, { normal: "F-Zero GX", impostor: "Capitán Falcon" },
+            { normal: "EarthBound", impostor: "Ness" }, { normal: "Mother 3", impostor: "Lucas" },
+            { normal: "Undertale", impostor: "Frisk" }, { normal: "Deltarune", impostor: "Kris" },
+            { normal: "Five Nights at Freddy's", impostor: "Animatrónico" }, { normal: "Amnesia", impostor: "Tubería" },
+            { normal: "Outlast", impostor: "Cámara" }, { normal: "Silent Hill", impostor: "Niebla" },
+            { normal: "Dead Space", impostor: "Necromorfo" }, { normal: "Bioshock", impostor: "Rapture" },
+            { normal: "Dishonored", impostor: "Corvo" }, { normal: "Prey", impostor: "Typhon" },
+            { normal: "Deus Ex", impostor: "Aumento" }, { normal: "Half-Life 2", impostor: "City 17" },
+            { normal: "Left 4 Dead", impostor: "Infectado" }, { normal: "Payday 2", impostor: "Atraco" },
+            { normal: "Warframe", impostor: "Tenno" }
+        ],
+        "Colores": [
+            { normal: "Rojo", impostor: "Bermellón" }, { normal: "Azul", impostor: "Celeste" },
+            { normal: "Amarillo", impostor: "Dorado" }, { normal: "Verde", impostor: "Esmeralda" },
+            { normal: "Negro", impostor: "Ébano" }, { normal: "Blanco", impostor: "Nieve" },
+            { normal: "Gris", impostor: "Plata" }, { normal: "Naranja", impostor: "Salmón" },
+            { normal: "Violeta", impostor: "Morado" }, { normal: "Marrón", impostor: "Café" },
+            { normal: "Rosa", impostor: "Fucsia" }, { normal: "Cian", impostor: "Turquesa" },
+            { normal: "Magenta", impostor: "Púrpura" }, { normal: "Beige", impostor: "Crema" },
+            { normal: "Índigo", impostor: "Añil" }, { normal: "Verde lima", impostor: "Chartreuse" },
+            { normal: "Azul cobalto", impostor: "Ultramar" }, { normal: "Terracota", impostor: "Ladrillo" },
+            { normal: "Malva", impostor: "Lila" }, { normal: "Bordeaux", impostor: "Borgoña" },
+            { normal: "Carmín", impostor: "Grana" }, { normal: "Escarlata", impostor: "Carmesí" },
+            { normal: "Aguamarina", impostor: "Cian claro" }, { normal: "Zafiro", impostor: "Azul real" },
+            { normal: "Verde oliva", impostor: "Caqui" }, { normal: "Siena", impostor: "Ocre" },
+            { normal: "Ámbar", impostor: "Miel" }, { normal: "Bronce", impostor: "Cobre" },
+            { normal: "Oro", impostor: "Platino" }, { normal: "Rubí", impostor: "Granate" },
+            { normal: "Jade", impostor: "Malaquita" }, { normal: "Coral", impostor: "Salmón" },
+            { normal: "Lavanda", impostor: "Púrpura claro" }, { normal: "Borgoña", impostor: "Vino" },
+            { normal: "Tostado", impostor: "Canela" }, { normal: "Castaño", impostor: "Marrón oscuro" },
+            { normal: "Topacio", impostor: "Citrino" }, { normal: "Pistacho", impostor: "Verde pálido" },
+            { normal: "Plumbago", impostor: "Azul plomo" }, { normal: "Chocolate", impostor: "Moca" },
+            { normal: "Carbón", impostor: "Grafito" }, { normal: "Perla", impostor: "Marfil" },
+            { normal: "Rubio", impostor: "Dorado" }, { normal: "Moreno", impostor: "Castaño" },
+            { normal: "Pelirrojo", impostor: "Jengibre" }, { normal: "Aurora", impostor: "Amanecer" },
+            { normal: "Medianoche", impostor: "Oscuridad" }, { normal: "Esmeralda", impostor: "Beryl" },
+            { normal: "Rubí", impostor: "Corindón" }, { normal: "Zafiro", impostor: "Alúmina" },
+            { normal: "Diamante", impostor: "Carbono" }, { normal: "Púrpura", impostor: "Amatista" },
+            { normal: "Turquesa", impostor: "Cian" }, { normal: "Coral", impostor: "Pez" },
+            { normal: "Nuez", impostor: "Avellana" }, { normal: "Azul marino", impostor: "Navy" },
+            { normal: "Magenta", impostor: "Fucsia" }, { normal: "Carmesí", impostor: "Rojo profundo" },
+            { normal: "Vino", impostor: "Borgoña" }, { normal: "Arcilla", impostor: "Barro" },
+            { normal: "Marrón", impostor: "Pardo" }, { normal: "Sepia", impostor: "Café" },
+            { normal: "Grisáceo", impostor: "Ceniza" }, { normal: "Blanco roto", impostor: "Hueso" },
+            { normal: "Rojo escarlata", impostor: "Rojo cereza" }, { normal: "Azul cielo", impostor: "Azul claro" },
+            { normal: "Amarillo canario", impostor: "Amarillo limón" }, { normal: "Verde botella", impostor: "Verde oscuro" },
+            { normal: "Negro azabache", impostor: "Negro intenso" }, { normal: "Gris marengo", impostor: "Gris oscuro" },
+            { normal: "Naranja calabaza", impostor: "Naranja rojizo" }, { normal: "Violeta obispo", impostor: "Violeta intenso" },
+            { normal: "Rosa chicle", impostor: "Rosa brillante" }, { normal: "Verde menta", impostor: "Verde agua" },
+            { normal: "Azul pavo real", impostor: "Azul eléctrico" }, { normal: "Rojo sangre", impostor: "Rojo vino" },
+            { normal: "Amarillo mostaza", impostor: "Amarillo terroso" }, { normal: "Verde militar", impostor: "Verde seco" },
+            { normal: "Gris perla", impostor: "Gris claro" }, { normal: "Naranja óxido", impostor: "Naranja apagado" },
+            { normal: "Púrpura real", impostor: "Púrpura oscuro" }, { normal: "Marrón chocolate", impostor: "Marrón cacao" },
+            { normal: "Rosa palo", impostor: "Rosa viejo" }, { normal: "Cian claro", impostor: "Turquesa pálido" },
+            { normal: "Magenta oscuro", impostor: "Ciruela" }, { normal: "Beige tostado", impostor: "Arena" },
+            { normal: "Azul turquesa", impostor: "Verde azulado" }, { normal: "Rojo ladrillo", impostor: "Terracota" },
+            { normal: "Amarillo pálido", impostor: "Crema" }, { normal: "Verde fluorescente", impostor: "Verde neón" },
+            { normal: "Gris carbón", impostor: "Antracita" }, { normal: "Naranja brillante", impostor: "Naranja flúor" },
+            { normal: "Violeta berenjena", impostor: "Morado oscuro" }, { normal: "Marrón rojizo", impostor: "Óxido" },
+            { normal: "Rosa salmón", impostor: "Melocotón" }, { normal: "Azul aciano", impostor: "Azul francés" },
+            { normal: "Rojo amapola", impostor: "Rojo fresa" }, { normal: "Amarillo oro", impostor: "Amarillo mostaza" },
+            { normal: "Verde manzana", impostor: "Verde hoja" }, { normal: "Gris pizarra", impostor: "Gris ceniza" },
+            { normal: "Naranja mandarina", impostor: "Naranja butano" }, { normal: "Púrpura cardenal", impostor: "Morado fuerte" },
+            { normal: "Marrón tierra", impostor: "Marrón arcilla" }, { normal: "Rosa fucsia", impostor: "Rosa mexicano" },
+            { normal: "Cian brillante", impostor: "Verde menta" }, { normal: "Magenta claro", impostor: "Malva pálido" },
+            { normal: "Blanco puro", impostor: "Blanco óptico" }, { normal: "Negro mate", impostor: "Negro liso" },
+            { normal: "Azul cobalto", impostor: "Azul marino" }, { normal: "Rojo cereza", impostor: "Rojo rubí" },
+            { normal: "Amarillo sol", impostor: "Amarillo brillante" }, { normal: "Verde pino", impostor: "Verde abeto" },
+            { normal: "Gris oscuro", impostor: "Gris plomo" }, { normal: "Naranja quemado", impostor: "Siena tostada" },
+            { normal: "Violeta de parma", impostor: "Morado claro" }, { normal: "Marrón caoba", impostor: "Marrón ébano" },
+            { normal: "Rosa coral", impostor: "Rosa anaranjado" }, { normal: "Azul eléctrico", impostor: "Azul índigo" },
+            { normal: "Rojo carmesí", impostor: "Rojo intenso" }, { normal: "Amarillo azufre", impostor: "Amarillo claro" },
+            { normal: "Verde musgo", impostor: "Verde pantano" }, { normal: "Gris plateado", impostor: "Plata" },
+            { normal: "Naranja rojizo", impostor: "Rojo anaranjado" }, { normal: "Púrpura añil", impostor: "Azul purpúreo" },
+            { normal: "Marrón nogal", impostor: "Marrón oscuro" }, { normal: "Rosa cuarzo", impostor: "Rosa empolvado" },
+            { normal: "Azul cerúleo", impostor: "Azul celeste" }, { normal: "Rojo teja", impostor: "Terracota" },
+            { normal: "Amarillo huevo", impostor: "Yema" }, { normal: "Verde jade", impostor: "Verde esmeralda" },
+            { normal: "Gris topo", impostor: "Gris marrón" }, { normal: "Naranja albaricoque", impostor: "Melocotón" },
+            { normal: "Violeta genciana", impostor: "Morado azulado" }, { normal: "Marrón avellana", impostor: "Avellana" },
+            { normal: "Rosa bebé", impostor: "Rosa claro" }, { normal: "Cian agua", impostor: "Verde mar" }
+        ],
+        "Música": [
+            { normal: "Guitarra", impostor: "Ukelele" }, { normal: "Piano", impostor: "Teclado" },
+            { normal: "Batería", impostor: "Percusión" }, { normal: "Pop", impostor: "Rock" },
+            { normal: "Jazz", impostor: "Blues" }, { normal: "Flauta", impostor: "Clarinete" },
+            { normal: "Violín", impostor: "Viola" }, { normal: "Concierto", impostor: "Recital" },
+            { normal: "Cantante", impostor: "Vocalista" }, { normal: "Orquesta", impostor: "Banda" },
+            { normal: "Bohemian Rhapsody", impostor: "Somebody to Love" }, // Queen
+            { normal: "Thriller", impostor: "Billie Jean" }, // Michael Jackson
+            { normal: "Stairway to Heaven", impostor: "Led Zeppelin" }, // Led Zeppelin
+            { normal: "Imagine", impostor: "Give Peace a Chance" }, // John Lennon
+            { normal: "Smells Like Teen Spirit", impostor: "Nirvana" }, // Nirvana
+            { normal: "Despacito", impostor: "Fonsi" }, // Luis Fonsi
+            { normal: "Reggaeton", impostor: "Dembow" }, // Género
+            { normal: "Salsa", impostor: "Bachata" }, // Género
+            { normal: "Ópera", impostor: "Aria" }, // Género/Forma
+            { normal: "Taylor Swift", impostor: "Cardigan" }, // Artista/Canción
+            { normal: "Bad Bunny", impostor: "Un Verano Sin Ti" }, // Artista/Álbum
+            { normal: "The Beatles", impostor: "Yesterday" }, // Banda/Canción
+            { normal: "Sinfonía", impostor: "Sonata" }, { normal: "Trompeta", impostor: "Corneta" },
+            { normal: "Saxofón", impostor: "Oboe" }, { normal: "Arpa", impostor: "Lira" },
+            { normal: "Tambor", impostor: "Timbal" }, { normal: "Metal", impostor: "Heavy" },
+            { normal: "Rap", impostor: "Hip Hop" }, { normal: "Electrónica", impostor: "Tecno" },
+            { normal: "Disco", impostor: "Funk" }, { normal: "Soul", impostor: "Gospel" },
+            { normal: "Country", impostor: "Folk" }, { normal: "Reggae", impostor: "Ska" },
+            { normal: "Bolero", impostor: "Balada" }, { normal: "Tango", impostor: "Milonga" },
+            { normal: "Flamenco", impostor: "Sevillanas" }, { normal: "Mariachi", impostor: "Ranchera" },
+            { normal: "Cumbia", impostor: "Salsa" }, { normal: "Merengue", impostor: "Mambo" },
+            { normal: "Rock and Roll", impostor: "Doo-wop" }, { normal: "Grunge", impostor: "Punk" },
+            { normal: "New Wave", impostor: "Synth Pop" }, { normal: "Indie", impostor: "Alternativo" },
+            { normal: "Coro", impostor: "Canto" }, { normal: "Director", impostor: "Maestro" },
+            { normal: "Partitura", impostor: "Pentagrama" }, { normal: "Nota", impostor: "Clave" },
+            { normal: "Acorde", impostor: "Armonía" }, { normal: "Melodía", impostor: "Ritmo" },
+            { normal: "Tempo", impostor: "Compás" }, { normal: "Micrófono", impostor: "Auricular" },
+            { normal: "Estudio", impostor: "Grabación" }, { normal: "Álbum", impostor: "EP" },
+            { normal: "Single", impostor: "Sencillo" }, { normal: "Gira", impostor: "Tour" },
+            { normal: "Concierto", impostor: "Festival" }, { normal: "Auditorio", impostor: "Teatro" },
+            { normal: "DJ", impostor: "Productor" }, { normal: "Remix", impostor: "Cover" },
+            { normal: "Demo", impostor: "Maqueta" }, { normal: "Roadie", impostor: "Técnico" },
+            { normal: "Guitarrista", impostor: "Bajista" }, { normal: "Baterista", impostor: "Percusionista" },
+            { normal: "Tecladista", impostor: "Pianista" }, { normal: "Trovador", impostor: "Juglar" },
+            { normal: "Rapero", impostor: "MC" }, { normal: "Beat", impostor: "Loop" },
+            { normal: "Sintetizador", impostor: "Secuenciador" }, { normal: "Reverb", impostor: "Delay" },
+            { normal: "Distorsión", impostor: "Overdrive" }, { normal: "Pedal", impostor: "Efecto" },
+            { normal: "Afinador", impostor: "Metrónomo" }, { normal: "Cuerda", impostor: "Traste" },
+            { normal: "Válvula", impostor: "Pistón" }, { normal: "Caña", impostor: "Lengüeta" },
+            { normal: "Diapasón", impostor: "Mástil" }, { normal: "Arco", impostor: "Resina" },
+            { normal: "Chelo", impostor: "Contrabajo" }, { normal: "Fagot", impostor: "Clavecín" },
+            { normal: "Clarinete", impostor: "Flauta dulce" }, { normal: "Armónica", impostor: "Acordeón" },
+            { normal: "Banjo", impostor: "Mandolina" }, { normal: "Sitar", impostor: "Tabla" },
+            { normal: "Gaita", impostor: "Dulzaina" }, { normal: "Marimba", impostor: "Xilófono" },
+            { normal: "Campana", impostor: "Gong" }, { normal: "Platillos", impostor: "Címbalos" },
+            { normal: "Arma", impostor: "Bazuca" }, { normal: "Bala", impostor: "Proyectil" },
+            { normal: "Espada", impostor: "Sable" }, { normal: "Escudo", impostor: "Rodela" },
+            { normal: "Yelmo", impostor: "Casco" }, { normal: "Armadura", impostor: "Coraza" },
+            { normal: "Mago", impostor: "Hechicero" }, { normal: "Brujo", impostor: "Nigromante" },
+            { normal: "Elfo", impostor: "Hada" }, { normal: "Ogro", impostor: "Trol" },
+            { normal: "Minotauro", impostor: "Centauro" }, { normal: "Grifo", impostor: "Hipogrifo" },
+            { normal: "Sirena", impostor: "Nereida" }, { normal: "Vikingo", impostor: "Bárbaro" },
+            { normal: "Samurái", impostor: "Ninja" }, { normal: "Gladiador", impostor: "Pretoriano" },
+            { normal: "Faraón", impostor: "Sacerdote" }, { normal: "Imperio", impostor: "Reino" },
+            { normal: "Rey", impostor: "Príncipe" }, { normal: "Héroe", impostor: "Villano" },
+            { normal: "Profecía", impostor: "Oráculo" }, { normal: "Grial", impostor: "Cáliz" },
+            { normal: "Anillo", impostor: "Joya" }, { normal: "Poción", impostor: "Elixir" },
+            { normal: "Cripta", impostor: "Tumba" }, { normal: "Ruinas", impostor: "Escombros" },
+            { normal: "Leyenda", impostor: "Mito" }, { normal: "Saga", impostor: "Epopeya" },
+            { normal: "Quimera", impostor: "Ilusión" }, { normal: "Espectro", impostor: "Fantasma" },
+            { normal: "Zombi", impostor: "Goul" }, { normal: "Vampiro", impostor: "Nosferatu" },
+            { normal: "Licántropo", impostor: "Hombre Lobo" }, { normal: "Gárgola", impostor: "Quimera" },
+            { normal: "Alquimia", impostor: "Piedra Filosofal" }, { normal: "Papiro", impostor: "Pergamino" },
+            { normal: "Escriba", impostor: "Copista" }, { normal: "Caligrafía", impostor: "Tinta" },
+            { normal: "Código", impostor: "Manuscrito" }, { normal: "Mapa", impostor: "Carta" },
+            { normal: "Astrolabio", impostor: "Sextante" }, { normal: "Brújula", impostor: "Norte" },
+            { normal: "Catapulta", impostor: "Balista" }, { normal: "Tiro", impostor: "Proyectil" },
+            { normal: "Muralla", impostor: "Baluarte" }, { normal: "Foso", impostor: "Cisterna" },
+            { normal: "Torre", impostor: "Atalaya" }, { normal: "Mazmorra", impostor: "Calabozo" },
+            { normal: "Escalera de caracol", impostor: "Espirales" }
+        ],
+        "Deportes": [
+            { normal: "Baloncesto", impostor: "Fútbol" }, { normal: "Natación", impostor: "Buceo" },
+            { normal: "Tenis", impostor: "Pádel" }, { normal: "Voleibol", impostor: "Balón" },
+            { normal: "Béisbol", impostor: "Softbol" }, { normal: "Boxeo", impostor: "Lucha" },
+            { normal: "Atletismo", impostor: "Maratón" }, { normal: "Golf", impostor: "Hoyo" },
+            { normal: "Hockey", impostor: "Puck" }, { normal: "Gimnasia", impostor: "Acrobacia" },
+            { normal: "Ciclismo", impostor: "Bicicleta" }, { normal: "Rugby", impostor: "Oval" },
+            { normal: "Esgrima", impostor: "Espada" }, { normal: "Judo", impostor: "Karate" },
+            { normal: "Fórmula 1", impostor: "NASCAR" }, { normal: "Motociclismo", impostor: "MotoGP" },
+            { normal: "Vela", impostor: "Yate" }, { normal: "Remo", impostor: "Piragüismo" },
+            { normal: "Escalada", impostor: "Alpinismo" }, { normal: "Halterofilia", impostor: "Pesas" },
+            { normal: "Triatlón", impostor: "Decatlón" }, { normal: "Críquet", impostor: "Bate" },
+            { normal: "Polo", impostor: "Caballo" }, { normal: "Petanca", impostor: "Bolas" },
+            { normal: "Curling", impostor: "Piedra" }, { normal: "Bádminton", impostor: "Volante" },
+            { normal: "Squash", impostor: "Raqueta" }, { normal: "Waterpolo", impostor: "Piscina" },
+            { normal: "Balonmano", impostor: "Portería" }, { normal: "Fútbol Americano", impostor: "Touchdown" },
+            { normal: "Super Bowl", impostor: "NFL" }, { normal: "Lanzamiento de Jabalina", impostor: "Disco" },
+            { normal: "Salto de Longitud", impostor: "Triple Salto" }, { normal: "Carrera de 100m", impostor: "Velocidad" },
+            { normal: "Juegos Olímpicos", impostor: "Paralímpicos" }, { normal: "Medalla de Oro", impostor: "Plata" },
+            { normal: "Podio", impostor: "Primer Lugar" }, { normal: "Dopaje", impostor: "Sustancia" },
+            { normal: "Entrenador", impostor: "Técnico" }, { normal: "Árbitro", impostor: "Juez" },
+            { normal: "Gimnasio", impostor: "Pabellón" }, { normal: "Estadio", impostor: "Arena" },
+            { normal: "Pista", impostor: "Carril" }, { normal: "Portería", impostor: "Arco" },
+            { normal: "Red", impostor: "Malla" }, { normal: "Equipo", impostor: "Squadra" },
+            { normal: "Capitán", impostor: "Líder" }, { normal: "Fanático", impostor: "Hincha" },
+            { normal: "Derbi", impostor: "Clásico" }, { normal: "Tiempo Extra", impostor: "Prórroga" },
+            { normal: "Penalti", impostor: "Tiro libre" }, { normal: "Falta", impostor: "Infracción" },
+            { normal: "Tiro a Canasta", impostor: "Triple" }, { normal: "Rebote", impostor: "Asistencia" },
+            { normal: "Bateador", impostor: "Lanzador" }, { normal: "Home run", impostor: "Cuadrangular" },
+            { normal: "Strike", impostor: "Bola" }, { normal: "Mano", impostor: "Pase" },
+            { normal: "Defensa", impostor: "Ataque" }, { normal: "Cancha", impostor: "Campo" },
+            { normal: "Raqueta", impostor: "Pala" }, { normal: "Revés", impostor: "Drive" },
+            { normal: "Saque", impostor: "Servicio" }, { normal: "Ace", impostor: "Punto directo" },
+            { normal: "KO", impostor: "Nocaut" }, { normal: "Uppercut", impostor: "Gancho" },
+            { normal: "Cinturón", impostor: "Título" }, { normal: "Ring", impostor: "Cuadrilátero" },
+            { normal: "Judogi", impostor: "Kimono" }, { normal: "Cinturón Negro", impostor: "Dan" },
+            { normal: "Tiro con Arco", impostor: "Flecha" }, { normal: "Hípica", impostor: "Jinete" },
+            { normal: "Patinaje", impostor: "Hielo" }, { normal: "Snowboard", impostor: "Esquí" },
+            { normal: "Surf", impostor: "Tabla" }, { normal: "Windsurf", impostor: "Vela" },
+            { normal: "Kitesurf", impostor: "Cometa" }, { normal: "Canotaje", impostor: "Kayac" },
+            { normal: "Bobsleigh", impostor: "Trineo" }, { normal: "Luge", impostor: "Pista" },
+            { normal: "Skeleton", impostor: "Rastrillo" }, { normal: "Biatlón", impostor: "Esquí de fondo" },
+            { normal: "Patinaje de velocidad", impostor: "Pista corta" }, { normal: "Clavados", impostor: "Trampolín" },
+            { normal: "Nado sincronizado", impostor: "Dúo" }, { normal: "Maratón", impostor: "Medio Maratón" },
+            { normal: "Ultra Maratón", impostor: "Trail Running" }, { normal: "Triatlón", impostor: "Ironman" },
+            { normal: "Gimnasia Artística", impostor: "Rítmica" }, { normal: "Viga", impostor: "Paralelas" },
+            { normal: "Barras", impostor: "Anillas" }, { normal: "Salto de Potro", impostor: "Caballo" },
+            { normal: "Levantamiento de Pesas", impostor: "Arrancada" }, { normal: "Dos Tiempos", impostor: "Press" },
+            { normal: "Fisicoculturismo", impostor: "Músculo" }, { normal: "Powerlifting", impostor: "Fuerza" },
+            { normal: "Caza", impostor: "Pesca" }, { normal: "Tiro Olímpico", impostor: "Carabina" },
+            { normal: "Buceo", impostor: "Snorkel" }, { normal: "Espeleología", impostor: "Cueva" },
+            { normal: "Senderismo", impostor: "Trekking" }, { normal: "Acampada", impostor: "Tienda" },
+            { normal: "Orientación", impostor: "Mapa" }, { normal: "Geocaching", impostor: "GPS" },
+            { normal: "Paracaidismo", impostor: "Salto base" }, { normal: "Ala delta", impostor: "Parapente" },
+            { normal: "Globo aerostático", impostor: "Zeppelin" }, { normal: "Carreras de caballos", impostor: "Jockey" },
+            { normal: "Galope", impostor: "Trote" }, { normal: "Saltos", impostor: "Doma" },
+            { normal: "Carreras de galgos", impostor: "Liebre" }, { normal: "Fútbol playa", impostor: "Arena" },
+            { normal: "Fútbol sala", impostor: "Pista" }, { normal: "Hándicap", impostor: "Ventaja" },
+            { normal: "Putt", impostor: "Swing" }, { normal: "Green", impostor: "Tee" },
+            { normal: "Fairway", impostor: "Rough" }, { normal: "Búnker", impostor: "Trampa" },
+            { normal: "Caddie", impostor: "Asistente" }, { normal: "Jiu-jitsu", impostor: "Sambo" },
+            { normal: "Taekwondo", impostor: "Hapkido" }, { normal: "Muay Thai", impostor: "Kickboxing" },
+            { normal: "Aikido", impostor: "Kendo" }, { normal: "Dojo", impostor: "Tatami" },
+            { normal: "Sensei", impostor: "Sempai" }, { normal: "Dardos", impostor: "Diana" },
+            { normal: "Billar", impostor: "Pool" }, { normal: "Snooker", impostor: "Carambola" }
+        ],
+        "Ficción Científica": [
+            { normal: "Alien", impostor: "Extraterrestre" }, { normal: "Robots", impostor: "Androides" },
+            { normal: "Viaje en el tiempo", impostor: "Crononauta" }, { normal: "Nave espacial", impostor: "Cohete" },
+            { normal: "Mutante", impostor: "X-Men" }, { normal: "Inteligencia Artificial", impostor: "Cerebro" },
+            { normal: "Láser", impostor: "Rayo" }, { normal: "Ciborg", impostor: "Biónico" },
+            { normal: "Teletransporte", impostor: "Desplazamiento" }, { normal: "Galaxia", impostor: "Universo" },
+            { normal: "Clonación", impostor: "Réplica" }, { normal: "Invisibilidad", impostor: "Camuflaje" },
+            { normal: "Gravedad", impostor: "Antigravedad" }, { normal: "Holograma", impostor: "Proyección" },
+            { normal: "Exoesqueleto", impostor: "Armadura" }, { normal: "Cápsula", impostor: "Vaina" },
+            { normal: "Colonización", impostor: "Asentamiento" }, { normal: "Tierra", impostor: "Planeta" },
+            { normal: "Marte", impostor: "Luna" }, { normal: "Saturno", impostor: "Júpiter" },
+            { normal: "Nebulosa", impostor: "Cometa" }, { normal: "Agujero Negro", impostor: "Singularidad" },
+            { normal: "Warp Drive", impostor: "Hiperpropulsión" }, { normal: "Luz", impostor: "Velocidad" },
+            { normal: "Realidad Virtual", impostor: "Simulación" }, { normal: "Realidad Aumentada", impostor: "Superposición" },
+            { normal: "Implante", impostor: "Prótesis" }, { normal: "Nanotecnología", impostor: "Microscópico" },
+            { normal: "Vector", impostor: "Portador" }, { normal: "Virus", impostor: "Patógeno" },
+            { normal: "Apocalipsis", impostor: "Catástrofe" }, { normal: "Post-apocalíptico", impostor: "Distópico" },
+            { normal: "Utopía", impostor: "Paraíso" }, { normal: "Mutación", impostor: "Evolución" },
+            { normal: "ADN", impostor: "Genoma" }, { normal: "Modificación Genética", impostor: "Edición de Genes" },
+            { normal: "Bioingeniería", impostor: "Biotecnología" }, { normal: "Criogenización", impostor: "Suspención" },
+            { normal: "Crioestasis", impostor: "Sueño" }, { normal: "Hibernación", impostor: "Letargo" },
+            { normal: "Quinta Dimensión", impostor: "Cuarta" }, { normal: "Continuo Espacio-Tiempo", impostor: "Tensor" },
+            { normal: "Paradoja", impostor: "Contradicción" }, { normal: "Futuro", impostor: "Pasado" },
+            { normal: "Búnker", impostor: "Refugio" }, { normal: "Supervivencia", impostor: "Resistencia" },
+            { normal: "Posthumano", impostor: "Transhumanismo" }, { normal: "Conciencia", impostor: "Mente" },
+            { normal: "Transferencia de Mente", impostor: "Descarga de Conciencia" }, { normal: "Singularidad", impostor: "Punto de Inflexión" },
+            { normal: "Máquina de Guerra", impostor: "Droide de Combate" }, { normal: "Dron", impostor: "Aeronave" },
+            { normal: "Arma Biológica", impostor: "Química" }, { normal: "Combustible", impostor: "Propelente" },
+            { normal: "Reactor", impostor: "Motor" }, { normal: "Campo de Fuerza", impostor: "Escudo" },
+            { normal: "Telequinesis", impostor: "Psicoquinesis" }, { normal: "Poderes Mentales", impostor: "Telepatía" },
+            { normal: "Psiónica", impostor: "Habilidad Mental" }, { normal: "Realidad Alterna", impostor: "Universo Paralelo" },
+            { normal: "Dimensión", impostor: "Plano de Existencia" }, { normal: "Portal", impostor: "Umbral" },
+            { normal: "Agujero de Gusano", impostor: "Puente Espacial" }, { normal: "Anomalía", impostor: "Disfunción" },
+            { normal: "Artefacto", impostor: "Reliquia" }, { normal: "Tecnología Antigua", impostor: "Avanzada" },
+            { normal: "Civilización", impostor: "Cultura" }, { normal: "Imperio Galáctico", impostor: "Federación" },
+            { normal: "República", impostor: "Alianza" }, { normal: "Estación Espacial", impostor: "Plataforma Orbital" },
+            { normal: "Hábitat", impostor: "Módulo" }, { normal: "Traje Espacial", impostor: "Escafandra" },
+            { normal: "Gravedad Cero", impostor: "Ingravidez" }, { normal: "Astrofísica", impostor: "Cosmología" },
+            { normal: "Hipótesis", impostor: "Teoría" }, { normal: "Ecuación", impostor: "Fórmula" },
+            { normal: "Algoritmo", impostor: "Código" }, { normal: "Programa", impostor: "Software" },
+            { normal: "Interfase", impostor: "Terminal" }, { normal: "Hacker", impostor: "Crackeador" },
+            { normal: "Firewall", impostor: "Ciberseguridad" }, { normal: "Dato", impostor: "Información" },
+            { normal: "Transmisión", impostor: "Señal" }, { normal: "Receptor", impostor: "Emisor" },
+            { normal: "Radiación", impostor: "Energía" }, { normal: "Partícula", impostor: "Cuanto" },
+            { normal: "Fusión", impostor: "Fisión" }, { normal: "Plasma", impostor: "Iones" },
+            { normal: "Antimateria", impostor: "Materia Oscura" }, { normal: "Bosón de Higgs", impostor: "Partícula Divina" },
+            { normal: "Realidad Simulada", impostor: "Hiperrealidad" }, { normal: "Metaverso", impostor: "Mundo Virtual" },
+            { normal: "Sensor", impostor: "Detector" }, { normal: "Monitoreo", impostor: "Vigilancia" },
+            { normal: "Implante Neural", impostor: "Chip Cerebral" }, { normal: "Neurociencia", impostor: "Cognitivo" },
+            { normal: "Máquina de Ensueño", impostor: "Simulador de Sueños" }, { normal: "Sueño Lúcido", impostor: "Onírico" },
+            { normal: "Pesadilla", impostor: "Terror Nocturno" }, { normal: "Sueño", impostor: "Vigilia" },
+            { normal: "Robot de Servicio", impostor: "Doméstico" }, { normal: "Autómata", impostor: "Gólem" },
+            { normal: "Máquina", impostor: "Mecanismo" }, { normal: "Dispositivo", impostor: "Artilugio" },
+            { normal: "Invento", impostor: "Creación" }, { normal: "Patente", impostor: "Licencia" },
+            { normal: "Laboratorio", impostor: "Investigación" }, { normal: "Científico", impostor: "Investigador" },
+            { normal: "Experimentación", impostor: "Prueba" }, { normal: "Teorema", impostor: "Postulado" },
+            { normal: "Ley Física", impostor: "Principio" }, { normal: "Gravedad Cuántica", impostor: "Teoría de Cuerdas" },
+            { normal: "Multiverso", impostor: "Muchos Mundos" }
         ]
     };
 
     let remainingWordPairs = {};
 
-    // Función para mezclar un array de forma aleatoria.
+    // Función para mezclar un array de forma aleatoria (Fisher-Yates)
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -274,36 +1305,47 @@
 
     function setPlayerCount() {
         playerCount = parseInt(document.getElementById('player-count').value);
+        const startScreen = document.getElementById('start-screen');
+        let errorMessage = startScreen.querySelector('.error-message');
+
         if (playerCount < 3) {
-            const startScreen = document.getElementById('start-screen');
-            let errorMessage = startScreen.querySelector('.error-message');
             if (!errorMessage) {
                 errorMessage = document.createElement('p');
-                errorMessage.className = 'text-red-400 mt-2 error-message';
+                errorMessage.className = 'text-red-500 mt-4 error-message shake font-bold';
                 startScreen.querySelector('.card').appendChild(errorMessage);
             }
-            errorMessage.textContent = 'Debe haber al menos 3 jugadores.';
+            errorMessage.textContent = 'ERROR: MÍNIMO 3 AGENTES REQUERIDOS';
             return;
+        }
+
+        if (errorMessage) {
+            errorMessage.remove();
         }
 
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('impostor-count-screen').classList.remove('hidden');
         document.getElementById('impostor-min-max').textContent = `(Mínimo 1, Máximo ${playerCount - 1})`;
         document.getElementById('impostor-count').setAttribute('max', playerCount - 1);
+        document.getElementById('impostor-count').value = Math.min(1, playerCount - 1); // Default a 1
     }
 
     function selectThemeScreen() {
         impostorCount = parseInt(document.getElementById('impostor-count').value);
+        const impostorScreen = document.getElementById('impostor-count-screen');
+        let errorMessage = impostorScreen.querySelector('.error-message');
+
         if (impostorCount <= 0 || impostorCount >= playerCount) {
-            const impostorScreen = document.getElementById('impostor-count-screen');
-            let errorMessage = impostorScreen.querySelector('.error-message');
             if (!errorMessage) {
                 errorMessage = document.createElement('p');
-                errorMessage.className = 'text-red-400 mt-2 error-message';
+                errorMessage.className = 'text-red-500 mt-4 error-message shake font-bold';
                 impostorScreen.querySelector('.card').appendChild(errorMessage);
             }
-            errorMessage.textContent = 'La cantidad de impostores no es válida.';
+            errorMessage.textContent = 'ERROR: CANTIDAD DE IMPOSTORES INVÁLIDA';
             return;
+        }
+
+        if (errorMessage) {
+            errorMessage.remove();
         }
         
         document.getElementById('impostor-count-screen').classList.add('hidden');
@@ -331,35 +1373,42 @@
         if (remainingWordPairs[selectedTheme].length === 0) {
             remainingWordPairs[selectedTheme] = shuffleArray([...themes[selectedTheme]]);
         }
+        
+        // Toma la siguiente pareja de palabras y la remueve de las disponibles
+        const randomWords = remainingWordPairs[selectedTheme].shift();
 
-        players = Array.from({ length: playerCount }, (_, i) => ({ id: `Jugador ${i + 1}`, role: 'Jugador', word: '' }));
+        // Inicializar a todos como Jugador con la palabra normal
+        players = Array.from({ length: playerCount }, (_, i) => ({ 
+            id: `AGENTE ${i + 1}`, 
+            role: 'Tripulante', 
+            word: randomWords.normal 
+        }));
 
+        // Seleccionar impostores y asignar su rol y palabra
         const playerIndices = [...Array(playerCount).keys()];
-        const shuffledIndices = playerIndices.sort(() => 0.5 - Math.random());
+        const shuffledIndices = shuffleArray(playerIndices);
         const impostorIndices = shuffledIndices.slice(0, impostorCount);
 
         impostorIndices.forEach(index => {
             players[index].role = 'Impostor';
-        });
-
-        const randomWords = remainingWordPairs[selectedTheme].shift();
-        
-        players.forEach(player => {
-            player.word = player.role === 'Impostor' ? "" : randomWords.normal;
+            players[index].word = randomWords.impostor; 
         });
 
         document.getElementById('theme-selection-screen').classList.add('hidden');
         document.getElementById('reveal-screen').classList.remove('hidden');
+        currentPlayerIndex = 0; 
         updateScreen();
     }
 
     function updateScreen() {
         if (currentPlayerIndex < players.length) {
-            document.getElementById('current-player').textContent = `Jugador ${currentPlayerIndex + 1}`;
+            document.getElementById('current-player').textContent = `AGENTE ${currentPlayerIndex + 1}`;
             document.getElementById('secret-info').classList.add('hidden');
+            document.querySelector('#reveal-screen button:not(#next-player-btn)').classList.remove('hidden'); // Botón 'Toca aquí para ver tu rol'
             document.getElementById('next-player-btn').classList.add('hidden');
-            document.querySelector('#reveal-screen button').classList.remove('hidden');
+            document.getElementById('confirmation-message').classList.add('hidden'); // Ocultar mensaje de confirmación para el siguiente jugador
         } else {
+            // Todos han visto su rol
             document.getElementById('reveal-screen').classList.add('hidden');
             document.getElementById('end-screen').classList.remove('hidden');
         }
@@ -369,25 +1418,32 @@
         const currentPlayer = players[currentPlayerIndex];
         const roleElement = document.getElementById('player-role');
         const wordElement = document.getElementById('secret-word');
+        const wordLabel = document.getElementById('secret-word-label');
+        const secretWordContainer = document.getElementById('secret-word-container');
         const confirmationMessage = document.getElementById('confirmation-message');
 
-        roleElement.textContent = currentPlayer.role;
+        roleElement.textContent = currentPlayer.role.toUpperCase();
+        
+        // Resetear clases
+        roleElement.className = 'text-4xl font-bold mb-6';
+        wordElement.className = 'text-4xl font-black secret-word-style';
+        secretWordContainer.classList.remove('hidden');
+        
+        confirmationMessage.classList.add('hidden');
 
-        // Estilos para el rol
-        roleElement.className = 'text-2xl font-bold mb-2';
         if (currentPlayer.role === 'Impostor') {
-            roleElement.classList.add('text-red-400');
-            wordElement.classList.add('hidden');
-            confirmationMessage.classList.add('hidden');
+            // Estilo para el Impostor
+            roleElement.classList.add('role-impostor');
+            secretWordContainer.classList.add('hidden'); // Ocultar bloque de palabra
         } else {
-            roleElement.classList.add('text-green-400');
-            wordElement.textContent = currentPlayer.word;
-            wordElement.classList.remove('hidden');
-            confirmationMessage.classList.remove('hidden');
+            // Estilo para el Tripulante
+            roleElement.classList.add('role-crewmate');
+            wordElement.textContent = currentPlayer.word.toUpperCase();
+            confirmationMessage.classList.remove('hidden'); 
         }
 
         document.getElementById('secret-info').classList.remove('hidden');
-        document.querySelector('#reveal-screen button').classList.add('hidden');
+        document.querySelector('#reveal-screen button:not(#next-player-btn)').classList.add('hidden'); // Ocultar el botón 'Toca aquí'
         document.getElementById('next-player-btn').classList.remove('hidden');
     }
 
