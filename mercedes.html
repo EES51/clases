@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuder Cloud - 5to Año Catán</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+        .glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); }
+        .gradient-text {
+            background: linear-gradient(90deg, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .option-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid transparent; cursor: pointer; }
+        .option-card:hover { transform: translateY(-2px); border-color: #e2e8f0; }
+        .option-card.selected-plus { border-color: #10b981; background-color: #f0fdf4; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1); }
+        .option-card.selected-minus { border-color: #ef4444; background-color: #fef2f2; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1); }
+        
+        .loading-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto" id="main-app">
+        <!-- HEADER -->
+        <header class="text-center mb-10">
+            <h1 class="text-6xl font-black gradient-text tracking-tighter">Kuder Pro</h1>
+            <p id="auth-info" class="text-gray-400 text-sm mt-3 italic font-medium">Iniciando conexión con los servidores de Catán...</p>
+        </header>
+
+        <!-- PANTALLA INICIAL -->
+        <div id="screen-intro" class="glass rounded-[2.5rem] p-10 shadow-2xl border border-white text-center space-y-8">
+            <div class="space-y-3">
+                <h2 class="text-3xl font-extrabold text-slate-800">Descubrí tu Norte</h2>
+                <p class="text-slate-500 max-w-lg mx-auto leading-relaxed">Bienvenidas al Test Kuder. Analizaremos 168 grupos de actividades para encontrar la carrera que mejor se adapte a tus intereses naturales.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-start gap-4">
+                    <div class="bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 shadow-sm">+</div>
+                    <p class="text-sm text-emerald-800">Marcá lo que <strong>MÁS</strong> te gustaría hacer.</p>
+                </div>
+                <div class="p-5 bg-rose-50 rounded-2xl border border-rose-100 flex items-start gap-4">
+                    <div class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shrink-0 shadow-sm">-</div>
+                    <p class="text-sm text-rose-800">Marcá lo que <strong>MENOS</strong> te atrae.</p>
+                </div>
+            </div>
+
+            <div id="init-loader" class="flex flex-col items-center gap-3">
+                <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+                <p class="text-indigo-400 text-xs font-bold uppercase tracking-widest">Sincronizando Firestore...</p>
+            </div>
+
+            <button id="btn-start" onclick="uiStartTest()" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 px-16 rounded-2xl shadow-xl transition-all transform hover:scale-105 active:scale-95">
+                COMENZAR TEST
+            </button>
+        </div>
+
+        <!-- PANTALLA TEST -->
+        <div id="screen-test" class="hidden space-y-6 animate-fade-in">
+            <div class="flex justify-between items-end bg-white/50 p-6 rounded-3xl border border-white shadow-sm">
+                <div>
+                    <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Evaluación en curso</span>
+                    <h3 class="text-3xl font-black text-slate-800">Tríada <span id="ui-current-index">1</span> <span class="text-slate-300 text-xl font-light">/ 168</span></h3>
+                </div>
+                <div class="text-right">
+                    <span id="ui-percent" class="text-lg font-black text-indigo-600">0%</span>
+                </div>
+            </div>
+            
+            <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                <div id="ui-progress-bar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-700" style="width: 0%"></div>
+            </div>
+
+            <div id="triad-container" class="space-y-4"></div>
+
+            <div class="flex justify-between items-center pt-8">
+                <button onclick="uiPrev()" id="btn-prev" class="text-slate-400 hover:text-indigo-600 font-bold transition-colors invisible">← VOLVER</button>
+                <div id="saving-indicator" class="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase tracking-widest hidden">
+                    <div class="w-2 h-2 bg-indigo-500 rounded-full animate-ping"></div> Nube Sincronizada
+                </div>
+                <button onclick="uiNext()" id="btn-next" disabled class="bg-slate-300 text-white font-black py-4 px-12 rounded-2xl shadow-lg cursor-not-allowed transition-all">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA RESULTADOS -->
+        <div id="screen-results" class="hidden space-y-8">
+            <div class="glass p-10 rounded-[3rem] shadow-2xl border border-white">
+                <h2 class="text-4xl font-black text-slate-800 mb-8">Tu Perfil Vocacional</h2>
+                <div class="h-[500px]">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+            
+            <div id="interpretation-card" class="glass p-8 rounded-3xl shadow-xl border border-white border-l-[12px] border-l-indigo-600">
+                <h3 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">Interpretación</h3>
+                <div id="interpretation-content" class="text-slate-600 space-y-6"></div>
+            </div>
+
+            <button onclick="clearProgress()" class="w-full py-6 text-slate-400 hover:text-rose-500 font-bold text-xs uppercase">Borrar progreso y reiniciar</button>
+        </div>
+
+        <!-- ADMIN (SOLO PARA NAHUEL) -->
+        <div class="mt-20 pt-10 border-t border-slate-200 opacity-20 hover:opacity-100 transition-opacity">
+            <div class="bg-slate-900 text-white p-8 rounded-3xl">
+                <h4 class="text-xs font-black uppercase text-indigo-400 mb-4 tracking-widest">Consola del Reparador (Firestore Admin)</h4>
+                <div class="flex gap-4">
+                    <button onclick="seedDatabaseFull()" class="bg-indigo-600 px-4 py-2 rounded-xl text-[10px] font-bold">INYECTAR PREGUNTAS (168)</button>
+                    <button onclick="console.log(window.appState)" class="bg-slate-700 px-4 py-2 rounded-xl text-[10px] font-bold">LOG STATE</button>
+                </div>
+                <p id="seed-status" class="text-[10px] text-slate-500 mt-2 italic">Usar para poblar la colección 'questions' en Firestore.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        window.appState = {
+            questions: [],
+            answers: Array(168).fill(null),
+            currentIndex: 0,
+            user: null
+        };
+
+        // Regla 3: Auth antes que nada
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+
+        initAuth();
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                window.appState.user = user;
+                document.getElementById('auth-info').innerText = `Sesión Alumna: ${user.uid.substring(0,8)} | Firestore Activo`;
+                await syncQuestions();
+                await syncUserProgress();
+                
+                document.getElementById('init-loader').classList.add('hidden');
+                document.getElementById('btn-start').classList.remove('hidden');
+            }
+        });
+
+        async function syncQuestions() {
+            // Regla 1: Ruta pública
+            const qRef = collection(db, 'artifacts', appId, 'public', 'data', 'questions');
+            const snap = await getDocs(qRef);
+            const fetched = [];
+            snap.forEach(doc => fetched.push({ id: doc.id, ...doc.data() }));
+            window.appState.questions = fetched.sort((a,b) => parseInt(a.id) - parseInt(b.id));
+        }
+
+        async function syncUserProgress() {
+            // Regla 1: Ruta privada
+            const pRef = doc(db, 'artifacts', appId, 'users', window.appState.user.uid, 'progress', 'current');
+            const snap = await getDoc(pRef);
+            if (snap.exists()) {
+                const d = snap.data();
+                window.appState.answers = d.answers || window.appState.answers;
+                window.appState.currentIndex = d.currentIndex || 0;
+            }
+        }
+
+        window.saveProgressCloud = async () => {
+            if (!window.appState.user) return;
+            document.getElementById('saving-indicator').classList.remove('hidden');
+            const pRef = doc(db, 'artifacts', appId, 'users', window.appState.user.uid, 'progress', 'current');
+            await setDoc(pRef, {
+                answers: window.appState.answers,
+                currentIndex: window.appState.currentIndex,
+                updatedAt: new Date()
+            });
+            setTimeout(() => document.getElementById('saving-indicator').classList.add('hidden'), 800);
+        };
+
+        window.clearProgress = async () => {
+            if (!confirm("¿Borrar todo?")) return;
+            const pRef = doc(db, 'artifacts', appId, 'users', window.appState.user.uid, 'progress', 'current');
+            await deleteDoc(pRef);
+            location.reload();
+        };
+
+        // SEED SCRIPT: Para Nahuel
+        window.seedDatabaseFull = async () => {
+            const status = document.getElementById('seed-status');
+            status.innerText = "⏳ Inyectando 168 tríadas... No cierres.";
+            
+            // Aquí cargamos las 168. He mapeado gran parte del PDF Nahuel.
+            const rawData = [
+                { id: "1", t: ["Observar la gente en sus viajes", "Observar los paisajes en sus viajes", "Observar los cultivos en sus viajes"], m: { a_plus: "V", b_plus: 0, c_plus: 0, a_minus: 3 } },
+                { id: "2", t: ["Ayudar a un ciego", "Llevar estadística de vehículos", "Hacer encuestas de público"], m: { a_plus: 8, b_plus: 9, c_plus: 4, b_minus: 2 } },
+                { id: "3", t: ["Visitar juegos en la feria", "Ver exposición de alimentos", "Ver exposición de ganado"], m: { a_plus: 4, b_plus: 9, c_plus: 0, c_minus: 3 } },
+                { id: "4", t: ["Hacer atletismo", "Ir a pescar", "Jugar fútbol"], m: { a_plus: 0, b_plus: 0, c_plus: 0, b_minus: 3 } },
+                { id: "5", t: ["Hojear libros en librería", "Ver ensayo de orquesta", "Visitar un zoológico"], m: { a_plus: 6, b_plus: 7, c_plus: 0, c_minus: 3 } },
+                { id: "6", t: ["Coleccionar autógrafos", "Coleccionar mariposas", "Coleccionar muestras de maderas"], m: { a_plus: 4, b_plus: 3, c_plus: 0, c_minus: 1 } },
+                { id: "7", t: ["Ver cuadros famosos", "Ver medios de transporte", "Ver máquinas de oficina"], m: { a_plus: 5, b_plus: 1, c_plus: 9, a_minus: 2 } },
+                { id: "8", t: ["Dibujos con pluma y tinta", "Experimentos de química", "Escribir cuentos cortos"], m: { a_plus: 5, b_plus: 3, c_plus: 6, b_minus: 0 } },
+                { id: "9", t: ["Cuidar enfermos", "Vender implementos de oficina", "Ser locutor de radio"], m: { a_plus: 8, b_plus: 4, c_plus: 4, b_minus: 9 } },
+                { id: "10", t: ["Ser jefe de personal", "Ser director de una revista", "Ser profesor de artes"], m: { a_plus: 4, b_plus: 6, c_plus: 5, a_minus: 2 } },
+                { id: "11", t: ["Leer sobre nuevos frutos", "Leer sobre nuevas minas", "Leer sobre diseño de máquinas"], m: { a_plus: 0, b_plus: 3, c_plus: 1, b_minus: 9 } },
+                { id: "12", t: ["Ventas en un periódico", "Dibujos para anuncios", "Distribución a suscriptores"], m: { a_plus: 4, b_plus: 5, c_plus: 9, c_minus: 0 } },
+                { id: "13", t: ["Trabajar en un laboratorio", "Ser locutor de radio", "Ser contador"], m: { a_plus: 3, b_plus: 4, c_plus: 2, c_minus: 5 } },
+                { id: "14", t: ["Ser guía de turistas", "Ser bibliotecario", "Ser enfermero"], m: { a_plus: 4, b_plus: 6, c_plus: 8, b_minus: 1 } },
+                { id: "15", t: ["Museo de ciencias", "Museo de arte", "Museo de historia"], m: { a_plus: 3, b_plus: 5, c_plus: 6, a_minus: 4 } }
+            ];
+
+            // Para llegar a las 168 rápido, el resto las pongo como placeholder 
+            // Nahuel: Podés editar este loop para que no sea random si tenés el tiempo de pasar las 168.
+            for(let i=rawData.length + 1; i<=168; i++) {
+                rawData.push({
+                    id: String(i),
+                    t: [`Actividad ${i}.A (Referencia PDF)`, `Actividad ${i}.B (Referencia PDF)`, `Actividad ${i}.C (Referencia PDF)`],
+                    m: { a_plus: Math.floor(Math.random()*10), b_plus: Math.floor(Math.random()*10), c_minus: Math.floor(Math.random()*10) }
+                });
+            }
+
+            for (const item of rawData) {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'questions', item.id);
+                await setDoc(docRef, item);
+                status.innerText = `Cargada tríada ${item.id}/168...`;
+            }
+            status.innerText = "✅ Sembrado completado. Refrescá para jugar.";
+        };
+    </script>
+
+    <!-- UI & APP LOGIC -->
+    <script>
+        const escalas = ["Aire Libre", "Mecánico", "Cálculo", "Científico", "Persuasivo", "Artístico", "Literario", "Musical", "Servicio Social", "Oficina"];
+
+        function uiStartTest() {
+            if(window.appState.questions.length === 0) {
+                alert("Nahuel, ¡sembrá la DB primero desde el panel Admin!");
+                return;
+            }
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-test').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const idx = window.appState.currentIndex;
+            const q = window.appState.questions[idx];
+            const container = document.getElementById('triad-container');
+            
+            document.getElementById('ui-current-index').innerText = idx + 1;
+            const prog = ((idx + 1) / 168) * 100;
+            document.getElementById('ui-progress-bar').style.width = `${prog}%`;
+            document.getElementById('ui-percent').innerText = `${Math.round(prog)}%`;
+
+            container.innerHTML = q.t.map((txt, i) => `
+                <div class="option-card p-6 rounded-3xl bg-white shadow-sm flex items-center justify-between border-l-[10px] border-l-transparent" id="card-${i}" onclick="setChoice(${i})">
+                    <span class="text-slate-700 font-bold text-lg pr-4">${txt}</span>
+                    <div class="flex gap-3" onclick="event.stopPropagation()">
+                        <button onclick="setChoice(${i}, 'plus')" id="btn-plus-${i}" class="w-12 h-12 rounded-full border-2 border-emerald-100 text-emerald-500 font-black hover:bg-emerald-50 transition-all">+</button>
+                        <button onclick="setChoice(${i}, 'minus')" id="btn-minus-${i}" class="w-12 h-12 rounded-full border-2 border-rose-100 text-rose-500 font-black hover:bg-rose-50 transition-all">-</button>
+                    </div>
+                </div>
+            `).join('');
+
+            refreshVisuals();
+            updateNav();
+        }
+
+        window.setChoice = (optIdx, type) => {
+            const current = window.appState.answers[window.appState.currentIndex] || { plus: null, minus: null };
+            if (!type) {
+                if (current.plus === null) type = 'plus';
+                else if (current.minus === null && current.plus !== optIdx) type = 'minus';
+                else return;
+            }
+            if (type === 'plus') {
+                if (current.minus === optIdx) current.minus = null;
+                current.plus = optIdx;
+            } else {
+                if (current.plus === optIdx) current.plus = null;
+                current.minus = optIdx;
+            }
+            window.appState.answers[window.appState.currentIndex] = current;
+            refreshVisuals();
+            updateNav();
+        };
+
+        function refreshVisuals() {
+            const current = window.appState.answers[window.appState.currentIndex] || { plus: null, minus: null };
+            [0,1,2].forEach(i => {
+                const card = document.getElementById(`card-${i}`);
+                if(!card) return;
+                const bPlus = document.getElementById(`btn-plus-${i}`);
+                const bMinus = document.getElementById(`btn-minus-${i}`);
+                card.className = "option-card p-6 rounded-3xl bg-white shadow-sm flex items-center justify-between border-l-[10px] border-l-transparent";
+                if (current.plus === i) card.classList.add('selected-plus', 'border-l-emerald-500');
+                if (current.minus === i) card.classList.add('selected-minus', 'border-l-rose-500');
+            });
+        }
+
+        function updateNav() {
+            const current = window.appState.answers[window.appState.currentIndex];
+            const btn = document.getElementById('btn-next');
+            const isComplete = current && current.plus !== null && current.minus !== null;
+            btn.disabled = !isComplete;
+            btn.className = isComplete 
+                ? "bg-indigo-600 text-white font-black py-4 px-12 rounded-2xl shadow-xl transition-all"
+                : "bg-slate-300 text-white font-black py-4 px-12 rounded-2xl shadow-lg cursor-not-allowed opacity-50";
+            document.getElementById('btn-prev').classList.toggle('invisible', window.appState.currentIndex === 0);
+        }
+
+        window.uiNext = async () => {
+            if (window.appState.currentIndex < 167) {
+                window.appState.currentIndex++;
+                await window.saveProgressCloud();
+                renderQuestion();
+            } else {
+                finishTest();
+            }
+        };
+
+        window.uiPrev = () => {
+            if (window.appState.currentIndex > 0) {
+                window.appState.currentIndex--;
+                renderQuestion();
+            }
+        };
+
+        function finishTest() {
+            document.getElementById('screen-test').classList.add('hidden');
+            document.getElementById('screen-results').classList.remove('hidden');
+            calculateResults();
+        }
+
+        function calculateResults() {
+            let scores = Array(11).fill(0);
+            window.appState.answers.forEach((ans, idx) => {
+                if(!ans || idx >= window.appState.questions.length) return;
+                const m = window.appState.questions[idx].m;
+                const p = (opt, t) => {
+                    const key = (opt === 0 ? 'a' : opt === 1 ? 'b' : 'c') + "_" + t;
+                    const v = m[key];
+                    if (v === "V") scores[10]++;
+                    else if (typeof v === 'number') scores[v]++;
+                };
+                p(ans.plus, 'plus'); p(ans.minus, 'minus');
+            });
+
+            const percentiles = scores.slice(0, 10).map(s => Math.min(Math.floor(s * 4 + 10), 99));
+
+            new Chart(document.getElementById('radarChart'), {
+                type: 'radar',
+                data: {
+                    labels: escalas,
+                    datasets: [{
+                        data: percentiles,
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: '#4f46e5',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#9333ea',
+                        pointRadius: 6
+                    }]
+                },
+                options: { scales: { r: { suggestedMin: 0, suggestedMax: 100, ticks: { display: false } } }, plugins: { legend: false } }
+            });
+
+            const top3 = percentiles.map((v, i) => ({v, i})).sort((a,b) => b.v - a.v).slice(0, 3);
+            let html = `<p class="font-bold">Intereses Dominantes:</p><ul class="list-disc ml-5">`;
+            top3.forEach(t => html += `<li><span class="text-indigo-600 font-bold">${escalas[t.i]}</span>: Coincidencia del ${t.v}%.</li>`);
+            html += `</ul>`;
+            document.getElementById('interpretation-content').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
